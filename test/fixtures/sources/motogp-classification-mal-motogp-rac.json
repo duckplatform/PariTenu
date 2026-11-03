@@ -1,0 +1,562 @@
+{
+ "classification": [
+  {
+   "position": 1,
+   "time": "40:14.236",
+   "gap": {
+    "first": "0.000",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 25,
+   "status": "INSTND",
+   "rider": {
+    "id": "f55b433d-38b8-4d1d-bb3a-a709c82a0260",
+    "full_name": "Marc Marquez",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 93
+   },
+   "team": {
+    "name": "Ducati Lenovo Team"
+   }
+  },
+  {
+   "position": 2,
+   "time": "40:18.408",
+   "gap": {
+    "first": "4.172",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 20,
+   "status": "INSTND",
+   "rider": {
+    "id": "a6108385-dd4c-490d-b02e-542ed0275f79",
+    "full_name": "Pedro Acosta",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 37
+   },
+   "team": {
+    "name": "Red Bull KTM Factory Racing"
+   }
+  },
+  {
+   "position": 3,
+   "time": "40:20.191",
+   "gap": {
+    "first": "5.955",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 16,
+   "status": "INSTND",
+   "rider": {
+    "id": "e7e4c72e-952e-4f64-8e8a-a47ff590fade",
+    "full_name": "Alex Marquez",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 73
+   },
+   "team": {
+    "name": "BK8 Gresini Racing MotoGP"
+   }
+  },
+  {
+   "position": 4,
+   "time": "40:20.995",
+   "gap": {
+    "first": "6.759",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 13,
+   "status": "INSTND",
+   "rider": {
+    "id": "eb47c439-e136-40ff-9534-5c612853f529",
+    "full_name": "Ai Ogura",
+    "country": {
+     "iso": "JP",
+     "name": "Japan",
+     "region_iso": ""
+    },
+    "number": 79
+   },
+   "team": {
+    "name": "SuperFile Trackhouse MotoGP Team"
+   }
+  },
+  {
+   "position": 5,
+   "time": "40:25.132",
+   "gap": {
+    "first": "10.896",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 11,
+   "status": "INSTND",
+   "rider": {
+    "id": "ff225c9d-64a2-43ac-a70e-62cf385a85a1",
+    "full_name": "Enea Bastianini",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 23
+   },
+   "team": {
+    "name": "Red Bull KTM Tech3"
+   }
+  },
+  {
+   "position": 6,
+   "time": "40:25.495",
+   "gap": {
+    "first": "11.259",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 10,
+   "status": "INSTND",
+   "rider": {
+    "id": "ab06dbae-7d6e-47c3-b63f-b7ac6b7d3bcd",
+    "full_name": "Marco Bezzecchi",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 72
+   },
+   "team": {
+    "name": "Aprilia Racing"
+   }
+  },
+  {
+   "position": 7,
+   "time": "40:31.960",
+   "gap": {
+    "first": "17.724",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 9,
+   "status": "INSTND",
+   "rider": {
+    "id": "7b0687b0-90bd-4ad6-b157-8c66fb8a93cf",
+    "full_name": "Luca Marini",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 10
+   },
+   "team": {
+    "name": "Honda HRC Castrol"
+   }
+  },
+  {
+   "position": 8,
+   "time": "40:32.026",
+   "gap": {
+    "first": "17.790",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 8,
+   "status": "INSTND",
+   "rider": {
+    "id": "6c33de41-f014-4f17-8dc9-e6f36e61026a",
+    "full_name": "Fabio Di Giannantonio",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 49
+   },
+   "team": {
+    "name": "Pertamina Enduro VR46 Racing Team"
+   }
+  },
+  {
+   "position": 9,
+   "time": "40:37.965",
+   "gap": {
+    "first": "23.729",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 7,
+   "status": "INSTND",
+   "rider": {
+    "id": "ba579548-f026-402b-a607-38db5317d33f",
+    "full_name": "Brad Binder",
+    "country": {
+     "iso": "ZA",
+     "name": "South Africa",
+     "region_iso": ""
+    },
+    "number": 33
+   },
+   "team": {
+    "name": "Red Bull KTM Factory Racing"
+   }
+  },
+  {
+   "position": 10,
+   "time": "40:39.333",
+   "gap": {
+    "first": "25.097",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 6,
+   "status": "INSTND",
+   "rider": {
+    "id": "a73f8ef2-784f-4f52-8511-1d315fd3a459",
+    "full_name": "Franco Morbidelli",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 21
+   },
+   "team": {
+    "name": "Pertamina Enduro VR46 Racing Team"
+   }
+  },
+  {
+   "position": 11,
+   "time": "40:40.062",
+   "gap": {
+    "first": "25.826",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 5,
+   "status": "INSTND",
+   "rider": {
+    "id": "fcdd5500-a769-4ff4-8b9e-080d1849ff42",
+    "full_name": "Fabio Quartararo",
+    "country": {
+     "iso": "FR",
+     "name": "France",
+     "region_iso": ""
+    },
+    "number": 20
+   },
+   "team": {
+    "name": "Monster Energy Yamaha MotoGP Team"
+   }
+  },
+  {
+   "position": 12,
+   "time": "40:41.299",
+   "gap": {
+    "first": "27.063",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 4,
+   "status": "INSTND",
+   "rider": {
+    "id": "56475aa3-f3d1-485a-b6db-ca1149e1b6fa",
+    "full_name": "Alex Rins",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 42
+   },
+   "team": {
+    "name": "Monster Energy Yamaha MotoGP Team"
+   }
+  },
+  {
+   "position": 13,
+   "time": "40:47.196",
+   "gap": {
+    "first": "32.960",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 3,
+   "status": "INSTND",
+   "rider": {
+    "id": "9cb55304-0ac1-401c-beb6-1a4f445018a4",
+    "full_name": "Francesco Bagnaia",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    },
+    "number": 63
+   },
+   "team": {
+    "name": "Ducati Lenovo Team"
+   }
+  },
+  {
+   "position": 14,
+   "time": "40:48.833",
+   "gap": {
+    "first": "34.597",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 2,
+   "status": "INSTND",
+   "rider": {
+    "id": "66ee98b2-239c-487f-8913-aab8493ce280",
+    "full_name": "Maverick Viñales",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 12
+   },
+   "team": {
+    "name": "Red Bull KTM Tech3"
+   }
+  },
+  {
+   "position": 15,
+   "time": "40:52.682",
+   "gap": {
+    "first": "38.446",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 1,
+   "status": "INSTND",
+   "rider": {
+    "id": "173da4e6-99bd-4468-b277-cf47f1efd24b",
+    "full_name": "Iker Lecuona",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 27
+   },
+   "team": {
+    "name": "BK8 Gresini Racing MotoGP"
+   }
+  },
+  {
+   "position": 16,
+   "time": "40:57.563",
+   "gap": {
+    "first": "43.327",
+    "lap": "0"
+   },
+   "total_laps": 20,
+   "points": 0,
+   "status": "INSTND",
+   "rider": {
+    "id": "6e940243-5167-4cc3-a343-a74337369b94",
+    "full_name": "Jack Miller",
+    "country": {
+     "iso": "AU",
+     "name": "Australia",
+     "region_iso": ""
+    },
+    "number": 43
+   },
+   "team": {
+    "name": "Prima Pramac Yamaha MotoGP"
+   }
+  },
+  {
+   "position": null,
+   "time": "35:17.309",
+   "gap": {
+    "first": "0.000",
+    "lap": "3"
+   },
+   "total_laps": 17,
+   "points": 0,
+   "status": "OUTSTND",
+   "rider": {
+    "id": "487440af-cfa9-478a-903b-4e893ee18d3a",
+    "full_name": "Johann Zarco",
+    "country": {
+     "iso": "FR",
+     "name": "France",
+     "region_iso": ""
+    },
+    "number": 5
+   },
+   "team": {
+    "name": "Castrol Honda LCR"
+   }
+  },
+  {
+   "position": null,
+   "time": "29:46.196",
+   "gap": {
+    "first": "0.000",
+    "lap": "6"
+   },
+   "total_laps": 14,
+   "points": 0,
+   "status": "OUTSTND",
+   "rider": {
+    "id": "3c7598e5-12ec-4e19-9311-1c0e9a017cbe",
+    "full_name": "Diogo Moreira",
+    "country": {
+     "iso": "BR",
+     "name": "Brazil",
+     "region_iso": ""
+    },
+    "number": 11
+   },
+   "team": {
+    "name": "Pro Honda LCR"
+   }
+  },
+  {
+   "position": null,
+   "time": "18:42.571",
+   "gap": {
+    "first": "0.000",
+    "lap": "11"
+   },
+   "total_laps": 9,
+   "points": 0,
+   "status": "OUTSTND",
+   "rider": {
+    "id": "9a441928-d1af-452d-afce-fa028c044932",
+    "full_name": "Joan Mir",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 36
+   },
+   "team": {
+    "name": "Honda HRC Castrol"
+   }
+  },
+  {
+   "position": null,
+   "time": "02:08.894",
+   "gap": {
+    "first": "0.000",
+    "lap": "19"
+   },
+   "total_laps": 1,
+   "points": 0,
+   "status": "OUTSTND",
+   "rider": {
+    "id": "1113c9b8-c231-4ba7-a352-4c11c92ab9df",
+    "full_name": "Augusto Fernandez",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    },
+    "number": 47
+   },
+   "team": {
+    "name": "Prima Pramac Yamaha MotoGP"
+   }
+  }
+ ],
+ "records": [
+  {
+   "type": "bestLap",
+   "bestLap": {
+    "number": null,
+    "time": "01:58.873"
+   },
+   "speed": "167.8",
+   "year": 2025,
+   "isNewRecord": false,
+   "rider": {
+    "id": "e7e4c72e-952e-4f64-8e8a-a47ff590fade",
+    "full_name": "Alex Marquez",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    }
+   }
+  },
+  {
+   "type": "fastestLap",
+   "bestLap": {
+    "number": 2,
+    "time": "01:59.261"
+   },
+   "speed": "167.3",
+   "year": null,
+   "isNewRecord": true,
+   "rider": {
+    "id": "a6108385-dd4c-490d-b02e-542ed0275f79",
+    "full_name": "Pedro Acosta",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    }
+   }
+  },
+  {
+   "type": "recordLap",
+   "bestLap": {
+    "number": null,
+    "time": "01:56.337"
+   },
+   "speed": "171.5",
+   "year": 2024,
+   "isNewRecord": false,
+   "rider": {
+    "id": "9cb55304-0ac1-401c-beb6-1a4f445018a4",
+    "full_name": "Francesco Bagnaia",
+    "country": {
+     "iso": "IT",
+     "name": "Italy",
+     "region_iso": ""
+    }
+   }
+  },
+  {
+   "type": "poleLap",
+   "bestLap": {
+    "number": null,
+    "time": "01:56.493"
+   },
+   "speed": "171.2",
+   "year": null,
+   "isNewRecord": false,
+   "rider": {
+    "id": "e7e4c72e-952e-4f64-8e8a-a47ff590fade",
+    "full_name": "Alex Marquez",
+    "country": {
+     "iso": "ES",
+     "name": "Spain",
+     "region_iso": ""
+    }
+   }
+  }
+ ]
+}

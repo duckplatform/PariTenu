@@ -1,0 +1,79 @@
+/* Thème « Tribune » — le programme de match : blocs francs, rouge club et or du trophée. Clair.
+   Style Vibrant & Block-based, palette « Team red + championship gold », Bebas Neue / Source Sans 3 (skill ui-ux-pro-max).
+   Chargé après app.css (adresse /theme.css) : ne règle que des variables et quelques détails. */
+/* Polices hébergées par l’app (Google Fonts, licence SIL OFL), sous-ensemble latin. */
+@font-face { font-family: "Bebas Neue"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/tribune/bebas-neue-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Source Sans 3"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("/fonts/tribune/source-sans-3-400-800.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --bg: #fef2f2;
+  --surface: #ffffff;
+  --surface-2: #f7eeee;
+  --ink: #2b1111;
+  --muted: #6b4f4f;
+  --line: #f3d0d0;
+  --night: #7f1d1d;
+  --night-2: #991b1b;
+  --night-ink: #fff7ed;
+  --brand: #dc2626;
+  --brand-strong: #b91c1c;
+  --brand-ink: #ffffff;
+  --brand-soft: #fee2e2;
+  --accent: #fbbf24;
+  --accent-ink: #3b1d00;
+  --accent-soft: #fef3c7;
+  --hot: #3b1d00;
+  --hot-soft: #fbbf24;
+  --ok: #15803d;
+  --ok-soft: #dcfce7;
+  --bad: #b91c1c;
+  --bad-soft: #fee2e2;
+  --warn: #92400e;
+  --warn-soft: #fef3c7;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 22px -16px rgb(127 29 29 / 45%);
+  --display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --body-font: "Source Sans 3", system-ui, sans-serif;
+  --display-style: normal;
+  --display-case: uppercase;
+  --label-case: uppercase;
+  --top-bg: repeating-linear-gradient(115deg, rgb(255 255 255 / 7%) 0 14px, transparent 14px 28px), #dc2626;
+  --top-ink: #ffffff;
+  --top-line: 0 solid transparent;
+  --nav-bg: #ffffff;
+  --nav-ink: #6b4f4f;
+  --nav-on: #dc2626;
+  --nav-line: 1px solid #f3d0d0;
+  --side-bg: repeating-linear-gradient(115deg, rgb(255 255 255 / 4%) 0 14px, transparent 14px 28px), #7f1d1d;
+  --side-ink: #fff7ed;
+  --side-hover: rgb(255 255 255 / 10%);
+  --side-on-bg: #dc2626;
+  --side-on-ink: #ffffff;
+  --side-line: 0 solid transparent;
+  --chip-on-bg: #7f1d1d;
+  --chip-on-ink: #ffffff;
+  --pick-bg: #dc2626;
+  --pick-ink: #ffffff;
+  --gain: #b45309;
+  --cta-bg: #fbbf24;
+  --cta-ink: #3b1d00;
+  --card-line: 1px solid #f3d0d0;
+  --me-bg: rgb(0 0 0 / 18%);
+  color-scheme: light;
+}
+
+/* Bebas Neue n'a qu'une graisse : pas de faux gras. */
+html { font-synthesis-weight: none; }
+h1, h2, h3, .section-title, .rail-head h2 { letter-spacing: 0.03em; }
+.topbar h1 { font-size: 1.75rem; }
+.section-title { font-size: 1.45rem; padding-left: 8px; border-left: 6px solid var(--brand); line-height: 1; }
+.section-title > .icon { display: none; }
+.section-title .count { background: var(--accent); color: var(--accent-ink); font-family: var(--body-font); }
+.status, .cat { font-family: var(--body-font); }
+/* L'état d'un pari en bandeau sur le haut de la carte, plutôt que sur le côté. */
+.bet-card { padding-left: 16px; }
+.bet-card::before { inset: 0 0 auto; width: auto; height: 5px; }
+.opt-chip.pickable { box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn.primary, .btn.accent { letter-spacing: 0.06em; font-size: 1.2rem; }
+.match-score, .podium-step span:last-child, .rank-pos, .score { letter-spacing: 0.02em; }

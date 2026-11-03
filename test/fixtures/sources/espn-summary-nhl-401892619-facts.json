@@ -1,0 +1,723 @@
+{
+ "header": {
+  "id": "401892619",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final",
+      "shortDetail": "Final"
+     }
+    },
+    "competitors": [
+     {
+      "id": "18",
+      "homeAway": "home",
+      "score": "1",
+      "winner": false,
+      "team": {
+       "id": "18",
+       "displayName": "San Jose Sharks",
+       "abbreviation": "SJ"
+      }
+     },
+     {
+      "id": "14",
+      "homeAway": "away",
+      "score": "5",
+      "winner": true,
+      "team": {
+       "id": "14",
+       "displayName": "Ottawa Senators",
+       "abbreviation": "OTT"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "plays": [
+  {
+   "id": "401892619000002900",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Dylan Cozens Goal (4) Wrist Shot, assists: Tim Stützle (12), Artem Zub (3)",
+   "awayScore": 1,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "13:25"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565228",
+      "displayName": "Dylan Cozens",
+      "shortName": "D. Cozens"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4697384",
+      "displayName": "Tim Stutzle",
+      "shortName": "T. Stutzle"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4712021",
+      "displayName": "Artem Zub",
+      "shortName": "A. Zub"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892619000003260",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Michael Misa Goal (3) Wrist Shot, assists: Jacob Trouba (7), Kiefer Sherwood (6)",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "16:06"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291934",
+      "displayName": "Michael Misa",
+      "shortName": "M. Misa"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "2976839",
+      "displayName": "Jacob Trouba",
+      "shortName": "J. Trouba"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4391255",
+      "displayName": "Kiefer Sherwood",
+      "shortName": "K. Sherwood"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892619000005900",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Drake Batherson Goal (9) Wrist Shot, assists: Philip Tomasino (1), Thomas Chabot (4)",
+   "awayScore": 2,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "5:04"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4271734",
+      "displayName": "Drake Batherson",
+      "shortName": "D. Batherson"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4565245",
+      "displayName": "Philip Tomasino",
+      "shortName": "P. Tomasino"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "3900219",
+      "displayName": "Thomas Chabot",
+      "shortName": "T. Chabot"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892619000006530",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Artem Zub Roughing against Barclay Goodrow",
+   "awayScore": 2,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "9:29"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4712021",
+      "displayName": "Artem Zub",
+      "shortName": "A. Zub"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3069411",
+      "displayName": "Barclay Goodrow",
+      "shortName": "B. Goodrow"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000006570",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Barclay Goodrow Roughing against Artem Zub",
+   "awayScore": 2,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "9:29"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3069411",
+      "displayName": "Barclay Goodrow",
+      "shortName": "B. Goodrow"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4712021",
+      "displayName": "Artem Zub",
+      "shortName": "A. Zub"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000006700",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Tim Stützle Goal (9) Wrist Shot, assists: Jake Sanderson (6), Dylan Cozens (6)",
+   "awayScore": 3,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "10:54"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697384",
+      "displayName": "Tim Stutzle",
+      "shortName": "T. Stutzle"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4697386",
+      "displayName": "Jake Sanderson",
+      "shortName": "J. Sanderson"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4565228",
+      "displayName": "Dylan Cozens",
+      "shortName": "D. Cozens"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892619000006920",
+   "type": {
+    "id": "58",
+    "text": "Too Many Men on the Ice",
+    "abbreviation": "Too many men/ice - bench",
+    "penaltyMinutes": "2",
+    "penaltyType": "Bench"
+   },
+   "text": "Too many men/ice served by Fabian Zetterlund",
+   "awayScore": 3,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "11:38"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   }
+  },
+  {
+   "id": "401892619000006860",
+   "type": {
+    "id": "91",
+    "text": "Misconduct",
+    "abbreviation": "Misconduct (10 min)",
+    "penaltyMinutes": "10",
+    "penaltyType": "Misconduct"
+   },
+   "text": "Kiefer Sherwood Misconduct",
+   "awayScore": 3,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "11:38"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4391255",
+      "displayName": "Kiefer Sherwood",
+      "shortName": "K. Sherwood"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000006950",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Ridly Greig Goal (2) Backhand, assists: Shane Pinto (6)",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "12:17"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "703",
+    "text": "Shorthanded",
+    "abbreviation": "short-handed"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697411",
+      "displayName": "Ridly Greig",
+      "shortName": "R. Greig"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4565255",
+      "displayName": "Shane Pinto",
+      "shortName": "S. Pinto"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892619000008110",
+   "type": {
+    "id": "109",
+    "text": "Delaying Game - Puck over Glass",
+    "abbreviation": "Delaying Game-Puck over glass",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Thomas Chabot Delaying Game - Puck over glass",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "16:40"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3900219",
+      "displayName": "Thomas Chabot",
+      "shortName": "T. Chabot"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000009010",
+   "type": {
+    "id": "33",
+    "text": "Hooking",
+    "abbreviation": "Hooking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Sam Dickinson Hooking against Michael Amadio",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "3:46"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5216880",
+      "displayName": "Sam Dickinson",
+      "shortName": "S. Dickinson"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3149829",
+      "displayName": "Michael Amadio",
+      "shortName": "M. Amadio"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000009040",
+   "type": {
+    "id": "49",
+    "text": "Slashing",
+    "abbreviation": "Slashing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Jacob Trouba Slashing against Michael Amadio",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "3:46"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "703",
+    "text": "Shorthanded",
+    "abbreviation": "short-handed"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2976839",
+      "displayName": "Jacob Trouba",
+      "shortName": "J. Trouba"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3149829",
+      "displayName": "Michael Amadio",
+      "shortName": "M. Amadio"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000009880",
+   "type": {
+    "id": "33",
+    "text": "Hooking",
+    "abbreviation": "Hooking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Michael Amadio Hooking against Michael Kesselring",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "10:24"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3149829",
+      "displayName": "Michael Amadio",
+      "shortName": "M. Amadio"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4331604",
+      "displayName": "Michael Kesselring",
+      "shortName": "M. Kesselring"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000010220",
+   "type": {
+    "id": "29",
+    "text": "High-sticking",
+    "abbreviation": "High-sticking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Barclay Goodrow High-sticking against Michael Amadio",
+   "awayScore": 4,
+   "homeScore": 1,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "12:39"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3069411",
+      "displayName": "Barclay Goodrow",
+      "shortName": "B. Goodrow"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3149829",
+      "displayName": "Michael Amadio",
+      "shortName": "M. Amadio"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892619000010840",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Shane Pinto Goal (5) Wrist Shot, assists: Jake Sanderson (7)",
+   "awayScore": 5,
+   "homeScore": 1,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "17:30"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "903",
+    "text": "Empty Net",
+    "abbreviation": "empty-net"
+   },
+   "team": {
+    "id": "14"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565255",
+      "displayName": "Shane Pinto",
+      "shortName": "S. Pinto"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4697386",
+      "displayName": "Jake Sanderson",
+      "shortName": "J. Sanderson"
+     },
+     "type": "assister"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+/* Thème « Vestiaire » — sobre et lisible : noir et blanc, un seul vert pour ce qui rapporte. Clair.
+   Style Minimalism & Swiss Style, Outfit / Work Sans (skill ui-ux-pro-max).
+   Chargé après app.css (adresse /theme.css) : ne règle que des variables et quelques détails. */
+/* Polices hébergées par l’app (Google Fonts, licence SIL OFL), sous-ensemble latin. */
+@font-face { font-family: "Outfit"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("/fonts/vestiaire/outfit-400-800.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Work Sans"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/vestiaire/work-sans-400-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f5f5f4;
+  --ink: #0a0a0a;
+  --muted: #57534e;
+  --line: #e7e5e4;
+  --night: #0a0a0a;
+  --night-2: #1c1917;
+  --night-ink: #ffffff;
+  --brand: #0a0a0a;
+  --brand-strong: #0a0a0a;
+  --brand-ink: #ffffff;
+  --brand-soft: #f0fdf4;
+  --accent: #16a34a;
+  --accent-ink: #ffffff;
+  --accent-soft: #dcfce7;
+  --hot: #ffffff;
+  --hot-soft: #16a34a;
+  --ok: #15803d;
+  --ok-soft: #f0fdf4;
+  --bad: #b91c1c;
+  --bad-soft: #fef2f2;
+  --warn: #92400e;
+  --warn-soft: #fffbeb;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --shadow: none;
+  --display: "Outfit", system-ui, sans-serif;
+  --body-font: "Work Sans", system-ui, sans-serif;
+  --display-style: normal;
+  --display-case: none;
+  --label-case: uppercase;
+  --top-bg: #ffffff;
+  --top-ink: #0a0a0a;
+  --top-line: 1px solid #e7e5e4;
+  --nav-bg: #ffffff;
+  --nav-ink: #57534e;
+  --nav-on: #0a0a0a;
+  --nav-line: 1px solid #e7e5e4;
+  --side-bg: #fafaf9;
+  --side-ink: #292524;
+  --side-hover: #f0efee;
+  --side-on-bg: #0a0a0a;
+  --side-on-ink: #ffffff;
+  --side-line: 1px solid #e7e5e4;
+  --chip-on-bg: #0a0a0a;
+  --chip-on-ink: #ffffff;
+  --pick-bg: #0a0a0a;
+  --pick-ink: #ffffff;
+  --gain: #15803d;
+  --cta-bg: #0a0a0a;
+  --cta-ink: #ffffff;
+  --card-line: 1px solid #e7e5e4;
+  --me-bg: #f5f5f4;
+  color-scheme: light;
+}
+
+h1, h2, h3 { letter-spacing: -0.02em; }
+/* Titres de section en petites capitales espacées, filet noir dessous. */
+.section-title {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #0a0a0a;
+  color: var(--muted);
+  font: 600 0.8rem var(--body-font);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.section-title > .icon { display: none; }
+.section-title .count { margin-left: auto; background: transparent; color: var(--muted); }
+/* Pas de bande de couleur sur les cartes, sauf pour le direct. */
+.bet-card { padding-left: 16px; }
+.bet-card::before { display: none; }
+.bet-card.is-live::before { display: block; }
+.opt-chip.pickable { background: #ffffff; box-shadow: inset 0 0 0 1px #d6d3d1; }
+.btn.primary { box-shadow: none; }
+.tag.t-todo { font-weight: 800; }
+.nav a[aria-current="page"] { position: relative; }
+.nav a[aria-current="page"]::before { content: ''; position: absolute; top: 0; width: 28px; height: 2px; background: #0a0a0a; }

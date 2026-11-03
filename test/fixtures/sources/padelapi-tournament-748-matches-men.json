@@ -1,0 +1,175 @@
+{
+ "data": [
+  {
+   "id": 14249,
+   "name": "Coello/Tapia - Tello/Arce",
+   "url": "https://fantasypadeltour.com/match/2775/coello-tapia-tello-arce",
+   "category": "men",
+   "draw": "main",
+   "round": 1,
+   "round_name": "Finals",
+   "played_at": "2026-10-31",
+   "scheduled_at": "2026-10-31T17:00:00+01:00",
+   "status": "finished",
+   "score": [
+    {
+     "team_1": "6",
+     "team_2": "1"
+    },
+    {
+     "team_1": "6",
+     "team_2": "1"
+    }
+   ],
+   "winner": "team_1",
+   "players": {
+    "team_1": [
+     {
+      "id": 65,
+      "name": "Arturo Coello",
+      "short_name": "Coello",
+      "nationality": "ES",
+      "side": "drive"
+     },
+     {
+      "id": 66,
+      "name": "Agustin Tapia",
+      "short_name": "Tapia",
+      "nationality": "AR",
+      "side": "backhand"
+     }
+    ],
+    "team_2": [
+     {
+      "id": 94,
+      "name": "Juan Tello",
+      "short_name": "Tello",
+      "nationality": "AR",
+      "side": "backhand"
+     },
+     {
+      "id": 452,
+      "name": "Maximiliano Arce",
+      "short_name": "Arce",
+      "nationality": "AR",
+      "side": "drive"
+     }
+    ]
+   }
+  },
+  {
+   "id": 14247,
+   "name": "Coello/Tapia - Libaak/Alfonso",
+   "url": "https://fantasypadeltour.com/match/2773/coello-tapia-alfonso-libaak",
+   "category": "men",
+   "draw": "main",
+   "round": 2,
+   "round_name": "Semifinals",
+   "played_at": "2026-10-30",
+   "scheduled_at": "2026-10-30T21:00:00+01:00",
+   "status": "finished",
+   "score": [
+    {
+     "team_1": "6",
+     "team_2": "2"
+    },
+    {
+     "team_1": "6",
+     "team_2": "2"
+    }
+   ],
+   "winner": "team_1",
+   "players": {
+    "team_1": [
+     {
+      "id": 65,
+      "name": "Arturo Coello",
+      "short_name": "Coello",
+      "nationality": "ES",
+      "side": "drive"
+     },
+     {
+      "id": 66,
+      "name": "Agustin Tapia",
+      "short_name": "Tapia",
+      "nationality": "AR",
+      "side": "backhand"
+     }
+    ],
+    "team_2": [
+     {
+      "id": 93,
+      "name": "Tino Libaak",
+      "short_name": "Libaak",
+      "nationality": "AR",
+      "side": "drive"
+     },
+     {
+      "id": 18,
+      "name": "Gonzalo Alfonso",
+      "short_name": "Alfonso",
+      "nationality": "AR",
+      "side": "backhand"
+     }
+    ]
+   }
+  },
+  {
+   "id": 14248,
+   "name": "Alonso/Goñi - Tello/Arce",
+   "url": "https://fantasypadeltour.com/match/2774/alonso-goni-tello-arce",
+   "category": "men",
+   "draw": "main",
+   "round": 2,
+   "round_name": "Semifinals",
+   "played_at": "2026-10-30",
+   "scheduled_at": "2026-10-30T16:00:00+01:00",
+   "status": "finished",
+   "score": [
+    {
+     "team_1": "4",
+     "team_2": "6"
+    },
+    {
+     "team_1": "3",
+     "team_2": "6"
+    }
+   ],
+   "winner": "team_2",
+   "players": {
+    "team_1": [
+     {
+      "id": 101,
+      "name": "Edu Alonso",
+      "short_name": "Alonso",
+      "nationality": "ES",
+      "side": "drive"
+     },
+     {
+      "id": 465,
+      "name": "Aimar Goñi",
+      "short_name": "Goñi",
+      "nationality": "ES",
+      "side": "backhand"
+     }
+    ],
+    "team_2": [
+     {
+      "id": 94,
+      "name": "Juan Tello",
+      "short_name": "Tello",
+      "nationality": "AR",
+      "side": "backhand"
+     },
+     {
+      "id": 452,
+      "name": "Maximiliano Arce",
+      "short_name": "Arce",
+      "nationality": "AR",
+      "side": "drive"
+     }
+    ]
+   }
+  }
+ ]
+}

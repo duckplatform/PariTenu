@@ -1,0 +1,86 @@
+/* Thème « Arène » — soirée e-sport : verre dépoli sur fond néon, typo de jeu vidéo, or du classement. Sombre.
+   Style Glassmorphism, palette Gaming « Neon purple + rose action » + or « gold leaderboard », Russo One / Chakra Petch
+   (skill ui-ux-pro-max). Chargé après app.css (adresse /theme.css) : ne règle que des variables et quelques détails. */
+/* Polices hébergées par l’app (Google Fonts, licence SIL OFL), sous-ensemble latin. */
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/arene/chakra-petch-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/arene/chakra-petch-500.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/arene/chakra-petch-600.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Chakra Petch"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/arene/chakra-petch-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Russo One"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/arene/russo-one-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --bg: #0f0f23;
+  --surface: rgb(255 255 255 / 7%);
+  --surface-2: rgb(255 255 255 / 9%);
+  --ink: #e2e8f0;
+  --muted: #aeb9ce;
+  --line: rgb(255 255 255 / 14%);
+  --night: #17173a;
+  --night-2: #241f5c;
+  --night-ink: #ffffff;
+  --brand: #8b5cf6;
+  --brand-strong: #c4b5fd;
+  --brand-ink: #ffffff;
+  --brand-soft: rgb(124 58 237 / 24%);
+  --accent: #f59e0b;
+  --accent-ink: #1e1300;
+  --accent-soft: rgb(245 158 11 / 18%);
+  --hot: #1e1300;
+  --hot-soft: #f59e0b;
+  --ok: #34d399;
+  --ok-soft: rgb(52 211 153 / 16%);
+  --bad: #fb7185;
+  --bad-soft: rgb(244 63 94 / 18%);
+  --warn: #fbbf24;
+  --warn-soft: rgb(245 158 11 / 16%);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 10px 30px rgb(0 0 0 / 30%), inset 0 1px 0 rgb(255 255 255 / 10%);
+  --display: "Russo One", system-ui, sans-serif;
+  --body-font: "Chakra Petch", system-ui, sans-serif;
+  --display-style: normal;
+  --display-case: none;
+  --label-case: uppercase;
+  --top-bg: rgb(15 15 35 / 55%);
+  --top-ink: #ffffff;
+  --top-line: 1px solid rgb(255 255 255 / 10%);
+  --nav-bg: rgb(15 15 35 / 80%);
+  --nav-ink: #aeb9ce;
+  --nav-on: #c4b5fd;
+  --nav-line: 1px solid rgb(255 255 255 / 10%);
+  --side-bg: rgb(255 255 255 / 4%);
+  --side-ink: #e2e8f0;
+  --side-hover: rgb(255 255 255 / 8%);
+  --side-on-bg: linear-gradient(90deg, #7c3aed, #2563eb);
+  --side-on-ink: #ffffff;
+  --side-line: 1px solid rgb(255 255 255 / 10%);
+  --chip-on-bg: #ffffff;
+  --chip-on-ink: #1e1b4b;
+  --pick-bg: linear-gradient(135deg, #7c3aed, #2563eb);
+  --pick-ink: #ffffff;
+  --gain: #fbbf24;
+  --cta-bg: linear-gradient(135deg, #7c3aed, #2563eb);
+  --cta-ink: #ffffff;
+  --card-line: 1px solid rgb(255 255 255 / 14%);
+  --glass: blur(16px) saturate(140%);
+  --me-bg: rgb(255 255 255 / 10%);
+  color-scheme: dark;
+}
+
+/* Le fond néon reste en place pendant qu'on fait défiler : le verre des cartes le laisse deviner. */
+body {
+  background:
+    radial-gradient(520px 420px at 0% 0%, rgb(124 58 237 / 50%), transparent 65%),
+    radial-gradient(560px 460px at 100% 35%, rgb(37 99 235 / 38%), transparent 65%),
+    radial-gradient(620px 520px at 25% 100%, rgb(244 63 94 / 28%), transparent 65%),
+    #0f0f23 fixed;
+  background-attachment: fixed;
+}
+.topbar, .nav, .sidebar { backdrop-filter: blur(18px) saturate(140%); }
+/* Panneaux, menus et notifications : opaques, pour rester lisibles au-dessus des cartes. */
+.sheet, .toast { background: #1b1b3d; }
+.chip { background: rgb(255 255 255 / 6%); }
+.opt-chip.pickable.mine { box-shadow: 0 6px 20px -6px rgb(124 58 237 / 80%); }
+.tag.t-todo { box-shadow: 0 0 14px rgb(245 158 11 / 55%); }
+.section-title .count { background: rgb(255 255 255 / 12%); color: #fbbf24; }
+.podium-step.p1 { background: linear-gradient(180deg, #2e1065, #17173a); }

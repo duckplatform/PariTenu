@@ -1,0 +1,90 @@
+[
+ {
+  "id": "b7551b27-a4de-4aec-8343-08902fb00c63",
+  "name": "BARCELONA TEST ",
+  "sponsored_name": "BARCELONA TEST ",
+  "short_name": "CT1",
+  "additional_name": "BARCELONA TEST ",
+  "date_start": "2026-05-18",
+  "date_end": "2026-05-18",
+  "status": "FINISHED",
+  "test": true,
+  "toad_api_uuid": "b7551b27-a4de-4aec-8343-08902fb00c63",
+  "country": {
+   "iso": "ES",
+   "name": "Spain"
+  },
+  "circuit": {
+   "id": "2218098d-ab2d-498b-a633-1a4a39119e9e",
+   "name": "Circuit de Barcelona-Catalunya",
+   "place": "Barcelona",
+   "nation": "SPA"
+  }
+ },
+ {
+  "id": "275ca55d-45d3-440f-ad59-17d6b3e6b2d3",
+  "name": "GRAND PRIX OF INDONESIA",
+  "sponsored_name": "PERTAMINA GRAND PRIX OF INDONESIA ",
+  "short_name": "INA",
+  "additional_name": "INDONESIA",
+  "date_start": "2026-10-09",
+  "date_end": "2026-10-11",
+  "status": "FINISHED",
+  "test": false,
+  "toad_api_uuid": "877c27e8-70e0-4847-bacf-2290d7cc903c",
+  "country": {
+   "iso": "ID",
+   "name": "Indonesia"
+  },
+  "circuit": {
+   "id": "a1ec6331-c571-418c-92d7-768cf0c83872",
+   "name": "Pertamina Mandalika Circuit",
+   "place": "Lombok",
+   "nation": "INA"
+  }
+ },
+ {
+  "id": "c1dea7a7-e35e-4363-9e28-7997e3bc6fbf",
+  "name": "GRAND PRIX OF AUSTRALIA",
+  "sponsored_name": "RED BULL GRAND PRIX OF AUSTRALIA",
+  "short_name": "AUS",
+  "additional_name": "AUSTRALIA",
+  "date_start": "2026-10-23",
+  "date_end": "2026-10-25",
+  "status": "CURRENT",
+  "test": false,
+  "toad_api_uuid": "66961f05-2454-4455-9d65-f99c49d25b17",
+  "country": {
+   "iso": "AU",
+   "name": "Australia"
+  },
+  "circuit": {
+   "id": "d4629be0-3742-4950-af2e-2807562d6cb8",
+   "name": "Phillip Island",
+   "place": "Phillip Island",
+   "nation": "AUS"
+  }
+ },
+ {
+  "id": "ea2ba334-b943-462f-aedb-084ac38408d1",
+  "name": "GRAND PRIX OF MALAYSIA",
+  "sponsored_name": "PETRONAS GRAND PRIX OF MALAYSIA ",
+  "short_name": "MAL",
+  "additional_name": "MALAYSIA",
+  "date_start": "2026-10-30",
+  "date_end": "2026-11-01",
+  "status": "CURRENT",
+  "test": false,
+  "toad_api_uuid": "d1aedfce-d7c8-4d4a-9532-99c82547baad",
+  "country": {
+   "iso": "MY",
+   "name": "Malaysia"
+  },
+  "circuit": {
+   "id": "f5a7f3f8-0097-4810-a2da-eee749aedc77",
+   "name": "Petronas Sepang International Circuit",
+   "place": "Sepang",
+   "nation": "MAL"
+  }
+ }
+]

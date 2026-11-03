@@ -1,0 +1,640 @@
+{
+ "leagues": [
+  {
+   "id": "10",
+   "name": "Major League Baseball",
+   "season": {
+    "year": 2026,
+    "startDate": "2026-02-19T08:00Z",
+    "endDate": "2026-11-12T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "3",
+     "type": 3,
+     "name": "Postseason",
+     "abbreviation": "post"
+    }
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "401908046",
+   "date": "2026-10-29T00:00Z",
+   "name": "Milwaukee Brewers at Tampa Bay Rays",
+   "shortName": "MIL @ TB",
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401908046",
+     "date": "2026-10-29T00:00Z",
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "featuredAthletes": [
+       {
+        "name": "winningPitcher",
+        "displayName": "Winning Pitcher",
+        "shortDisplayName": "Win",
+        "abbreviation": "WP",
+        "playerId": 5080761,
+        "athlete": {
+         "id": "5080761",
+         "fullName": "Jacob Misiorowski",
+         "displayName": "Jacob Misiorowski",
+         "shortName": "J. Misiorowski",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/mlb/player/_/id/5080761"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/mlb/players/full/5080761.png",
+         "jersey": "32",
+         "position": "SP",
+         "team": {
+          "id": "8"
+         }
+        },
+        "team": {
+         "id": "8"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "2"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "1.89"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401908046/competitions/401908046/competitors/8/roster/5080761/projections?lang=en&region=us"
+        }
+       },
+       {
+        "name": "losingPitcher",
+        "displayName": "Losing Pitcher",
+        "shortDisplayName": "Loss",
+        "abbreviation": "LP",
+        "playerId": 42584,
+        "athlete": {
+         "id": "42584",
+         "fullName": "Drew Rasmussen",
+         "displayName": "Drew Rasmussen",
+         "shortName": "D. Rasmussen",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/mlb/player/_/id/42584"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/mlb/players/full/42584.png",
+         "jersey": "57",
+         "position": "SP",
+         "team": {
+          "id": "30"
+         }
+        },
+        "team": {
+         "id": "30"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "2"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "2.20"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401908046/competitions/401908046/competitors/30/roster/42584/projections?lang=en&region=us"
+        }
+       }
+      ]
+     },
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "winner": false,
+       "score": "1",
+       "hits": 4,
+       "errors": 0,
+       "team": {
+        "id": "30",
+        "abbreviation": "TB",
+        "shortDisplayName": "Rays",
+        "displayName": "Tampa Bay Rays",
+        "logo": "https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/tb.png",
+        "color": "092c5c"
+       },
+       "linescores": [
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 6
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 8
+        },
+        {
+         "value": 1,
+         "displayValue": "1",
+         "period": 9
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "4"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "1"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".125"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "0"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "1"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "0"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "4.00"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "0"
+        }
+       ],
+       "leaders": [
+        {
+         "name": "avg",
+         "displayName": "Batting Average",
+         "leaders": [
+          {
+           "displayValue": "2-4, 2B, RBI",
+           "value": 0.5,
+           "athlete": {
+            "id": "4679983",
+            "displayName": "Chandler Simpson",
+            "shortName": "C. Simpson"
+           },
+           "team": {
+            "id": "30"
+           }
+          }
+         ]
+        },
+        {
+         "name": "homeRuns",
+         "displayName": "Home Runs",
+         "leaders": [
+          {
+           "displayValue": "0-3, BB, K",
+           "value": 0,
+           "athlete": {
+            "id": "33481",
+            "displayName": "Yandy Diaz",
+            "shortName": "Y. Diaz"
+           },
+           "team": {
+            "id": "30"
+           }
+          }
+         ]
+        },
+        {
+         "name": "RBIs",
+         "displayName": "Runs Batted In",
+         "leaders": [
+          {
+           "displayValue": "2-4, 2B, RBI",
+           "value": 1,
+           "athlete": {
+            "id": "4679983",
+            "displayName": "Chandler Simpson",
+            "shortName": "C. Simpson"
+           },
+           "team": {
+            "id": "30"
+           }
+          }
+         ]
+        },
+        {
+         "name": "MLBRating",
+         "displayName": "MLB Rating",
+         "leaders": [
+          {
+           "displayValue": "2-4, 2B, RBI",
+           "value": 64.5,
+           "athlete": {
+            "id": "4679983",
+            "displayName": "Chandler Simpson",
+            "shortName": "C. Simpson"
+           },
+           "team": {
+            "id": "30"
+           }
+          }
+         ]
+        },
+        {
+         "name": "MLBRating",
+         "displayName": "MLB Rating",
+         "leaders": [
+          {
+           "displayValue": "2-4, 2B, RBI",
+           "value": 64.5,
+           "athlete": {
+            "id": "4679983",
+            "displayName": "Chandler Simpson",
+            "shortName": "C. Simpson"
+           },
+           "team": {
+            "id": "30"
+           }
+          }
+         ]
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "98-64"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "43-38"
+        }
+       ]
+      },
+      {
+       "id": "8",
+       "homeAway": "away",
+       "order": 1,
+       "winner": true,
+       "score": "4",
+       "hits": 8,
+       "errors": 2,
+       "team": {
+        "id": "8",
+        "abbreviation": "MIL",
+        "shortDisplayName": "Brewers",
+        "displayName": "Milwaukee Brewers",
+        "logo": "https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/mil.png",
+        "color": "13294b"
+       },
+       "linescores": [
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 1,
+         "displayValue": "1",
+         "period": 2
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 1,
+         "displayValue": "1",
+         "period": 5
+        },
+        {
+         "value": 2,
+         "displayValue": "2",
+         "period": 6
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 8
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 9
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "8"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "4"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".250"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "0"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "0"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "1"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "1.00"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "2"
+        }
+       ],
+       "leaders": [
+        {
+         "name": "avg",
+         "displayName": "Batting Average",
+         "leaders": [
+          {
+           "displayValue": "2-3, 2 RBI, R",
+           "value": 0.6666666865348816,
+           "athlete": {
+            "id": "5149101",
+            "displayName": "Cooper Pratt",
+            "shortName": "C. Pratt"
+           },
+           "team": {
+            "id": "8"
+           }
+          }
+         ]
+        },
+        {
+         "name": "homeRuns",
+         "displayName": "Home Runs",
+         "leaders": [
+          {
+           "displayValue": "0-3, R",
+           "value": 0,
+           "athlete": {
+            "id": "31283",
+            "displayName": "Christian Yelich",
+            "shortName": "C. Yelich"
+           },
+           "team": {
+            "id": "8"
+           }
+          }
+         ]
+        },
+        {
+         "name": "RBIs",
+         "displayName": "Runs Batted In",
+         "leaders": [
+          {
+           "displayValue": "2-3, 2 RBI, R",
+           "value": 2,
+           "athlete": {
+            "id": "5149101",
+            "displayName": "Cooper Pratt",
+            "shortName": "C. Pratt"
+           },
+           "team": {
+            "id": "8"
+           }
+          }
+         ]
+        },
+        {
+         "name": "MLBRating",
+         "displayName": "MLB Rating",
+         "leaders": [
+          {
+           "displayValue": "2-3, 2 RBI, R",
+           "value": 66,
+           "athlete": {
+            "id": "5149101",
+            "displayName": "Cooper Pratt",
+            "shortName": "C. Pratt"
+           },
+           "team": {
+            "id": "8"
+           }
+          }
+         ]
+        },
+        {
+         "name": "MLBRating",
+         "displayName": "MLB Rating",
+         "leaders": [
+          {
+           "displayValue": "2-3, 2 RBI, R",
+           "value": 66,
+           "athlete": {
+            "id": "5149101",
+            "displayName": "Cooper Pratt",
+            "shortName": "C. Pratt"
+           },
+           "team": {
+            "id": "8"
+           }
+          }
+         ]
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "103-59"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "48-33"
+        }
+       ]
+      }
+     ],
+     "leaders": [
+      {
+       "name": "MLBRating",
+       "displayName": "MLB Rating",
+       "leaders": [
+        {
+         "displayValue": "2-3, 2 RBI, R",
+         "value": 66,
+         "athlete": {
+          "id": "5149101",
+          "displayName": "Cooper Pratt",
+          "shortName": "C. Pratt"
+         },
+         "team": {
+          "id": "8"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

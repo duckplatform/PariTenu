@@ -1,0 +1,34 @@
+{
+ "results": [
+  {
+   "id": 2996944,
+   "name": "Lyon",
+   "latitude": 45.74906,
+   "longitude": 4.84789,
+   "country": "France",
+   "country_code": "FR",
+   "admin1": "Auvergne-Rhône-Alpes",
+   "timezone": "Europe/Paris"
+  },
+  {
+   "id": 4434478,
+   "name": "Lyon",
+   "latitude": 34.21789,
+   "longitude": -90.54204,
+   "country": "États-Unis",
+   "country_code": "US",
+   "admin1": "Mississippi",
+   "timezone": "America/Chicago"
+  },
+  {
+   "id": 4207205,
+   "name": "Lyons",
+   "latitude": 32.20435,
+   "longitude": -82.32179,
+   "country": "États-Unis",
+   "country_code": "US",
+   "admin1": "Géorgie",
+   "timezone": "America/New_York"
+  }
+ ]
+}

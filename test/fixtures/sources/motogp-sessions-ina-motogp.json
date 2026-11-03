@@ -1,0 +1,98 @@
+[
+ {
+  "id": "bd7ca50e-e5a4-4d27-b4ef-9cc4e3afe1ef",
+  "type": "FP",
+  "number": 1,
+  "date": "2026-10-09T10:45:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "7641370f-c2a2-4f9e-94a4-d3403b1fe8f0",
+  "type": "PR",
+  "number": null,
+  "date": "2026-10-09T15:35:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "3fd74fc1-3dec-4c24-9f55-396c5248a8af",
+  "type": "FP",
+  "number": 2,
+  "date": "2026-10-10T10:10:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "e8eca32d-f4c5-4d16-9416-b29ea1991914",
+  "type": "Q",
+  "number": 1,
+  "date": "2026-10-10T10:55:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "d1e894fa-687c-4208-ad64-eec4e392cd59",
+  "type": "Q",
+  "number": 2,
+  "date": "2026-10-10T11:20:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "c9982d81-11e7-4f9e-a1cf-c7f47d66cf74",
+  "type": "SPR",
+  "number": null,
+  "date": "2026-10-10T15:00:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "e2ef187a-7b63-42ee-b51b-93c9d2beee33",
+  "type": "WUP",
+  "number": null,
+  "date": "2026-10-11T10:40:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ },
+ {
+  "id": "6ff94bbd-cece-46d7-bc92-37fbed0fa047",
+  "type": "RAC",
+  "number": null,
+  "date": "2026-10-11T15:00:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Pertamina Mandalika Circuit",
+  "category": {
+   "id": "e8c110ad-64aa-4e8e-8a86-f2f152f6a942",
+   "name": "MotoGP™"
+  }
+ }
+]

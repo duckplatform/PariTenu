@@ -1,0 +1,141 @@
+import { face } from '../avatars.js';
+import { api, get, patch, post } from '../api.js';
+import { brand } from '../brand.js';
+import { h } from '../dom.js';
+import { activeMembers, ctx, inviteUrl, invalidate, navigate, rerender } from '../state.js';
+import { pointsEditor } from '../settings-editor.js';
+import { forgetGroup, rememberGroup } from '../store.js';
+import { confirmSheet, emojiPicker, field, GROUP_EMOJIS, promptSheet, run, share, toast } from '../ui.js';
+
+export async function adminView() {
+  if (ctx.me.role !== 'admin') {
+    navigate(`/${ctx.gid}/me`, { replace: true });
+    return null;
+  }
+  const base = `/groups/${ctx.gid}`;
+  const s = ctx.settings;
+  const reload = async () => { invalidate(); rerender(); };
+
+  // Lien d'invitation
+  const linkCode = h('code', inviteUrl());
+  const inviteSection = h('section.card.stack',
+    h('h2', '🔗 Lien d’invitation'),
+    h('p.invite-link', linkCode),
+    h('div.row-wrap',
+      h('button.btn.primary', { type: 'button', onclick: () => share({ title: ctx.group.name, text: `🎲 Rejoins « ${ctx.group.name} » sur ${brand.name}`, url: inviteUrl() }) }, 'Partager'),
+      h('button.btn.danger', {
+        type: 'button',
+        onclick: async (e) => {
+          const ok = await confirmSheet('Changer le lien ?', 'L’ancien lien ne marchera plus. Les membres déjà connectés le restent. Tu devras partager le nouveau lien.', { confirm: 'Changer le lien', danger: true });
+          if (!ok) return;
+          const r = await run(e.currentTarget, () => post(`${base}/invite/regenerate`), { success: 'Nouveau lien créé.' });
+          if (r) {
+            ctx.group.inviteToken = r.inviteToken;
+            rememberGroup(ctx.group);
+            linkCode.textContent = inviteUrl();
+          }
+        },
+      }, 'Changer le lien')));
+
+  // Nom et emoji du groupe
+  const name = h('input', { type: 'text', maxlength: 40, value: ctx.group.name });
+  const emoji = emojiPicker(GROUP_EMOJIS.includes(ctx.group.emoji) ? GROUP_EMOJIS : [ctx.group.emoji, ...GROUP_EMOJIS], ctx.group.emoji, { label: 'Emoji du groupe' });
+  const groupSection = h('section.card.stack', h('h2', '✏️ Le groupe'), field('Nom', name), emoji.el,
+    h('button.btn', {
+      type: 'button',
+      onclick: async (e) => { if (await run(e.currentTarget, () => patch(base, { name: name.value, emoji: emoji.value }), { success: 'Groupe mis à jour.' })) await reload(); },
+    }, 'Enregistrer'));
+
+  // Points et délais
+  const points = pointsEditor(s);
+  const pointsSection = h('section.card.stack', h('h2', '🎯 Points, délais et commentaires'), points.node,
+    h('button.btn', {
+      type: 'button',
+      onclick: async (e) => {
+        if (await run(e.currentTarget, () => patch(`${base}/settings`, points.value()), { success: 'Réglages enregistrés.' })) await reload();
+      },
+    }, 'Enregistrer les réglages'));
+
+  // Types, catégories et sources de données : page à part (/<g>/config)
+  const activeCats = s.categories.filter((c) => !c.hidden).length;
+  const kindsOn = [s.kinds.yesno && 'Oui / Non', s.kinds.multi && 'choix multiples'].filter(Boolean).join(' et ') || 'aucun type de pari maison';
+  const catSection = h('a.card.list-item.config-link', { href: `/${ctx.gid}/config` },
+    h('span.big-emoji', '🎛️'),
+    h('span.grow', h('b', 'Réglages des paris'), h('br'),
+      h('small.muted', `${kindsOn} · ${activeCats ? `paris maison dans ${activeCats} catégorie${activeCats > 1 ? 's' : ''}` : 'pas de paris maison'} · matchs, météo, cryptos… avec résultat automatique`)),
+    h('span.chev', '›'));
+
+  // Membres
+  const memberSection = h('section.card.stack', h('h2', `👥 Membres (${activeMembers().length})`),
+    h('ul.list', activeMembers().map((m) => h('li.member-row', { dataset: { memberId: m.id } },
+      h('span.avatar', face(m.avatar)),
+      h('span.grow', h('b', m.pseudo), m.role === 'admin' ? h('small.tag', 'admin') : null),
+      m.id === ctx.me.id ? h('small.muted', 'toi') : h('div.row-wrap.small-actions',
+        h('button.btn.small', {
+          type: 'button',
+          onclick: async (e) => {
+            const role = m.role === 'admin' ? 'member' : 'admin';
+            if (await run(e.currentTarget, () => post(`${base}/members/${m.id}/role`, { role }), { success: role === 'admin' ? `${m.pseudo} est admin.` : `${m.pseudo} n’est plus admin.` })) await reload();
+          },
+        }, m.role === 'admin' ? 'Retirer admin' : 'Nommer admin'),
+        h('button.btn.small', {
+          type: 'button',
+          onclick: async (e) => {
+            const message = `${m.pseudo} sera déconnecté partout et choisira un nouveau PIN en rouvrant le lien du groupe. S’il est aussi dans d’autres groupes, un admin de chacun doit faire de même (sinon un seul admin pourrait prendre son compte).`;
+            if (await confirmSheet(`Réinitialiser le PIN de ${m.pseudo} ?`, message, { confirm: 'Réinitialiser' })) {
+              const result = await run(e.currentTarget, () => post(`${base}/members/${m.id}/reset-pin`));
+              if (result?.done) toast(`PIN de ${m.pseudo} réinitialisé : envoie-lui le lien du groupe pour qu’il en choisisse un nouveau.`, 'ok');
+              else if (result) toast(`C’est noté. ${m.pseudo} est aussi dans ${result.waiting} autre${result.waiting > 1 ? 's' : ''} groupe${result.waiting > 1 ? 's' : ''} : un admin de chacun doit aussi réinitialiser son PIN (d’ici 7 jours).`, 'ok');
+            }
+          },
+        }, 'Réinit. PIN'),
+        h('button.btn.small.danger', {
+          type: 'button',
+          onclick: async (e) => {
+            if (await confirmSheet(`Retirer ${m.pseudo} ?`, 'Ses pronostics sur les paris ouverts sont retirés. Son historique reste visible.', { confirm: 'Retirer', danger: true })) {
+              if (await run(e.currentTarget, () => post(`${base}/members/${m.id}/remove`), { success: `${m.pseudo} a été retiré.` })) await reload();
+            }
+          },
+        }, 'Retirer'))))));
+
+  // Export
+  const exportSection = h('section.card.stack', h('h2', '💾 Export'),
+    h('p.muted', 'Tout le groupe en JSON (paris, pronostics, points, historique), sans PIN ni lien secret.'),
+    h('button.btn', {
+      type: 'button',
+      onclick: async (e) => {
+        const data = await run(e.currentTarget, () => get(`${base}/export`));
+        if (!data) return;
+        const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+        const a = h('a', { href: url, download: `pari-tenu-${ctx.group.name}.json` });
+        document.body.append(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        toast('Export téléchargé.', 'ok');
+      },
+    }, 'Télécharger l’export'));
+
+  // Supprimer le groupe : un admin, en retapant son nom ; tout disparaît pour tout le monde (les comptes restent).
+  const deleteSection = h('section.card.stack.danger-zone', h('h2', '🗑️ Supprimer le groupe'),
+    h('p.muted', 'Les paris, pronostics, points, classements et l’historique du groupe disparaissent pour tous ses membres. Leurs comptes et leurs autres groupes restent. On ne peut pas revenir en arrière : pense à l’export avant.'),
+    h('button.btn.danger', {
+      type: 'button',
+      onclick: async (e) => {
+        const name = await promptSheet(`Supprimer « ${ctx.group.name} » ?`, {
+          label: 'Retape le nom du groupe pour confirmer', placeholder: ctx.group.name, confirm: 'Supprimer définitivement', max: 80, danger: true,
+        });
+        if (name == null) return;
+        if (await run(e.currentTarget, () => api('DELETE', base, { confirm: name }))) {
+          forgetGroup(ctx.gid);
+          toast(`Groupe « ${ctx.group.name} » supprimé.`, 'ok');
+          navigate('/groups', { replace: true });
+        }
+      },
+    }, 'Supprimer le groupe'));
+
+  const node = h('main.admin',
+    h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', '⚙️ Réglages du groupe')),
+    inviteSection, catSection, groupSection, pointsSection, memberSection, exportSection, deleteSection);
+  return { node, tab: 'settings' };
+}

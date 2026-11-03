@@ -1,0 +1,541 @@
+{
+ "leagues": [
+  {
+   "id": "710",
+   "name": "French Ligue 1",
+   "season": {
+    "year": 2026,
+    "startDate": "2026-06-01T04:00Z",
+    "endDate": "2027-06-01T03:59Z",
+    "displayName": "2026-27 French Ligue 1",
+    "type": {
+     "id": "1",
+     "type": 14252,
+     "name": "2026-27 Ligue 1",
+     "abbreviation": "2026-27 Ligue 1"
+    }
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "401876414",
+   "date": "2026-11-01T14:00Z",
+   "name": "AJ Auxerre at Strasbourg",
+   "shortName": "AUX @ STR",
+   "status": {
+    "clock": 5400,
+    "displayClock": "90'+8'",
+    "period": 2,
+    "type": {
+     "id": "28",
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401876414",
+     "date": "2026-11-01T14:00Z",
+     "status": {
+      "clock": 5400,
+      "displayClock": "90'+8'",
+      "period": 2,
+      "type": {
+       "id": "28",
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "competitors": [
+      {
+       "id": "180",
+       "homeAway": "home",
+       "order": 0,
+       "winner": true,
+       "score": "5",
+       "team": {
+        "id": "180",
+        "abbreviation": "STR",
+        "shortDisplayName": "Strasbourg",
+        "displayName": "Strasbourg",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/180.png",
+        "color": "0000bf"
+       },
+       "statistics": [
+        {
+         "name": "appearances",
+         "abbreviation": "APP",
+         "displayValue": "0"
+        },
+        {
+         "name": "foulsCommitted",
+         "abbreviation": "FC",
+         "displayValue": "11"
+        },
+        {
+         "name": "wonCorners",
+         "abbreviation": "CW",
+         "displayValue": "5"
+        },
+        {
+         "name": "goalAssists",
+         "abbreviation": "A",
+         "displayValue": "4"
+        },
+        {
+         "name": "possessionPct",
+         "abbreviation": "PP",
+         "displayValue": "64.2"
+        },
+        {
+         "name": "shotAssists",
+         "abbreviation": "SHAST",
+         "displayValue": "12"
+        },
+        {
+         "name": "shotsOnTarget",
+         "abbreviation": "SOG",
+         "displayValue": "6"
+        },
+        {
+         "name": "totalGoals",
+         "abbreviation": "G",
+         "displayValue": "5"
+        },
+        {
+         "name": "totalShots",
+         "abbreviation": "SHOT",
+         "displayValue": "19"
+        }
+       ],
+       "records": [
+        {
+         "name": "All Splits",
+         "type": "total",
+         "summary": "3-1-5"
+        }
+       ]
+      },
+      {
+       "id": "172",
+       "homeAway": "away",
+       "order": 1,
+       "winner": false,
+       "score": "1",
+       "team": {
+        "id": "172",
+        "abbreviation": "AUX",
+        "shortDisplayName": "Auxerre",
+        "displayName": "AJ Auxerre",
+        "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/172.png",
+        "color": "ffffff"
+       },
+       "statistics": [
+        {
+         "name": "appearances",
+         "abbreviation": "APP",
+         "displayValue": "0"
+        },
+        {
+         "name": "foulsCommitted",
+         "abbreviation": "FC",
+         "displayValue": "18"
+        },
+        {
+         "name": "wonCorners",
+         "abbreviation": "CW",
+         "displayValue": "0"
+        },
+        {
+         "name": "goalAssists",
+         "abbreviation": "A",
+         "displayValue": "1"
+        },
+        {
+         "name": "possessionPct",
+         "abbreviation": "PP",
+         "displayValue": "35.8"
+        },
+        {
+         "name": "shotAssists",
+         "abbreviation": "SHAST",
+         "displayValue": "5"
+        },
+        {
+         "name": "shotsOnTarget",
+         "abbreviation": "SOG",
+         "displayValue": "2"
+        },
+        {
+         "name": "totalGoals",
+         "abbreviation": "G",
+         "displayValue": "1"
+        },
+        {
+         "name": "totalShots",
+         "abbreviation": "SHOT",
+         "displayValue": "6"
+        }
+       ],
+       "records": [
+        {
+         "name": "All Splits",
+         "type": "total",
+         "summary": "3-1-5"
+        }
+       ]
+      }
+     ],
+     "details": [
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 2283,
+        "displayValue": "39'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "335320",
+         "displayName": "Lamine Sy",
+         "shortName": "L. Sy"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "70",
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 2453,
+        "displayValue": "41'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "316560",
+         "displayName": "Dário Essugo",
+         "shortName": "D. Essugo"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 2610,
+        "displayValue": "44'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false
+      },
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 3007,
+        "displayValue": "51'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false
+      },
+      {
+       "type": {
+        "id": "70",
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 3276,
+        "displayValue": "55'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "348301",
+         "displayName": "Martial Godo",
+         "shortName": "M. Godo"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 3585,
+        "displayValue": "60'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "362476",
+         "displayName": "Christ Makosso",
+         "shortName": "C. Makosso"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "98",
+        "text": "Penalty - Scored"
+       },
+       "clock": {
+        "value": 3677,
+        "displayValue": "62'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": true,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "362794",
+         "displayName": "Conrad Harder",
+         "shortName": "C. Harder"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "70",
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4070,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "293347",
+         "displayName": "Cameron Archer",
+         "shortName": "C. Archer"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 4303,
+        "displayValue": "72'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "159312",
+         "displayName": "Paul Nardi",
+         "shortName": "P. Nardi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "93",
+        "text": "Red Card"
+       },
+       "clock": {
+        "value": 4438,
+        "displayValue": "74'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": true,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "416458",
+         "displayName": "Lamfia Dioubaté",
+         "shortName": "L. Dioubaté"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "70",
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4572,
+        "displayValue": "77'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "379012",
+         "displayName": "Gessime Yassine",
+         "shortName": "G. Yassine"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "137",
+        "text": "Goal - Header"
+       },
+       "clock": {
+        "value": 5084,
+        "displayValue": "85'"
+       },
+       "team": {
+        "id": "180"
+       },
+       "scoreValue": 1,
+       "scoringPlay": true,
+       "redCard": false,
+       "yellowCard": false,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "379012",
+         "displayName": "Gessime Yassine",
+         "shortName": "G. Yassine"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "94",
+        "text": "Yellow Card"
+       },
+       "clock": {
+        "value": 5175,
+        "displayValue": "87'"
+       },
+       "team": {
+        "id": "172"
+       },
+       "scoreValue": 0,
+       "scoringPlay": false,
+       "redCard": false,
+       "yellowCard": true,
+       "penaltyKick": false,
+       "ownGoal": false,
+       "shootout": false,
+       "athletesInvolved": [
+        {
+         "id": "268591",
+         "displayName": "Romain Faivre",
+         "shortName": "R. Faivre"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

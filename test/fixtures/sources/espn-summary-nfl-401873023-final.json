@@ -1,0 +1,40 @@
+{
+ "header": {
+  "id": "401873023",
+  "competitions": [
+   {
+    "date": "2026-10-30T00:15Z",
+    "status": {
+     "type": {
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "shortDetail": "Final"
+     }
+    },
+    "competitors": [
+     {
+      "id": "9",
+      "homeAway": "home",
+      "score": "27",
+      "winner": true,
+      "team": {
+       "displayName": "Green Bay Packers",
+       "abbreviation": "GB"
+      }
+     },
+     {
+      "id": "29",
+      "homeAway": "away",
+      "score": "19",
+      "winner": false,
+      "team": {
+       "displayName": "Carolina Panthers",
+       "abbreviation": "CAR"
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

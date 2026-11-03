@@ -1,0 +1,169 @@
+{
+ "leagues": [
+  {
+   "name": "National Football League",
+   "abbreviation": "NFL",
+   "season": {
+    "year": 2026,
+    "displayName": "2026",
+    "startDate": "2026-08-06T07:00Z",
+    "endDate": "2027-02-16T07:59Z"
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "401873026",
+   "date": "2026-11-01T18:00Z",
+   "name": "Baltimore Ravens at Buffalo Bills",
+   "shortName": "BAL @ BUF",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "shortDetail": "11/1 - 1:00 PM EST"
+    }
+   },
+   "links": [
+    {
+     "href": "https://www.espn.com/nfl/game/_/gameId/401873026/ravens-bills"
+    }
+   ],
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "id": "2",
+       "homeAway": "home",
+       "score": "0",
+       "team": {
+        "displayName": "Buffalo Bills",
+        "shortDisplayName": "Bills",
+        "abbreviation": "BUF"
+       }
+      },
+      {
+       "id": "33",
+       "homeAway": "away",
+       "score": "0",
+       "team": {
+        "displayName": "Baltimore Ravens",
+        "shortDisplayName": "Ravens",
+        "abbreviation": "BAL"
+       }
+      }
+     ],
+     "odds": [
+      {
+       "details": "BUF -3",
+       "overUnder": 54.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401873031",
+   "date": "2026-11-01T18:00Z",
+   "name": "Tennessee Titans at Cincinnati Bengals",
+   "shortName": "TEN @ CIN",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "shortDetail": "11/1 - 1:00 PM EST"
+    }
+   },
+   "links": [
+    {
+     "href": "https://www.espn.com/nfl/game/_/gameId/401873031/titans-bengals"
+    }
+   ],
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "id": "4",
+       "homeAway": "home",
+       "score": "0",
+       "team": {
+        "displayName": "Cincinnati Bengals",
+        "shortDisplayName": "Bengals",
+        "abbreviation": "CIN"
+       }
+      },
+      {
+       "id": "10",
+       "homeAway": "away",
+       "score": "0",
+       "team": {
+        "displayName": "Tennessee Titans",
+        "shortDisplayName": "Titans",
+        "abbreviation": "TEN"
+       }
+      }
+     ],
+     "odds": [
+      {
+       "details": "CIN -12.5",
+       "overUnder": 46.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401873024",
+   "date": "2026-11-01T18:00Z",
+   "name": "Arizona Cardinals at Dallas Cowboys",
+   "shortName": "ARI @ DAL",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "shortDetail": "11/1 - 1:00 PM EST"
+    }
+   },
+   "links": [
+    {
+     "href": "https://www.espn.com/nfl/game/_/gameId/401873024/cardinals-cowboys"
+    }
+   ],
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "id": "6",
+       "homeAway": "home",
+       "score": "0",
+       "team": {
+        "displayName": "Dallas Cowboys",
+        "shortDisplayName": "Cowboys",
+        "abbreviation": "DAL"
+       }
+      },
+      {
+       "id": "22",
+       "homeAway": "away",
+       "score": "0",
+       "team": {
+        "displayName": "Arizona Cardinals",
+        "shortDisplayName": "Cardinals",
+        "abbreviation": "ARI"
+       }
+      }
+     ],
+     "odds": [
+      {
+       "details": "DAL -7",
+       "overUnder": 54.5
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

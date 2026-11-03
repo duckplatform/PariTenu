@@ -1,0 +1,1171 @@
+{
+ "header": {
+  "id": "401892616",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final/SO",
+      "shortDetail": "Final/SO",
+      "altDetail": "SO"
+     }
+    },
+    "competitors": [
+     {
+      "id": "27",
+      "homeAway": "home",
+      "score": "5",
+      "winner": true,
+      "team": {
+       "id": "27",
+       "displayName": "Nashville Predators",
+       "abbreviation": "NSH"
+      }
+     },
+     {
+      "id": "20",
+      "homeAway": "away",
+      "score": "4",
+      "winner": false,
+      "team": {
+       "id": "20",
+       "displayName": "Tampa Bay Lightning",
+       "abbreviation": "TB"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "plays": [
+  {
+   "id": "401892616000001350",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "J.J. Moser Tripping against Matthew Wood",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "6:23"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4874929",
+      "displayName": "JJ Moser",
+      "shortName": "J. Moser"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5149189",
+      "displayName": "Matthew Wood",
+      "shortName": "M. Wood"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000002440",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Reid Schaefer Goal (1) Wrist Shot, assists: Alexander Kerfoot (4), Nick Perbix (1)",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "11:14"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5080180",
+      "displayName": "Reid Schaefer",
+      "shortName": "R. Schaefer"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3069394",
+      "displayName": "Alexander Kerfoot",
+      "shortName": "A. Kerfoot"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4419638",
+      "displayName": "Nick Perbix",
+      "shortName": "N. Perbix"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000002820",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "John Carlson Goal (5) Wrist Shot, assists: Nikita Kucherov (12), Charle-Edouard D'Astous (5)",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "13:38"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5118",
+      "displayName": "John Carlson",
+      "shortName": "J. Carlson"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "2563060",
+      "displayName": "Nikita Kucherov",
+      "shortName": "N. Kucherov"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4588175",
+      "displayName": "Charle-Edouard D'Astous",
+      "shortName": "C. D'Astous"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000004160",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Jake Guentzel Goal (8) Tip-In, assists: John Carlson (3), Nikita Kucherov (13)",
+   "awayScore": 2,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "0:18"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042083",
+      "displayName": "Jake Guentzel",
+      "shortName": "J. Guentzel"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "5118",
+      "displayName": "John Carlson",
+      "shortName": "J. Carlson"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "2563060",
+      "displayName": "Nikita Kucherov",
+      "shortName": "N. Kucherov"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000004230",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Adam Edstrom Goal (5) Snap Shot, assists: Brady Skjei (4), Nick Perbix (2)",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "0:45"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4894222",
+      "displayName": "Adam Edstrom",
+      "shortName": "A. Edstrom"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "2976856",
+      "displayName": "Brady Skjei",
+      "shortName": "B. Skjei"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4419638",
+      "displayName": "Nick Perbix",
+      "shortName": "N. Perbix"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000005520",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Victor Hedman Goal (3) Wrist Shot, assists: Nikita Kucherov (14), Brayden Point (8)",
+   "awayScore": 3,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "3:23"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5157",
+      "displayName": "Victor Hedman",
+      "shortName": "V. Hedman"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "2563060",
+      "displayName": "Nikita Kucherov",
+      "shortName": "N. Kucherov"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "3151187",
+      "displayName": "Brayden Point",
+      "shortName": "B. Point"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000006790",
+   "type": {
+    "id": "33",
+    "text": "Hooking",
+    "abbreviation": "Hooking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Jack Drury Hooking against Brayden Point",
+   "awayScore": 3,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "13:01"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4378671",
+      "displayName": "Jack Drury",
+      "shortName": "J. Drury"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3151187",
+      "displayName": "Brayden Point",
+      "shortName": "B. Point"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000007960",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Jayden Struble Goal (2) Wrist Shot, assists: Adam Wilsby (6), Filip Forsberg (11)",
+   "awayScore": 3,
+   "homeScore": 3,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "19:42"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565269",
+      "displayName": "Jayden Struble",
+      "shortName": "J. Struble"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4697765",
+      "displayName": "Adam Wilsby",
+      "shortName": "A. Wilsby"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "2968772",
+      "displayName": "Filip Forsberg",
+      "shortName": "F. Forsberg"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000008280",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Ryan O'Reilly Tripping against Anthony Cirelli",
+   "awayScore": 3,
+   "homeScore": 3,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "1:06"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5208",
+      "displayName": "Ryan O'Reilly",
+      "shortName": "R. O'Reilly"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3941973",
+      "displayName": "Anthony Cirelli",
+      "shortName": "A. Cirelli"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000008550",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Conor Geekie Goal (4) Wrist Shot, assists: Jeff Viel (2)",
+   "awayScore": 4,
+   "homeScore": 3,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "3:31"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5080155",
+      "displayName": "Conor Geekie",
+      "shortName": "C. Geekie"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4588188",
+      "displayName": "Jeffrey Viel",
+      "shortName": "J. Viel"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000009000",
+   "type": {
+    "id": "33",
+    "text": "Hooking",
+    "abbreviation": "Hooking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Scott Sabourin Hooking against Nick Perbix",
+   "awayScore": 4,
+   "homeScore": 3,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "7:05"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3067840",
+      "displayName": "Scott Sabourin",
+      "shortName": "S. Sabourin"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4419638",
+      "displayName": "Nick Perbix",
+      "shortName": "N. Perbix"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000009040",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Steven Stamkos Goal (8) Wrist Shot, assists: Filip Forsberg (12), Ryan O'Reilly (8)",
+   "awayScore": 4,
+   "homeScore": 4,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "7:27"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037",
+      "displayName": "Steven Stamkos",
+      "shortName": "S. Stamkos"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "2968772",
+      "displayName": "Filip Forsberg",
+      "shortName": "F. Forsberg"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "5208",
+      "displayName": "Ryan O'Reilly",
+      "shortName": "R. O'Reilly"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892616000009490",
+   "type": {
+    "id": "33",
+    "text": "Hooking",
+    "abbreviation": "Hooking",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Ilya Mikheyev Hooking against Alexander Kerfoot",
+   "awayScore": 4,
+   "homeScore": 4,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "11:05"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4422415",
+      "displayName": "Ilya Mikheyev",
+      "shortName": "I. Mikheyev"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3069394",
+      "displayName": "Alexander Kerfoot",
+      "shortName": "A. Kerfoot"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000010360",
+   "type": {
+    "id": "109",
+    "text": "Delaying Game - Puck over Glass",
+    "abbreviation": "Delaying Game-Puck over glass",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Adam Wilsby Delaying Game - Puck over glass",
+   "awayScore": 4,
+   "homeScore": 4,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "17:03"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697765",
+      "displayName": "Adam Wilsby",
+      "shortName": "A. Wilsby"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000004650",
+   "type": {
+    "id": "518",
+    "text": "Period Start",
+    "abbreviation": "period-start"
+   },
+   "text": "Start of Shootout",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   }
+  },
+  {
+   "id": "401892616000001580",
+   "type": {
+    "id": "506",
+    "text": "Shot",
+    "abbreviation": "shot-on-goal"
+   },
+   "text": "Filip Forsberg Wrist Shot saved by Andrei Vasilevskiy",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2968772",
+      "displayName": "Filip Forsberg",
+      "shortName": "F. Forsberg"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "2976847",
+      "displayName": "Andrei Vasilevskiy",
+      "shortName": "A. Vasilevskiy"
+     },
+     "type": "saver"
+    }
+   ]
+  },
+  {
+   "id": "401892616000003050",
+   "type": {
+    "id": "507",
+    "text": "Missed",
+    "abbreviation": "shot-missed"
+   },
+   "text": "Pontus Holmberg Backhand Wide Right",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4588205",
+      "displayName": "Pontus Holmberg",
+      "shortName": "P. Holmberg"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "4393408",
+      "displayName": "Justus Annunen",
+      "shortName": "J. Annunen"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000001590",
+   "type": {
+    "id": "507",
+    "text": "Missed",
+    "abbreviation": "shot-missed"
+   },
+   "text": "Ryan O'Reilly Wrist Shot Wide Left",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5208",
+      "displayName": "Ryan O'Reilly",
+      "shortName": "R. O'Reilly"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "2976847",
+      "displayName": "Andrei Vasilevskiy",
+      "shortName": "A. Vasilevskiy"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892616000003060",
+   "type": {
+    "id": "506",
+    "text": "Shot",
+    "abbreviation": "shot-on-goal"
+   },
+   "text": "Brayden Point Wrist Shot saved by Justus Annunen",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3151187",
+      "displayName": "Brayden Point",
+      "shortName": "B. Point"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "4393408",
+      "displayName": "Justus Annunen",
+      "shortName": "J. Annunen"
+     },
+     "type": "saver"
+    }
+   ]
+  },
+  {
+   "id": "401892616000001600",
+   "type": {
+    "id": "506",
+    "text": "Shot",
+    "abbreviation": "shot-on-goal"
+   },
+   "text": "Jonathan Marchessault Wrist Shot saved by Andrei Vasilevskiy",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2967072",
+      "displayName": "Jonathan Marchessault",
+      "shortName": "J. Marchessault"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "2976847",
+      "displayName": "Andrei Vasilevskiy",
+      "shortName": "A. Vasilevskiy"
+     },
+     "type": "saver"
+    }
+   ]
+  },
+  {
+   "id": "401892616000003070",
+   "type": {
+    "id": "506",
+    "text": "Shot",
+    "abbreviation": "shot-on-goal"
+   },
+   "text": "Jake Guentzel Wrist Shot saved by Justus Annunen",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042083",
+      "displayName": "Jake Guentzel",
+      "shortName": "J. Guentzel"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "4393408",
+      "displayName": "Justus Annunen",
+      "shortName": "J. Annunen"
+     },
+     "type": "saver"
+    }
+   ]
+  },
+  {
+   "id": "401892616000001610",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Steven Stamkos Goal Backhand",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "27"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037",
+      "displayName": "Steven Stamkos",
+      "shortName": "S. Stamkos"
+     },
+     "type": "scorer"
+    }
+   ]
+  },
+  {
+   "id": "401892616000003080",
+   "type": {
+    "id": "506",
+    "text": "Shot",
+    "abbreviation": "shot-on-goal"
+   },
+   "text": "Gage Goncalves Wrist Shot saved by Justus Annunen",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "20"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697470",
+      "displayName": "Gage Goncalves",
+      "shortName": "G. Goncalves"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "4393408",
+      "displayName": "Justus Annunen",
+      "shortName": "J. Annunen"
+     },
+     "type": "saver"
+    }
+   ]
+  },
+  {
+   "id": "401892616000004680",
+   "type": {
+    "id": "521",
+    "text": "Shootout End",
+    "abbreviation": "shootout-end"
+   },
+   "text": "End of Shootout",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   }
+  },
+  {
+   "id": "401892616000004690",
+   "type": {
+    "id": "519",
+    "text": "Period End",
+    "abbreviation": "period-end"
+   },
+   "text": "End of SO",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   }
+  },
+  {
+   "id": "401892616000004730",
+   "type": {
+    "id": "522",
+    "text": "End of Game"
+   },
+   "text": "Game End",
+   "awayScore": 0,
+   "homeScore": 1,
+   "period": {
+    "number": 5,
+    "displayValue": "SO"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   }
+  }
+ ]
+}

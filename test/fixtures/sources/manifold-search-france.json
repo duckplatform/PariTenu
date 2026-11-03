@@ -1,0 +1,92 @@
+[
+ {
+  "id": "OUPVIzf9SvfxbMEPoZ9C",
+  "question": "Will Emmanuel Macron cease being President of France before 2027?",
+  "url": "https://manifold.markets/MetaculusBot/will-emmanuel-macron-cease-being-pr",
+  "outcomeType": "BINARY",
+  "probability": 0.04175834788721924,
+  "closeTime": 1798718400000,
+  "isResolved": false
+ },
+ {
+  "id": "UU2gIo7bcwJ0iADMfrPu",
+  "question": "Will the next president of France be from a left-wing party",
+  "url": "https://manifold.markets/dionisos/will-the-next-president-of-france-b",
+  "outcomeType": "BINARY",
+  "probability": 0.33693495040828964,
+  "closeTime": 1799189940000,
+  "isResolved": false
+ },
+ {
+  "id": "kOyHPkhLswsAhOMZvVuW",
+  "question": "Marine Le Pen Will be the next president of France.",
+  "url": "https://manifold.markets/HenryFaou/marine-le-pen-will-be-the-next-pres",
+  "outcomeType": "BINARY",
+  "probability": 0.45139156114402185,
+  "closeTime": 1809122340000,
+  "isResolved": false
+ },
+ {
+  "id": "3HHDWgT9TH94kRFnAu6q",
+  "question": "Will France have a civil war by 2050?",
+  "url": "https://manifold.markets/BendikBendiksen/will-france-have-a-civil-war-by-205",
+  "outcomeType": "BINARY",
+  "probability": 0.17458419467780384,
+  "closeTime": 2524607940000,
+  "isResolved": false
+ },
+ {
+  "id": "Z9n5SgcU0y",
+  "question": "🇫🇷🪧 Will France report 500,000+ protesters on at least 1 of the next 2 Saturdays (Oct 24 or Oct 31, 2026)?",
+  "url": "https://manifold.markets/CheerForgeAdmin/-will-france-report-300000-proteste",
+  "outcomeType": "BINARY",
+  "probability": 0.1674540624712975,
+  "closeTime": 1793444400000,
+  "isResolved": false
+ },
+ {
+  "id": "nl6MipbyNX6w1tgpu4Jo",
+  "question": "Will France be a member state of the EU on January 1st 2032?",
+  "url": "https://manifold.markets/NickelChen/will-france-be-a-member-state-of-th",
+  "outcomeType": "BINARY",
+  "probability": 0.9278155193753388,
+  "closeTime": 1956524340000,
+  "isResolved": false
+ },
+ {
+  "id": "VUpK70I6RKiqWHUSsmqp",
+  "question": "Will Emmanuel Macron ever become President of France again after his first two terms?",
+  "url": "https://manifold.markets/JuJumper/will-emmanuel-macron-ever-become-pr",
+  "outcomeType": "BINARY",
+  "probability": 0.11621906233146283,
+  "closeTime": 4133969940000,
+  "isResolved": false
+ },
+ {
+  "id": "u8SEZgRU9u",
+  "question": "🇫🇷🪧 Will organizers report 1,000,000+ protesters on one “vie chère” day in France before Nov 15, 2026?",
+  "url": "https://manifold.markets/CheerForgeAdmin/-will-frances-interior-ministry-rep",
+  "outcomeType": "BINARY",
+  "probability": 0.1743466895214942,
+  "closeTime": 1794700740000,
+  "isResolved": false
+ },
+ {
+  "id": "uREg5ulcSE",
+  "question": "Will Tadej Pogacar win the Tour de France a record-breaking 6 times?",
+  "url": "https://manifold.markets/RedzoneITG/will-tadej-pogacar-win-the-tour-de",
+  "outcomeType": "BINARY",
+  "probability": 0.8354230200690453,
+  "closeTime": 2082776340000,
+  "isResolved": false
+ },
+ {
+  "id": "N066tIAARy",
+  "question": "Will France extend its nuclear protection to other countries before 2029?",
+  "url": "https://manifold.markets/HannesLynchburg/will-france-extend-its-nuclear-prot",
+  "outcomeType": "BINARY",
+  "probability": 0.6727084529436627,
+  "closeTime": 1861916340000,
+  "isResolved": false
+ }
+]

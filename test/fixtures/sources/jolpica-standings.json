@@ -1,0 +1,112 @@
+{
+ "MRData": {
+  "xmlns": "",
+  "series": "f1",
+  "url": "https://api.jolpi.ca/ergast/f1/current/driverstandings.json",
+  "limit": "30",
+  "offset": "0",
+  "total": "23",
+  "StandingsTable": {
+   "season": "2026",
+   "round": "18",
+   "StandingsLists": [
+    {
+     "season": "2026",
+     "round": "18",
+     "DriverStandings": [
+      {
+       "position": "1",
+       "points": "365",
+       "Driver": {
+        "driverId": "antonelli",
+        "givenName": "Andrea Kimi",
+        "familyName": "Antonelli"
+       }
+      },
+      {
+       "position": "2",
+       "points": "242",
+       "Driver": {
+        "driverId": "russell",
+        "givenName": "George",
+        "familyName": "Russell"
+       }
+      },
+      {
+       "position": "3",
+       "points": "241",
+       "Driver": {
+        "driverId": "hamilton",
+        "givenName": "Lewis",
+        "familyName": "Hamilton"
+       }
+      },
+      {
+       "position": "4",
+       "points": "236",
+       "Driver": {
+        "driverId": "max_verstappen",
+        "givenName": "Max",
+        "familyName": "Verstappen"
+       }
+      },
+      {
+       "position": "5",
+       "points": "233",
+       "Driver": {
+        "driverId": "leclerc",
+        "givenName": "Charles",
+        "familyName": "Leclerc"
+       }
+      },
+      {
+       "position": "6",
+       "points": "211",
+       "Driver": {
+        "driverId": "norris",
+        "givenName": "Lando",
+        "familyName": "Norris"
+       }
+      },
+      {
+       "position": "7",
+       "points": "144",
+       "Driver": {
+        "driverId": "piastri",
+        "givenName": "Oscar",
+        "familyName": "Piastri"
+       }
+      },
+      {
+       "position": "8",
+       "points": "105",
+       "Driver": {
+        "driverId": "hadjar",
+        "givenName": "Isack",
+        "familyName": "Hadjar"
+       }
+      },
+      {
+       "position": "9",
+       "points": "77",
+       "Driver": {
+        "driverId": "lawson",
+        "givenName": "Liam",
+        "familyName": "Lawson"
+       }
+      },
+      {
+       "position": "10",
+       "points": "42",
+       "Driver": {
+        "driverId": "gasly",
+        "givenName": "Pierre",
+        "familyName": "Gasly"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

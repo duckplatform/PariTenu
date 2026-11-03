@@ -1,0 +1,880 @@
+{
+ "header": {
+  "id": "401876414",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "28",
+      "name": "STATUS_FULL_TIME",
+      "state": "post",
+      "completed": true,
+      "description": "Full Time",
+      "detail": "FT",
+      "shortDetail": "FT"
+     }
+    },
+    "competitors": [
+     {
+      "id": "180",
+      "homeAway": "home",
+      "score": "5",
+      "winner": true,
+      "team": {
+       "id": "180",
+       "displayName": "Strasbourg",
+       "shortDisplayName": "Strasbourg",
+       "abbreviation": "STR"
+      }
+     },
+     {
+      "id": "172",
+      "homeAway": "away",
+      "score": "1",
+      "winner": false,
+      "team": {
+       "id": "172",
+       "displayName": "AJ Auxerre",
+       "shortDisplayName": "Auxerre",
+       "abbreviation": "AUX"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "keyEvents": [
+  {
+   "id": "54637555",
+   "type": {
+    "id": "80",
+    "text": "Kickoff",
+    "type": "kickoff"
+   },
+   "text": "First Half begins.",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 0,
+    "displayValue": ""
+   },
+   "scoringPlay": false,
+   "shootout": false
+  },
+  {
+   "id": "54640077",
+   "type": {
+    "id": "129",
+    "text": "Start Delay",
+    "type": "start-delay"
+   },
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 1090,
+    "displayValue": "19'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   }
+  },
+  {
+   "id": "54640079",
+   "type": {
+    "id": "130",
+    "text": "End Delay",
+    "type": "end-delay"
+   },
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 1137,
+    "displayValue": "19'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   }
+  },
+  {
+   "id": "54642801",
+   "type": {
+    "id": "94",
+    "text": "Yellow Card",
+    "type": "yellow-card"
+   },
+   "text": "Lamine Sy (Auxerre) is shown the yellow card for a bad foul.",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 2283,
+    "displayValue": "39'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "335320",
+      "displayName": "Lamine Sy"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54643104",
+   "type": {
+    "id": "70",
+    "text": "Goal",
+    "type": "goal"
+   },
+   "text": "Goal! Strasbourg 1, Auxerre 0. Dário Essugo (Strasbourg) right footed shot from the centre of the box to the centre of the goal. Assisted by Oso.",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 2453,
+    "displayValue": "41'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "316560",
+      "displayName": "Dário Essugo"
+     }
+    },
+    {
+     "athlete": {
+      "id": "377782",
+      "displayName": "Oso"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54644099",
+   "type": {
+    "id": "81",
+    "text": "Halftime",
+    "type": "halftime"
+   },
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 2700,
+    "displayValue": "45'+3'"
+   },
+   "scoringPlay": false,
+   "shootout": false
+  },
+  {
+   "id": "54645804",
+   "type": {
+    "id": "82",
+    "text": "Start 2nd Half",
+    "type": "start-2nd-half"
+   },
+   "text": "Second Half begins Strasbourg 1, Auxerre 0.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 2700,
+    "displayValue": "45'"
+   },
+   "scoringPlay": false,
+   "shootout": false
+  },
+  {
+   "id": "54647471",
+   "type": {
+    "id": "70",
+    "text": "Goal",
+    "type": "goal"
+   },
+   "text": "Goal! Strasbourg 2, Auxerre 0. Martial Godo (Strasbourg) left footed shot from the centre of the box to the bottom right corner. Assisted by Gessime Yassine following a fast break.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3276,
+    "displayValue": "55'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "348301",
+      "displayName": "Martial Godo"
+     }
+    },
+    {
+     "athlete": {
+      "id": "379012",
+      "displayName": "Gessime Yassine"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648058",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Strasbourg. Sebastian Nanasi replaces Martial Godo.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3529,
+    "displayValue": "59'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "303787",
+      "displayName": "Sebastian Nanasi"
+     }
+    },
+    {
+     "athlete": {
+      "id": "348301",
+      "displayName": "Martial Godo"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648271",
+   "type": {
+    "id": "94",
+    "text": "Yellow Card",
+    "type": "yellow-card"
+   },
+   "text": "Christ Makosso (Auxerre) is shown the yellow card for a bad foul.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3585,
+    "displayValue": "60'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "362476",
+      "displayName": "Christ Makosso"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648475",
+   "type": {
+    "id": "98",
+    "text": "Penalty - Scored",
+    "type": "penalty---scored"
+   },
+   "text": "Goal! Strasbourg 3, Auxerre 0. Conrad Harder (Strasbourg) converts the penalty with a left footed shot to the top right corner.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3677,
+    "displayValue": "62'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "362794",
+      "displayName": "Conrad Harder"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648600",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Auxerre. Arthur Piedfort replaces Danny Namaso.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3746,
+    "displayValue": "63'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "359360",
+      "displayName": "Arthur Piedfort"
+     }
+    },
+    {
+     "athlete": {
+      "id": "243748",
+      "displayName": "Danny Namaso"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648748",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Auxerre. Lamfia Dioubaté replaces Kévin Danois.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3748,
+    "displayValue": "63'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "416458",
+      "displayName": "Lamfia Dioubaté"
+     }
+    },
+    {
+     "athlete": {
+      "id": "323722",
+      "displayName": "Kévin Danois"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648756",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Auxerre. Rayan Mandengue replaces Lamine Sy.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3748,
+    "displayValue": "63'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "379070",
+      "displayName": "Rayan Mandengue"
+     }
+    },
+    {
+     "athlete": {
+      "id": "335320",
+      "displayName": "Lamine Sy"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648599",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Auxerre. Marvin Senaya replaces Christ Makosso.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3758,
+    "displayValue": "63'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "309638",
+      "displayName": "Marvin Senaya"
+     }
+    },
+    {
+     "athlete": {
+      "id": "362476",
+      "displayName": "Christ Makosso"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648929",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Strasbourg. Diogo Sousa replaces Giovanni Reyna.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3912,
+    "displayValue": "66'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "368325",
+      "displayName": "Diogo Sousa"
+     }
+    },
+    {
+     "athlete": {
+      "id": "290230",
+      "displayName": "Giovanni Reyna"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54648930",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Strasbourg. Jeyland Mitchell replaces Ismaël Doukouré.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 3922,
+    "displayValue": "66'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "362926",
+      "displayName": "Jeyland Mitchell"
+     }
+    },
+    {
+     "athlete": {
+      "id": "305935",
+      "displayName": "Ismael Doukoure"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54649278",
+   "type": {
+    "id": "70",
+    "text": "Goal",
+    "type": "goal"
+   },
+   "text": "Goal! Strasbourg 3, Auxerre 1. Cameron Archer (Auxerre) right footed shot from the centre of the box to the centre of the goal. Assisted by Romain Faivre with a headed pass.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4070,
+    "displayValue": "68'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "293347",
+      "displayName": "Cameron Archer"
+     }
+    },
+    {
+     "athlete": {
+      "id": "268591",
+      "displayName": "Romain Faivre"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54649714",
+   "type": {
+    "id": "94",
+    "text": "Yellow Card",
+    "type": "yellow-card"
+   },
+   "text": "Paul Nardi (Auxerre) is shown the yellow card.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4303,
+    "displayValue": "72'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "159312",
+      "displayName": "Paul Nardi"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54649715",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Auxerre. Youssef Khoudda replaces Naouirou Ahamada.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4359,
+    "displayValue": "73'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3145596",
+      "displayName": "Youssef Khoudda"
+     }
+    },
+    {
+     "athlete": {
+      "id": "297775",
+      "displayName": "Naouirou Ahamada"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54649980",
+   "type": {
+    "id": "93",
+    "text": "Red Card",
+    "type": "red-card"
+   },
+   "text": "Lamfia Dioubaté (Auxerre) is shown the red card.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4438,
+    "displayValue": "74'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "416458",
+      "displayName": "Lamfia Dioubaté"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54650224",
+   "type": {
+    "id": "70",
+    "text": "Goal",
+    "type": "goal"
+   },
+   "text": "Goal! Strasbourg 4, Auxerre 1. Gessime Yassine (Strasbourg) left footed shot from the centre of the box to the centre of the goal. Assisted by Sebastian Nanasi.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4572,
+    "displayValue": "77'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "379012",
+      "displayName": "Gessime Yassine"
+     }
+    },
+    {
+     "athlete": {
+      "id": "303787",
+      "displayName": "Sebastian Nanasi"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54650800",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Strasbourg. Pape Diop replaces Dário Essugo.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4656,
+    "displayValue": "78'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "353378",
+      "displayName": "Pape Diop"
+     }
+    },
+    {
+     "athlete": {
+      "id": "316560",
+      "displayName": "Dário Essugo"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54650569",
+   "type": {
+    "id": "76",
+    "text": "Substitution",
+    "type": "substitution"
+   },
+   "text": "Substitution, Strasbourg. Jacobo Ortega replaces Conrad Harder.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 4662,
+    "displayValue": "78'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3117410",
+      "displayName": "Jacobo Ortega Conde"
+     }
+    },
+    {
+     "athlete": {
+      "id": "362794",
+      "displayName": "Conrad Harder"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54651705",
+   "type": {
+    "id": "137",
+    "text": "Goal - Header",
+    "type": "goal---header"
+   },
+   "text": "Goal! Strasbourg 5, Auxerre 1. Gessime Yassine (Strasbourg) header from very close range to the centre of the goal. Assisted by Oso with a cross.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 5084,
+    "displayValue": "85'"
+   },
+   "scoringPlay": true,
+   "shootout": false,
+   "team": {
+    "id": "180",
+    "displayName": "Strasbourg"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "379012",
+      "displayName": "Gessime Yassine"
+     }
+    },
+    {
+     "athlete": {
+      "id": "377782",
+      "displayName": "Oso"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54652079",
+   "type": {
+    "id": "94",
+    "text": "Yellow Card",
+    "type": "yellow-card"
+   },
+   "text": "Romain Faivre (Auxerre) is shown the yellow card for a bad foul.",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 5175,
+    "displayValue": "87'"
+   },
+   "scoringPlay": false,
+   "shootout": false,
+   "team": {
+    "id": "172",
+    "displayName": "AJ Auxerre"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "268591",
+      "displayName": "Romain Faivre"
+     }
+    }
+   ]
+  },
+  {
+   "id": "54653653",
+   "type": {
+    "id": "83",
+    "text": "End Regular Time",
+    "type": "end-regular-time"
+   },
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 5400,
+    "displayValue": "90'+8'"
+   },
+   "scoringPlay": false,
+   "shootout": false
+  }
+ ]
+}

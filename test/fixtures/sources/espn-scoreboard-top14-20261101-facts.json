@@ -1,0 +1,1356 @@
+{
+ "leagues": [
+  {
+   "id": "8005",
+   "name": "French Top 14",
+   "season": {
+    "year": 2026,
+    "startDate": "2026-11-01T19:00Z",
+    "endDate": "2026-07-02T03:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "1",
+     "type": 1,
+     "name": "Top 14",
+     "abbreviation": "Top 14"
+    }
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "604414",
+   "date": "2026-11-01T14:00Z",
+   "name": "Montpellier Herault vs Castres Olympique",
+   "shortName": "MON VS CAS",
+   "status": {
+    "clock": 0,
+    "displayClock": "1'",
+    "period": 2,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "FT",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "604414",
+     "date": "2026-11-01T14:00Z",
+     "status": {
+      "clock": 0,
+      "displayClock": "1'",
+      "period": 2,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "FT",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "competitors": [
+      {
+       "id": "25918",
+       "homeAway": "home",
+       "order": 0,
+       "winner": true,
+       "score": "69",
+       "team": {
+        "id": "25918",
+        "abbreviation": "MON",
+        "shortDisplayName": "Montpellier Herault",
+        "displayName": "Montpellier Herault",
+        "logo": "https://a.espncdn.com/i/teamlogos/rugby/teams/500/25918.png",
+        "color": "0000FF"
+       },
+       "linescores": [
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 69,
+         "displayValue": "69",
+         "period": 2
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 20
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 60
+        }
+       ],
+       "statistics": [],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "WWLWL"
+        }
+       ]
+      },
+      {
+       "id": "25916",
+       "homeAway": "away",
+       "order": 1,
+       "winner": false,
+       "score": "10",
+       "team": {
+        "id": "25916",
+        "abbreviation": "CAS",
+        "shortDisplayName": "Castres Olympique",
+        "displayName": "Castres Olympique",
+        "logo": "https://a.espncdn.com/i/teamlogos/rugby/teams/500/25916.png",
+        "color": "000066"
+       },
+       "linescores": [
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 10,
+         "displayValue": "10",
+         "period": 2
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 20
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 60
+        }
+       ],
+       "statistics": [],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "WWLLL"
+        }
+       ]
+      }
+     ],
+     "details": [
+      {
+       "type": {
+        "id": "5",
+        "text": "yellow card"
+       },
+       "clock": {
+        "value": 436,
+        "displayValue": "8'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "291410",
+         "displayName": "Guillaume Ducat",
+         "shortName": "G. Ducat"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "3",
+        "text": "penalty goal"
+       },
+       "clock": {
+        "value": 481,
+        "displayValue": "9'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "3",
+        "text": "penalty goal"
+       },
+       "clock": {
+        "value": 799,
+        "displayValue": "14'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296936",
+         "displayName": "Jeremy Fernandez",
+         "shortName": "J. Fernandez"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 1241,
+        "displayValue": "21'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "307704",
+         "displayName": "Melvyn Rates",
+         "shortName": "M. Rates"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 1757,
+        "displayValue": "30'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "305590",
+         "displayName": "Justo Piccardo",
+         "shortName": "J. Piccardo"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 1797,
+        "displayValue": "30'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 2040,
+        "displayValue": "34'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "306705",
+         "displayName": "Alexis Bernadet",
+         "shortName": "A. Bernadet"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 2076,
+        "displayValue": "35'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2080,
+        "displayValue": "35'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296936",
+         "displayName": "Jeremy Fernandez",
+         "shortName": "J. Fernandez"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2080,
+        "displayValue": "35'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "290734",
+         "displayName": "Santiago Arata",
+         "shortName": "S. Arata"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2137,
+        "displayValue": "36'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "300583",
+         "displayName": "Theo Chabouni",
+         "shortName": "T. Chabouni"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2137,
+        "displayValue": "36'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "382763",
+         "displayName": "Theo Vidal",
+         "shortName": "T. Vidal"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 2240,
+        "displayValue": "38'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "303575",
+         "displayName": "Lyam Akrab",
+         "shortName": "L. Akrab"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 2285,
+        "displayValue": "39'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2400,
+        "displayValue": "40'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296877",
+         "displayName": "Abraham Papali'i",
+         "shortName": "A. Papali'i"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2400,
+        "displayValue": "40'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "134162",
+         "displayName": "Hamish Watson",
+         "shortName": "H. Watson"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2860,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "303576",
+         "displayName": "Valentin Welsch",
+         "shortName": "V. Welsch"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2860,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296193",
+         "displayName": "Reda Wardi",
+         "shortName": "R. Wardi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2861,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "303575",
+         "displayName": "Lyam Akrab",
+         "shortName": "L. Akrab"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2861,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "157506",
+         "displayName": "Christopher Tolofua",
+         "shortName": "C. Tolofua"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2862,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "294952",
+         "displayName": "Wilfrid Hounkpatin",
+         "shortName": "W. Hounkpatin"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2862,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296917",
+         "displayName": "Luka Japaridze",
+         "shortName": "L. Japaridze"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2863,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "133309",
+         "displayName": "Billy Vunipola",
+         "shortName": "B. Vunipola"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2863,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "301488",
+         "displayName": "Alexander Masibaka",
+         "shortName": "A. Masibaka"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2864,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "294939",
+         "displayName": "Florent Vanverberghe",
+         "shortName": "F. Vanverberghe"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2864,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "303453",
+         "displayName": "Chris Gabriel",
+         "shortName": "C. Gabriel"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 2865,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "304581",
+         "displayName": "Vuate Karawalevu",
+         "shortName": "V. Karawalevu"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 2865,
+        "displayValue": "48'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "201745",
+         "displayName": "Adrea Cocagi",
+         "shortName": "A. Cocagi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3002,
+        "displayValue": "51'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "295112",
+         "displayName": "Donovan Taofifenua",
+         "shortName": "D. Taofifenua"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3002,
+        "displayValue": "51'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "134149",
+         "displayName": "Stuart Hogg",
+         "shortName": "S. Hogg"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3091,
+        "displayValue": "52'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "326422",
+         "displayName": "Mate Gurtskaia",
+         "shortName": "M. Gurtskaia"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3091,
+        "displayValue": "52'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "160268",
+         "displayName": "Levan Chilachava",
+         "shortName": "L. Chilachava"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3092,
+        "displayValue": "52'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "303446",
+         "displayName": "Teddy Durand",
+         "shortName": "T. Durand"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3092,
+        "displayValue": "52'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "298681",
+         "displayName": "Pierre Colonna",
+         "shortName": "P. Colonna"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 3131,
+        "displayValue": "53'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "157506",
+         "displayName": "Christopher Tolofua",
+         "shortName": "C. Tolofua"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 3176,
+        "displayValue": "53'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3197,
+        "displayValue": "54'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "298597",
+         "displayName": "Tyler Duguid",
+         "shortName": "T. Duguid"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3197,
+        "displayValue": "54'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "302137",
+         "displayName": "Mael Perrin",
+         "shortName": "M. Perrin"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3406,
+        "displayValue": "57'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "305590",
+         "displayName": "Justo Piccardo",
+         "shortName": "J. Piccardo"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3406,
+        "displayValue": "57'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "294846",
+         "displayName": "Lennox Anyanwu",
+         "shortName": "L. Anyanwu"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 3457,
+        "displayValue": "58'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "157506",
+         "displayName": "Christopher Tolofua",
+         "shortName": "C. Tolofua"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 3494,
+        "displayValue": "59'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 3502,
+        "displayValue": "59'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "306705",
+         "displayName": "Alexis Bernadet",
+         "shortName": "A. Bernadet"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 3502,
+        "displayValue": "59'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "174529",
+         "displayName": "Sebastien Bezy",
+         "shortName": "S. Bezy"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 3869,
+        "displayValue": "65'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "257099",
+         "displayName": "Tom Banks",
+         "shortName": "T. Banks"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 3907,
+        "displayValue": "66'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "6",
+        "text": "red card"
+       },
+       "clock": {
+        "value": 4057,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296193",
+         "displayName": "Reda Wardi",
+         "shortName": "R. Wardi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 4059,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296627",
+         "displayName": "Christian Ambadiang",
+         "shortName": "C. Ambadiang"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 4059,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "201745",
+         "displayName": "Adrea Cocagi",
+         "shortName": "A. Cocagi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 4060,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "302037",
+         "displayName": "Lois Guerois-Galisson",
+         "shortName": "L. Guerois-Galisson"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 4060,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "294553",
+         "displayName": "Nicolas Corato",
+         "shortName": "N. Corato"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 4119,
+        "displayValue": "69'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "290734",
+         "displayName": "Santiago Arata",
+         "shortName": "S. Arata"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 4145,
+        "displayValue": "70'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "382763",
+         "displayName": "Theo Vidal",
+         "shortName": "T. Vidal"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 4408,
+        "displayValue": "74'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "302137",
+         "displayName": "Mael Perrin",
+         "shortName": "M. Perrin"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 4451,
+        "displayValue": "75'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 4505,
+        "displayValue": "76'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "301488",
+         "displayName": "Alexander Masibaka",
+         "shortName": "A. Masibaka"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "2",
+        "text": "conversion"
+       },
+       "clock": {
+        "value": 4546,
+        "displayValue": "76'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "285609",
+         "displayName": "Adam Hastings",
+         "shortName": "A. Hastings"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "1",
+        "text": "try"
+       },
+       "clock": {
+        "value": 4615,
+        "displayValue": "77'"
+       },
+       "team": {
+        "id": "25918"
+       },
+       "athletesInvolved": [
+        {
+         "id": "302137",
+         "displayName": "Mael Perrin",
+         "shortName": "M. Perrin"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "7",
+        "text": "player substituted"
+       },
+       "clock": {
+        "value": 4760,
+        "displayValue": "80'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "201745",
+         "displayName": "Adrea Cocagi",
+         "shortName": "A. Cocagi"
+        }
+       ]
+      },
+      {
+       "type": {
+        "id": "8",
+        "text": "substitute on"
+       },
+       "clock": {
+        "value": 4760,
+        "displayValue": "80'"
+       },
+       "team": {
+        "id": "25916"
+       },
+       "athletesInvolved": [
+        {
+         "id": "296627",
+         "displayName": "Christian Ambadiang",
+         "shortName": "C. Ambadiang"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

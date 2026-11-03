@@ -1,0 +1,80 @@
+/* Thème « Récré » — entre potes, sans prise de tête : traits noirs, ombres franches et couleurs pop. Clair.
+   Style Neubrutalism (#FFDB58 · #FF6B6B · #4ECDC4), Space Grotesk / DM Sans (skill ui-ux-pro-max).
+   Chargé après app.css (adresse /theme.css) : ne règle que des variables et quelques détails. */
+/* Polices hébergées par l’app (Google Fonts, licence SIL OFL), sous-ensemble latin. */
+@font-face { font-family: "DM Sans"; font-style: normal; font-weight: 400 800; font-display: swap; src: url("/fonts/recre/dm-sans-400-800.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("/fonts/recre/space-grotesk-400-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --bg: #fff4d6;
+  --surface: #ffffff;
+  --surface-2: #fff8e6;
+  --ink: #111111;
+  --muted: #444444;
+  --line: #111111;
+  --night: #111111;
+  --night-2: #2a2a2a;
+  --night-ink: #fff4d6;
+  --brand: #ff6b6b;
+  --brand-strong: #b42318;
+  --brand-ink: #111111;
+  --brand-soft: #ffe1e1;
+  --accent: #ffdb58;
+  --accent-ink: #111111;
+  --accent-soft: #fff1b8;
+  --hot: #111111;
+  --hot-soft: #4ecdc4;
+  --ok: #0f766e;
+  --ok-soft: #d5f5f2;
+  --bad: #c81e1e;
+  --bad-soft: #ffe1e1;
+  --warn: #8a5300;
+  --warn-soft: #fff1b8;
+  --radius: 12px;
+  --radius-sm: 9px;
+  --shadow: 4px 4px 0 #111111;
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --body-font: "DM Sans", system-ui, sans-serif;
+  --display-style: normal;
+  --display-case: none;
+  --label-case: none;
+  --top-bg: #ffdb58;
+  --top-ink: #111111;
+  --top-line: 2.5px solid #111111;
+  --nav-bg: #ffffff;
+  --nav-ink: #333333;
+  --nav-on: #111111;
+  --nav-line: 2.5px solid #111111;
+  --side-bg: #ffdb58;
+  --side-ink: #111111;
+  --side-hover: rgb(0 0 0 / 7%);
+  --side-on-bg: #111111;
+  --side-on-ink: #ffdb58;
+  --side-line: 2.5px solid #111111;
+  --chip-on-bg: #111111;
+  --chip-on-ink: #ffdb58;
+  --pick-bg: #ffdb58;
+  --pick-ink: #111111;
+  --gain: #0f766e;
+  --cta-bg: #ff6b6b;
+  --cta-ink: #111111;
+  --card-line: 2.5px solid #111111;
+  --me-bg: #ffffff;
+  color-scheme: light;
+}
+
+h1, h2, h3, .section-title { letter-spacing: -0.01em; }
+.btn, .chip, .me-link, .nav-plus, input[type=text], input[type=url], input[type=number], input[type=password], input:not([type]), select, textarea { border: 2px solid #111; }
+.btn:not(.ghost), .me-link, .nav-plus { box-shadow: 3px 3px 0 #111; }
+.btn.ghost { border-color: transparent; }
+.btn:not(.ghost):active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #111; }
+.chip[aria-pressed="true"], .chip[aria-checked="true"], .chip[aria-selected="true"] { box-shadow: 3px 3px 0 #ff6b6b; }
+.opt-chip.pickable { background: #fff; box-shadow: inset 0 0 0 2px #111; }
+.opt-chip.pickable.mine { box-shadow: inset 0 0 0 2px #111, 3px 3px 0 #111; }
+.tag.t-todo { border: 2px solid #111; box-shadow: 2px 2px 0 #111; transform: rotate(-3deg); }
+.section-title .count { background: #111; color: #ffdb58; }
+.avatar.xs, .me-link .avatar { box-shadow: 0 0 0 2px #111; }
+.nav a[aria-current="page"] .ico { padding: 2px 12px; border: 2px solid #111; border-radius: 10px; background: #ffdb58; }
+.rank-row, .live-row, .stat, .live-stat, .podium-step { border-width: 2px; }
+.side-nav a[aria-current="page"] { box-shadow: 3px 3px 0 #ff6b6b; }
+.match.big .crest { box-shadow: 0 0 0 2px #111; }

@@ -1,0 +1,106 @@
+{
+ "leagues": [
+  {
+   "name": "French Top 14",
+   "abbreviation": "TOP14",
+   "season": {
+    "year": 2026,
+    "displayName": "2026",
+    "startDate": "2026-11-01T19:00Z",
+    "endDate": "2026-07-02T03:59Z"
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "604412",
+   "date": "2026-10-31T13:30Z",
+   "name": "Clermont Auvergne vs Racing 92",
+   "shortName": "ASM VS RAC",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "shortDetail": "10/31 - 9:30 AM EDT"
+    }
+   },
+   "links": [
+    {
+     "href": "https://www.espn.com/rugby/match/_/gameId/604412/league/270559"
+    }
+   ],
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "id": "25917",
+       "homeAway": "home",
+       "score": "0",
+       "team": {
+        "displayName": "Clermont Auvergne",
+        "shortDisplayName": "Clermont Auvergne",
+        "abbreviation": "ASM"
+       }
+      },
+      {
+       "id": "99855",
+       "homeAway": "away",
+       "score": "0",
+       "team": {
+        "displayName": "Racing 92",
+        "shortDisplayName": "Racing 92",
+        "abbreviation": "RAC"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "604411",
+   "date": "2026-10-31T15:35Z",
+   "name": "Bordeaux Begles vs Bayonne",
+   "shortName": "UNI VS BAY",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "shortDetail": "10/31 - 11:35 AM EDT"
+    }
+   },
+   "links": [
+    {
+     "href": "https://www.espn.com/rugby/match/_/gameId/604411/league/270559"
+    }
+   ],
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "id": "143737",
+       "homeAway": "home",
+       "score": "0",
+       "team": {
+        "displayName": "Bordeaux Begles",
+        "shortDisplayName": "Bordeaux Begles",
+        "abbreviation": "UNI"
+       }
+      },
+      {
+       "id": "25912",
+       "homeAway": "away",
+       "score": "0",
+       "team": {
+        "displayName": "Bayonne",
+        "shortDisplayName": "Bayonne",
+        "abbreviation": "BAY"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

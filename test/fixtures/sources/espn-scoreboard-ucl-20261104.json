@@ -1,0 +1,414 @@
+{
+ "leagues": [
+  {
+   "name": "UEFA Champions League"
+  }
+ ],
+ "events": [
+  {
+   "id": "401915383",
+   "date": "2026-11-04T17:45Z",
+   "name": "Real Madrid at AEK Athens",
+   "shortName": "RMA @ AEK",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 12:45 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "AEK Athens",
+        "shortDisplayName": "AEK Athens",
+        "abbreviation": "AEK"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Real Madrid",
+        "shortDisplayName": "Real Madrid",
+        "abbreviation": "RMA"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915383/real-madrid-aek-athens"
+    }
+   ]
+  },
+  {
+   "id": "401915382",
+   "date": "2026-11-04T17:45Z",
+   "name": "Liverpool at Fenerbahce",
+   "shortName": "LIV @ FEN",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 12:45 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Fenerbahce",
+        "shortDisplayName": "Fenerbahce",
+        "abbreviation": "FEN"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Liverpool",
+        "shortDisplayName": "Liverpool",
+        "abbreviation": "LIV"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915382/liverpool-fenerbahce"
+    }
+   ]
+  },
+  {
+   "id": "401915304",
+   "date": "2026-11-04T20:00Z",
+   "name": "Real Betis at Borussia Dortmund",
+   "shortName": "BET @ DOR",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Borussia Dortmund",
+        "shortDisplayName": "Dortmund",
+        "abbreviation": "DOR"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Real Betis",
+        "shortDisplayName": "Betis",
+        "abbreviation": "BET"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915304/real-betis-borussia-dortmund"
+    }
+   ]
+  },
+  {
+   "id": "401915301",
+   "date": "2026-11-04T20:00Z",
+   "name": "Napoli at FC Porto",
+   "shortName": "NAP @ FCP",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "FC Porto",
+        "shortDisplayName": "FC Porto",
+        "abbreviation": "FCP"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Napoli",
+        "shortDisplayName": "Napoli",
+        "abbreviation": "NAP"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915301/napoli-fc-porto"
+    }
+   ]
+  },
+  {
+   "id": "401915305",
+   "date": "2026-11-04T20:00Z",
+   "name": "Como at Lens",
+   "shortName": "COMO @ RCL",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Lens",
+        "shortDisplayName": "Lens",
+        "abbreviation": "RCL"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Como",
+        "shortDisplayName": "Como",
+        "abbreviation": "COMO"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915305/como-lens"
+    }
+   ]
+  },
+  {
+   "id": "401915303",
+   "date": "2026-11-04T20:00Z",
+   "name": "Club Brugge at PSV Eindhoven",
+   "shortName": "BRU @ PSV",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "PSV Eindhoven",
+        "shortDisplayName": "PSV",
+        "abbreviation": "PSV"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Club Brugge",
+        "shortDisplayName": "Club Brugge",
+        "abbreviation": "BRU"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915303/club-brugge-psv-eindhoven"
+    }
+   ]
+  },
+  {
+   "id": "401915306",
+   "date": "2026-11-04T20:00Z",
+   "name": "Manchester City at RB Leipzig",
+   "shortName": "MNC @ RBL",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "RB Leipzig",
+        "shortDisplayName": "RB Leipzig",
+        "abbreviation": "RBL"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Manchester City",
+        "shortDisplayName": "Man City",
+        "abbreviation": "MNC"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915306/manchester-city-rb-leipzig"
+    }
+   ]
+  },
+  {
+   "id": "401915381",
+   "date": "2026-11-04T20:00Z",
+   "name": "Arsenal at Slavia Prague",
+   "shortName": "ARS @ SLP",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Slavia Prague",
+        "shortDisplayName": "Slavia Prague",
+        "abbreviation": "SLP"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Arsenal",
+        "shortDisplayName": "Arsenal",
+        "abbreviation": "ARS"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915381/arsenal-slavia-prague"
+    }
+   ]
+  },
+  {
+   "id": "401915302",
+   "date": "2026-11-04T20:00Z",
+   "name": "Sabah FK at Viking FK",
+   "shortName": "SAB @ VFK",
+   "status": {
+    "type": {
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "detail": "Wed, November 4th at 3:00 PM EST"
+    }
+   },
+   "competitions": [
+    {
+     "competitors": [
+      {
+       "homeAway": "home",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Viking FK",
+        "shortDisplayName": "Viking FK",
+        "abbreviation": "VFK"
+       }
+      },
+      {
+       "homeAway": "away",
+       "score": "0",
+       "winner": false,
+       "team": {
+        "displayName": "Sabah FK",
+        "shortDisplayName": "Sabah",
+        "abbreviation": "SAB"
+       }
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.espn.com/soccer/match/_/gameId/401915302/sabah-fk-viking-fk"
+    }
+   ]
+  }
+ ]
+}

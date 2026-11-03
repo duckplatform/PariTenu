@@ -1,0 +1,74 @@
+[
+ {
+  "id": "fbc5f20e-d712-4c6f-82c5-6450b12f4ba6",
+  "type": "FP",
+  "number": 1,
+  "date": "2026-10-23T09:00:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ },
+ {
+  "id": "8aafb607-1d1a-4c42-a7fa-0681e237c0be",
+  "type": "PR",
+  "number": null,
+  "date": "2026-10-23T13:15:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ },
+ {
+  "id": "460dff71-a6f4-48e4-bbba-05b2d47acfa9",
+  "type": "FP",
+  "number": 2,
+  "date": "2026-10-24T08:40:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ },
+ {
+  "id": "17042c4c-1c65-417f-9793-dfb1ce9a460b",
+  "type": "Q",
+  "number": 1,
+  "date": "2026-10-24T12:45:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ },
+ {
+  "id": "34485615-346e-4116-9e12-36f95eced357",
+  "type": "Q",
+  "number": 2,
+  "date": "2026-10-24T13:10:00+00:00",
+  "status": "FINISHED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ },
+ {
+  "id": "c0c33f19-ce05-45c4-b083-a7ca78bbaee9",
+  "type": "RAC",
+  "number": null,
+  "date": "2026-10-25T11:00:00+00:00",
+  "status": "CANCELLED",
+  "circuit": "Phillip Island",
+  "category": {
+   "id": "954f7e65-2ef2-4423-b949-4961cc603e45",
+   "name": "Moto3™"
+  }
+ }
+]

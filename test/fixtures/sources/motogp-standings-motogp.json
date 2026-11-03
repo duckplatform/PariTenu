@@ -1,0 +1,484 @@
+{
+ "classification": [
+  {
+   "id": "7b022265-c3ef-4265-9b73-2dee8c396699",
+   "position": 1,
+   "points": 365,
+   "rider": {
+    "id": "f55b433d-38b8-4d1d-bb3a-a709c82a0260",
+    "full_name": "Marc Marquez",
+    "number": 93,
+    "legacy_id": 7444,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "f4990bf3-4ef1-4e30-bad7-f6d3d9cc6815",
+   "position": 2,
+   "points": 355,
+   "rider": {
+    "id": "5cbd7eb6-ccfc-4b9f-aad1-ede25d394f7b",
+    "full_name": "Jorge Martin",
+    "number": 89,
+    "legacy_id": 8146,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "0a511bf9-aada-49a9-ab2e-b8563a65f798",
+   "position": 3,
+   "points": 315,
+   "rider": {
+    "id": "ab06dbae-7d6e-47c3-b63f-b7ac6b7d3bcd",
+    "full_name": "Marco Bezzecchi",
+    "number": 72,
+    "legacy_id": 8688,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "d4476fa0-6f32-4c34-8d2e-ea32e1164208",
+   "position": 4,
+   "points": 263,
+   "rider": {
+    "id": "a6108385-dd4c-490d-b02e-542ed0275f79",
+    "full_name": "Pedro Acosta",
+    "number": 37,
+    "legacy_id": 8658,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "7f7de888-2200-41f9-ab19-484cb94e256d",
+   "position": 5,
+   "points": 259,
+   "rider": {
+    "id": "eb47c439-e136-40ff-9534-5c612853f529",
+    "full_name": "Ai Ogura",
+    "number": 79,
+    "legacy_id": 8680,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "2dc3de74-6b8c-400c-babb-e290335393da",
+   "position": 6,
+   "points": 252,
+   "rider": {
+    "id": "6c33de41-f014-4f17-8dc9-e6f36e61026a",
+    "full_name": "Fabio Di Giannantonio",
+    "number": 49,
+    "legacy_id": 8539,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "b416f927-cd81-4b23-bcde-ef6e5512a4bd",
+   "position": 7,
+   "points": 236,
+   "rider": {
+    "id": "58448742-f520-466a-a1a1-bf3286cce9c3",
+    "full_name": "Raul Fernandez",
+    "number": 25,
+    "legacy_id": 8269,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "69cf7264-8f3d-43b2-9e24-b5f9882ad201",
+   "position": 8,
+   "points": 181,
+   "rider": {
+    "id": "e7e4c72e-952e-4f64-8e8a-a47ff590fade",
+    "full_name": "Alex Marquez",
+    "number": 73,
+    "legacy_id": 8173,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "8647544a-0dbb-4003-b965-a9598fc9b309",
+   "position": 9,
+   "points": 166,
+   "rider": {
+    "id": "9cb55304-0ac1-401c-beb6-1a4f445018a4",
+    "full_name": "Francesco Bagnaia",
+    "number": 63,
+    "legacy_id": 8273,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "abe5c55e-21d0-456b-ace4-1bacbb41bb93",
+   "position": 10,
+   "points": 125,
+   "rider": {
+    "id": "2614e0f6-7e02-4076-a746-50f43fe3143c",
+    "full_name": "Fermin Aldeguer",
+    "number": 54,
+    "legacy_id": 9867,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "775a26a8-6ffd-47ee-94c7-dacbf412b581",
+   "position": 11,
+   "points": 122,
+   "rider": {
+    "id": "ff225c9d-64a2-43ac-a70e-62cf385a85a1",
+    "full_name": "Enea Bastianini",
+    "number": 23,
+    "legacy_id": 8295,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "f8ac873d-5ec1-4e6d-bd2f-d59ad128f733",
+   "position": 12,
+   "points": 108,
+   "rider": {
+    "id": "7b0687b0-90bd-4ad6-b157-8c66fb8a93cf",
+    "full_name": "Luca Marini",
+    "number": 10,
+    "legacy_id": 8431,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "a0ccac13-77d9-4221-b4ff-cdb5c56582dc",
+   "position": 13,
+   "points": 108,
+   "rider": {
+    "id": "ba579548-f026-402b-a607-38db5317d33f",
+    "full_name": "Brad Binder",
+    "number": 33,
+    "legacy_id": 7646,
+    "country": {
+     "iso": "ZA",
+     "name": "South Africa"
+    }
+   }
+  },
+  {
+   "id": "07956f32-82eb-43c2-b39d-e43f8aea2928",
+   "position": 14,
+   "points": 76,
+   "rider": {
+    "id": "3c7598e5-12ec-4e19-9311-1c0e9a017cbe",
+    "full_name": "Diogo Moreira",
+    "number": 11,
+    "legacy_id": 10257,
+    "country": {
+     "iso": "BR",
+     "name": "Brazil"
+    }
+   }
+  },
+  {
+   "id": "33130509-266c-47e0-abb3-4f644024b8e6",
+   "position": 15,
+   "points": 74,
+   "rider": {
+    "id": "fcdd5500-a769-4ff4-8b9e-080d1849ff42",
+    "full_name": "Fabio Quartararo",
+    "number": 20,
+    "legacy_id": 8520,
+    "country": {
+     "iso": "FR",
+     "name": "France"
+    }
+   }
+  },
+  {
+   "id": "ef025748-4b71-47c5-8ab7-96988f10e721",
+   "position": 16,
+   "points": 59,
+   "rider": {
+    "id": "a73f8ef2-784f-4f52-8511-1d315fd3a459",
+    "full_name": "Franco Morbidelli",
+    "number": 21,
+    "legacy_id": 7741,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "95606179-3c73-46dd-a8f3-eca979e56bc0",
+   "position": 17,
+   "points": 51,
+   "rider": {
+    "id": "487440af-cfa9-478a-903b-4e893ee18d3a",
+    "full_name": "Johann Zarco",
+    "number": 5,
+    "legacy_id": 7236,
+    "country": {
+     "iso": "FR",
+     "name": "France"
+    }
+   }
+  },
+  {
+   "id": "12120297-6a9b-4937-9974-63d8d6586f44",
+   "position": 18,
+   "points": 33,
+   "rider": {
+    "id": "9a441928-d1af-452d-afce-fa028c044932",
+    "full_name": "Joan Mir",
+    "number": 36,
+    "legacy_id": 8141,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "82f04051-62fc-4425-8a28-21339eb4e52c",
+   "position": 19,
+   "points": 31,
+   "rider": {
+    "id": "6e940243-5167-4cc3-a343-a74337369b94",
+    "full_name": "Jack Miller",
+    "number": 43,
+    "legacy_id": 8049,
+    "country": {
+     "iso": "AU",
+     "name": "Australia"
+    }
+   }
+  },
+  {
+   "id": "7d853f81-b11f-4573-ba15-1f1efa2408eb",
+   "position": 20,
+   "points": 25,
+   "rider": {
+    "id": "56475aa3-f3d1-485a-b6db-ca1149e1b6fa",
+    "full_name": "Alex Rins",
+    "number": 42,
+    "legacy_id": 8150,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "b5bbf530-dcf0-404d-b14a-63f4c57a31b2",
+   "position": 21,
+   "points": 18,
+   "rider": {
+    "id": "24c03c0c-b2d9-4959-99e0-017214043604",
+    "full_name": "Toprak Razgatlioglu",
+    "number": 7,
+    "legacy_id": 8298,
+    "country": {
+     "iso": "TR",
+     "name": "Türkiye"
+    }
+   }
+  },
+  {
+   "id": "60020d6e-eb14-436a-bc85-bd4e9fc12c05",
+   "position": 22,
+   "points": 12,
+   "rider": {
+    "id": "66ee98b2-239c-487f-8913-aab8493ce280",
+    "full_name": "Maverick Viñales",
+    "number": 12,
+    "legacy_id": 7409,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "8d2ef4e2-7590-41a0-b64a-2c2345178f5a",
+   "position": 23,
+   "points": 10,
+   "rider": {
+    "id": "173da4e6-99bd-4468-b277-cf47f1efd24b",
+    "full_name": "Iker Lecuona",
+    "number": 27,
+    "legacy_id": 8947,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "b8040f4e-3318-49a4-8658-c00d1384db95",
+   "position": 24,
+   "points": 6,
+   "rider": {
+    "id": "1113c9b8-c231-4ba7-a352-4c11c92ab9df",
+    "full_name": "Augusto Fernandez",
+    "number": 47,
+    "legacy_id": 9973,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "c4f6926a-ee9f-4ee9-87b2-c60705e567b7",
+   "position": 25,
+   "points": 5,
+   "rider": {
+    "id": "40c19361-abe5-46e8-bed9-b3fa648dd7ac",
+    "full_name": "Pol Espargaro",
+    "number": 44,
+    "legacy_id": 7086,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "e51e929d-b721-4d74-9e9f-459a9fa40e6b",
+   "position": 26,
+   "points": 3,
+   "rider": {
+    "id": "a463fc7c-ee5b-4fa8-9229-b041a8637051",
+    "full_name": "Somkiat Chantra",
+    "number": 15,
+    "legacy_id": 8476,
+    "country": {
+     "iso": "TH",
+     "name": "Thailand"
+    }
+   }
+  },
+  {
+   "id": "6b66c135-10f4-4de8-a41b-a3314c014768",
+   "position": 27,
+   "points": 3,
+   "rider": {
+    "id": "201ae7a4-0dc7-4191-be71-d91ac0330090",
+    "full_name": "Takaaki Nakagami",
+    "number": 30,
+    "legacy_id": 6976,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "8c37bc73-4fe2-4799-9dd9-3eacaf6e78f3",
+   "position": 28,
+   "points": 0,
+   "rider": {
+    "id": "c2e99a2c-ec5b-4757-8728-ed3254ebbeee",
+    "full_name": "Cal Crutchlow",
+    "number": 35,
+    "legacy_id": 8010,
+    "country": {
+     "iso": "GB",
+     "name": "United Kingdom of Great Britain and Northern Ireland"
+    }
+   }
+  },
+  {
+   "id": "3a71f848-d218-4830-ab1a-05cf489e7029",
+   "position": 29,
+   "points": 0,
+   "rider": {
+    "id": "14ca9be2-6d69-4a70-b224-ea44b791638c",
+    "full_name": "Jonas Folger",
+    "number": 94,
+    "legacy_id": 7174,
+    "country": {
+     "iso": "DE",
+     "name": "Germany"
+    }
+   }
+  },
+  {
+   "id": "328dec9e-7d11-4d67-9a4b-bf58c2d800cc",
+   "position": 30,
+   "points": 0,
+   "rider": {
+    "id": "0c9405ff-e879-498c-964d-b39409361a6c",
+    "full_name": "Lorenzo Savadori",
+    "number": 32,
+    "legacy_id": 7246,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "9b74929c-6f38-46d5-986e-3bbe3e133539",
+   "position": 31,
+   "points": 0,
+   "rider": {
+    "id": "eed93130-03ac-4f5d-9d2e-b207ab47154e",
+    "full_name": "Michele Pirro",
+    "number": 51,
+    "legacy_id": 6231,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "64b37635-6d5a-4ac8-8b7b-0ce81325c872",
+   "position": 32,
+   "points": 0,
+   "rider": {
+    "id": "4cff2dfb-2feb-4264-9a17-8a67189c204c",
+    "full_name": "Aleix Espargaro",
+    "number": 41,
+    "legacy_id": 6854,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  }
+ ]
+}

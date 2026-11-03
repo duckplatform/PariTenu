@@ -1,0 +1,139 @@
+{
+ "leagues": [
+  {
+   "name": "Ultimate Fighting Championship",
+   "abbreviation": "UFC",
+   "season": {
+    "year": 2026,
+    "displayName": "2026",
+    "startDate": "2026-01-01T08:00Z",
+    "endDate": "2026-12-31T08:00Z"
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "600061420",
+   "name": "UFC Fight Night: Moicano vs. Nolan",
+   "date": "2026-10-31T21:00Z",
+   "links": [
+    {
+     "href": "https://www.espn.com/mma/fightcenter/_/id/600061420/league/ufc"
+    }
+   ],
+   "competitions": [
+    {
+     "id": "401931555",
+     "date": "2026-11-01T00:00Z",
+     "timeValid": true,
+     "round": {},
+     "type": {
+      "abbreviation": "Flyweight"
+     },
+     "status": {
+      "type": {
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "shortDetail": "10/31 - 8:00 PM EDT"
+      }
+     },
+     "competitors": [
+      {
+       "id": "4424224",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Ode' Osbourne",
+        "shortName": "O. Osbourne"
+       }
+      },
+      {
+       "id": "4686725",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Cody Durden",
+        "shortName": "C. Durden"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401931616",
+     "date": "2026-11-01T00:00Z",
+     "timeValid": true,
+     "round": {},
+     "type": {
+      "abbreviation": "Welterweight"
+     },
+     "status": {
+      "type": {
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "shortDetail": "10/31 - 8:00 PM EDT"
+      }
+     },
+     "competitors": [
+      {
+       "id": "3960071",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Randy Brown",
+        "shortName": "R. Brown"
+       }
+      },
+      {
+       "id": "5149961",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Jacobe Smith",
+        "shortName": "J. Smith"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401921310",
+     "date": "2026-11-01T00:00Z",
+     "timeValid": true,
+     "round": {},
+     "type": {
+      "abbreviation": "Lightweight"
+     },
+     "status": {
+      "type": {
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "shortDetail": "10/31 - 8:00 PM EDT"
+      }
+     },
+     "competitors": [
+      {
+       "id": "3028863",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Renato Moicano",
+        "shortName": "R. Moicano"
+       }
+      },
+      {
+       "id": "5144007",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Tom Nolan",
+        "shortName": "T. Nolan"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

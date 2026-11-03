@@ -1,0 +1,944 @@
+{
+ "leagues": [
+  {
+   "name": "ATP",
+   "abbreviation": "ATP",
+   "season": {
+    "year": 2026,
+    "displayName": "2026",
+    "startDate": "2026-01-01T08:00Z",
+    "endDate": "2027-01-01T07:59Z"
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "10-2026",
+   "name": "Erste Bank Open",
+   "date": "2026-10-24T04:00Z",
+   "endDate": "2026-11-02T04:59Z",
+   "links": [
+    {
+     "href": "https://www.espn.com/tennis/scoreboard/tournament/_/eventId/10-2026/competitionType/1"
+    }
+   ],
+   "groupings": [
+    {
+     "grouping": {
+      "slug": "mens-singles",
+      "displayName": "Men's Singles"
+     },
+     "competitions": [
+      {
+       "id": "185199",
+       "date": "2026-10-30T16:30Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/30 - 12:30 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "8621",
+         "order": 2,
+         "athlete": {
+          "displayName": "Arthur Fery",
+          "shortName": "A. Fery"
+         }
+        },
+        {
+         "id": "2375",
+         "order": 1,
+         "athlete": {
+          "displayName": "Alexander Zverev",
+          "shortName": "A. Zverev"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185200",
+       "date": "2026-10-30T19:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/30 - 3:00 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2651",
+         "order": 2,
+         "athlete": {
+          "displayName": "Alex de Minaur",
+          "shortName": "A. de Minaur"
+         }
+        },
+        {
+         "id": "2622",
+         "order": 1,
+         "athlete": {
+          "displayName": "Matteo Berrettini",
+          "shortName": "M. Berrettini"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185204",
+       "date": "2026-10-31T04:00Z",
+       "timeValid": false,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "TBD"
+        }
+       },
+       "competitors": [
+        {
+         "id": "-4",
+         "order": 2,
+         "athlete": {
+          "displayName": "TBD",
+          "shortName": "TBD"
+         }
+        },
+        {
+         "id": "2383",
+         "order": 1,
+         "athlete": {
+          "displayName": "Daniil Medvedev",
+          "shortName": "D. Medvedev"
+         }
+        }
+       ]
+      },
+      {
+       "id": "187149",
+       "date": "2026-10-24T09:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Qualifying 1st Round"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "1590",
+         "order": 2,
+         "winner": false,
+         "athlete": {
+          "displayName": "Pablo Carreno Busta",
+          "shortName": "P. Carreno Busta"
+         }
+        },
+        {
+         "id": "11685",
+         "order": 1,
+         "winner": true,
+         "athlete": {
+          "displayName": "Jacob Fearnley",
+          "shortName": "J. Fearnley"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185196",
+       "date": "2026-10-29T19:45Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Round 2"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_RETIRED",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Retired"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2622",
+         "order": 2,
+         "winner": true,
+         "athlete": {
+          "displayName": "Matteo Berrettini",
+          "shortName": "M. Berrettini"
+         }
+        },
+        {
+         "id": "7602",
+         "order": 1,
+         "winner": false,
+         "athlete": {
+          "displayName": "Flavio Cobolli",
+          "shortName": "F. Cobolli"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185201",
+       "date": "2026-10-30T12:40Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2383",
+         "order": 2,
+         "winner": true,
+         "athlete": {
+          "displayName": "Daniil Medvedev",
+          "shortName": "D. Medvedev"
+         }
+        },
+        {
+         "id": "1266",
+         "order": 1,
+         "winner": false,
+         "athlete": {
+          "displayName": "Adrian Mannarino",
+          "shortName": "A. Mannarino"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "grouping": {
+      "slug": "mens-doubles",
+      "displayName": "Men's Doubles"
+     },
+     "competitions": [
+      {
+       "id": "185211",
+       "date": "2026-10-30T17:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/30 - 1:00 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2293-2699",
+         "order": 2,
+         "athlete": {}
+        },
+        {
+         "id": "11489-10386",
+         "order": 1,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185214",
+       "date": "2026-10-31T04:00Z",
+       "timeValid": false,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "TBD"
+        }
+       },
+       "competitors": [
+        {
+         "id": "-3--4",
+         "order": 2,
+         "athlete": {}
+        },
+        {
+         "id": "3700-3739",
+         "order": 1,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185212",
+       "date": "2026-10-31T04:00Z",
+       "timeValid": false,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "TBD"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2292-3735",
+         "order": 2,
+         "athlete": {}
+        },
+        {
+         "id": "-3--4",
+         "order": 1,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "187264",
+       "date": "2026-10-27T10:30Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Qualifying 1st Round"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "1045-2152",
+         "order": 2,
+         "winner": true,
+         "athlete": {}
+        },
+        {
+         "id": "666-3162",
+         "order": 1,
+         "winner": false,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185218",
+       "date": "2026-10-30T12:10Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2292-3735",
+         "order": 2,
+         "winner": true,
+         "athlete": {}
+        },
+        {
+         "id": "279-3548",
+         "order": 1,
+         "winner": false,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185219",
+       "date": "2026-10-30T14:15Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3700-3739",
+         "order": 2,
+         "winner": true,
+         "athlete": {}
+        },
+        {
+         "id": "1045-2152",
+         "order": 1,
+         "winner": false,
+         "athlete": {}
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "23-2026",
+   "name": "Swiss Indoors Basel",
+   "date": "2026-10-24T04:00Z",
+   "endDate": "2026-11-02T04:59Z",
+   "links": [
+    {
+     "href": "https://www.espn.com/tennis/scoreboard/tournament/_/eventId/23-2026/competitionType/1"
+    }
+   ],
+   "groupings": [
+    {
+     "grouping": {
+      "slug": "mens-singles",
+      "displayName": "Men's Singles"
+     },
+     "competitions": [
+      {
+       "id": "185155",
+       "date": "2026-10-30T17:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/30 - 1:00 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3754",
+         "order": 2,
+         "athlete": {
+          "displayName": "Jiri Lehecka",
+          "shortName": "J. Lehecka"
+         }
+        },
+        {
+         "id": "3752",
+         "order": 1,
+         "athlete": {
+          "displayName": "Jerome Kym",
+          "shortName": "J. Kym"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185156",
+       "date": "2026-10-30T18:30Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/30 - 2:30 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "4115",
+         "order": 2,
+         "athlete": {
+          "displayName": "Nuno Borges",
+          "shortName": "N. Borges"
+         }
+        },
+        {
+         "id": "2337",
+         "order": 1,
+         "athlete": {
+          "displayName": "Jan-Lennard Struff",
+          "shortName": "J. Struff"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185158",
+       "date": "2026-10-31T14:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/31 - 10:00 AM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2946",
+         "order": 2,
+         "athlete": {
+          "displayName": "Taylor Fritz",
+          "shortName": "T. Fritz"
+         }
+        },
+        {
+         "id": "9376",
+         "order": 1,
+         "athlete": {
+          "displayName": "Valentin Vacherot",
+          "shortName": "V. Vacherot"
+         }
+        }
+       ]
+      },
+      {
+       "id": "187216",
+       "date": "2026-10-24T09:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Qualifying 1st Round"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3322",
+         "order": 2,
+         "winner": true,
+         "athlete": {
+          "displayName": "Yannick Hanfmann",
+          "shortName": "Y. Hanfmann"
+         }
+        },
+        {
+         "id": "1993",
+         "order": 1,
+         "winner": false,
+         "athlete": {
+          "displayName": "Marcos Giron",
+          "shortName": "M. Giron"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185153",
+       "date": "2026-10-30T13:10Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "9376",
+         "order": 2,
+         "winner": true,
+         "athlete": {
+          "displayName": "Valentin Vacherot",
+          "shortName": "V. Vacherot"
+         }
+        },
+        {
+         "id": "3659",
+         "order": 1,
+         "winner": false,
+         "athlete": {
+          "displayName": "Holger Rune",
+          "shortName": "H. Rune"
+         }
+        }
+       ]
+      },
+      {
+       "id": "185154",
+       "date": "2026-10-30T15:35Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Singles",
+        "slug": "mens-singles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_RETIRED",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Retired"
+        }
+       },
+       "competitors": [
+        {
+         "id": "10052",
+         "order": 2,
+         "winner": false,
+         "athlete": {
+          "displayName": "Arthur Fils",
+          "shortName": "A. Fils"
+         }
+        },
+        {
+         "id": "2946",
+         "order": 1,
+         "winner": true,
+         "athlete": {
+          "displayName": "Taylor Fritz",
+          "shortName": "T. Fritz"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "grouping": {
+      "slug": "mens-doubles",
+      "displayName": "Men's Doubles"
+     },
+     "competitions": [
+      {
+       "id": "185170",
+       "date": "2026-10-31T12:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/31 - 8:00 AM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "11568-650",
+         "order": 2,
+         "athlete": {}
+        },
+        {
+         "id": "10882-1965",
+         "order": 1,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185174",
+       "date": "2026-10-31T17:30Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "10/31 - 1:30 PM EDT"
+        }
+       },
+       "competitors": [
+        {
+         "id": "15080-9962",
+         "order": 2,
+         "athlete": {}
+        },
+        {
+         "id": "1627-2695",
+         "order": 1,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185169",
+       "date": "2026-11-01T04:00Z",
+       "timeValid": false,
+       "round": {
+        "displayName": "Final"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false,
+         "shortDetail": "TBD"
+        }
+       },
+       "competitors": [
+        {
+         "id": "-4",
+         "order": 2,
+         "athlete": {
+          "displayName": "TBD",
+          "shortName": "TBD"
+         }
+        },
+        {
+         "id": "-3",
+         "order": 1,
+         "athlete": {
+          "displayName": "TBD",
+          "shortName": "TBD"
+         }
+        }
+       ]
+      },
+      {
+       "id": "187261",
+       "date": "2026-10-24T15:00Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Qualifying 1st Round"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "4037-10885",
+         "order": 2,
+         "winner": true,
+         "athlete": {}
+        },
+        {
+         "id": "19249-10515",
+         "order": 1,
+         "winner": false,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185171",
+       "date": "2026-10-29T18:25Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "10882-1965",
+         "order": 2,
+         "winner": true,
+         "athlete": {}
+        },
+        {
+         "id": "11400-3310",
+         "order": 1,
+         "winner": false,
+         "athlete": {}
+        }
+       ]
+      },
+      {
+       "id": "185165",
+       "date": "2026-10-30T11:10Z",
+       "timeValid": true,
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "type": {
+        "text": "Men's Doubles",
+        "slug": "mens-doubles"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "shortDetail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2420-3064",
+         "order": 2,
+         "winner": false,
+         "athlete": {}
+        },
+        {
+         "id": "11568-650",
+         "order": 1,
+         "winner": true,
+         "athlete": {}
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

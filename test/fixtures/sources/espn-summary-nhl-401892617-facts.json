@@ -1,0 +1,776 @@
+{
+ "header": {
+  "id": "401892617",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final",
+      "shortDetail": "Final"
+     }
+    },
+    "competitors": [
+     {
+      "id": "12",
+      "homeAway": "home",
+      "score": "0",
+      "winner": false,
+      "team": {
+       "id": "12",
+       "displayName": "New York Islanders",
+       "abbreviation": "NYI"
+      }
+     },
+     {
+      "id": "6",
+      "homeAway": "away",
+      "score": "4",
+      "winner": true,
+      "team": {
+       "id": "6",
+       "displayName": "Edmonton Oilers",
+       "abbreviation": "EDM"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "plays": [
+  {
+   "id": "401892617000000100",
+   "type": {
+    "id": "85",
+    "text": "Kneeing",
+    "abbreviation": "Kneeing (maj)",
+    "penaltyMinutes": "5",
+    "penaltyType": "Major"
+   },
+   "text": "Emil Heineman Kneeing against Isaac Howard served by Victor Eklund",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "2:22"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697447",
+      "displayName": "Emil Heineman",
+      "shortName": "E. Heineman"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5080179",
+      "displayName": "Isaac Howard",
+      "shortName": "I. Howard"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000006010",
+   "type": {
+    "id": "93",
+    "text": "Game Misconduct",
+    "abbreviation": "Game misconduct",
+    "penaltyMinutes": "10",
+    "penaltyType": "Game"
+   },
+   "text": "Emil Heineman Game Misconduct",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "2:22"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "703",
+    "text": "Shorthanded",
+    "abbreviation": "short-handed"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697447",
+      "displayName": "Emil Heineman",
+      "shortName": "E. Heineman"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000001180",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Ryan Nugent-Hopkins Tripping against Scott Mayfield",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "4:45"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2562624",
+      "displayName": "Ryan Nugent-Hopkins",
+      "shortName": "R. Nugent-Hopkins"
+     }
+    },
+    {
+     "athlete": {
+      "id": "2563069",
+      "displayName": "Scott Mayfield",
+      "shortName": "S. Mayfield"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000002040",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Victor Eklund Tripping against Jason Dickinson",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "8:02"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291952",
+      "displayName": "Victor Eklund",
+      "shortName": "V. Eklund"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3042062",
+      "displayName": "Jason Dickinson",
+      "shortName": "J. Dickinson"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000003840",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Trent Frederic Roughing against Casey Cizikas",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "16:12"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4024997",
+      "displayName": "Trent Frederic",
+      "shortName": "T. Frederic"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5262",
+      "displayName": "Casey Cizikas",
+      "shortName": "C. Cizikas"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000007060",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Ryan Nugent-Hopkins Goal (2) Snap Shot, assists: Kasperi Kapanen (3)",
+   "awayScore": 1,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "8:42"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2562624",
+      "displayName": "Ryan Nugent-Hopkins",
+      "shortName": "R. Nugent-Hopkins"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3114775",
+      "displayName": "Kasperi Kapanen",
+      "shortName": "K. Kapanen"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892617000007210",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Vasily Podkolzin Goal (9) Wrist Shot, assists: Leon Draisaitl (13), Evan Bouchard (16)",
+   "awayScore": 2,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "9:50"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565231",
+      "displayName": "Vasily Podkolzin",
+      "shortName": "V. Podkolzin"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3114727",
+      "displayName": "Leon Draisaitl",
+      "shortName": "L. Draisaitl"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4352722",
+      "displayName": "Evan Bouchard",
+      "shortName": "E. Bouchard"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892617000007510",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Trent Frederic Holding against Ondrej Palat",
+   "awayScore": 2,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "11:33"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4024997",
+      "displayName": "Trent Frederic",
+      "shortName": "T. Frederic"
+     }
+    },
+    {
+     "athlete": {
+      "id": "2590389",
+      "displayName": "Ondrej Palat",
+      "shortName": "O. Palat"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000008290",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Matthew Schaefer Holding against Connor McDavid",
+   "awayScore": 2,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "17:35"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291933",
+      "displayName": "Matthew Schaefer",
+      "shortName": "M. Schaefer"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3895074",
+      "displayName": "Connor McDavid",
+      "shortName": "C. McDavid"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000008370",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Ryan Nugent-Hopkins Goal (3) Wrist Shot, assists: Connor McDavid (29), Leon Draisaitl (14)",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:26"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2562624",
+      "displayName": "Ryan Nugent-Hopkins",
+      "shortName": "R. Nugent-Hopkins"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3895074",
+      "displayName": "Connor McDavid",
+      "shortName": "C. McDavid"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "3114727",
+      "displayName": "Leon Draisaitl",
+      "shortName": "L. Draisaitl"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892617000000430",
+   "type": {
+    "id": "91",
+    "text": "Misconduct",
+    "abbreviation": "Misconduct (10 min)",
+    "penaltyMinutes": "10",
+    "penaltyType": "Misconduct"
+   },
+   "text": "Scott Mayfield Misconduct",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:26"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "703",
+    "text": "Shorthanded",
+    "abbreviation": "short-handed"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2563069",
+      "displayName": "Scott Mayfield",
+      "shortName": "S. Mayfield"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000008580",
+   "type": {
+    "id": "49",
+    "text": "Slashing",
+    "abbreviation": "Slashing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Matthew Schaefer Slashing against Alex Formenton",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "19:29"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291933",
+      "displayName": "Matthew Schaefer",
+      "shortName": "M. Schaefer"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4233882",
+      "displayName": "Alex Formenton",
+      "shortName": "A. Formenton"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000009440",
+   "type": {
+    "id": "37",
+    "text": "Interference",
+    "abbreviation": "Interference",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Anthony Duclair Interference against Connor Murphy",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "6:24"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "12"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042086",
+      "displayName": "Anthony Duclair",
+      "shortName": "A. Duclair"
+     }
+    },
+    {
+     "athlete": {
+      "id": "2562618",
+      "displayName": "Connor Murphy",
+      "shortName": "C. Murphy"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000009950",
+   "type": {
+    "id": "37",
+    "text": "Interference",
+    "abbreviation": "Interference",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Colton Dach Interference against Kyle Palmieri",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "9:50"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4874940",
+      "displayName": "Colton Dach",
+      "shortName": "C. Dach"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5517",
+      "displayName": "Kyle Palmieri",
+      "shortName": "K. Palmieri"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892617000006050",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Jason Dickinson Goal (1) Wrist Shot, assists: Mathieu Joseph (4), Mattias Ekholm (3)",
+   "awayScore": 4,
+   "homeScore": 0,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "17:23"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "903",
+    "text": "Empty Net",
+    "abbreviation": "empty-net"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042062",
+      "displayName": "Jason Dickinson",
+      "shortName": "J. Dickinson"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3941965",
+      "displayName": "Mathieu Joseph",
+      "shortName": "M. Joseph"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "2558631",
+      "displayName": "Mattias Ekholm",
+      "shortName": "M. Ekholm"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892617000011030",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Shakir Mukhamadullin Holding against Mitchell Chaffee",
+   "awayScore": 4,
+   "homeScore": 0,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "18:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697403",
+      "displayName": "Shakir Mukhamadullin",
+      "shortName": "S. Mukhamadullin"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4419646",
+      "displayName": "Mitchell Chaffee",
+      "shortName": "M. Chaffee"
+     }
+    }
+   ]
+  }
+ ]
+}

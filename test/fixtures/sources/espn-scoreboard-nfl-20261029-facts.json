@@ -1,0 +1,231 @@
+{
+ "leagues": [
+  {
+   "id": "28",
+   "name": "National Football League",
+   "season": {
+    "year": 2026,
+    "startDate": "2026-08-06T07:00Z",
+    "endDate": "2027-02-16T07:59Z",
+    "displayName": "2026",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "401873023",
+   "date": "2026-10-30T00:15Z",
+   "name": "Carolina Panthers at Green Bay Packers",
+   "shortName": "CAR @ GB",
+   "status": {
+    "clock": 0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873023",
+     "date": "2026-10-30T00:15Z",
+     "status": {
+      "clock": 0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     },
+     "competitors": [
+      {
+       "id": "9",
+       "homeAway": "home",
+       "order": 0,
+       "winner": true,
+       "score": "27",
+       "team": {
+        "id": "9",
+        "abbreviation": "GB",
+        "shortDisplayName": "Packers",
+        "displayName": "Green Bay Packers",
+        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png",
+        "color": "204e32"
+       },
+       "linescores": [
+        {
+         "value": 6,
+         "displayValue": "6",
+         "period": 1
+        },
+        {
+         "value": 14,
+         "displayValue": "14",
+         "period": 2
+        },
+        {
+         "value": 7,
+         "displayValue": "7",
+         "period": 3
+        },
+        {
+         "value": 0,
+         "displayValue": "0",
+         "period": 4
+        }
+       ],
+       "statistics": [],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "5-3"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "3-1"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "2-2"
+        }
+       ]
+      },
+      {
+       "id": "29",
+       "homeAway": "away",
+       "order": 1,
+       "winner": false,
+       "score": "19",
+       "team": {
+        "id": "29",
+        "abbreviation": "CAR",
+        "shortDisplayName": "Panthers",
+        "displayName": "Carolina Panthers",
+        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png",
+        "color": "0085ca"
+       },
+       "linescores": [
+        {
+         "value": 3,
+         "displayValue": "3",
+         "period": 1
+        },
+        {
+         "value": 7,
+         "displayValue": "7",
+         "period": 2
+        },
+        {
+         "value": 3,
+         "displayValue": "3",
+         "period": 3
+        },
+        {
+         "value": 6,
+         "displayValue": "6",
+         "period": 4
+        }
+       ],
+       "statistics": [],
+       "records": [
+        {
+         "name": "overall",
+         "type": "total",
+         "summary": "3-4"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "2-2"
+        }
+       ]
+      }
+     ],
+     "leaders": [
+      {
+       "name": "passingYards",
+       "displayName": "Passing Leader",
+       "leaders": [
+        {
+         "displayValue": "30/41, 288 YDS, 3 TD, 1 INT",
+         "value": 288,
+         "athlete": {
+          "id": "4036378",
+          "displayName": "Jordan Love",
+          "shortName": "J. Love"
+         },
+         "team": {
+          "id": "9"
+         }
+        }
+       ]
+      },
+      {
+       "name": "rushingYards",
+       "displayName": "Rushing Leader",
+       "leaders": [
+        {
+         "displayValue": "22 CAR, 81 YDS, 1 TD",
+         "value": 81,
+         "athlete": {
+          "id": "4241416",
+          "displayName": "Chuba Hubbard",
+          "shortName": "C. Hubbard"
+         },
+         "team": {
+          "id": "29"
+         }
+        }
+       ]
+      },
+      {
+       "name": "receivingYards",
+       "displayName": "Receiving Leader",
+       "leaders": [
+        {
+         "displayValue": "8 REC, 113 YDS",
+         "value": 113,
+         "athlete": {
+          "id": "4248528",
+          "displayName": "Christian Watson",
+          "shortName": "C. Watson"
+         },
+         "team": {
+          "id": "9"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

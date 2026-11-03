@@ -1,0 +1,68 @@
+[
+ {
+  "id": "5a880aba-62c4-413c-bb2d-b721683dd064",
+  "name": "GRAND PRIX OF QATAR",
+  "sponsored_name": "Qatar Airways Grand Prix of Qatar",
+  "short_name": "QAT",
+  "additional_name": "QATAR",
+  "date_start": "2026-11-06",
+  "date_end": "2026-11-08",
+  "status": "NOT-STARTED",
+  "test": false,
+  "toad_api_uuid": "3f3d3f5e-851c-42d2-887a-8ce8b41fa908",
+  "country": {
+   "iso": "QA",
+   "name": "Qatar"
+  },
+  "circuit": {
+   "id": "e9a71399-cea9-400a-b2ef-48bfdcdf6526",
+   "name": "Lusail International Circuit",
+   "place": "Doha",
+   "nation": "QAT"
+  }
+ },
+ {
+  "id": "4b3882a8-24b2-4321-aa12-d1847c989438",
+  "name": "GRAND PRIX OF PORTUGAL",
+  "sponsored_name": "Repsol Grand Prix of Portugal",
+  "short_name": "POR",
+  "additional_name": "PORTUGAL",
+  "date_start": "2026-11-20",
+  "date_end": "2026-11-22",
+  "status": "NOT-STARTED",
+  "test": false,
+  "toad_api_uuid": "c7f7626b-807f-4a6f-813e-7ad2c68302a3",
+  "country": {
+   "iso": "PT",
+   "name": "Portugal"
+  },
+  "circuit": {
+   "id": "912a9d7f-2864-4311-bebb-19851e9c2620",
+   "name": "Autódromo Internacional do Algarve",
+   "place": "Portimao",
+   "nation": "POR"
+  }
+ },
+ {
+  "id": "723031d1-27bd-4467-b59c-4cb8f7e081ab",
+  "name": "GRAND PRIX OF VALENCIA",
+  "sponsored_name": "Motul Grand Prix of Valencia",
+  "short_name": "VAL",
+  "additional_name": "VALENCIA",
+  "date_start": "2026-11-27",
+  "date_end": "2026-11-29",
+  "status": "NOT-STARTED",
+  "test": false,
+  "toad_api_uuid": "6ad2859f-51c4-459e-9714-338814e7537f",
+  "country": {
+   "iso": "ES",
+   "name": "Spain"
+  },
+  "circuit": {
+   "id": "664c40ff-8deb-4613-91cd-62c945f95e1e",
+   "name": "Circuit Ricardo Tormo",
+   "place": "Cheste",
+   "nation": "SPA"
+  }
+ }
+]

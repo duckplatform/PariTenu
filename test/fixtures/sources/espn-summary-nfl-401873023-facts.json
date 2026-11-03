@@ -1,0 +1,262 @@
+{
+ "header": {
+  "id": "401873023",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final",
+      "shortDetail": "Final"
+     }
+    },
+    "competitors": [
+     {
+      "id": "9",
+      "homeAway": "home",
+      "score": "27",
+      "winner": true,
+      "team": {
+       "id": "9",
+       "displayName": "Green Bay Packers",
+       "abbreviation": "GB"
+      }
+     },
+     {
+      "id": "29",
+      "homeAway": "away",
+      "score": "19",
+      "winner": false,
+      "team": {
+       "id": "29",
+       "displayName": "Carolina Panthers",
+       "abbreviation": "CAR"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "scoringPlays": [
+  {
+   "id": "401873023190",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Ryan Fitzgerald 39 Yd Field Goal ",
+   "awayScore": 3,
+   "homeScore": 0,
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 703,
+    "displayValue": "11:43"
+   },
+   "scoringType": {
+    "name": "field-goal",
+    "displayName": "Field Goal",
+    "abbreviation": "FG"
+   },
+   "team": {
+    "id": "29",
+    "abbreviation": "CAR"
+   }
+  },
+  {
+   "id": "401873023666",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Tucker Kraft 12 Yd pass from Jordan Love (Trey Smack PAT Failed)",
+   "awayScore": 3,
+   "homeScore": 6,
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 308,
+    "displayValue": "5:08"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "9",
+    "abbreviation": "GB"
+   }
+  },
+  {
+   "id": "4018730231048",
+   "type": {
+    "id": "68",
+    "text": "Rushing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Chuba Hubbard 1 Yd Rush (Ryan Fitzgerald Kick)",
+   "awayScore": 10,
+   "homeScore": 6,
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 897,
+    "displayValue": "14:57"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "29",
+    "abbreviation": "CAR"
+   }
+  },
+  {
+   "id": "4018730231599",
+   "type": {
+    "id": "68",
+    "text": "Rushing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Josh Jacobs 1 Yd Rush (Trey Smack Kick)",
+   "awayScore": 10,
+   "homeScore": 13,
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 393,
+    "displayValue": "6:33"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "9",
+    "abbreviation": "GB"
+   }
+  },
+  {
+   "id": "4018730231998",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Matthew Golden 24 Yd pass from Jordan Love (Trey Smack Kick)",
+   "awayScore": 10,
+   "homeScore": 20,
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 106,
+    "displayValue": "1:46"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "9",
+    "abbreviation": "GB"
+   }
+  },
+  {
+   "id": "4018730232749",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Josh Jacobs 4 Yd pass from Jordan Love (Trey Smack Kick)",
+   "awayScore": 10,
+   "homeScore": 27,
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 450,
+    "displayValue": "7:30"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "9",
+    "abbreviation": "GB"
+   }
+  },
+  {
+   "id": "4018730232985",
+   "type": {
+    "id": "59",
+    "text": "Field Goal Good",
+    "abbreviation": "FG"
+   },
+   "text": "Ryan Fitzgerald 50 Yd Field Goal",
+   "awayScore": 13,
+   "homeScore": 27,
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 247,
+    "displayValue": "4:07"
+   },
+   "scoringType": {
+    "name": "field-goal",
+    "displayName": "Field Goal",
+    "abbreviation": "FG"
+   },
+   "team": {
+    "id": "29",
+    "abbreviation": "CAR"
+   }
+  },
+  {
+   "id": "4018730233914",
+   "type": {
+    "id": "67",
+    "text": "Passing Touchdown",
+    "abbreviation": "TD"
+   },
+   "text": "Jalen Coker 26 Yd pass from Bryce Young (Two-Point Pass Conversion Failed)",
+   "awayScore": 19,
+   "homeScore": 27,
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 337,
+    "displayValue": "5:37"
+   },
+   "scoringType": {
+    "name": "touchdown",
+    "displayName": "Touchdown",
+    "abbreviation": "TD"
+   },
+   "team": {
+    "id": "29",
+    "abbreviation": "CAR"
+   }
+  }
+ ]
+}

@@ -1,0 +1,383 @@
+{
+ "classification": [
+  {
+   "id": "044a429e-05d8-4093-8192-3727923ee294",
+   "position": 1,
+   "points": 25,
+   "status": "INSTND",
+   "time": "40:46.582",
+   "total_laps": 27,
+   "rider": {
+    "id": "ab06dbae-7d6e-47c3-b63f-b7ac6b7d3bcd",
+    "full_name": "Marco Bezzecchi",
+    "number": 72,
+    "legacy_id": 8688,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "db061d7c-b9ad-4a69-a2f3-628eb2d2bf2e",
+   "position": 2,
+   "points": 20,
+   "status": "INSTND",
+   "time": "40:50.842",
+   "total_laps": 27,
+   "rider": {
+    "id": "58448742-f520-466a-a1a1-bf3286cce9c3",
+    "full_name": "Raul Fernandez",
+    "number": 25,
+    "legacy_id": 8269,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "3e6e2eb7-15a2-4ae8-a4e1-ad5706303783",
+   "position": 3,
+   "points": 16,
+   "status": "INSTND",
+   "time": "40:53.472",
+   "total_laps": 27,
+   "rider": {
+    "id": "5cbd7eb6-ccfc-4b9f-aad1-ede25d394f7b",
+    "full_name": "Jorge Martin",
+    "number": 89,
+    "legacy_id": 8146,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "e51446be-fced-42f4-a4c7-705ffa3aafee",
+   "position": 4,
+   "points": 13,
+   "status": "INSTND",
+   "time": "40:55.960",
+   "total_laps": 27,
+   "rider": {
+    "id": "eb47c439-e136-40ff-9534-5c612853f529",
+    "full_name": "Ai Ogura",
+    "number": 79,
+    "legacy_id": 8680,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "3f76684f-7a09-49a6-979d-8b6b012ad20c",
+   "position": 5,
+   "points": 11,
+   "status": "INSTND",
+   "time": "40:56.074",
+   "total_laps": 27,
+   "rider": {
+    "id": "a6108385-dd4c-490d-b02e-542ed0275f79",
+    "full_name": "Pedro Acosta",
+    "number": 37,
+    "legacy_id": 8658,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "47d22db6-f4b7-4644-8120-517774e01608",
+   "position": 6,
+   "points": 10,
+   "status": "INSTND",
+   "time": "40:57.360",
+   "total_laps": 27,
+   "rider": {
+    "id": "f55b433d-38b8-4d1d-bb3a-a709c82a0260",
+    "full_name": "Marc Marquez",
+    "number": 93,
+    "legacy_id": 7444,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "37414a2b-20a4-4d13-8193-928acf71638a",
+   "position": 7,
+   "points": 9,
+   "status": "INSTND",
+   "time": "41:03.403",
+   "total_laps": 27,
+   "rider": {
+    "id": "e7e4c72e-952e-4f64-8e8a-a47ff590fade",
+    "full_name": "Alex Marquez",
+    "number": 73,
+    "legacy_id": 8173,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "8f65307e-2dc0-4cd5-92c6-4d187494fd1b",
+   "position": 8,
+   "points": 8,
+   "status": "INSTND",
+   "time": "41:06.422",
+   "total_laps": 27,
+   "rider": {
+    "id": "6c33de41-f014-4f17-8dc9-e6f36e61026a",
+    "full_name": "Fabio Di Giannantonio",
+    "number": 49,
+    "legacy_id": 8539,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "6123b4eb-027b-4048-8577-6932e9723cc4",
+   "position": 9,
+   "points": 7,
+   "status": "INSTND",
+   "time": "41:06.581",
+   "total_laps": 27,
+   "rider": {
+    "id": "fcdd5500-a769-4ff4-8b9e-080d1849ff42",
+    "full_name": "Fabio Quartararo",
+    "number": 20,
+    "legacy_id": 8520,
+    "country": {
+     "iso": "FR",
+     "name": "France"
+    }
+   }
+  },
+  {
+   "id": "dc098a60-7723-4dfe-a107-b46a41a69164",
+   "position": 10,
+   "points": 6,
+   "status": "INSTND",
+   "time": "41:07.693",
+   "total_laps": 27,
+   "rider": {
+    "id": "ff225c9d-64a2-43ac-a70e-62cf385a85a1",
+    "full_name": "Enea Bastianini",
+    "number": 23,
+    "legacy_id": 8295,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "557f3b98-37e6-440a-b484-4665f504cb1a",
+   "position": 11,
+   "points": 5,
+   "status": "INSTND",
+   "time": "41:08.494",
+   "total_laps": 27,
+   "rider": {
+    "id": "ba579548-f026-402b-a607-38db5317d33f",
+    "full_name": "Brad Binder",
+    "number": 33,
+    "legacy_id": 7646,
+    "country": {
+     "iso": "ZA",
+     "name": "South Africa"
+    }
+   }
+  },
+  {
+   "id": "10b2021e-ec61-4686-9a13-a8de8565a225",
+   "position": 12,
+   "points": 4,
+   "status": "INSTND",
+   "time": "41:09.238",
+   "total_laps": 27,
+   "rider": {
+    "id": "7b0687b0-90bd-4ad6-b157-8c66fb8a93cf",
+    "full_name": "Luca Marini",
+    "number": 10,
+    "legacy_id": 8431,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "23b1c73e-1a7f-4d6f-ab13-4d545c2b80db",
+   "position": 13,
+   "points": 3,
+   "status": "INSTND",
+   "time": "41:12.842",
+   "total_laps": 27,
+   "rider": {
+    "id": "487440af-cfa9-478a-903b-4e893ee18d3a",
+    "full_name": "Johann Zarco",
+    "number": 5,
+    "legacy_id": 7236,
+    "country": {
+     "iso": "FR",
+     "name": "France"
+    }
+   }
+  },
+  {
+   "id": "75365b40-818f-4b83-9b5f-0aa6e980140d",
+   "position": 14,
+   "points": 2,
+   "status": "INSTND",
+   "time": "41:14.594",
+   "total_laps": 27,
+   "rider": {
+    "id": "a73f8ef2-784f-4f52-8511-1d315fd3a459",
+    "full_name": "Franco Morbidelli",
+    "number": 21,
+    "legacy_id": 7741,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "9e935fa4-f79a-4350-8680-e9318f23c748",
+   "position": 15,
+   "points": 1,
+   "status": "INSTND",
+   "time": "41:18.244",
+   "total_laps": 27,
+   "rider": {
+    "id": "56475aa3-f3d1-485a-b6db-ca1149e1b6fa",
+    "full_name": "Alex Rins",
+    "number": 42,
+    "legacy_id": 8150,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "7240e7b9-8142-4ea4-9b4f-b32553fef30a",
+   "position": 16,
+   "points": 0,
+   "status": "INSTND",
+   "time": "41:20.750",
+   "total_laps": 27,
+   "rider": {
+    "id": "3c7598e5-12ec-4e19-9311-1c0e9a017cbe",
+    "full_name": "Diogo Moreira",
+    "number": 11,
+    "legacy_id": 10257,
+    "country": {
+     "iso": "BR",
+     "name": "Brazil"
+    }
+   }
+  },
+  {
+   "id": "c844693b-883b-4f7d-aa90-ab7dc3ed4259",
+   "position": 17,
+   "points": 0,
+   "status": "INSTND",
+   "time": "41:58.178",
+   "total_laps": 27,
+   "rider": {
+    "id": "66ee98b2-239c-487f-8913-aab8493ce280",
+    "full_name": "Maverick Viñales",
+    "number": 12,
+    "legacy_id": 7409,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "7594abfb-0efc-4010-bad6-039edb5a30c4",
+   "position": null,
+   "points": 0,
+   "status": "OUTSTND",
+   "time": "12:25.706",
+   "total_laps": 8,
+   "rider": {
+    "id": "24c03c0c-b2d9-4959-99e0-017214043604",
+    "full_name": "Toprak Razgatlioglu",
+    "number": 7,
+    "legacy_id": 8298,
+    "country": {
+     "iso": "TR",
+     "name": "Türkiye"
+    }
+   }
+  },
+  {
+   "id": "3f90c11e-ea33-410d-a938-29bcd6e6828b",
+   "position": null,
+   "points": 0,
+   "status": "OUTSTND",
+   "time": "07:45.589",
+   "total_laps": 5,
+   "rider": {
+    "id": "6e940243-5167-4cc3-a343-a74337369b94",
+    "full_name": "Jack Miller",
+    "number": 43,
+    "legacy_id": 8049,
+    "country": {
+     "iso": "AU",
+     "name": "Australia"
+    }
+   }
+  },
+  {
+   "id": "a0e59342-c328-453d-8f6e-54c2861b4ad5",
+   "position": null,
+   "points": 0,
+   "status": "OUTSTND",
+   "time": "07:42.948",
+   "total_laps": 5,
+   "rider": {
+    "id": "9cb55304-0ac1-401c-beb6-1a4f445018a4",
+    "full_name": "Francesco Bagnaia",
+    "number": 63,
+    "legacy_id": 8273,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "2924d5fd-b0b2-4454-95c3-a0697f400d31",
+   "position": null,
+   "points": 0,
+   "status": "OUTSTND",
+   "time": "01:35.719",
+   "total_laps": 1,
+   "rider": {
+    "id": "2614e0f6-7e02-4076-a746-50f43fe3143c",
+    "full_name": "Fermin Aldeguer",
+    "number": 54,
+    "legacy_id": 9867,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  }
+ ],
+ "file": "https://resources.motogp.com/files/results/2026/INA/MotoGP/RAC/Classification.pdf"
+}

@@ -1,0 +1,46 @@
+{
+ "header": {
+  "id": "401876421",
+  "league": {
+   "name": "French Ligue 1"
+  },
+  "links": [
+   {
+    "href": "https://www.espn.com/soccer/match/_/gameId/401876421/paris-saint-germain-le-havre-ac"
+   }
+  ],
+  "competitions": [
+   {
+    "date": "2026-10-30T18:00Z",
+    "status": {
+     "type": {
+      "name": "STATUS_SCHEDULED",
+      "state": "pre",
+      "completed": false,
+      "detail": "Fri, October 30th at 2:00 PM EDT"
+     }
+    },
+    "competitors": [
+     {
+      "homeAway": "home",
+      "winner": false,
+      "team": {
+       "displayName": "Le Havre AC",
+       "shortDisplayName": "Le Havre AC",
+       "abbreviation": "HAC"
+      }
+     },
+     {
+      "homeAway": "away",
+      "winner": false,
+      "team": {
+       "displayName": "Paris Saint-Germain",
+       "shortDisplayName": "PSG",
+       "abbreviation": "PSG"
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

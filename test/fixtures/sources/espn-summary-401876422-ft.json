@@ -1,0 +1,48 @@
+{
+ "header": {
+  "id": "401876422",
+  "league": {
+   "name": "French Ligue 1"
+  },
+  "links": [
+   {
+    "href": "https://www.espn.com/soccer/match/_/gameId/401876422/lyon-paris-saint-germain"
+   }
+  ],
+  "competitions": [
+   {
+    "date": "2026-10-26T19:30Z",
+    "status": {
+     "type": {
+      "name": "STATUS_FULL_TIME",
+      "state": "post",
+      "completed": true,
+      "detail": "FT"
+     }
+    },
+    "competitors": [
+     {
+      "homeAway": "home",
+      "score": "2",
+      "winner": true,
+      "team": {
+       "displayName": "Paris Saint-Germain",
+       "shortDisplayName": "PSG",
+       "abbreviation": "PSG"
+      }
+     },
+     {
+      "homeAway": "away",
+      "score": "0",
+      "winner": false,
+      "team": {
+       "displayName": "Lyon",
+       "shortDisplayName": "Lyon",
+       "abbreviation": "LYON"
+      }
+     }
+    ]
+   }
+  ]
+ }
+}

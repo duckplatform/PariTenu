@@ -1,0 +1,8 @@
+node_modules/
+# La base, ses sauvegardes, l'icône téléversée et les images des sources : propres à chaque installation.
+data/
+# Secrets et réglages locaux (sous cPanel : les variables de « Setup Node.js App »).
+.env
+test/e2e/out/
+# Dépôt vide créé par GitHub Desktop à l'intérieur du projet (2026-11-03), pas une partie du code.
+/PariTenu/

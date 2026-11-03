@@ -1,0 +1,1394 @@
+{
+ "header": {
+  "id": "401892614",
+  "competitions": [
+   {
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final/OT",
+      "shortDetail": "Final/OT",
+      "altDetail": "OT"
+     }
+    },
+    "competitors": [
+     {
+      "id": "1",
+      "homeAway": "home",
+      "score": "5",
+      "winner": true,
+      "team": {
+       "id": "1",
+       "displayName": "Boston Bruins",
+       "abbreviation": "BOS"
+      }
+     },
+     {
+      "id": "4",
+      "homeAway": "away",
+      "score": "4",
+      "winner": false,
+      "team": {
+       "id": "4",
+       "displayName": "Chicago Blackhawks",
+       "abbreviation": "CHI"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "plays": [
+  {
+   "id": "401892614000000520",
+   "type": {
+    "id": "518",
+    "text": "Period Start",
+    "abbreviation": "period-start"
+   },
+   "text": "Start of 1st Period",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   }
+  },
+  {
+   "id": "401892614000000510",
+   "type": {
+    "id": "502",
+    "text": "Face Off",
+    "abbreviation": "faceoff"
+   },
+   "text": "Frank Nazar faceoff won against Pavel Zacha",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "0:00"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5080157",
+      "displayName": "Frank Nazar",
+      "shortName": "F. Nazar"
+     },
+     "type": "face-off-winner"
+    },
+    {
+     "athlete": {
+      "id": "3899949",
+      "displayName": "Pavel Zacha",
+      "shortName": "P. Zacha"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000000550",
+   "type": {
+    "id": "508",
+    "text": "Blocked",
+    "abbreviation": "shot-blocked"
+   },
+   "text": "Patrick Kane shot blocked by Hampus Lindholm",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "0:19"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3735",
+      "displayName": "Patrick Kane",
+      "shortName": "P. Kane"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "2968818",
+      "displayName": "Hampus Lindholm",
+      "shortName": "H. Lindholm"
+     },
+     "type": "defender"
+    }
+   ]
+  },
+  {
+   "id": "401892614000000710",
+   "type": {
+    "id": "503",
+    "text": "Hit",
+    "abbreviation": "hit"
+   },
+   "text": "Pavel Zacha hit Oliver Moore",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "0:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3899949",
+      "displayName": "Pavel Zacha",
+      "shortName": "P. Zacha"
+     },
+     "type": "hit-credited"
+    },
+    {
+     "athlete": {
+      "id": "5149194",
+      "displayName": "Oliver Moore",
+      "shortName": "O. Moore"
+     },
+     "type": "hitted"
+    }
+   ]
+  },
+  {
+   "id": "401892614000000630",
+   "type": {
+    "id": "508",
+    "text": "Blocked",
+    "abbreviation": "shot-blocked"
+   },
+   "text": "Wyatt Kaiser shot blocked by James Hagens",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "1:05"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697717",
+      "displayName": "Wyatt Kaiser",
+      "shortName": "W. Kaiser"
+     },
+     "type": "shooter"
+    },
+    {
+     "athlete": {
+      "id": "5275337",
+      "displayName": "James Hagens",
+      "shortName": "J. Hagens"
+     },
+     "type": "defender"
+    }
+   ]
+  },
+  {
+   "id": "401892614000000820",
+   "type": {
+    "id": "503",
+    "text": "Hit",
+    "abbreviation": "hit"
+   },
+   "text": "Nikita Zadorov hit Connor Bedard",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "1:06"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042021",
+      "displayName": "Nikita Zadorov",
+      "shortName": "N. Zadorov"
+     },
+     "type": "hit-credited"
+    },
+    {
+     "athlete": {
+      "id": "5149125",
+      "displayName": "Connor Bedard",
+      "shortName": "C. Bedard"
+     },
+     "type": "hitted"
+    }
+   ]
+  },
+  {
+   "id": "401892614000000960",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Cole Smith Tripping against Mark Kastelic",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "3:09"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4197130",
+      "displayName": "Cole Smith",
+      "shortName": "C. Smith"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4587985",
+      "displayName": "Mark Kastelic",
+      "shortName": "M. Kastelic"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000001360",
+   "type": {
+    "id": "109",
+    "text": "Delaying Game - Puck over Glass",
+    "abbreviation": "Delaying Game-Puck over glass",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "William Borgen Delaying Game - Puck over glass",
+   "awayScore": 0,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "5:53"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3941946",
+      "displayName": "Will Borgen",
+      "shortName": "W. Borgen"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000001400",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Anton Frondell Goal (2) Snap Shot, assists: Patrick Kane (8), Connor Bedard (5)",
+   "awayScore": 1,
+   "homeScore": 0,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "6:04"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291935",
+      "displayName": "Anton Frondell",
+      "shortName": "A. Frondell"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3735",
+      "displayName": "Patrick Kane",
+      "shortName": "P. Kane"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "5149125",
+      "displayName": "Connor Bedard",
+      "shortName": "C. Bedard"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000002340",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "David Pastrnak Goal (8) Snap Shot, assists: Pavel Zacha (6)",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "13:05"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3114778",
+      "displayName": "David Pastrnak",
+      "shortName": "D. Pastrnak"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3899949",
+      "displayName": "Pavel Zacha",
+      "shortName": "P. Zacha"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000002440",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Morgan Geekie Roughing against Oliver Moore",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "13:22"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4268466",
+      "displayName": "Morgan Geekie",
+      "shortName": "M. Geekie"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5149194",
+      "displayName": "Oliver Moore",
+      "shortName": "O. Moore"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000003420",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Andrew Mangiapane Roughing against Jonathan Aspirot",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "17:05"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3149619",
+      "displayName": "Andrew Mangiapane",
+      "shortName": "A. Mangiapane"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4392308",
+      "displayName": "Jonathan Aspirot",
+      "shortName": "J. Aspirot"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000003470",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Jonathan Aspirot Roughing against Andrew Mangiapane",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "17:05"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4392308",
+      "displayName": "Jonathan Aspirot",
+      "shortName": "J. Aspirot"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3149619",
+      "displayName": "Andrew Mangiapane",
+      "shortName": "A. Mangiapane"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000004110",
+   "type": {
+    "id": "55",
+    "text": "Tripping",
+    "abbreviation": "Tripping",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Wyatt Kaiser Tripping against David Pastrnak",
+   "awayScore": 1,
+   "homeScore": 1,
+   "period": {
+    "number": 1,
+    "displayValue": "1st"
+   },
+   "clock": {
+    "displayValue": "18:27"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697717",
+      "displayName": "Wyatt Kaiser",
+      "shortName": "W. Kaiser"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3114778",
+      "displayName": "David Pastrnak",
+      "shortName": "D. Pastrnak"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000005270",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Anton Frondell Goal (3) Deflected, assists: Tyler Bertuzzi (4), Sam Rinzel (2)",
+   "awayScore": 2,
+   "homeScore": 1,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "3:31"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5291935",
+      "displayName": "Anton Frondell",
+      "shortName": "A. Frondell"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3042056",
+      "displayName": "Tyler Bertuzzi",
+      "shortName": "T. Bertuzzi"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "5080173",
+      "displayName": "Sam Rinzel",
+      "shortName": "S. Rinzel"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000006410",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Casey Mittelstadt Goal (5) Snap Shot, assists: James Hagens (6)",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "12:34"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4233575",
+      "displayName": "Casey Mittelstadt",
+      "shortName": "C. Mittelstadt"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "5275337",
+      "displayName": "James Hagens",
+      "shortName": "J. Hagens"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000006510",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Fraser Minten Holding against Tyler Bertuzzi",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "12:54"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5080207",
+      "displayName": "Fraser Minten",
+      "shortName": "F. Minten"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3042056",
+      "displayName": "Tyler Bertuzzi",
+      "shortName": "T. Bertuzzi"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000004600",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Nikita Zadorov Roughing against Alex Vlasic",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042021",
+      "displayName": "Nikita Zadorov",
+      "shortName": "N. Zadorov"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4565266",
+      "displayName": "Alex Vlasic",
+      "shortName": "A. Vlasic"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000004570",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Nikita Zadorov Roughing against Alex Vlasic",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "703",
+    "text": "Shorthanded",
+    "abbreviation": "short-handed"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042021",
+      "displayName": "Nikita Zadorov",
+      "shortName": "N. Zadorov"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4565266",
+      "displayName": "Alex Vlasic",
+      "shortName": "A. Vlasic"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000000480",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Alex Vlasic Roughing against Casey Mittelstadt",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565266",
+      "displayName": "Alex Vlasic",
+      "shortName": "A. Vlasic"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4233575",
+      "displayName": "Casey Mittelstadt",
+      "shortName": "C. Mittelstadt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000004510",
+   "type": {
+    "id": "45",
+    "text": "Roughing",
+    "abbreviation": "Roughing",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Alex Vlasic Roughing against Casey Mittelstadt",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565266",
+      "displayName": "Alex Vlasic",
+      "shortName": "A. Vlasic"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4233575",
+      "displayName": "Casey Mittelstadt",
+      "shortName": "C. Mittelstadt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000004620",
+   "type": {
+    "id": "91",
+    "text": "Misconduct",
+    "abbreviation": "Misconduct (10 min)",
+    "penaltyMinutes": "10",
+    "penaltyType": "Misconduct"
+   },
+   "text": "Nikita Zadorov Misconduct",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 2,
+    "displayValue": "2nd"
+   },
+   "clock": {
+    "displayValue": "18:34"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3042021",
+      "displayName": "Nikita Zadorov",
+      "shortName": "N. Zadorov"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000007870",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Alex Vlasic Holding against David Pastrnak",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "4:45"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4565266",
+      "displayName": "Alex Vlasic",
+      "shortName": "A. Vlasic"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3114778",
+      "displayName": "David Pastrnak",
+      "shortName": "D. Pastrnak"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000008740",
+   "type": {
+    "id": "142",
+    "text": "Embellishment",
+    "abbreviation": "Embellishment",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Tanner Jeannot Embellishment",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "7:38"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4064780",
+      "displayName": "Tanner Jeannot",
+      "shortName": "T. Jeannot"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000008770",
+   "type": {
+    "id": "31",
+    "text": "Holding",
+    "abbreviation": "Holding",
+    "penaltyMinutes": "2",
+    "penaltyType": "Minor"
+   },
+   "text": "Connor Bedard Holding against Tanner Jeannot",
+   "awayScore": 2,
+   "homeScore": 2,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "7:38"
+   },
+   "scoringPlay": false,
+   "strength": {
+    "id": "702",
+    "text": "Power Play",
+    "abbreviation": "power-play"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5149125",
+      "displayName": "Connor Bedard",
+      "shortName": "C. Bedard"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4064780",
+      "displayName": "Tanner Jeannot",
+      "shortName": "T. Jeannot"
+     }
+    }
+   ]
+  },
+  {
+   "id": "401892614000008970",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Ryan Greene Goal (2) Snap Shot, assists: Andrew Mangiapane (2)",
+   "awayScore": 3,
+   "homeScore": 2,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "9:38"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5080227",
+      "displayName": "Ryan Greene",
+      "shortName": "R. Greene"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3149619",
+      "displayName": "Andrew Mangiapane",
+      "shortName": "A. Mangiapane"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000009380",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Connor Bedard Goal (4) Backhand, assists: Ryan Donato (2), Roman Kantserov (2)",
+   "awayScore": 4,
+   "homeScore": 2,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "12:20"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "4"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5149125",
+      "displayName": "Connor Bedard",
+      "shortName": "C. Bedard"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3115033",
+      "displayName": "Ryan Donato",
+      "shortName": "R. Donato"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "5149231",
+      "displayName": "Roman Kantserov",
+      "shortName": "R. Kantserov"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000009460",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Mason Lohrei Goal (3) Snap Shot, assists: JJ Peterka (6), Tanner Jeannot (3)",
+   "awayScore": 4,
+   "homeScore": 3,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "13:06"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4697461",
+      "displayName": "Mason Lohrei",
+      "shortName": "M. Lohrei"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "4697438",
+      "displayName": "JJ Peterka",
+      "shortName": "J. Peterka"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4064780",
+      "displayName": "Tanner Jeannot",
+      "shortName": "T. Jeannot"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000010970",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Morgan Geekie Goal (2) Slap Shot, assists: Charlie McAvoy (6), JJ Peterka (7)",
+   "awayScore": 4,
+   "homeScore": 4,
+   "period": {
+    "number": 3,
+    "displayValue": "3rd"
+   },
+   "clock": {
+    "displayValue": "19:48"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4268466",
+      "displayName": "Morgan Geekie",
+      "shortName": "M. Geekie"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3988803",
+      "displayName": "Charlie McAvoy",
+      "shortName": "C. McAvoy"
+     },
+     "type": "assister"
+    },
+    {
+     "athlete": {
+      "id": "4697438",
+      "displayName": "JJ Peterka",
+      "shortName": "J. Peterka"
+     },
+     "type": "assister"
+    }
+   ]
+  },
+  {
+   "id": "401892614000011350",
+   "type": {
+    "id": "505",
+    "text": "Goal",
+    "abbreviation": "goal"
+   },
+   "text": "Elias Lindholm Goal (5) Snap Shot, assists: Charlie McAvoy (7)",
+   "awayScore": 4,
+   "homeScore": 5,
+   "period": {
+    "number": 4,
+    "displayValue": "OT"
+   },
+   "clock": {
+    "displayValue": "2:32"
+   },
+   "scoringPlay": true,
+   "strength": {
+    "id": "701",
+    "text": "Even Strength",
+    "abbreviation": "even-strength"
+   },
+   "team": {
+    "id": "1"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3041994",
+      "displayName": "Elias Lindholm",
+      "shortName": "E. Lindholm"
+     },
+     "type": "scorer"
+    },
+    {
+     "athlete": {
+      "id": "3988803",
+      "displayName": "Charlie McAvoy",
+      "shortName": "C. McAvoy"
+     },
+     "type": "assister"
+    }
+   ]
+  }
+ ]
+}

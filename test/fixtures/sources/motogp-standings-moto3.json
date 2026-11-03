@@ -1,0 +1,484 @@
+{
+ "classification": [
+  {
+   "id": "0fda3f19-89c7-42b7-8a0c-a8b0e919b4ca",
+   "position": 1,
+   "points": 351,
+   "rider": {
+    "id": "e6532a75-fac6-4d72-a03d-26904d3298af",
+    "full_name": "Maximo Quiles",
+    "number": 28,
+    "legacy_id": 10392,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "3e0aed01-a7df-420d-9c9a-f9099f931097",
+   "position": 2,
+   "points": 217,
+   "rider": {
+    "id": "0bfba4d0-4af8-4174-a566-8236e75a3b08",
+    "full_name": "David Almansa",
+    "number": 22,
+    "legacy_id": 10424,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "2c3e3c16-1b32-4f2f-bc22-b6441fa5fe21",
+   "position": 3,
+   "points": 198,
+   "rider": {
+    "id": "ebbcbb0f-0692-4963-9a8b-7efb7bd91d9e",
+    "full_name": "Brian Uriarte",
+    "number": 51,
+    "legacy_id": 10506,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "eefe9eea-bd22-4f72-9dce-36272f39f2d6",
+   "position": 4,
+   "points": 189,
+   "rider": {
+    "id": "8c6da2df-4891-41f1-a703-8d51dc51c284",
+    "full_name": "Alvaro Carpe",
+    "number": 83,
+    "legacy_id": 10445,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "ff6929c0-28b7-46ab-bc24-2c8be7adfff5",
+   "position": 5,
+   "points": 148,
+   "rider": {
+    "id": "16332a3a-5c77-4f28-b58f-1381711cd452",
+    "full_name": "Adrian Fernandez",
+    "number": 31,
+    "legacy_id": 8649,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "007b19ff-2544-4bae-9dfb-1ecdf65c2ee6",
+   "position": 6,
+   "points": 140,
+   "rider": {
+    "id": "eff84411-d39e-49c1-8447-a42160daf173",
+    "full_name": "Marco Morelli",
+    "number": 97,
+    "legacy_id": 10442,
+    "country": {
+     "iso": "AR",
+     "name": "Argentina"
+    }
+   }
+  },
+  {
+   "id": "915df5cd-71f7-4d95-b7e6-25e5fa648500",
+   "position": 7,
+   "points": 120,
+   "rider": {
+    "id": "f69ef365-138a-4727-a992-b8857bc5bb52",
+    "full_name": "Valentin Perrone",
+    "number": 73,
+    "legacy_id": 10509,
+    "country": {
+     "iso": "AR",
+     "name": "Argentina"
+    }
+   }
+  },
+  {
+   "id": "08ea68ac-f443-4101-aa11-f3d88cbdaeb9",
+   "position": 8,
+   "points": 111,
+   "rider": {
+    "id": "4540b4b4-43ca-46a9-bbca-68ade8c5ced2",
+    "full_name": "Veda Pratama",
+    "number": 9,
+    "legacy_id": 10352,
+    "country": {
+     "iso": "ID",
+     "name": "Indonesia"
+    }
+   }
+  },
+  {
+   "id": "01698dfd-9baa-43e3-9673-9e7f253c139c",
+   "position": 9,
+   "points": 103,
+   "rider": {
+    "id": "b187512c-fb56-46b1-b00d-62b46a7c65aa",
+    "full_name": "Hakim Danish",
+    "number": 13,
+    "legacy_id": 10239,
+    "country": {
+     "iso": "MY",
+     "name": "Malaysia"
+    }
+   }
+  },
+  {
+   "id": "806c8ffb-caf3-4452-80e5-63de3a578b48",
+   "position": 10,
+   "points": 103,
+   "rider": {
+    "id": "760c8192-f5d5-4f96-a032-36dde524ea62",
+    "full_name": "Matteo Bertelle",
+    "number": 18,
+    "legacy_id": 10154,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "1ce05c35-5eff-46d6-8cbd-140d033c0ef3",
+   "position": 11,
+   "points": 89,
+   "rider": {
+    "id": "f3dd914c-72cf-446a-a135-12c05a0eebde",
+    "full_name": "Rico Salmela",
+    "number": 27,
+    "legacy_id": 10391,
+    "country": {
+     "iso": "FI",
+     "name": "Finland"
+    }
+   }
+  },
+  {
+   "id": "0b5b3129-e8e2-4032-9b8c-e32175088352",
+   "position": 12,
+   "points": 78,
+   "rider": {
+    "id": "aa5b1925-1b45-4cf1-8b0d-7d2726e99415",
+    "full_name": "Adrian Cruces",
+    "number": 11,
+    "legacy_id": 10337,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "2e7469e8-9390-4902-8cfc-40223b8b0c42",
+   "position": 13,
+   "points": 77,
+   "rider": {
+    "id": "bc85adec-2833-4acb-8f42-0d1b7b3839e8",
+    "full_name": "Guido Pini",
+    "number": 94,
+    "legacy_id": 10441,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "3ace0039-9460-408c-bcc7-b32b6e16c464",
+   "position": 14,
+   "points": 68,
+   "rider": {
+    "id": "dd9a6ca6-8bb0-4d66-ad73-86092335975f",
+    "full_name": "Joel Esteban",
+    "number": 78,
+    "legacy_id": 10041,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "253af705-eac9-4d62-b76f-7b224abdbaad",
+   "position": 15,
+   "points": 66,
+   "rider": {
+    "id": "b2ad206f-7eb7-4ecf-b53f-8be998663b23",
+    "full_name": "Casey O'gorman",
+    "number": 67,
+    "legacy_id": 10335,
+    "country": {
+     "iso": "IE",
+     "name": "Ireland"
+    }
+   }
+  },
+  {
+   "id": "46a85284-3a7b-4ad0-b88a-30b5e80b0ed5",
+   "position": 16,
+   "points": 64,
+   "rider": {
+    "id": "8d4c8c88-f989-4d86-8cfd-702237b8083b",
+    "full_name": "Joel Kelso",
+    "number": 66,
+    "legacy_id": 10284,
+    "country": {
+     "iso": "AU",
+     "name": "Australia"
+    }
+   }
+  },
+  {
+   "id": "1730c36c-4413-4df5-9486-b2e28ea3c6bb",
+   "position": 17,
+   "points": 60,
+   "rider": {
+    "id": "39bd22aa-4179-411f-bebb-c8bb3c0c8620",
+    "full_name": "Eddie O'shea",
+    "number": 8,
+    "legacy_id": 10193,
+    "country": {
+     "iso": "GB",
+     "name": "United Kingdom of Great Britain and Northern Ireland"
+    }
+   }
+  },
+  {
+   "id": "a9fc0e68-7e22-4cc8-bdd2-8d0a51056e53",
+   "position": 18,
+   "points": 56,
+   "rider": {
+    "id": "ed6ebad8-3f85-48db-8539-5cf755de6c30",
+    "full_name": "David Muñoz",
+    "number": 64,
+    "legacy_id": 9869,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "7558a0c8-9179-48ac-8f6c-1df41767ec24",
+   "position": 19,
+   "points": 48,
+   "rider": {
+    "id": "f7138283-ea5f-475a-bd40-cb1fcb02c6aa",
+    "full_name": "Jesus Rios",
+    "number": 54,
+    "legacy_id": 10537,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "a3c13c13-a8ae-43e7-a5dc-69fbb655b450",
+   "position": 20,
+   "points": 41,
+   "rider": {
+    "id": "9de28705-315e-4370-a304-308147bf8203",
+    "full_name": "Ryusei Yamanaka",
+    "number": 6,
+    "legacy_id": 8681,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "677ffcc2-e03d-4277-8348-ae599289ed3d",
+   "position": 21,
+   "points": 33,
+   "rider": {
+    "id": "4331b1bc-b5f4-4649-b787-485f762639cb",
+    "full_name": "Scott Ogden",
+    "number": 19,
+    "legacy_id": 10114,
+    "country": {
+     "iso": "GB",
+     "name": "United Kingdom of Great Britain and Northern Ireland"
+    }
+   }
+  },
+  {
+   "id": "61ead613-324a-4904-92fc-c24bb40abc3d",
+   "position": 22,
+   "points": 7,
+   "rider": {
+    "id": "8eb7bb58-ad5e-4191-84d9-4fec986d62fb",
+    "full_name": "David Gonzalez",
+    "number": 71,
+    "legacy_id": 10702,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "9f821920-d53d-48f5-9974-a576a23b2227",
+   "position": 23,
+   "points": 5,
+   "rider": {
+    "id": "6adb635c-52cd-4473-8479-67869e89b97d",
+    "full_name": "Marcos Uriarte",
+    "number": 88,
+    "legacy_id": 8669,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  },
+  {
+   "id": "0bd4662f-ebdd-41e1-8251-aafd8fdb74fe",
+   "position": 24,
+   "points": 5,
+   "rider": {
+    "id": "cb4628b6-3af2-4b76-bd84-aa9d195876f4",
+    "full_name": "Cormac Buchanan",
+    "number": 14,
+    "legacy_id": 10251,
+    "country": {
+     "iso": "NZ",
+     "name": "New Zealand"
+    }
+   }
+  },
+  {
+   "id": "d1fbf2d3-575a-454b-b5fc-b4724538f74f",
+   "position": 25,
+   "points": 2,
+   "rider": {
+    "id": "23269713-f105-44db-9f83-7d10c1c1c058",
+    "full_name": "Leo Rammerstorfer",
+    "number": 5,
+    "legacy_id": 10291,
+    "country": {
+     "iso": "AT",
+     "name": "Austria"
+    }
+   }
+  },
+  {
+   "id": "8e697f08-86f6-45e6-a0aa-7848750cfff2",
+   "position": 26,
+   "points": 1,
+   "rider": {
+    "id": "055c69fa-ccac-4086-9ba8-28de9fb3e59f",
+    "full_name": "Kiattisak Singhapong",
+    "number": 85,
+    "legacy_id": 10488,
+    "country": {
+     "iso": "TH",
+     "name": "Thailand"
+    }
+   }
+  },
+  {
+   "id": "b68fd1f3-4fc5-4366-89cd-13f3a9355420",
+   "position": 27,
+   "points": 0,
+   "rider": {
+    "id": "9aad8146-4002-4852-9857-e1edb47543ea",
+    "full_name": "Zen Mitani",
+    "number": 32,
+    "legacy_id": 10473,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "f16eda97-da82-4539-b431-80653426c40b",
+   "position": 28,
+   "points": 0,
+   "rider": {
+    "id": "39a2c75d-08af-4d3f-89ae-0a38ae2affb9",
+    "full_name": "Ruche Moodley",
+    "number": 21,
+    "legacy_id": 10390,
+    "country": {
+     "iso": "ZA",
+     "name": "South Africa"
+    }
+   }
+  },
+  {
+   "id": "cea233ab-7288-496a-bdbb-11e3dc6ed4aa",
+   "position": 29,
+   "points": 0,
+   "rider": {
+    "id": "eb622674-1751-486a-b97f-e252353ed7a9",
+    "full_name": "Ryota Ogiwara",
+    "number": 79,
+    "legacy_id": 10480,
+    "country": {
+     "iso": "JP",
+     "name": "Japan"
+    }
+   }
+  },
+  {
+   "id": "beda20a5-fae2-4dcf-bf25-378a819cdc78",
+   "position": 30,
+   "points": 0,
+   "rider": {
+    "id": "a14ea48a-578d-45a6-9e95-1007032024e9",
+    "full_name": "Nicola Carraro",
+    "number": 10,
+    "legacy_id": 10161,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "30340e86-9a2a-45c0-ac5e-736ff5db20d6",
+   "position": 31,
+   "points": 0,
+   "rider": {
+    "id": "513193e6-6725-48f0-b62f-c5eb6bc0f740",
+    "full_name": "Leonardo Abruzzo",
+    "number": 25,
+    "legacy_id": 10534,
+    "country": {
+     "iso": "IT",
+     "name": "Italy"
+    }
+   }
+  },
+  {
+   "id": "cdbe3a3b-bb13-4e84-a02d-c75a8fd6bb79",
+   "position": 32,
+   "points": 0,
+   "rider": {
+    "id": "67d13fd3-1b88-4557-b547-ca0e6e4f5535",
+    "full_name": "Eduardo Gutierrez",
+    "number": 41,
+    "legacy_id": 10687,
+    "country": {
+     "iso": "ES",
+     "name": "Spain"
+    }
+   }
+  }
+ ]
+}
