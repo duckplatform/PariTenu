@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/paritenu/
+    - /bin/cp -R * $DEPLOYPATH
+    - source $HOME/nodevenv/paritenu/24/bin/activate && cd $DEPLOYPATH
+    - npm install
+    - mkdir -p tmp
+    - touch tmp/restart.txt
