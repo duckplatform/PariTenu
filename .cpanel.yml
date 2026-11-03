@@ -3,7 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=$HOME/paritenu/
     - /bin/cp -R * $DEPLOYPATH
-    - . $HOME/nodevenv/paritenu/24/bin/activate && cd $DEPLOYPATH
+    - source $HOME/nodevenv/paritenu/24/bin/activate && cd $DEPLOYPATH
     - npm install --omit=dev --no-audit --no-fund
     - mkdir -p tmp
     - touch tmp/restart.txt
