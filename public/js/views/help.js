@@ -29,18 +29,18 @@ const SECTIONS = [
   ]],
   ['points', '📈 Les points', [
     ['h3', 'Paris sportifs : la cote des bookmakers'],
-    ['p', 'Chaque option a une cote fixe, affichée avant de parier :'],
+    ['p', 'Chaque option a une cote fixe, affichée sous son nom avant de parier, comme chez les bookmakers (« 2,50 ») :'],
     ['formula', 'Bon pronostic = 100 × la cote'],
     ['ul', [
       'Foot, NFL, NBA, NHL, MLB… : la cote des bookmakers (DraftKings). Un favori à 1,40 rapporte 140 pts, un outsider à 4,50 en rapporte 450.',
-      'Quand aucune cote n’est connue (rugby, tennis, MMA, F1, moto…) : barème fixe, 200 pts le bon pronostic.',
+      'Quand aucune cote n’est connue (rugby, tennis, MMA, F1, moto…) : barème fixe, 200 pts le bon pronostic (la cote 2,00 s’affiche alors en grisé).',
       'Ça ne dépend pas des autres : même seul à parier, ou si tout le monde a fait le même choix, un bon pronostic rapporte sa cote. Jamais de cote à 1.',
     ]],
     ['h3', 'Paris entre amis'],
     ['p', 'La cote vient du groupe : participants ÷ pronostics sur l’option. Plus tu as raison seul, plus ça rapporte.'],
     ['formula', 'Bon pronostic = 100 × (participants ÷ ceux qui ont choisi cette option)'],
     ['ul', [
-      'À 4 participants, seul contre 3 : cote ×4, 400 pts. À 2 contre 2 : cote ×2, 200 pts.',
+      'À 4 participants, seul contre 3 : cote 4,00, 400 pts. À 2 contre 2 : cote 2,00, 200 pts.',
       'Moins de 2 participants, ou tout le monde du même avis : pari annulé, personne ne marque.',
       'L’arbitre (qui tranche) ne parie pas ; il gagne une prime de 20 pts si personne ne conteste son verdict.',
     ]],

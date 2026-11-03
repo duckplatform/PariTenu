@@ -83,7 +83,7 @@ L'admin du site a son propre habillage (`css/admin.css`, chargé après `app.css
 Variables principales d'`app.css` : `--bg`, `--surface`, `--ink`, `--muted`, `--line`, `--brand` (actions),
 `--accent`, `--night` (blocs foncés), `--display` et `--body-font` (polices), `--display-style` et `--display-case`
 (titres en italique et en capitales ou non), `--top-*`, `--nav-*`, `--side-*` (barre du haut, barre du bas, menu de
-gauche), `--pick-*` (option choisie), `--gain` (« +210 »), `--cta-*` (bouton « Parier »), `--card-line`, `--glass`.
+gauche), `--pick-*` (option choisie), `--gain` (la cote « 2,50 » sous chaque option), `--cta-*` (bouton « Parier »), `--card-line`, `--glass`.
 
 ### Configuration de l'installation
 

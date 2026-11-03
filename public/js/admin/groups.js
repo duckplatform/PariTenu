@@ -3,7 +3,7 @@
 import { faceText } from '../avatars.js';
 import { appUrl } from '../brand.js';
 import { h, fill } from '../dom.js';
-import { percent, pts } from '../format.js';
+import { odds, percent, pts } from '../format.js';
 import { icon } from '../icons.js';
 import { betSettingsEditor, pointsEditor } from '../settings-editor.js';
 import { confirmSheet, emojiPicker, field, GROUP_EMOJIS, openSheet, run, toast } from '../ui.js';
@@ -14,7 +14,6 @@ import {
 const inviteUrl = (token) => appUrl(`/invite/${token}`);
 const SEASON = { current: ['En cours', 'ok'], ending: ['Derniers résultats', 'warn'], closed: ['Close', 'muted'], upcoming: ['À venir', 'info'] };
 const STATUS = { left: ['A quitté', 'muted'], removed: ['Retiré', 'muted'] };
-const decimal = (n) => String(n).replace('.', ',');
 
 /**
  * Les classements du groupe (un par compétition ou catégorie) : une puce par classement, la saison choisie (en cours par
@@ -59,7 +58,7 @@ function settingsCard(g) {
   const cats = s.categories.filter((c) => !c.hidden);
   return card('Réglages', { extra: button('Modifier les réglages', { icon: 'pencil', small: true, href: `/admin/groups/${g.id}/edit` }) },
     facts([
-      ['Points', `${s.basePoints} × la cote${s.oddsCap ? ` (cote plafonnée à ×${decimal(s.oddsCap)})` : ''}`],
+      ['Points', `${s.basePoints} × la cote${s.oddsCap ? ` (cote plafonnée à ${odds(s.oddsCap)})` : ''}`],
       ['Prime d’arbitre', `${s.arbiterBonus} pts`],
       ['Délais des paris maison', `contester ${s.validationHours} h · voter ${s.voteHours} h`],
       ['Paris maison', kinds.length && cats.length ? `${kinds.join(' et ')} · ${cats.map((c) => c.emoji).join(' ')} (${plural(cats.length, 'catégorie')})` : 'aucun'],

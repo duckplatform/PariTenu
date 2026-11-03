@@ -328,8 +328,8 @@ await test('parier en 2 touches, avec les points potentiels justes', async () =>
   await pickIt(ines, 'Non', 150); // 3 participants, 2 sur Non : ×1,5
   const page = ines.page;
   const options = await page.locator('.option').allInnerTexts();
-  assert.match(options[0], /Oui\s+×3,0[\s\S]*1 pronostic · ≈ 300 pts si ça gagne/);
-  assert.match(options[1], /Non\s+×1,5[\s\S]*2 pronostics · ≈ 150 pts si ça gagne/);
+  assert.match(options[0], /Oui\s+3,00[\s\S]*1 pronostic · ≈ 300 pts si ça gagne/);
+  assert.match(options[1], /Non\s+1,50[\s\S]*2 pronostics · ≈ 150 pts si ça gagne/);
   await shot(page, '07-pari-cotes', { fullPage: true });
   // Son option n'est plus à toucher ; l'autre, si : on peut changer d'avis jusqu'à la clôture.
   assert.equal(await page.locator('button.option').count(), 1);
@@ -608,6 +608,10 @@ await test('paris automatiques : la Ligue 1 activée, ses matchs s’ouvrent et 
   await page.getByRole('button', { name: '⚽ Ligue 1' }).click();
   await waitText(page, 'Football · Ligue 1 · Lille – Lens');
   assert.equal(await page.locator('.bet-card').count(), 2, 'seulement les paris de la Ligue 1');
+  // Sous chaque choix, la cote comme chez les bookmakers (+150, +230, +180 chez ESPN), pas les points.
+  const lilleCard = page.locator('.bet-card', { hasText: 'Football · Ligue 1 · Lille – Lens' });
+  assert.deepEqual(await lilleCard.locator('.opt-chip b').allTextContents(), ['2,50', '3,30', '2,80']);
+  assert.equal(await lilleCard.locator('.opt-chip b.fixed').count(), 0);
   await shot(page, '22-paris-auto');
   // Toute la carte mène à la fiche (sauf les options, qui parient d'un geste) : on touche son coin.
   await page.locator('.bet-card', { hasText: 'Football · Ligue 1 · Lille – Lens' }).locator('.card-link').click({ position: { x: 24, y: 16 } });
@@ -618,7 +622,7 @@ await test('paris automatiques : la Ligue 1 activée, ses matchs s’ouvrent et 
   assert.match(t, /Voir sur ESPN ↗/);
   assert.match(t, /Compte pour le classement ⚽ Ligue 1/);
   assert.match(t, /Cotes des bookmakers/);
-  assert.match(t, /Victoire Lille\n×2,5/);
+  assert.match(t, /Victoire Lille\n2,50/);
   await shot(page, '23-pari-auto', { fullPage: true });
 
   for (const [p, label] of [[max, 'Victoire Lille'], [tom, 'Match nul'], [ines, 'Victoire Lens']]) {
@@ -644,7 +648,7 @@ await test('paris automatiques : la Ligue 1 activée, ses matchs s’ouvrent et 
   await shot(tom.page, '24-resultat-auto', { fullPage: true });
   await open(max.page, autoUrl);
   await waitText(max.page, 'Résultat : « Victoire Lille »');
-  assert.match(await max.page.locator('.banner').innerText(), /Max \+250 pts/, 'cote des bookmakers ×2,5');
+  assert.match(await max.page.locator('.banner').innerText(), /Max \+250 pts/, 'cote des bookmakers 2,50');
 
   // Les points vont au classement de la Ligue 1, sur sa saison officielle.
   await max.page.getByRole('link', { name: '⚽ Ligue 1' }).click();
@@ -680,6 +684,8 @@ await test('paris de sport en images : logos, score en direct, page Direct, pilo
     .every((card) => [...card.querySelectorAll('.crest img')].length === 2 && [...card.querySelectorAll('.crest img')].every((i) => i.complete && i.naturalWidth > 0)));
   assert.deepEqual(await lyon.locator('.match-name').allInnerTexts(), ['Lyon', 'Nice']);
   assert.deepEqual((await lyon.locator('.opt-chip span').allInnerTexts()).map((t) => t.trim()), ['Lyon', 'Nul', 'Nice']);
+  // Pas de cote de bookmaker pour ce match : barème fixe, la cote 2,00 en grisé.
+  assert.deepEqual(await lyon.locator('.opt-chip b.fixed').allTextContents(), ['2,00', '2,00', '2,00']);
   await shot(page, '33-cartes-logos');
 
   // Max parie depuis la liste, d'un geste (sans fenêtre) : Lyon… puis il change d'avis pour Nice avant la clôture.
@@ -1219,7 +1225,7 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   await lea.page.goto(`${home}/admin`);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/invite\/\w+$/);
+  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/invite\/[\w-]+$/); // jeton en base64url : « - » et « _ »
   await lea.page.getByRole('button', { name: 'Partager', exact: true }).click();
   const sent = await lea.page.evaluate(() => window.__shared.at(-1));
   assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/invite\//);

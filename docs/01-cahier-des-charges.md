@@ -159,7 +159,7 @@ Tout tient sur un seul écran :
 * Sur la fiche, on touche une option, puis on valide. C'est gratuit. Depuis la liste des paris, on touche une option et
   c'est parié, sans fenêtre de confirmation (demande du 2026-11-01 : « parier rapidement depuis la page liste des paris,
   en cliquant sur le choix, pas de modale »).
-* Avant de valider, l'app affiche par exemple : « Si tu as raison, ça te rapporte environ 250 pts (cote ×2,5), à l'heure actuelle ».
+* Avant de valider, l'app affiche par exemple : « Si tu as raison, ça te rapporte environ 250 pts (cote 2,50), à l'heure actuelle ».
 * Règles :
   * **une seule option par membre et par pari** ;
   * pas de retrait ; changement d'option possible jusqu'à la clôture (le fil le raconte : « a changé d'avis : « Non »
@@ -170,7 +170,8 @@ Tout tient sur un seul écran :
 
 ### 7.4 Calcul des cotes et des points (Indispensable)
 
-**Paris sportifs (V3, cote fixe)** : chaque option a une **cote fixe**, affichée avant de parier, et un bon
+**Paris sportifs (V3, cote fixe)** : chaque option a une **cote fixe**, affichée sous son nom avant de parier comme
+chez les bookmakers (« 2,50 », deux décimales ; le barème fixe « 2,00 » en grisé, ce n'est pas une vraie cote), et un bon
 pronostic rapporte **100 × cette cote**. C'est la cote des bookmakers (DraftKings, donnée par ESPN pour le foot, la NFL,
 la NBA, la NHL, la MLB…) ; sans cote connue (rugby, tennis, MMA, F1, moto…), un **barème fixe** de 2 (200 pts le bon
 pronostic). Le résultat ne dépend pas des autres joueurs : **jamais de cote à 1**, et un pari sportif
@@ -181,7 +182,7 @@ l'ouverture remplace le barème fixe tant que personne n'a parié. Pas de prime 
 
 Notations : *N* est le nombre de participants au pari, *nₖ* le nombre de pronostics sur l'option *k*.
 
-* **Cote** de l'option *k* : *N ÷ nₖ*, affichée avec une décimale (« ×2,5 » ; « — » si personne ne l'a choisie). Elle bouge à chaque pronostic et devient définitive à la clôture.
+* **Cote** de l'option *k* : *N ÷ nₖ*, affichée avec deux décimales, comme les cotes des bookmakers (« 2,50 » ; « — » si personne ne l'a choisie). Elle bouge à chaque pronostic et devient définitive à la clôture.
 * **Points** pour chaque bon pronostic : **100 × la cote**, arrondi à l'entier le plus proche.
 * Un mauvais pronostic rapporte 0 point. On ne perd jamais de points.
 
@@ -189,8 +190,8 @@ Notations : *N* est le nombre de participants au pari, *nₖ* le nombre de prono
 
 | Option | Qui | Pronostics | Cote | Points si elle gagne |
 |---|---|---|---|---|
-| Oui | Léa, Max, Sam | 3 | 5 ÷ 3 = ×1,7 | 167 chacun |
-| Non | Tom, Inès | 2 | 5 ÷ 2 = ×2,5 | 250 chacun |
+| Oui | Léa, Max, Sam | 3 | 5 ÷ 3 = 1,67 | 167 chacun |
+| Non | Tom, Inès | 2 | 5 ÷ 2 = 2,50 | 250 chacun |
 
 Julien arrive à 20 h 10, donc **Non** gagne : Tom et Inès marquent 250 points chacun, Léa, Max et Sam ne marquent rien.
 
@@ -229,7 +230,7 @@ Ouvert ou Clos ──l'arbitre annule──▶ Annulé (aucun point)
 | Réglage | Valeur par défaut (réglable par l'admin) |
 |---|---|
 | Points de base d'un bon pronostic | 100 (multipliés par la cote) |
-| Plafond de cote | Aucun (l'admin peut plafonner, par exemple à ×5, si un coup chanceux pèse trop) |
+| Plafond de cote | Aucun (l'admin peut plafonner, par exemple à 5, si un coup chanceux pèse trop) |
 | Prime de l'arbitre | 20 points par pari réglé sans contestation, avec au moins 3 participants et sans unanimité |
 
 * La **prime de l'arbitre** compense celui qui ne peut pas parier sur son propre pari, et encourage à créer des paris et à bien les trancher.
@@ -375,7 +376,7 @@ scores et résultats des rencontres et des paris du jour pour le joueur ». Les 
 
 * **Carte d'un match** : les deux écussons et noms des équipes (ou les photos et drapeaux des joueurs au tennis et au
   MMA), l'heure du coup d'envoi au centre, puis le score en grand et le chrono en direct (« 62' », « Mi-temps »,
-  « 3e QT · 5:32 »…), puis le score final ; options au nom des équipes (« Lyon ×2,1 · Nul · Nice »).
+  « 3e QT · 5:32 »…), puis le score final ; options au nom des équipes, la cote sous chacune (« Lyon 2,10 · Nul 3,40 · Nice 3,20 » ; barème fixe : 2,00 en grisé).
 * **Carte d'une course** (MotoGP, Moto2, Moto3, F1) : une tuile par pilote (photo officielle recadrée sur le visage,
   numéro, couleur de l'équipe), puis le podium à l'arrivée.
 * **Où en est mon prono** pendant le match : « Ton prono passe / ne passe pas », puis « Bien vu / Raté ».

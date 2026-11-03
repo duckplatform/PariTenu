@@ -15,7 +15,7 @@ export const id = z.string().min(1).max(40);
 /** Réglages d'un groupe (core/settings.js), envoyés par un admin du groupe ou l'admin du site : seuls les champs changés. */
 export const Settings = z.object({
   basePoints: z.number().int().min(10, 'Entre 10 et 1000 points.').max(1000, 'Entre 10 et 1000 points.'),
-  oddsCap: z.number().min(1.5, 'Plafond entre ×1,5 et ×100.').max(100, 'Plafond entre ×1,5 et ×100.').nullable(),
+  oddsCap: z.number().min(1.5, 'Plafond de cote entre 1,5 et 100.').max(100, 'Plafond de cote entre 1,5 et 100.').nullable(),
   arbiterBonus: z.number().int().min(0, 'Prime entre 0 et 500 points.').max(500, 'Prime entre 0 et 500 points.'),
   validationHours: z.number().int().min(1, 'Délai entre 1 et 168 heures.').max(168, 'Délai entre 1 et 168 heures.'),
   voteHours: z.number().int().min(1, 'Délai entre 1 et 168 heures.').max(168, 'Délai entre 1 et 168 heures.'),

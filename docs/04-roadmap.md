@@ -316,6 +316,25 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   chaque source (la santé des sources n'est gardée qu'en mémoire).
 * 🧪 La vraie admin connectée (avec le mot de passe de l'utilisateur) : à regarder sur son PC et son téléphone.
 
+### 2026-11-03 : la cote affichée comme chez les bookmakers
+
+* ✅ Demande : « sur les pages des paris je vois pas les cotes… on voit le nombre de points à gagner, c'est bizarre ».
+  Les cartes de la liste montraient sous chaque choix ce qu'il rapporte (« +250 », pris pour une cote américaine), et la
+  fiche une cote à une décimale (« ×1,4 » pour une vraie cote de 1,41).
+* ✅ Partout le format des bookmakers, deux décimales et sans « × » : « Lille 2,50 · Nul 3,30 · Lens 2,80 » sur les
+  cartes (au lieu de « +250 · +330 · +280 »), sur la fiche, dans la confirmation (« Si tu as raison : 250 pts (cote
+  2,50, fixée à l'avance) »), l'activité, le « meilleur coup » du profil et le plafond de cote de l'admin.
+* ✅ Barème fixe (pas de cote connue pour le match) : « 2,00 » en grisé sur les cartes et la fiche, avec l'explication
+  au survol et dans la confirmation. Pari entre amis à moins de 2 pronostics : « — », comme avant.
+* ✅ Aide (exemples de cotes) et cahier des charges à jour ; cache du service worker `pari-tenu-v6`.
+* ✅ 223 tests et 30 scénarios Edge (cotes des cartes Lille – Lens et du barème fixe Lyon – Nice vérifiées). Le
+  scénario Configuration échouait environ une fois sur trois : il refusait un lien d'invitation contenant « - » (le
+  jeton est en base64url) ; corrigé.
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+* ✅ Au passage : cette feuille de route et `docs/03-technique.md` contenaient une copie de leur propre début (un
+  remplacement de texte de l'entrée « moteurs de recherche » où « $` » de `Allow: /$` avait recopié tout le haut du
+  fichier) ; copies retirées après avoir vérifié qu'elles ne contenaient rien de plus que l'original.
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

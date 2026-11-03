@@ -187,7 +187,11 @@ function optionsList(bet, { base, refresh }) {
       h('div.option-main',
         face ? crest(face, { size: 'sm', round: bet.event.layout === 'field' }) : null,
         h('span.option-label', o.label, won ? ' ✅' : ''),
-        h('span.odds', { title: bet.scoring === 'group' ? 'Cote : participants ÷ pronostics sur cette option' : 'Cote fixe de cette option' }, odds(o.odds))),
+        h('span.odds', {
+          class: cls(bet.scoring === 'fixed' && 'fixed'),
+          title: { group: 'Cote : participants ÷ pronostics sur cette option', bookmaker: 'Cote des bookmakers, fixée à l’avance' }[bet.scoring]
+            ?? 'Barème fixe : pas de cote connue pour ce match',
+        }, odds(o.odds))),
       h('div.bar', fill),
       h('div.option-foot',
         h('span.pickers', o.pickers.map((id) => avatar(id, { size: 'xs' }))),
@@ -233,7 +237,8 @@ async function pickSheet(stale, staleOption, base, refresh) {
     previous ? h('p.muted', `Au lieu de « ${previous.label} ».`) : null,
     bet.scoring === 'group'
       ? h('p.potential', 'Si tu as raison : ', h('b', `≈ ${p.points} pts`), ` (cote ${odds(p.odds)} avec ton pari, à l’heure actuelle).`)
-      : h('p.potential', 'Si tu as raison : ', h('b', `${p.points} pts`), ` (cote ${odds(p.odds)}, fixée à l’avance).`),
+      : h('p.potential', 'Si tu as raison : ', h('b', `${p.points} pts`),
+        bet.scoring === 'fixed' ? ' (barème fixe : pas de cote connue pour ce match).' : ` (cote ${odds(p.odds)}, fixée à l’avance).`),
     h('p.muted', bet.scoring === 'group'
       ? 'La cote bouge avec les pronostics des autres jusqu’à la clôture. Tu peux changer d’avis jusque-là.'
       : 'Ton pronostic vaut aussi dans tes autres groupes où ce match est ouvert. Tu peux changer d’avis jusqu’à la clôture.'),

@@ -54,7 +54,7 @@
   --chip-on-ink: var(--accent);
   --pick-bg: color-mix(in srgb, var(--brand) 18%, var(--surface-2)); /* l'option que j'ai choisie */
   --pick-ink: var(--ink);
-  --gain: var(--brand-strong); /* « +210 » sur les options */
+  --gain: var(--brand-strong); /* la cote « 2,50 » sous chaque option */
   --cta-bg: var(--accent); /* « Parier » au centre de la barre du bas */
   --cta-ink: var(--accent-ink);
   --card-line: 1px solid var(--line);
@@ -510,6 +510,8 @@ textarea.copy { font-size: 0.9rem; }
   font-weight: 600;
 }
 .opt-chip b { color: var(--gain); font-family: var(--display); }
+/* Barème fixe : pas une vraie cote, en grisé (sauf sur l'option choisie ou gagnante, plus bas). */
+.opt-chip b.fixed, .odds.fixed { color: var(--muted); }
 .opt-chip.mine { outline: 2px solid var(--brand); }
 /* Toute la carte mène à la fiche (lien posé dessus) ; les options à toucher passent au-dessus pour parier d'un geste. */
 .card-link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }

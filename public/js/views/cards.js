@@ -1,5 +1,5 @@
 import { cls, h } from '../dom.js';
-import { plural, pointsFor, relative, signedPts } from '../format.js';
+import { odds, plural, relative, signedPts } from '../format.js';
 import { icon } from '../icons.js';
 import { ctx } from '../state.js';
 import { competitorOf, crest, isLive, kickoff, matchVisual, pickBadge } from './match.js';
@@ -28,13 +28,15 @@ export function shortLabel(bet, option) {
   return option.key === 'draw' ? 'Nul' : option.label;
 }
 
+/** La cote d'une option sous son nom, « 2,50 » ; le barème fixe (pas de cote connue) en grisé. */
+const quote = (bet, o) => (bet.scoring === 'fixed'
+  ? h('b.fixed', { title: 'Barème fixe : pas de cote connue pour ce match' }, odds(o.odds))
+  : h('b', odds(o.odds)));
+
 /**
  * La carte d'un pari dans une liste : toute la carte mène à la fiche. onPick(bet, option, button) : parier d'un geste en
  * touchant une option (sans fenêtre de confirmation), ou changer d'avis jusqu'à la clôture.
  */
-/** Ce que rapporte une option si elle gagne : « +210 », plus parlant qu'une cote (pas de cote encore : « — »). */
-const gain = (o) => (o.odds == null ? '—' : `+${pointsFor(o.odds, ctx.settings)}`);
-
 export function betCard(bet, { isNew = false, onPick = null } = {}) {
   const myOption = bet.options.find((o) => o.id === bet.myPick);
   const decided = ['validating', 'settled'].includes(bet.status);
@@ -46,8 +48,8 @@ export function betCard(bet, { isNew = false, onPick = null } = {}) {
     // Une course : une tuile par pilote (photo, numéro, nom), « Un autre pilote » en point d'interrogation.
     const c = field ? competitorOf(bet, o) : null;
     const content = field
-      ? [crest(c ?? { key: o.key, name: o.label, abbr: '?' }, { round: true }), h('span', c ? c.name.split(' ').slice(1).join(' ') || c.name : 'Autre'), h('b', gain(o))]
-      : [h('span', visual ? shortLabel(bet, o) : o.label), h('b', gain(o))];
+      ? [crest(c ?? { key: o.key, name: o.label, abbr: '?' }, { round: true }), h('span', c ? c.name.split(' ').slice(1).join(' ') || c.name : 'Autre'), quote(bet, o)]
+      : [h('span', visual ? shortLabel(bet, o) : o.label), quote(bet, o)];
     const tag = field ? '.opt-chip.face-tile' : '.opt-chip';
     if (!quick) return h(`span${tag}`, { class: state, title: field ? o.label : null }, content);
     return h(`button${tag}.pickable`, {

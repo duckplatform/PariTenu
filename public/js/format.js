@@ -9,7 +9,8 @@ const nf = new Intl.NumberFormat('fr-FR');
 export const num = (n) => nf.format(n);
 export const pts = (n) => `${nf.format(n)} pts`;
 export const signedPts = (n) => `${n > 0 ? '+' : n < 0 ? '−' : ''}${nf.format(Math.abs(n))} pts`;
-export const odds = (x) => (x == null ? '—' : `×${x.toFixed(1).replace('.', ',')}`);
+/** Une cote comme chez les bookmakers : « 2,50 », deux décimales (pas encore de cote : « — »). */
+export const odds = (x) => (x == null ? '—' : x.toFixed(2).replace('.', ','));
 export const percent = (r) => (r == null ? '—' : `${Math.round(r * 100)} %`);
 export const plural = (n, one, many = `${one}s`) => `${n} ${n > 1 ? many : one}`;
 
