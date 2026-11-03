@@ -1,0 +1,54 @@
+# Tests de PariTenu à chaque envoi sur main, à chaque pull request, et à la demande (onglet Actions → Run workflow).
+#   - Tests unitaires (node:test) sous Linux : l'API réelle sur un port libre, aucune donnée ni Internet requis.
+#   - Parcours de bout en bout dans Microsoft Edge sous Windows (playwright-core, canal msedge, déjà installé sur les
+#     machines Windows de GitHub) ; les captures d'écran sont jointes au résultat (artefact « captures-edge »).
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un nouvel envoi sur la même branche annule les tests en cours de l'envoi précédent.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Tests unitaires
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24 # crypto.argon2 (PIN) et node:sqlite : Node 24.7 au moins (package.json, engines)
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+
+  e2e:
+    name: Parcours dans Edge
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:e2e
+      - name: Captures d'écran
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: captures-edge
+          path: test/e2e/out/
+          retention-days: 14
+          if-no-files-found: ignore

@@ -96,7 +96,7 @@ ils se règlent dans `/admin`, page Configuration.
 ## Tests
 
 ```bash
-npm test           # 216 tests : barème, cycle de vie, sécurité, admin et coupons, saisons et classements, sources, simulation de 360 paris
+npm test           # 219 tests : barème, cycle de vie, sécurité, admin et coupons, saisons et classements, sources, simulation de 360 paris
 npm run test:e2e   # 30 scénarios dans Edge (4 téléphones et un PC), captures dans test/e2e/out/
 npm run test:all   # les deux
 ```
@@ -106,6 +106,10 @@ sont vérifiés sur de vraies réponses capturées (`test/fixtures/sources/`).
 
 Les tests de bout en bout utilisent Microsoft Edge installé sur la machine (`playwright-core`, canal `msedge`) : rien
 à télécharger. `npm run test:e2e -- --headed` pour regarder. `test/e2e/out/planche.png` rassemble les écrans clés.
+
+**GitHub Actions** (`.github/workflows/tests.yml`) : à chaque envoi sur `main`, à chaque pull request et à la demande,
+les tests unitaires tournent sous Linux et le parcours dans Edge sous Windows ; ses captures sont jointes au résultat
+(artefact « captures-edge », gardé 14 jours).
 
 ## Documentation
 

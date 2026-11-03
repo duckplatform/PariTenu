@@ -26,9 +26,17 @@ Dans ce guide, `<utilisateur>` est ton identifiant cPanel (le dossier personnel 
 Le code va dans un dossier **hors de** `public_html`, par exemple `/home/<utilisateur>/paritenu`. Les données vont dans
 un autre dossier, par exemple `/home/<utilisateur>/paritenu-data` : une mise à jour du code ne les touche jamais.
 
+* **Avec Git (conseillé)** : le dépôt GitHub est cloné dans un dossier à part, et `.cpanel.yml` (à la racine du dépôt)
+  copie le code dans l'application à chaque déploiement, installe les dépendances et redémarre Passenger.
+  1. **Git Version Control** → **Create** : l'adresse du dépôt (`https://github.com/<compte>/PariTenu.git` ; pour un
+     dépôt privé, l'adresse SSH `git@github.com:<compte>/PariTenu.git` et la clé SSH de cPanel ajoutée au dépôt sur
+     GitHub comme « Deploy key », en lecture seule), dossier `/home/<utilisateur>/repositories/PariTenu` (**pas** le
+     dossier de l'application).
+  2. Crée d'abord l'application (étape 3) : `.cpanel.yml` utilise son environnement Node
+     (`~/nodevenv/paritenu/24`) et copie le code dans `~/paritenu`.
+  3. **Manage** → **Pull or Deploy** → **Deploy HEAD Commit**.
 * **Avec une archive** : sur ton PC, une archive du projet **sans** `node_modules/`, `data/`, `.env` ni `test/e2e/out/`.
   Dans **File Manager**, envoie-la dans `/home/<utilisateur>/paritenu`, puis **Extract**.
-* **Avec Git** (une fois le dépôt publié) : **Git Version Control** → **Create**, dossier `/home/<utilisateur>/paritenu`.
 
 ## 3. Créer l'application Node.js
 
@@ -133,9 +141,13 @@ Les liens d'invitation déjà envoyés pointent vers l'ancienne adresse. Une foi
 ## Mettre à jour
 
 1. `npm run backup -- avant-mise-a-jour` (Terminal, environnement virtuel) ;
-2. envoie le nouveau code dans `/home/<utilisateur>/paritenu` (sans toucher à `paritenu-data/`) ;
-3. **Run NPM Install** si `package.json` a changé, puis **Restart**. Les migrations de la base se font seules au
-   démarrage.
+2. **avec Git** : **Git Version Control** → **Manage** → **Pull or Deploy** → **Update from Remote**, puis **Deploy
+   HEAD Commit** (`.cpanel.yml` copie, installe et redémarre) ;
+   **avec une archive** : envoie le nouveau code dans `/home/<utilisateur>/paritenu` (sans toucher à `paritenu-data/`),
+   puis **Run NPM Install** si `package.json` a changé, et **Restart**.
+
+Les migrations de la base se font seules au démarrage. Le déploiement par Git ne supprime pas les fichiers retirés du
+dépôt : sans conséquence pour l'app, mais un ménage de `~/paritenu` peut se faire à la main de temps en temps.
 
 ## Ce que l'app suppose
 

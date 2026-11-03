@@ -58,6 +58,7 @@ public/
 scripts/admin.mjs      npm run admin : mot de passe de l'admin du site (saisi deux fois, rien d'affiché)
 scripts/backup.mjs     npm run backup [-- étiquette] : copie cohérente de la base (VACUUM INTO) dans <dossier de la base>/backups/
 app.cjs                démarrage sous Phusion Passenger (cPanel) : charge src/server.js ; voir docs/05-installation-cpanel.md
+.cpanel.yml            déploiement par le Git de cPanel : copie dans ~/paritenu, npm install sans outils de test, redémarrage
 scripts/demo.mjs       groupe de démonstration ; scripts/icons.mjs : icônes PNG depuis le SVG
 scripts/theme-previews.mjs  aperçus des thèmes pour l'admin (après npm run test:e2e)
 test/                  node:test (API réelle sur port libre) ; test/e2e/run.mjs : Edge headless
@@ -636,6 +637,11 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   fuseau du circuit), relié par `toad_api_uuid` ; l'API de résultats ne sert qu'aux classements et aux annulations.
 
 ## Tests
+
+GitHub Actions (`.github/workflows/tests.yml`) : `npm test` sous Linux (ubuntu-latest, Node 24) et `npm run test:e2e`
+sous Windows (windows-latest, Edge déjà installé), à chaque envoi sur `main`, à chaque pull request et à la demande ;
+les captures du parcours sont jointes au résultat. Les deux passent aussi en UTC et sur un clone neuf (sans `data/` ni
+`.env`).
 
 | Fichier | Ce qu'il couvre |
 |---|---|

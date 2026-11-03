@@ -241,6 +241,19 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   30 scénarios Edge, et par le lien public dans Edge (redirections `/aide`, `/g/…?pari=`, `/c/…` ; `/#/aide/installer`
   → `/help/installer` ; `/admin#/comptes` → `/admin/users` ; aucune erreur) ; base intacte (1 groupe, 227 paris).
 
+### 2026-11-03 : dépôt Git et GitHub Actions
+
+* ✅ Le projet devient un dépôt Git (branche `main`) dans `C:\Repositories\duckplatform\PariTenu` ; l'utilisateur le
+  publie lui-même avec GitHub Desktop. `.gitignore` : `data/` (base, sauvegardes, icône), `.env`, `node_modules`,
+  captures ; `.gitattributes` : fins de ligne LF. Aucun secret dans les fichiers suivis (vérifié).
+* ✅ GitHub Actions (`.github/workflows/tests.yml`) : tests unitaires sous Linux, parcours dans Edge sous Windows avec
+  ses captures en artefact ; à chaque envoi sur `main`, pull request, ou à la demande. Vérifié avant : clone neuf +
+  `npm ci`, 219 tests et 30 scénarios en UTC, et les tests unitaires dans un conteneur Linux (Node 26) ; casse des 430
+  imports relatifs (Linux distingue les majuscules).
+* 🧪 Premier passage sur GitHub après la publication du dépôt.
+* ⏳ Déploiement automatique sur cPanel (après l'installation manuelle) : SSH ou Git de cPanel, puis redémarrage de
+  Passenger.
+
 ### 2026-11-03 : prêt pour cPanel (Phusion Passenger), en SQLite
 
 * ✅ Précisions de l'utilisateur : sur cPanel, les variables d'environnement viennent de Passenger (« Setup Node.js App »),
