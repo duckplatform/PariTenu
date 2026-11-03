@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 24 # crypto.argon2 (PIN) et node:sqlite : Node 24.7 au moins (package.json, engines)
+          node-version: 24 # node:sqlite : Node 24.7 au moins (package.json, engines)
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm test

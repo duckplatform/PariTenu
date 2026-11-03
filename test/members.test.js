@@ -260,7 +260,7 @@ describe('administration du groupe', () => {
     const text = JSON.stringify(r.body);
     assert.equal(r.body.bets.length, 1);
     assert.ok(!text.includes(g.token), 'pas de lien d’invitation');
-    assert.ok(!text.includes('argon2'), 'pas de hash de PIN');
+    assert.ok(!/\$(scrypt|argon2id)\$/.test(text), 'pas de hash de PIN');
   });
 });
 

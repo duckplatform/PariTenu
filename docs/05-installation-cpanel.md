@@ -9,8 +9,8 @@ Dans ce guide, `<utilisateur>` est ton identifiant cPanel (le dossier personnel 
 
 ## Ce qu'il faut
 
-* **Node.js 24.7 ou plus récent** dans Setup Node.js App : les PIN sont hachés avec Argon2id (`crypto.argon2`, à partir
-  de Node 24.7) et la base utilise le SQLite intégré à Node.
+* **Node.js 24.7 ou plus récent** dans Setup Node.js App : la base utilise le SQLite intégré à Node. Les PIN sont hachés
+  avec scrypt (`crypto.scrypt`) : le Node de cPanel, lié à l'OpenSSL du système, n'a pas `crypto.argon2`.
 * Un **sous-domaine** (ou un domaine) avec un **certificat SSL** : l'app installable sur les téléphones et ses cookies
   demandent HTTPS.
 * Le **Terminal** de cPanel (pour choisir le mot de passe de l'admin) et les **Cron Jobs**.

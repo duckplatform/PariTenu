@@ -290,14 +290,14 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 * **Accès** : le jeton du lien (128 bits) est le secret du groupe ; la session est celle du compte (cookie
   `pt_session`), `HttpOnly`, `SameSite=Lax`, `Secure` en HTTPS et sur `*.ts.net`, valable un an et prolongée à
   chaque visite ; elle n'ouvre que les groupes dont le compte est membre (`403 not_member` sinon).
-* **PIN** : Argon2id (19 MiB, 2 passes). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
+* **PIN** : scrypt (N = 2^14, r = 8, p = 5 : 16 MiB ; les hachages Argon2id d'avant restent acceptés là où Node le permet). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
   d'un groupe (`inviteToken` ; sans : `403 group_link_required`, lien inconnu : `404`), contrôlé aussi par
   `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03). 5 erreurs (connexion ou
   changement de PIN) bloquent le compte 15 minutes, chaque blocage suivant dure deux fois plus (24 h
   au plus ; on repart de 15 minutes un jour après le dernier), plus la limite de 30 tentatives par adresse toutes les
   5 minutes. Après une réinitialisation, le nouveau PIN ne se choisit que depuis le lien d'un de ses groupes ; la
   réinitialisation n'aboutit que si un admin de chacun de ses groupes l'a demandée (dans les 7 jours).
-* **Admin du site** : mot de passe (12 caractères au moins) haché en Argon2id, choisi uniquement sur le serveur
+* **Admin du site** : mot de passe (12 caractères au moins) haché en scrypt, choisi uniquement sur le serveur
   (`npm run admin`, aucune route pour le faire depuis le site) ; 5 erreurs bloquent 15 min, puis deux fois plus (24 h au
   plus), en plus de la limite par adresse ; `npm run admin` débloque et ferme toutes les sessions. Session : cookie
   `pt_admin` (`HttpOnly`, `SameSite=Strict`, `Path=/api/admin`, `Secure` en HTTPS), fermée après 2 h sans activité et
@@ -602,14 +602,14 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 * **Accès** : le jeton du lien (128 bits) est le secret du groupe ; la session est celle du compte (cookie
   `pt_session`), `HttpOnly`, `SameSite=Lax`, `Secure` en HTTPS et sur `*.ts.net`, valable un an et prolongée à
   chaque visite ; elle n'ouvre que les groupes dont le compte est membre (`403 not_member` sinon).
-* **PIN** : Argon2id (19 MiB, 2 passes). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
+* **PIN** : scrypt (N = 2^14, r = 8, p = 5 : 16 MiB ; les hachages Argon2id d'avant restent acceptés là où Node le permet). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
   d'un groupe (`inviteToken` ; sans : `403 group_link_required`, lien inconnu : `404`), contrôlé aussi par
   `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03). 5 erreurs (connexion ou
   changement de PIN) bloquent le compte 15 minutes, chaque blocage suivant dure deux fois plus (24 h
   au plus ; on repart de 15 minutes un jour après le dernier), plus la limite de 30 tentatives par adresse toutes les
   5 minutes. Après une réinitialisation, le nouveau PIN ne se choisit que depuis le lien d'un de ses groupes ; la
   réinitialisation n'aboutit que si un admin de chacun de ses groupes l'a demandée (dans les 7 jours).
-* **Admin du site** : mot de passe (12 caractères au moins) haché en Argon2id, choisi uniquement sur le serveur
+* **Admin du site** : mot de passe (12 caractères au moins) haché en scrypt, choisi uniquement sur le serveur
   (`npm run admin`, aucune route pour le faire depuis le site) ; 5 erreurs bloquent 15 min, puis deux fois plus (24 h au
   plus), en plus de la limite par adresse ; `npm run admin` débloque et ferme toutes les sessions. Session : cookie
   `pt_admin` (`HttpOnly`, `SameSite=Strict`, `Path=/api/admin`, `Secure` en HTTPS), fermée après 2 h sans activité et

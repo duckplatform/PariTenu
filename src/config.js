@@ -47,8 +47,8 @@ export function buildConfig(env = process.env) {
     liveEveryMs: isTest ? 0 : 60_000, // scores en direct des rencontres en cours
     sourceKeys: { padel: env.PT_PADEL_TOKEN || null }, // sources qui demandent une clé personnelle
     autoOpenEveryMs: isTest ? 0 : 30 * 60_000, // ouverture des paris des compétitions activées (et juste après un réglage)
-    // En test, un hachage léger garde la suite rapide ; en vrai, Argon2id au niveau OWASP.
-    pinParams: isTest ? { memory: 1024, passes: 1 } : PIN_PARAMS,
+    // En test, un hachage léger garde la suite rapide ; en vrai, scrypt au niveau OWASP.
+    pinParams: isTest ? { cost: 2 ** 10, blockSize: 8, parallelization: 1 } : PIN_PARAMS,
     authRateLimit: isTest ? 10_000 : 30,
   };
 }

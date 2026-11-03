@@ -121,4 +121,4 @@ les tests unitaires tournent sous Linux et le parcours dans Edge sous Windows ; 
 ## Pile
 
 Node 24 (ESM), Express 5, zod, helmet ; SQLite intégré à Node (`node:sqlite`) ; interface en JavaScript natif sans
-étape de build, installable (PWA) ; PIN hachés en Argon2id (`crypto.argon2`). Trois dépendances.
+étape de build, installable (PWA) ; PIN hachés en scrypt (`crypto.scrypt`). Trois dépendances.
