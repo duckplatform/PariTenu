@@ -400,6 +400,19 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   capture `26b-annonce-competitions`, puis l'Activité).
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
+### 2026-11-04 : des interrupteurs dans « Mes compétitions »
+
+* ✅ Demande : « sur cette vue (`/<groupe>/follow`) on voit bien quand on participe (le bouton est vert), mais pas
+  quand on ne participe pas, les 2 boutons sont neutres. Sur cette vue uniquement, il faudrait des switchs plutôt que
+  des boutons […] On garde le système de boutons sur la page des paris pour notifier et choisir ».
+* ✅ « Mes compétitions » : un interrupteur par compétition (celui des réglages), allumé si j'y participe, éteint
+  sinon ; sans réponse, « pas encore choisi » sous son nom. Le basculer enregistre tout de suite (« Tu participes :
+  ⚽ Ligue 1. » / « Tu ne participes plus : … ») ; en cas d'erreur il revient en place. L'annonce de la page du groupe
+  garde ses boutons « Je participe » / « Non merci ».
+* ✅ Cahier des charges ; cache du service worker `pari-tenu-v10`. Scénario Edge : l'état de chaque interrupteur, « pas
+  encore choisi », basculer puis revenir, l'état enregistré (capture `26c-mes-competitions`).
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

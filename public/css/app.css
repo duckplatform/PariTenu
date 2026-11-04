@@ -575,6 +575,10 @@ textarea.copy { font-size: 0.9rem; }
 .feed-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
 .feed-row + .feed-row { border-top: 1px solid var(--line); }
 .feed-row .grow { display: flex; flex-direction: column; }
+/* Mes compétitions : un interrupteur par compétition, séparés comme les lignes de l’annonce. */
+.feed-switches { gap: 0; }
+.feed-switches .switch { padding: 8px 0; }
+.feed-switches .switch + .switch { border-top: 1px solid var(--line); }
 
 
 /* ——— Navigation : en bas sur téléphone, barre latérale sur PC */

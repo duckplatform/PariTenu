@@ -655,6 +655,24 @@ await test('paris automatiques : la Ligue 1 activée, ses matchs s’ouvrent et 
   await page.locator('.bet-card', { hasText: 'Lille – Lens' }).first().waitFor();
   await page.locator('.proposals [data-feed="meteo"]').getByRole('button', { name: 'Non merci' }).click();
   await page.locator('.proposals [data-feed="meteo"]').waitFor({ state: 'detached' });
+  // Mes compétitions : un interrupteur par compétition, allumé si j'y participe ; éteint sinon (« Non merci », ou pas
+  // encore de réponse, dit sous son nom).
+  const groupHome = betUrl.split('/bet/')[0];
+  await page.goto(`${groupHome}/follow`);
+  await page.getByRole('switch', { name: /Ligue 1/ }).waitFor();
+  assert.deepEqual(await Promise.all(['Ligue 1', 'NFL', 'Météo'].map((n) => page.getByRole('switch', { name: new RegExp(n) }).isChecked())), [true, false, false]);
+  assert.match(await page.locator('[data-feed="usfoot:nfl"]').innerText(), /pas encore choisi/);
+  assert.doesNotMatch(await page.locator('[data-feed="meteo"]').innerText(), /pas encore choisi/);
+  assert.equal(await page.getByRole('button', { name: 'Je participe' }).count(), 0, 'des interrupteurs, pas de boutons');
+  await shot(page, '26c-mes-competitions');
+  const meteoSwitch = page.getByRole('switch', { name: /Météo/ });
+  await meteoSwitch.check();
+  await waitText(page, 'Tu participes : 🌦️ Météo.');
+  await meteoSwitch.uncheck();
+  await waitText(page, 'Tu ne participes plus : 🌦️ Météo.');
+  const { feeds: chosen } = await page.evaluate(async (g) => (await fetch(`/api/groups/${g}/feeds`)).json(), gidOf(betUrl));
+  assert.deepEqual(chosen.map((f) => [f.key, f.choice]), [['foot:fra.1', 'in'], ['usfoot:nfl', null], ['meteo', 'out']]);
+  await page.goto(groupHome);
   await page.getByRole('button', { name: '⚽ Ligue 1' }).click();
   await waitText(page, 'Football · Ligue 1 · Lille – Lens');
   assert.equal(await page.locator('.bet-card').count(), 2, 'seulement les paris de la Ligue 1');

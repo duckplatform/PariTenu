@@ -1,6 +1,6 @@
 // Service worker : rend l'app installable et lançable hors connexion (la coquille, pas les données).
 // Réseau d'abord pour toujours avoir la dernière version ; le cache ne sert que sans réseau.
-const CACHE = 'pari-tenu-v9';
+const CACHE = 'pari-tenu-v10';
 const SHELL = ['/', '/css/app.css', '/theme.css', '/js/main.js', '/manifest.webmanifest', '/icons/icon.svg'];
 
 self.addEventListener('install', (event) => {

@@ -351,7 +351,8 @@ du lendemain…). Le fil du groupe reçoit un résumé (« 6 nouveaux paris ouve
 * Compétition désactivée : ses paris encore sans pronostic disparaissent, les autres vont jusqu'au bout.
 * L'accueil filtre les paris par classement (⚽ Ligue 1, 🏈 NFL, 👥 Vie du groupe…).
 * **Chacun choisit ses compétitions (V3)** : le groupe propose les compétitions activées ; chaque membre répond « Je
-  participe » ou « Non merci » (page Moi → Mes compétitions pour changer d'avis). Sans réponse, les paris d'une
+  participe » ou « Non merci » (page Moi → Mes compétitions pour changer d'avis : un interrupteur par compétition,
+  allumé s'il y participe, éteint sinon, « pas encore choisi » sans réponse ; demande du 2026-11-04). Sans réponse, les paris d'une
   compétition ne s'affichent pas chez lui ; un pari sur lequel il a parié reste visible.
 * **Une nouvelle compétition s'annonce** (demande du 2026-11-04 : « il serait bon de notifier cette nouvelle catégorie
   et de demander à l'utilisateur s'il souhaite participer ; à vérifier quand on est admin et simple membre ») :
