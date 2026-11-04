@@ -111,6 +111,11 @@ tous ses groupes ; une connexion par appareil vaut pour tous ses groupes. Les ch
   pseudo), son pseudo et son PIN : on retrouve tous ses groupes. Pas de connexion depuis l'accueil du site (demande du
   2026-11-03 : « les tentatives de login ne sont possibles que depuis les liens de groupe ») : il dit d'ouvrir le lien
   d'un groupe, ou de le demander à un ami (page « Moi », « Invite tes amis ») ;
+* l'adresse d'un groupe (`/<groupe>`) ne connecte pas non plus : elle ne change jamais, alors qu'un admin peut changer
+  le lien d'invitation. Sans session, si l'appareil garde le lien du groupe, l'app ouvre l'écran de connexion de ce
+  lien ; sinon (nouveau navigateur, nouvelle adresse du site) une page « Reconnecte-toi », sur l'adresse même, explique
+  d'ouvrir le lien d'invitation et où un membre le trouve (demande du 2026-11-04 : « quand j'utilise le lien du groupe,
+  je n'y accède pas et on ne me propose pas l'authentification ») ;
 * « Me déconnecter de cet appareil » (page « Moi ») le déconnecte de tous ses groupes, pas ses autres appareils.
 
 **Plusieurs groupes (V3)** :

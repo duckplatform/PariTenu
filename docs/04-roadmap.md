@@ -335,6 +335,24 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   remplacement de texte de l'entrée « moteurs de recherche » où « $` » de `Allow: /$` avait recopié tout le haut du
   fichier) ; copies retirées après avoir vérifié qu'elles ne contenaient rien de plus que l'original.
 
+### 2026-11-04 : « Reconnecte-toi » sur l'adresse d'un groupe
+
+* ✅ Demande : « quand j'utilise le lien de groupe (`/9fb047ac2a0b6f9c`) je n'y accède pas et on ne me propose pas
+  l'authentification ; pourquoi je dois absolument utiliser un lien d'invitation pour me reconnecter ? ». Constat : l'app
+  passée sur `pronos.entrecouilles.fr`, aucun appareil n'y a de session ni le lien du groupe en mémoire (propres à
+  chaque adresse) ; l'adresse du groupe renvoyait alors sur « Mes groupes » avec un message éphémère et « Tu n'es dans
+  aucun groupe pour l'instant », faux. Choix de l'utilisateur·ice : garder la connexion par le seul lien d'invitation
+  (l'adresse d'un groupe ne change jamais, un admin peut changer le lien) et mieux l'expliquer.
+* ✅ Sans session sur l'adresse d'un groupe, et sans le lien en mémoire : page « Reconnecte-toi », sur l'adresse même
+  (ouvrir le lien d'invitation, où un membre le trouve, pourquoi pas ici) ; avec le lien en mémoire : l'écran de
+  connexion de ce lien, comme avant. « Mes groupes » sans compte : « Aucun compte connecté sur cet appareil. »
+* ✅ Aide et cahier des charges à jour ; cache du service worker `pari-tenu-v7`.
+* ✅ 223 tests ; scénario Edge « un seul compte » : l'adresse du groupe dans un navigateur neuf (capture
+  `39-reconnecte-toi`).
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge). Chaque joueur
+  rouvre une fois le lien d'invitation sur `pronos.entrecouilles.fr` (un admin le repartage : Réglages du groupe →
+  Partager).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

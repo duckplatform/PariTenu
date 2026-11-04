@@ -214,6 +214,20 @@ await test('un seul compte : connexion par le lien du groupe (jamais depuis l’
   assert.equal(await pc.page.getByRole('button', { name: 'Me connecter' }).count(), 0);
   const refused = await pc.page.evaluate(async () => (await fetch('/api/account/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pseudo: 'Max', pin: '0000' }) })).status);
   assert.equal(refused, 403, 'sans lien de groupe, le serveur refuse aussi');
+  // L'adresse du groupe ne connecte pas : sur un navigateur qui n'en garde pas le lien, une page explique quoi faire,
+  // sans quitter l'adresse.
+  const groupHome = max.page.url();
+  assert.match(groupHome, GROUP_URL);
+  await pc.page.goto(groupHome);
+  const reconnect = pc.page.locator('#reconnexion');
+  await reconnect.waitFor();
+  assert.equal(pc.page.url(), groupHome, 'on reste sur l’adresse du groupe');
+  assert.match(await reconnect.textContent(), /ouvre son lien d’invitation[\s\S]*page « Moi », « Invite tes amis »/);
+  assert.equal(await pc.page.locator('input[name=login-pin]').count(), 0, 'pas de PIN à taper sur l’adresse du groupe');
+  assert.match(await pc.page.title(), /^Reconnecte-toi — /);
+  await shot(pc.page, '39-reconnecte-toi');
+  await pc.page.goto(`${ORIGIN}/groups`);
+  await waitText(pc.page, 'Aucun compte connecté sur cet appareil.');
   // Le lien du groupe : son pseudo et son PIN, il retrouve son groupe.
   await pc.page.goto(invite);
   await pc.page.getByRole('tab', { name: 'J’ai déjà un compte' }).click();

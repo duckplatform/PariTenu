@@ -18,7 +18,7 @@ import { liveView } from './views/live.js';
 import { install, meView } from './views/me.js';
 import { memberView } from './views/member.js';
 import { rankView } from './views/rank.js';
-import { createGroupView, groupsView, siteHomeView } from './views/welcome.js';
+import { createGroupView, groupsView, reconnectView, siteHomeView } from './views/welcome.js';
 
 const root = document.getElementById('app');
 
@@ -189,12 +189,16 @@ async function render() {
       return;
     }
     if (err instanceof ApiError && err.status === 401 && route.gid) {
-      // Pas connecté (déconnexion, PIN réinitialisé…) : retour à l'écran de connexion du groupe.
+      // Pas connecté (déconnexion, PIN réinitialisé…) : l'écran de connexion du groupe si l'appareil en garde le lien ;
+      // sinon (nouveau navigateur, nouvelle adresse du site) une page qui explique comment se reconnecter, sur place.
       const token = inviteTokenOf(route.gid);
       forgetGroup(route.gid);
       if (token) { location.assign(`/invite/${token}`); return; }
-      toast('Reconnecte-toi avec le lien du groupe.', 'error');
-      navigate('/groups', { replace: true });
+      const out = reconnectView();
+      document.title = `${out.title} — ${brand.name}`;
+      root.replaceChildren(out.node);
+      root.className = 'app';
+      window.scrollTo(0, 0);
       return;
     }
     if (err instanceof ApiError && err.status === 404 && route.gid) {

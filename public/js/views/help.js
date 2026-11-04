@@ -15,7 +15,7 @@ const SECTIONS = [
       'Chacun ouvre le lien, choisit un pseudo, un avatar et un code PIN à 4 chiffres : c’est son compte. Pas d’e-mail.',
       'Ton compte vaut dans tous tes groupes : un seul pseudo (à toi sur toute l’app), un seul avatar, un seul PIN. Change-les dans « Moi » et c’est changé partout.',
       'Déjà connecté, tu entres dans un nouveau groupe d’un geste en ouvrant son lien, sans rien retaper.',
-      'Sur un autre téléphone ou sur ton PC : ouvre le lien d’un de tes groupes, « J’ai déjà un compte », ton pseudo et ton PIN, et tu retrouves tous tes groupes. On ne se connecte que par le lien d’un groupe : sans lui, personne ne peut essayer de deviner ton PIN.',
+      'Sur un autre téléphone ou sur ton PC : ouvre le lien d’un de tes groupes, « J’ai déjà un compte », ton pseudo et ton PIN, et tu retrouves tous tes groupes. On ne se connecte que par le lien d’invitation d’un groupe (pas par l’adresse de sa page) : sans lui, personne ne peut essayer de deviner ton PIN.',
       'PIN oublié ? Demande à un admin de ton groupe de le réinitialiser, puis rouvre le lien du groupe pour en choisir un nouveau. Si tu es dans plusieurs groupes, il faut un admin de chacun : un seul ne peut pas prendre ton compte.',
     ]],
   ]],

@@ -292,7 +292,8 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   chaque visite ; elle n'ouvre que les groupes dont le compte est membre (`403 not_member` sinon).
 * **PIN** : scrypt (N = 2^14, r = 8, p = 5 : 16 MiB ; les hachages Argon2id d'avant restent acceptés là où Node le permet). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
   d'un groupe (`inviteToken` ; sans : `403 group_link_required`, lien inconnu : `404`), contrôlé aussi par
-  `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03). 5 erreurs (connexion ou
+  `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03), l'adresse d'un groupe non plus
+  (un `401` y ouvre `/invite/<lien>` si l'appareil le garde, sinon `reconnectView()` de `welcome.js`, sur place). 5 erreurs (connexion ou
   changement de PIN) bloquent le compte 15 minutes, chaque blocage suivant dure deux fois plus (24 h
   au plus ; on repart de 15 minutes un jour après le dernier), plus la limite de 30 tentatives par adresse toutes les
   5 minutes. Après une réinitialisation, le nouveau PIN ne se choisit que depuis le lien d'un de ses groupes ; la
