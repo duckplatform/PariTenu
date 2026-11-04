@@ -381,6 +381,25 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   repartage le nouveau lien.
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
+### 2026-11-04 : une nouvelle compétition s'annonce, chacun choisit (l'admin aussi)
+
+* ✅ Demande : « lorsque j'active une nouvelle compétition, on me propose directement les paris, il serait bon de
+  notifier cette nouvelle catégorie et demander à l'utilisateur s'il souhaite participer […] à vérifier quand on est
+  admin et simple membre du groupe ». Constat (code et tests) : l'admin qui activait y était inscrit d'office, sans
+  question ; un simple membre était bien consulté, mais par une carte placée sous les paris à jouer, facile à rater ;
+  activée depuis l'admin du site, tout le monde était consulté. Proposition validée.
+* ✅ Personne n'est inscrit d'office, l'admin qui active compris. En haut de la page du groupe, au-dessus des paris :
+  « 🆕 Nouvelle compétition dans le groupe » (ou « 3 nouvelles compétitions »), « Je participe » / « Non merci » pour
+  chacune, jusqu'à la réponse ; « Mes compétitions › » pour changer d'avis.
+* ✅ L'Activité le dit à tout le groupe : « Léa a ajouté ⚽ Ligue 1, 🏈 NFL et 🌦️ Météo aux compétitions du groupe :
+  chacun choisit d'y participer » (« L'admin du site a ajouté… » depuis `/admin`). Événement `competitions_added`.
+* ✅ « Je participe » après coup reprend ses pronostics des mêmes matchs faits dans ses autres groupes (avant : seulement
+  pour un pari ouvert après la réponse).
+* ✅ Aide, cahier des charges (§ 7.11), doc technique ; cache du service worker `pari-tenu-v9`. 225 tests (Léa consultée
+  comme les autres, le fil, l'admin du site, les pronostics repris), 30 scénarios Edge (l'annonce avant les paris,
+  capture `26b-annonce-competitions`, puis l'Activité).
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

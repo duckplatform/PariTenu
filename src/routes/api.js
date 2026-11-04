@@ -238,8 +238,9 @@ export function apiRouter(deps) {
     if (input.sources) input.sources = sources.normalizeConfig(input.sources);
     const before = new Set(sources.offered(req.group.id).map((f) => f.key));
     const settings = groups.updateSettings(req.me, input);
-    // L'admin qui active une compétition y participe ; les autres membres choisissent (page « Mes compétitions »).
-    for (const f of sources.offered(req.group.id)) if (!before.has(f.key)) follows.setIfUnset(req.me.id, f.key, 'in');
+    // Compétitions activées : une ligne dans l'Activité ; chacun, l'admin compris, choisit d'y participer (l'annonce en
+    // haut de la page du groupe). Personne n'y est inscrit d'office (demande du 2026-11-04).
+    groups.competitionsAdded(req.group.id, req.me.id, sources.offered(req.group.id).filter((f) => !before.has(f.key)));
     // Compétitions coupées : leurs paris pas encore joués disparaissent ; activées : leurs paris s'ouvrent (en tâche de fond).
     const removed = sources.prune(req.group.id);
     if (config.autoOpenEveryMs) {
@@ -270,6 +271,8 @@ export function apiRouter(deps) {
     const { key, choice } = parse(z.object({ key: z.string().max(80), choice: z.enum(['in', 'out']) }), req.body);
     if (!sources.offered(req.group.id).some((f) => f.key === key)) throw notFound('Cette compétition n’est pas proposée dans le groupe.');
     follows.set(req.me.id, key, choice);
+    // « Je participe » : ses pronostics des mêmes matchs, dans ses autres groupes, sont repris dans ce groupe.
+    if (choice === 'in') bets.adoptPicks(req.me, key);
     ok(res);
   });
 

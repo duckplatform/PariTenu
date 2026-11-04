@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { after, before, describe, it } from 'node:test';
 import { addDays, dayKey } from '../src/lib/time.js';
-import { betUrl, coupon, createBet, DAY, HOUR, MINUTE, setupGroup, startServer } from './helpers.js';
+import { betUrl, coupon, createBet, DAY, HOUR, MINUTE, joinCompetitions, setupGroup, startServer } from './helpers.js';
 
 let srv;
 before(async () => { srv = await startServer(); });
@@ -12,9 +12,13 @@ const settingsUrl = (g) => `/api/groups/${g.gid}/settings`;
 const sourcesUrl = (g) => `/api/groups/${g.gid}/sources`;
 const LIGUE_1 = { foot: { competitions: ['fra.1'] } };
 
-/** Un admin active des compétitions, puis le serveur ouvre leurs paris (il le fait tout seul toutes les 30 minutes). */
-async function enable(s, g, sources) {
+/**
+ * Un admin active des compétitions et y participe (« Je participe » : personne n'y est inscrit d'office), puis le serveur
+ * ouvre leurs paris (il le fait tout seul toutes les 30 minutes). join: false : Léa n'a pas encore répondu.
+ */
+async function enable(s, g, sources, { join = true } = {}) {
   await g.c.lea.ok('PATCH', settingsUrl(g), { sources });
+  if (join) await joinCompetitions(g.c.lea, g.gid);
   return s.deps.sources.autoOpen(g.gid);
 }
 
@@ -361,8 +365,16 @@ describe('un joueur, plusieurs groupes', () => {
 describe('compétitions suivies', () => {
   it('le groupe propose, chacun choisit : sans réponse les paris restent cachés', () => fresh(async (s) => {
     const g = await setupGroup(s, ['max', 'tom']);
-    await enable(s, g, { ...LIGUE_1, usfoot: { competitions: ['nfl'] } });
-    assert.equal((await listBets(g, 'lea')).length, 3, 'Léa a activé la Ligue 1 et la NFL : elle y participe');
+    await enable(s, g, { ...LIGUE_1, usfoot: { competitions: ['nfl'] } }, { join: false });
+    // Personne n'y est inscrit d'office, pas même Léa qui vient de les activer : chacun répond (demande du 2026-11-04).
+    assert.equal((await listBets(g, 'lea')).length, 0, 'Léa a activé la Ligue 1 et la NFL : on lui demande aussi');
+    assert.deepEqual((await g.c.lea.ok('GET', `/api/groups/${g.gid}/feeds`)).feeds.map((f) => f.choice), [null, null]);
+    // Le fil du groupe le dit à tous.
+    const added = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feed`)).events.find((e) => e.type === 'competitions_added');
+    assert.deepEqual([added.memberId, added.data.labels], [g.id.lea, ['⚽ Ligue 1', '🏈 NFL']]);
+    await g.c.lea.ok('POST', `/api/groups/${g.gid}/feeds`, { key: 'foot:fra.1', choice: 'in' });
+    await g.c.lea.ok('POST', `/api/groups/${g.gid}/feeds`, { key: 'usfoot:nfl', choice: 'in' });
+    assert.equal((await listBets(g, 'lea')).length, 3, 'elle y participe : leurs paris s’affichent');
     const { feeds } = await g.c.max.ok('GET', `/api/groups/${g.gid}/feeds`);
     assert.deepEqual(feeds.map((f) => [f.key, `${f.emoji} ${f.label}`, f.choice, f.open]), [['foot:fra.1', '⚽ Ligue 1', null, 2], ['usfoot:nfl', '🏈 NFL', null, 1]]);
     assert.equal((await listBets(g, 'max')).length, 0, 'Max n’a pas encore répondu : rien ne l’envahit');
@@ -376,6 +388,21 @@ describe('compétitions suivies', () => {
     await g.c.tom.ok('POST', betUrl(g, nfl.betId, 'pick'), { optionId: nfl.opt['Victoire Bills'] });
     await g.c.tom.ok('POST', `/api/groups/${g.gid}/feeds`, { key: 'usfoot:nfl', choice: 'out' });
     assert.deepEqual((await listBets(g, 'tom')).map((b) => b.question), ['Football américain · NFL · Bills – Ravens']);
+  }));
+
+  it('« Je participe » après coup : on retrouve ses pronostics des mêmes matchs faits dans ses autres groupes', () => fresh(async (s) => {
+    const g = await setupGroup(s, ['max']);
+    await enable(s, g, LIGUE_1);
+    const lille = await openBet(g, 'Football · Ligue 1 · Lille – Lens');
+    await g.c.lea.ok('POST', betUrl(g, lille.betId, 'pick'), { optionId: lille.opt['Match nul'] });
+    // Un autre groupe de Léa active la Ligue 1 : ses paris s'ouvrent, Léa n'a pas encore répondu.
+    const { groupId: other } = await g.c.lea.ok('POST', '/api/groups', { name: 'Bureau', emoji: '💼', coupon: coupon(s) });
+    const bureau = { gid: other, c: { lea: g.c.lea } };
+    await enable(s, bureau, LIGUE_1, { join: false });
+    assert.equal((await listBets(bureau)).length, 0);
+    await g.c.lea.ok('POST', `/api/groups/${other}/feeds`, { key: 'foot:fra.1', choice: 'in' });
+    const { bet } = await openBet(bureau, 'Football · Ligue 1 · Lille – Lens');
+    assert.equal(bet.options.find((o) => o.id === bet.myPick)?.label, 'Match nul', 'son pronostic du premier groupe');
   }));
 });
 

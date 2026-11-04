@@ -247,8 +247,21 @@ export class BetService {
     }
   }
 
-  /** Nouveau pari de source : les membres du groupe qui ont déjà parié dessus ailleurs (même joueur) y retrouvent leur pronostic. */
-  #inheritPicks(bet) {
+  /**
+   * « Je participe » à une compétition après coup : ses paris ouverts dans le groupe reprennent les pronostics que le
+   * joueur a déjà faits sur les mêmes matchs dans ses autres groupes.
+   */
+  adoptPicks(member, feed) {
+    const open = this.db.prepare("SELECT * FROM bets WHERE group_id = ? AND status = 'open' AND source IS NOT NULL AND closes_at > ?")
+      .all(member.group_id, this.clock.now()).filter((bet) => feedOf(bet) === feed);
+    tx(this.db, () => { for (const bet of open) this.#inheritPicks(bet, member.id); });
+  }
+
+  /**
+   * Nouveau pari de source : les membres du groupe qui ont déjà parié dessus ailleurs (même joueur) y retrouvent leur
+   * pronostic (only : un seul membre, qui vient de choisir de suivre la compétition).
+   */
+  #inheritPicks(bet, only = null) {
     const key = this.#refKey(bet);
     if (!key) return;
     const feed = feedOf(bet);
@@ -260,7 +273,7 @@ export class BetService {
         JOIN groups g ON g.id = b.group_id
         WHERE m.group_id = ? AND m.status = 'active' AND m.player_id IS NOT NULL`).all(bet.source, key, bet.group_id);
     for (const e of earlier) {
-      if (this.#pickOf(bet.id, e.member_id) || !this.follows.follows(e.member_id, feed)) continue;
+      if ((only && e.member_id !== only) || this.#pickOf(bet.id, e.member_id) || !this.follows.follows(e.member_id, feed)) continue;
       const option = this.db.prepare('SELECT * FROM bet_options WHERE bet_id = ? AND source_key = ?').get(bet.id, e.source_key);
       if (option) this.#insertPick(bet, e.member_id, option, e.group_name);
     }

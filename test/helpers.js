@@ -83,6 +83,15 @@ export const coupon = (srv) => srv.deps.coupons.create({ note: 'test' }).code;
 const PSEUDOS = { ines: 'Inès', jo: 'Jo' };
 
 /** Ce qu'un admin active d'abord pour lancer des paris maison : les deux types et toutes les catégories. */
+/**
+ * « Je participe » à toutes les compétitions proposées par le groupe et pas encore choisies : personne n'y est inscrit
+ * d'office, pas même l'admin qui les active.
+ */
+export async function joinCompetitions(client, gid) {
+  const { feeds } = await client.ok('GET', `/api/groups/${gid}/feeds`);
+  for (const f of feeds) if (f.choice == null) await client.ok('POST', `/api/groups/${gid}/feeds`, { key: f.key, choice: 'in' });
+}
+
 export async function enableHouseBets(client, gid) {
   const { settings } = await client.ok('GET', `/api/groups/${gid}`);
   await client.ok('PATCH', `/api/groups/${gid}/settings`, {

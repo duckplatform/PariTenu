@@ -48,7 +48,7 @@ const SECTIONS = [
   ]],
   ['competitions', '🏟️ Compétitions et paris automatiques', [
     ['p', 'Un admin active des compétitions dans les réglages du groupe (l’engrenage ⚙️ à côté de son nom) → Réglages des paris : Ligue 1, Ligue des champions, Top 14, NFL, NBA, ATP, padel, UFC, F1, MotoGP… (rien n’est activé d’office). Tous leurs paris s’ouvrent alors tout seuls : un pari par match ou par course, sur son vainqueur, titré « sport · compétition · rencontre ».'],
-    ['p', 'Chacun choisit ensuite les compétitions auxquelles il participe (Moi → Mes compétitions, ou la carte « Le groupe te propose » sur l’accueil). Les paris des compétitions que tu ne suis pas ne s’affichent pas chez toi.'],
+    ['p', 'Chacun choisit ensuite les compétitions auxquelles il participe, l’admin qui les active compris : une nouvelle compétition s’annonce en haut de la page du groupe (« Je participe » ou « Non merci ») et dans l’Activité ; tu peux changer d’avis dans Moi → Mes compétitions. Les paris des compétitions que tu ne suis pas ne s’affichent pas chez toi ; en disant « Je participe », tu retrouves tes pronostics déjà faits sur les mêmes matchs dans tes autres groupes.'],
     ['p', 'Le résultat officiel arrive tout seul dès la fin de l’événement, et les points avec. Il ne se conteste pas : c’est le score officiel (si la source se trompe, un admin du groupe corrige le résultat). Match reporté ou annulé : pari annulé.'],
   ]],
   ['groups', '👥 Plusieurs groupes', [

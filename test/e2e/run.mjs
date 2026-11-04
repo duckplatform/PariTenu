@@ -617,6 +617,25 @@ await test('réglages des paris : couper un type, une catégorie ; activer des c
   assert.deepEqual(settings.sources.meteo.competitions, ['meteo']);
   assert.equal(settings.sources.meteo.params.place.name, 'Lyon');
   assert.equal(settings.categories.find((c) => c.id === 'insolite').hidden, true);
+
+  // Léa aussi est consultée (personne n'est inscrit d'office) : l'annonce en haut de la page du groupe, avant les paris.
+  await page.goto(betUrl.split('/bet/')[0]);
+  const offer = page.locator('.proposals');
+  await offer.getByText('3 nouvelles compétitions dans le groupe').waitFor();
+  assert.equal(await page.evaluate(() => {
+    const first = document.querySelector('[data-section]');
+    return !!(document.querySelector('.proposals').compareDocumentPosition(first) & Node.DOCUMENT_POSITION_FOLLOWING);
+  }), true, 'l’annonce passe avant les paris');
+  await shot(page, '26b-annonce-competitions');
+  for (const feed of ['foot:fra.1', 'usfoot:nfl', 'meteo']) {
+    await offer.locator(`[data-feed="${feed}"]`).getByRole('button', { name: 'Je participe' }).click();
+    await page.locator(`.proposals [data-feed="${feed}"]`).waitFor({ state: 'detached' });
+  }
+  assert.equal(await page.locator('.proposals').count(), 0, 'répondu : l’annonce disparaît');
+  // L'Activité le dit à tout le groupe.
+  await page.goto(`${betUrl.split('/bet/')[0]}/activity`);
+  await waitText(page, 'aux compétitions du groupe');
+  assert.match(await text(page), /Léa a ajouté ⚽ Ligue 1, 🏈 NFL et .*Météo aux compétitions du groupe/);
 });
 
 let autoUrl;

@@ -351,9 +351,16 @@ du lendemain…). Le fil du groupe reçoit un résumé (« 6 nouveaux paris ouve
 * Compétition désactivée : ses paris encore sans pronostic disparaissent, les autres vont jusqu'au bout.
 * L'accueil filtre les paris par classement (⚽ Ligue 1, 🏈 NFL, 👥 Vie du groupe…).
 * **Chacun choisit ses compétitions (V3)** : le groupe propose les compétitions activées ; chaque membre répond « Je
-  participe » ou « Non merci » (carte « Le groupe te propose » sur l'accueil, page Moi → Mes compétitions). Sans réponse,
-  les paris d'une compétition ne s'affichent pas chez lui ; un pari sur lequel il a parié reste visible. L'admin qui
-  active une compétition y participe d'office.
+  participe » ou « Non merci » (page Moi → Mes compétitions pour changer d'avis). Sans réponse, les paris d'une
+  compétition ne s'affichent pas chez lui ; un pari sur lequel il a parié reste visible.
+* **Une nouvelle compétition s'annonce** (demande du 2026-11-04 : « il serait bon de notifier cette nouvelle catégorie
+  et de demander à l'utilisateur s'il souhaite participer ; à vérifier quand on est admin et simple membre ») :
+  * personne n'y est inscrit d'office, pas même l'admin qui l'active (avant : lui, oui) ;
+  * en haut de la page du groupe, au-dessus des paris, « 🆕 Nouvelle compétition dans le groupe », avec « Je participe »
+    et « Non merci » pour chacune, jusqu'à la réponse (avant : une carte placée sous les paris à jouer) ;
+  * l'Activité le dit à tout le groupe : « Léa a ajouté ⚽ Ligue 1 aux compétitions du groupe » (ou « L'admin du
+    site a ajouté… ») ;
+  * « Je participe » après coup : on retrouve ses pronostics des mêmes matchs déjà faits dans ses autres groupes.
 
 ### 7.12 Design, tablette et PC, site et aide (V3)
 

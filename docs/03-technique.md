@@ -129,7 +129,11 @@ d'origine et ses cookies restent `Secure` même si le proxy parle en http au ser
   reprend un pronostic sur les pairs du pari (même `source_ref.key`) dans les autres groupes du joueur (`#sharePick`),
   et à l'ouverture d'un pari ceux déjà faits ailleurs (`#inheritPicks`), si la compétition y est suivie.
 * **Compétitions suivies** (`follows`) : `SourceService.offered` liste ce que le groupe propose ; `BetService.list`
-  ne montre un pari de source que si son fil est suivi (`in`) ou si j'y ai parié ; parier fait suivre le fil.
+  ne montre un pari de source que si son fil est suivi (`in`) ou si j'y ai parié ; parier fait suivre le fil. Activer
+  une compétition n'y inscrit personne (2026-11-04), et ajoute un événement `competitions_added` (`labels`, `admin`
+  si c'est l'admin du site : `GroupService.competitionsAdded`) ; l'accueil du groupe annonce en tête les fils sans
+  réponse. « Je participe » (`POST …/feeds`) reprend ses pronostics des autres groupes dans les paris ouverts
+  (`BetService.adoptPicks`).
 * **Cycle de vie** (`services/bets.js`) : `open → closed → validating → settled`, ou `validating → voting →
   settled | cancelled`, ou `open | closed → cancelled`. Les échéances (clôture, fin de validation, fin de vote,
   abandon à 30 jours) sont appliquées par `sweep()` avant chaque requête du groupe et toutes les minutes ; les

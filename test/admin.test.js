@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { after, before, describe, it } from 'node:test';
 import { decodePng, encodePng, pngSize } from '../src/lib/png.js';
-import { betUrl, coupon, createBet, HOUR, MINUTE, PIN, setupGroup, startServer } from './helpers.js';
+import { betUrl, coupon, createBet, HOUR, MINUTE, joinCompetitions, PIN, setupGroup, startServer } from './helpers.js';
 
 const PASSWORD = 'un mot de passe solide';
 let srv;
@@ -570,6 +570,7 @@ describe('classements et sources', () => {
     await s.deps.admin.setPassword(PASSWORD);
     const g = await setupGroup(s, ['max']);
     await g.c.lea.ok('PATCH', `/api/groups/${g.gid}/settings`, { sources: { foot: { competitions: ['fra.1'] } } });
+    await joinCompetitions(g.c.lea, g.gid);
     await s.deps.sources.autoOpen(g.gid);
     const foot = async () => (await g.c.lea.ok('GET', `/api/groups/${g.gid}/bets`)).bets.filter((b) => b.source?.id === 'foot');
     const before = await foot();
@@ -626,6 +627,8 @@ describe('classements et sources', () => {
     assert.deepEqual(group.competitions.map((c) => c.key), ['foot:fra.1']);
     const feeds = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feeds`)).feeds;
     assert.deepEqual(feeds.map((f) => [f.key, f.choice]), [['foot:fra.1', null]], 'proposée aux membres, chacun choisit');
+    const added = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feed`)).events.find((e) => e.type === 'competitions_added');
+    assert.deepEqual([added.memberId, added.data], [null, { admin: true, labels: ['⚽ Ligue 1'] }], 'le fil du groupe le dit');
     assert.ok(await s.deps.sources.autoOpen(g.gid) >= 2, 'ses paris s’ouvrent');
 
     // Sans changement : rien de faux au journal. Puis la compétition coupée : ses paris sans pronostic partent.

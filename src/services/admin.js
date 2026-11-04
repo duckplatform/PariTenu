@@ -383,10 +383,13 @@ export class AdminService {
       this.groups.rename(g.id, { name, emoji });
       if (patch) this.groups.changeSettings(g.id, patch);
       const removed = patch ? this.sources.prune(g.id) : 0;
+      const after = patch ? snapshot() : null;
+      // Compétitions activées : une ligne dans l'Activité du groupe ; chaque membre choisit d'y participer.
+      if (patch) this.groups.competitionsAdded(g.id, null, after.offered.filter((f) => !before.offered.some((b) => b.key === f.key)), { admin: true });
       const changes = [
         name !== g.name && `renommé « ${name} »`,
         emoji !== g.emoji && 'emoji',
-        ...(patch ? this.#settingsChanges(before, snapshot()) : []),
+        ...(patch ? this.#settingsChanges(before, after) : []),
       ].filter(Boolean);
       this.log('group_updated', { target: `group:${id}`, ip, summary: `Groupe « ${g.name} » ${changes.length ? `modifié : ${changes.join(', ')}` : 'enregistré sans changement'}` });
       return removed;

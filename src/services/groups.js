@@ -209,6 +209,14 @@ export class GroupService {
     return this.settings(groupId);
   }
 
+  /**
+   * Des compétitions activées (réglages des paris, ou l'admin du site : data.admin) : une ligne dans l'Activité. Chacun,
+   * l'admin qui les active compris, choisit ensuite d'y participer (l'annonce en haut de la page du groupe).
+   */
+  competitionsAdded(groupId, memberId, feeds, data = {}) {
+    if (feeds.length) this.#event(groupId, 'competitions_added', memberId, { ...data, labels: feeds.map((f) => `${f.emoji} ${f.label}`) });
+  }
+
   /** « Changer le lien » : une nouvelle adresse ; l'ancienne ne permet plus ni d'entrer ni de se connecter. */
   changeAddress(me) {
     this.#requireAdmin(me);

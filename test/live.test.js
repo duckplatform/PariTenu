@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { after, before, describe, it } from 'node:test';
 import { pngSize } from '../src/lib/png.js';
-import { betUrl, coupon, HOUR, MINUTE, setupGroup, startServer } from './helpers.js';
+import { betUrl, coupon, HOUR, MINUTE, joinCompetitions, setupGroup, startServer } from './helpers.js';
 
 let srv;
 before(async () => { srv = await startServer(); });
@@ -19,6 +19,7 @@ async function fresh(fn) {
 
 const enable = async (s, g, sources) => {
   await g.c.lea.ok('PATCH', `/api/groups/${g.gid}/settings`, { sources });
+  await joinCompetitions(g.c.lea, g.gid); // personne n'y est inscrit d'office : Léa dit « Je participe »
   return s.deps.sources.autoOpen(g.gid);
 };
 const listBets = async (g, who = 'lea') => (await g.c[who].ok('GET', `/api/groups/${g.gid}/bets`)).bets;

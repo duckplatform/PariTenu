@@ -5,6 +5,7 @@ import { memberOf } from './state.js';
 
 const q = (e) => (e.question ? `« ${e.question} »` : 'un pari');
 const names = (ids) => ids.map((id) => memberOf(id).pseudo).join(', ').replace(/, ([^,]*)$/, ' et $1');
+const list = (labels) => labels.join(', ').replace(/, ([^,]*)$/, ' et $1');
 
 /** Phrase d'une ligne d'historique ; withBet ajoute la question (fil du groupe). */
 export function eventText(e, { withBet = true } = {}) {
@@ -19,6 +20,7 @@ export function eventText(e, { withBet = true } = {}) {
     case 'pin_reset': return `: PIN réinitialisé par ${memberOf(d.by).pseudo}`;
     case 'invite_regenerated': return 'a changé le lien d’invitation';
     case 'address_changed': return 'a changé le lien du groupe';
+    case 'competitions_added': return `${d.admin ? 'L’admin du site a' : 'a'} ajouté ${list(d.labels ?? [])} aux compétitions du groupe : chacun choisit d’y participer`;
     case 'created': return d.auto ? 'Pari ouvert automatiquement' : withBet ? `a lancé un pari :${on}` : 'a lancé le pari';
     case 'auto_opened': return `${d.count > 1 ? `${d.count} nouveaux paris ouverts` : 'Un nouveau pari ouvert'} automatiquement${d.labels ? ` : ${d.labels}` : ''}`;
     case 'season_closed': {
@@ -54,6 +56,6 @@ export function eventText(e, { withBet = true } = {}) {
 /** Les événements sans auteur (clôture automatique, règlement…) s'affichent avec une icône. */
 export function eventLine(e, opts) {
   const m = e.memberId ? memberOf(e.memberId) : null;
-  const icon = e.type === 'season_closed' ? '🏆 ' : e.data?.auto || e.type === 'auto_opened' ? '📡 ' : '🎲 ';
+  const icon = e.type === 'season_closed' ? '🏆 ' : e.type === 'competitions_added' ? '🆕 ' : e.data?.auto || e.type === 'auto_opened' ? '📡 ' : '🎲 ';
   return h('span.event-text', m ? h('b', h('span.avatar.xs', { 'aria-hidden': 'true' }, face(m.avatar)), ` ${m.pseudo} `) : h('b', icon), eventText(e, opts));
 }

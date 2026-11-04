@@ -2,7 +2,7 @@ import { face } from '../avatars.js';
 import { get, post } from '../api.js';
 import { brand } from '../brand.js';
 import { cls, fill, h } from '../dom.js';
-import { now, plural, pts, relative, syncClock } from '../format.js';
+import { now, pts, relative, syncClock } from '../format.js';
 import { icon } from '../icons.js';
 import { activeMembers, ctx, groupUrl, rerender } from '../state.js';
 import { pref, setPref, visitBaseline } from '../store.js';
@@ -22,15 +22,20 @@ export function inviteCard() {
     }, 'Partager le lien du groupe'));
 }
 
-/** Les compétitions que le groupe propose et auxquelles je n'ai pas encore répondu : un bandeau compact. */
+/**
+ * Les compétitions que le groupe propose et auxquelles je n'ai pas encore répondu (admin qui les active compris) : une
+ * annonce en haut de la page, au-dessus des paris, jusqu'à ma réponse (demande du 2026-11-04).
+ */
 function proposals(feeds, redraw) {
   const pending = feeds.filter((f) => f.choice == null);
   if (!pending.length) return null;
-  return h('section.card.proposals',
-    h('h2', icon('compass'), ` ${plural(pending.length, 'compétition', 'compétitions')} à découvrir`),
-    h('p.muted', 'Choisis celles qui t’intéressent : leurs paris s’afficheront ici, les autres ne t’encombreront pas.'),
+  return h('section.card.proposals', { role: 'region', 'aria-label': 'Nouvelles compétitions' },
+    h('h2', '🆕 ', pending.length > 1 ? `${pending.length} nouvelles compétitions dans le groupe` : 'Nouvelle compétition dans le groupe'),
+    h('p.muted', pending.length > 1
+      ? 'Tu participes ? Leurs paris s’afficheront ici ; sinon, ils ne t’encombreront pas.'
+      : 'Tu participes ? Ses paris s’afficheront ici ; sinon, ils ne t’encombreront pas.'),
     pending.map((f) => feedChoice(f, redraw)),
-    h('a.btn.ghost.small', { href: `/${ctx.gid}/follow` }, 'Gérer mes compétitions ›'));
+    h('a.btn.ghost.small', { href: `/${ctx.gid}/follow` }, 'Mes compétitions ›'));
 }
 
 // Les 4 sections de la liste (demande du 2026-11-03 : voir d'un coup d'œil s'il y a quelque chose à faire) : titre,
@@ -134,11 +139,8 @@ export async function homeView() {
       h('h2.section-title', icon(glyph), ` ${title}`, h('span.count', String(lists[i].length))),
       h('p.section-hint', hint),
       h('div.cards', lists[i].map((b) => betCard(b, { isNew: isNew(b), onPick: quickPick })))) : null)).filter(Boolean);
-    // Accepter une compétition fait apparaître ses paris : on recharge la vue.
+    // Accepter une compétition fait apparaître ses paris : on recharge la vue. L'annonce passe avant les paris.
     const offer = proposals(feeds, (f) => { if (f.choice === 'in') rerender(); else draw(); });
-    // Les paris d'abord : les compétitions à découvrir passent sous les paris à jouer quand il y en a.
-    const openAt = sections.findIndex((s) => s.dataset.section === 'À parier');
-    if (offer) sections.splice(openAt >= 0 ? openAt + 1 : 0, 0, offer);
 
     fill(node,
       h('header.topbar',
@@ -148,10 +150,11 @@ export async function homeView() {
         ctx.me.role === 'admin' ? h('a.icon-btn.group-settings', { href: `/${ctx.gid}/admin`, 'aria-label': 'Réglages du groupe', title: 'Réglages du groupe' }, icon('settings')) : null,
         meLink()),
       activeMembers().length < 2 ? inviteCard() : null,
+      offer,
       rankings.length > 1 ? h('div.chips.scroll', { role: 'toolbar', 'aria-label': 'Filtrer par compétition ou catégorie' },
         chip('all', 'Tout'), rankings.map((r) => chip(r.key, `${r.emoji} ${r.label}`))) : null,
       data.bets.length === 0
-        ? [offer, Object.values(ctx.settings.kinds).some(Boolean) && ctx.settings.categories.some((c) => !c.hidden)
+        ? [Object.values(ctx.settings.kinds).some(Boolean) && ctx.settings.categories.some((c) => !c.hidden)
           ? empty('🎲', 'Aucun pari pour l’instant', 'Lance le premier : une question, des options, une heure de clôture.',
             h('a.btn.primary', { href: `/${ctx.gid}/new` }, '＋ Lancer le premier pari'))
           // Pas de paris maison dans ce groupe : tout vient des compétitions activées.
