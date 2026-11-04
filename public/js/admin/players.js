@@ -130,10 +130,19 @@ function playerPanel(p, { refresh }) {
   };
 
   const remove = async () => {
+    const names = (list) => list.map((g) => `« ${g.name} »`).join(', ').replace(/, ([^,]*)$/, ' et $1');
+    // Seul admin d'un groupe où il reste du monde : nommer d'abord un autre admin (personne n'est promu d'office).
+    const lastAdmin = p.groups.filter((g) => g.lastAdmin);
+    if (lastAdmin.length) {
+      toast(`${p.pseudo} est le seul admin de ${names(lastAdmin)} : nomme d’abord un autre admin, ou supprime ${lastAdmin.length > 1 ? 'ces groupes' : 'ce groupe'}.`, 'error');
+      return;
+    }
+    const alone = p.groups.filter((g) => g.alone);
     const typed = await openSheet('Supprimer le compte', (close) => {
       const confirm = h('input', { name: 'confirm', autocomplete: 'off', placeholder: p.pseudo });
       return h('form.stack', { onsubmit: (e) => { e.preventDefault(); close(confirm.value); } },
-        h('p', `${p.pseudo} quitte ses ${p.groups.filter((g) => g.status === 'active').length} groupe(s) : son pseudo y devient « Ancien membre », ses points et l’historique restent. Le compte disparaît, ses appareils sont déconnectés. Irréversible.`),
+        h('p', `${p.pseudo} quitte ses ${p.groups.filter((g) => g.status === 'active').length} groupe(s) : il y apparaît comme « ${p.pseudo} (supprimé) », ses points et l’historique restent. Le compte disparaît, ses appareils sont déconnectés. Irréversible.`),
+        alone.length ? h('p.form-error', `Il est le dernier membre de ${names(alone)} : ${alone.length > 1 ? 'ces groupes seront supprimés' : 'ce groupe sera supprimé'} avec son compte.`) : null,
         field(`Tape « ${p.pseudo} » pour confirmer`, confirm),
         h('div.row-end', h('button.btn', { type: 'button', onclick: () => close(null) }, 'Retour'), h('button.btn.danger', { type: 'submit' }, 'Supprimer le compte')));
     });

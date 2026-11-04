@@ -1,9 +1,9 @@
 import { avatarPicker, face } from '../avatars.js';
 import { patch, post } from '../api.js';
 import { h } from '../dom.js';
-import { ctx, groupUrl, invalidate, navigate } from '../state.js';
+import { activeMembers, ctx, groupUrl, invalidate, navigate } from '../state.js';
 import { forgetGroup, setGroups } from '../store.js';
-import { confirmSheet, field, pinInput, run, toast } from '../ui.js';
+import { confirmSheet, field, openSheet, pinInput, run, toast } from '../ui.js';
 import { inviteCard } from './home.js';
 
 /** Invitation d'installation (Chrome/Android) mise de côté par main.js. */
@@ -63,13 +63,39 @@ export async function meView() {
   }, h('div.pin-row', field('PIN actuel', current), field('Nouveau', next), field('Encore', next2)), pinErr,
   h('button.btn', { type: 'submit' }, 'Changer mon PIN'));
 
+  // Quitter : le dernier membre emporte le groupe ; le seul admin nomme d'abord son successeur (personne n'est promu
+  // d'office, demande du 2026-11-04) ou supprime le groupe depuis ses réglages.
   const leave = async (e) => {
-    const ok = await confirmSheet('Quitter le groupe ?', `Tu y apparaîtras comme « ${ctx.me.pseudo} (parti) » et tes pronostics sur les paris encore ouverts seront retirés. Tu pourras revenir quand tu veux par le lien du groupe : tu retrouveras ta place, tes points et ton historique.`, { confirm: 'Quitter', danger: true });
-    if (ok && await run(e.currentTarget, () => post(`/groups/${ctx.gid}/me/leave`))) {
-      forgetGroup(ctx.gid);
-      toast('Tu as quitté le groupe.', 'ok');
-      navigate('/groups');
+    const button = e.currentTarget;
+    const others = activeMembers().filter((m) => m.id !== ctx.me.id);
+    const back = 'Tu pourras revenir quand tu veux par le lien du groupe : tu retrouveras ta place, tes points et ton historique.';
+    let body = {};
+    if (!others.length) {
+      const gone = [...ctx.members.values()].some((m) => m.status !== 'active');
+      const ok = await confirmSheet('Quitter et supprimer le groupe ?', `Tu es le dernier membre : le groupe sera supprimé, avec ses paris, ses classements et son historique.${gone ? ' Ceux qui en sont partis ou en ont été bannis ne pourront plus y revenir.' : ''}`, { confirm: 'Quitter et supprimer', danger: true });
+      if (!ok) return;
+    } else if (ctx.me.role === 'admin' && !others.some((m) => m.role === 'admin')) {
+      const successor = await openSheet('Passer le relais', (close) => {
+        const who = h('select', { name: 'successor', required: true }, h('option', { value: '' }, 'Choisis un membre…'),
+          others.map((m) => h('option', { value: m.id }, m.pseudo)));
+        return h('form.stack', { onsubmit: (ev) => { ev.preventDefault(); close(who.value || null); } },
+          h('p', 'Tu es le seul admin du groupe : avant de partir, choisis parmi les membres qui prend le relais.'),
+          field('Nouvel admin', who),
+          h('p.muted', `Après ton départ, ton nom s’affichera « ${ctx.me.pseudo} (parti) » dans le groupe. ${back}`),
+          h('button.btn.ghost.small', { type: 'button', onclick: () => { close(null); navigate(`/${ctx.gid}/admin`); } }, 'Supprimer plutôt le groupe pour tout le monde…'),
+          h('div.row-end', h('button.btn', { type: 'button', onclick: () => close(null) }, 'Retour'), h('button.btn.danger', { type: 'submit' }, 'Nommer et partir')));
+      });
+      if (!successor) return;
+      body = { successor };
+    } else {
+      const ok = await confirmSheet('Quitter le groupe ?', `Tu y apparaîtras comme « ${ctx.me.pseudo} (parti) » et tes pronostics sur les paris encore ouverts seront retirés. ${back}`, { confirm: 'Quitter', danger: true });
+      if (!ok) return;
     }
+    const result = await run(button, () => post(`/groups/${ctx.gid}/me/leave`, body));
+    if (!result) return;
+    forgetGroup(ctx.gid);
+    toast(result.deleted ? 'Tu as quitté le groupe : il est supprimé.' : 'Tu as quitté le groupe.', 'ok');
+    navigate('/groups');
   };
   const logout = async (e) => {
     if (await run(e.currentTarget, () => post('/account/logout'))) {

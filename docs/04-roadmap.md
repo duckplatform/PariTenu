@@ -469,7 +469,15 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
 * ✅ 228 tests (partir et revenir avec ses stats, bannir puis réintégrer par l'admin du groupe et par l'admin du site,
   pseudos réservés) ; scénario Edge : Zoé bannie (captures `17b-banni`, `17c-bannis`), réintégrée, partie puis revenue.
   Cache du service worker `pari-tenu-v11`.
-* ⏳ Point 2 de la relecture (un groupe vide n'a plus d'admin) : à décider.
+* ✅ Point 2 de la relecture (un groupe vidé n'avait plus d'admin) : « on peut signaler que la sortie du dernier du
+  groupe va le supprimer, et si l'admin sort et qu'il reste du monde il faut qu'il transmette le flambeau d'admin ou
+  autorise la suppression » ; puis « la règle actuelle, le plus ancien membre devient admin, me gêne ». Plus aucune
+  promotion d'office : le seul admin qui part nomme son successeur (« Passer le relais ») ou supprime le groupe ; le
+  dernier membre qui part supprime le groupe (confirmation qui le dit) ; l'admin du site ne bannit ni le seul admin ni
+  le dernier membre, et ne supprime pas le compte du seul admin d'un groupe où il reste du monde ; supprimer le compte
+  du dernier membre supprime aussi son groupe (journal : « supprimé avec le compte de son dernier membre »). 230 tests ;
+  scénario Edge : Tom passe le relais à Inès, Inès part la dernière et le groupe disparaît (captures
+  `56-passer-le-relais`, `57-dernier-membre`). Cache `pari-tenu-v12`.
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
 ### À vérifier en vrai

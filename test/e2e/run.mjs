@@ -1374,6 +1374,37 @@ await test('un admin supprime son groupe, en retapant son nom', async () => {
   assert.ok((await groupsOf()).some((g) => g.name === 'Les Potes'), 'ses autres groupes restent');
 });
 
+await test('quitter : le seul admin passe le relais ; le dernier membre emporte le groupe', async () => {
+  // Demande du 2026-11-04 : personne n'est promu admin d'office, et un groupe n'est jamais vide.
+  await tom.page.goto(`${ORIGIN}/groups/new`);
+  const create = tom.page.locator('#creer');
+  await create.getByLabel('Nom du groupe').fill('Le Bureau');
+  await create.getByLabel('Ton coupon').fill(newCoupon());
+  await create.getByRole('button', { name: 'Créer le groupe' }).click();
+  await waitText(tom.page, 'Aucun pari pour l’instant');
+  const bureau = tom.page.url();
+  await ines.page.goto(bureau);
+  await ines.page.getByRole('button', { name: 'Entrer dans Le Bureau' }).click();
+  await ines.page.locator('#entree').waitFor({ state: 'detached' });
+  // Tom, seul admin : il choisit qui prend le relais avant de partir.
+  await tom.page.goto(`${bureau}/me`);
+  await tom.page.getByRole('button', { name: 'Quitter le groupe' }).click();
+  const relay = dialog(tom.page);
+  await relay.getByLabel('Nouvel admin').selectOption({ label: 'Inès' });
+  await shot(tom.page, '56-passer-le-relais', { keepOverlays: true });
+  await relay.getByRole('button', { name: 'Nommer et partir' }).click();
+  await tom.page.waitForURL(/\/groups$/);
+  // Inès, devenue admin, est la dernière : partir supprime le groupe, et on le lui dit avant.
+  await ines.page.goto(`${bureau}/me`);
+  await ines.page.getByRole('button', { name: 'Quitter le groupe' }).click();
+  await dialog(ines.page).getByText('Tu es le dernier membre').waitFor();
+  await shot(ines.page, '57-dernier-membre', { keepOverlays: true });
+  await dialog(ines.page).getByRole('button', { name: 'Quitter et supprimer' }).click();
+  await waitText(ines.page, 'il est supprimé');
+  await tom.page.goto(bureau);
+  await waitText(tom.page, 'Lien périmé');
+});
+
 await test('accueil de Léa à la fin (récapitulatif)', async () => {
   const { page } = lea;
   await page.goto(betUrl.split('/bet/')[0]);

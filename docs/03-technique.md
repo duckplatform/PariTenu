@@ -263,7 +263,7 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | GET | `/api/groups/:g/seasons/:s/bets` | Les paris d'une saison (historique) |
 | GET | `/api/groups/:g/feed` · `members/:m` · `export` | Activité · profil · export (admin) |
 | POST | `…/members/:m/role` · `reset-pin` · `remove` · `reinstate` | Administration des membres (`reset-pin` rend `{ done, waiting }` ; `remove` bannit, `reinstate` réintègre un banni) |
-| POST | `…/me/leave` | Quitter le groupe (« Max (parti) » ; il revient par le lien et retrouve sa place) |
+| POST | `…/me/leave` | Quitter le groupe (« Max (parti) » ; il revient par le lien et retrouve sa place). Seul admin : `{ successor }` obligatoire (sinon `409 last_admin`) ; dernier membre : le groupe est supprimé (`{ deleted: true }`) |
 | POST | `/api/_test/clock` | Avancer l'horloge (uniquement avec `PT_TEST_HOOKS=1`) |
 
 **Admin du site** (`/api/admin`, session admin obligatoire sauf les trois premières) :
@@ -324,6 +324,10 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   seulement par un admin (`reinstate`, ou l'admin du site), sinon `403 banned`. Au départ, les pronostics sur les paris
   encore ouverts (`closes_at` à venir, pas seulement `status`) sont retirés. « (parti) », « (banni) », « (supprimé) »
   sont réservés (`RESERVED_PSEUDO`).
+* **Toujours un admin** : plus de promotion automatique (`#ensureAdmin` retiré). `#standing` dit si un membre est le
+  dernier (`alone`) ou le seul admin alors qu'il reste du monde (`lastAdmin`) : `leave` exige alors un successeur ou
+  supprime le groupe, `expel` (admin du site) refuse, et `AdminService.deletePlayer` refuse pour un seul admin et
+  supprime les groupes dont il est le dernier membre (`standingOf`, aussi dans la fiche du compte).
 * **Coupons** : 60 bits (12 caractères sur 32), seule l'empreinte SHA-256 est gardée ; vérifiés avant de hacher le PIN,
   puis consommés par un `UPDATE … WHERE used_at IS NULL` dans la transaction qui crée le groupe (deux créations
   simultanées : une seule passe, l'autre ne crée ni groupe ni compte). Limite de 30 essais par adresse en 5 minutes.

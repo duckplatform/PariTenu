@@ -226,7 +226,7 @@ describe('administration du groupe', () => {
     assert.equal((await g.c.lea.post(`/api/groups/${g.gid}/members/${g.id.max}/reinstate`)).status, 404, 'déjà revenu');
   });
 
-  it('quitter le groupe : « (parti) », un autre membre devient admin ; il revient seul et retrouve ses points', async () => {
+  it('quitter le groupe : « (parti) » ; la seule admin nomme son successeur ; elle revient seule et retrouve ses points', async () => {
     const g = await setupGroup(srv, ['max', 'tom']);
     const { betId, opt } = await createBet(srv, g, { by: 'max' });
     await g.c.lea.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Oui });
@@ -238,7 +238,11 @@ describe('administration du groupe', () => {
     const points = async (client) => (({ member, ...stats }) => stats)((await client.ok('GET', `/api/groups/${g.gid}/members/${g.id.lea}`)).profile);
     const before = await points(g.c.lea);
 
-    await g.c.lea.ok('POST', `/api/groups/${g.gid}/me/leave`);
+    // Seule admin, alors qu'il reste du monde : elle nomme d'abord quelqu'un (personne n'est promu d'office).
+    const alone = await g.c.lea.post(`/api/groups/${g.gid}/me/leave`, {});
+    assert.deepEqual([alone.status, alone.body.code], [409, 'last_admin']);
+    assert.equal((await g.c.lea.post(`/api/groups/${g.gid}/me/leave`, { successor: g.id.lea })).status, 400);
+    assert.deepEqual(await g.c.lea.ok('POST', `/api/groups/${g.gid}/me/leave`, { successor: g.id.max }), { deleted: false });
     const data = await g.c.max.ok('GET', `/api/groups/${g.gid}`);
     const lea = data.members.find((m) => m.id === g.id.lea);
     assert.deepEqual([lea.pseudo, lea.status], [`${g.pseudo.lea} (parti)`, 'left']);
@@ -252,6 +256,14 @@ describe('administration du groupe', () => {
     assert.deepEqual(await points(g.c.lea), before, 'ses stats telles qu’elle les avait laissées');
     const back = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feed`)).events.find((e) => e.type === 'member_joined' && e.memberId === g.id.lea && e.data.back);
     assert.ok(back, 'le fil dit qu’elle est revenue');
+  });
+
+  it('le dernier membre qui part emporte le groupe ; avec un autre admin, l’admin part librement', async () => {
+    const g = await setupGroup(srv, ['max']);
+    await g.c.lea.ok('POST', `/api/groups/${g.gid}/members/${g.id.max}/role`, { role: 'admin' });
+    assert.deepEqual(await g.c.lea.ok('POST', `/api/groups/${g.gid}/me/leave`, {}), { deleted: false }, 'Max reste admin');
+    assert.deepEqual(await g.c.max.ok('POST', `/api/groups/${g.gid}/me/leave`, {}), { deleted: true });
+    assert.equal((await srv.client().get(`/api/groups/${g.token}/entry`)).body.code, 'group_not_found');
   });
 
   it('réglages : bornes, catégories masquables mais pas supprimables', async () => {

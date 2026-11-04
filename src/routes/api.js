@@ -386,9 +386,14 @@ export function apiRouter(deps) {
     ok(res);
   });
 
+  // Quitter : le seul admin nomme d'abord un successeur ({ successor }) ; le dernier membre emporte le groupe.
   g.post('/me/leave', (req, res) => {
-    groups.leave(req.me);
-    ok(res);
+    const { successor } = parse(z.object({ successor: id.optional() }), req.body ?? {});
+    const { deleted } = groups.leave(req.me, { successor });
+    if (deleted) {
+      admin.log('group_deleted', { target: `group:${deleted.id}`, player: { id: req.me.player_id, pseudo: req.me.pseudo }, summary: `Groupe « ${deleted.name} » supprimé : son dernier membre « ${PLAYER} » l’a quitté`, ip: req.ip ?? '' });
+    }
+    res.json({ deleted: !!deleted });
   });
 
   // Un admin du groupe le supprime (en retapant son nom) ; l'admin du site le voit dans son journal.

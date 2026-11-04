@@ -212,21 +212,35 @@ describe('comptes', () => {
     assert.deepEqual(after.map((m) => [m.pseudo, m.status]), [[`${g.pseudo.max} (supprimé)`, 'left'], [g.pseudo.max, 'active']]);
   });
 
-  it('retiré de son groupe puis compte supprimé : son pseudo se libère aussi dans ce groupe (on rejoue l’arrivée)', async () => {
-    // Demande du 2026-11-04 : groupe vidé de son seul membre, compte supprimé, puis le même pseudo par le lien du groupe :
-    // « Ce pseudo est déjà pris dans le groupe ».
+  it('dernier membre : on ne le bannit pas ; supprimer son compte supprime aussi son groupe, et son pseudo se libère', async () => {
+    // Demande du 2026-11-04 : un groupe n'est jamais vide ; « la sortie du dernier du groupe va le supprimer ».
     const g = await setupGroup(srv, []);
     const adm = await signIn();
-    await adm.ok('DELETE', `/api/admin/members/${g.id.lea}`);
+    assert.equal((await adm.req('DELETE', `/api/admin/members/${g.id.lea}`)).status, 409);
     const leaId = (await adm.ok('GET', '/api/admin/players')).players.find((p) => p.pseudo === g.pseudo.lea).id;
+    const { player } = await adm.ok('GET', `/api/admin/players/${leaId}`);
+    assert.deepEqual(player.groups.map((x) => [x.name, x.alone, x.lastAdmin]), [['Les Potes', true, false]], 'la fiche le dit avant');
+    await adm.ok('DELETE', `/api/admin/players/${leaId}`, { confirm: g.pseudo.lea.toLowerCase() });
+    assert.equal((await adm.get(`/api/admin/groups/${g.gid}`)).status, 404, 'le groupe part avec son dernier membre');
+    assert.equal((await srv.client().get(`/api/groups/${g.token}/entry`)).body.code, 'group_not_found');
+    const deleted = (await adm.ok('GET', '/api/admin/log')).entries.find((e) => e.action === 'group_deleted');
+    assert.equal(deleted.summary, `Groupe « Les Potes » supprimé avec le compte de son dernier membre « ${g.pseudo.lea} (supprimé) »`);
+    // Son pseudo se libère : un nouveau compte le prend.
+    await srv.client().ok('POST', '/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN, coupon: coupon(srv) });
+  });
+
+  it('seul admin d’un groupe où il reste du monde : pas de suppression de son compte avant qu’un autre admin soit nommé', async () => {
+    const g = await setupGroup(srv, ['max']);
+    const adm = await signIn();
+    const leaId = (await adm.ok('GET', '/api/admin/players')).players.find((p) => p.pseudo === g.pseudo.lea).id;
+    assert.equal((await adm.ok('GET', `/api/admin/players/${leaId}`)).player.groups[0].lastAdmin, true);
+    const refused = await adm.req('DELETE', `/api/admin/players/${leaId}`, { body: { confirm: g.pseudo.lea.toLowerCase() } });
+    assert.deepEqual([refused.status, refused.body.error],
+      [409, `${g.pseudo.lea} est le seul admin de « Les Potes » : nomme d’abord un autre admin, ou supprime ce groupe.`]);
+    await adm.ok('PATCH', `/api/admin/members/${g.id.max}`, { role: 'admin' });
     await adm.ok('DELETE', `/api/admin/players/${leaId}`, { confirm: g.pseudo.lea.toLowerCase() });
     const { group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`);
-    assert.deepEqual(group.members.map((m) => [m.pseudo, m.status]), [[`${g.pseudo.lea} (supprimé)`, 'removed']], 'toujours « retiré »');
-    const again = srv.client();
-    const join = await again.post(`/api/groups/${g.token}/join`, { pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN });
-    assert.equal(join.status, 201, join.body.error);
-    const { me } = await again.ok('GET', `/api/groups/${g.gid}`);
-    assert.deepEqual([me.pseudo, me.status], [g.pseudo.lea, 'active']);
+    assert.deepEqual(group.members.filter((m) => m.status === 'active').map((m) => [m.pseudo, m.role]), [[g.pseudo.max, 'admin']]);
   });
 
   it('bannir puis réintégrer depuis l’admin du site : il retrouve sa place, « (banni) » disparaît', async () => {
@@ -310,11 +324,17 @@ describe('groupes', () => {
     assert.equal((await adm.post(`/api/admin/groups/${g.gid}/members`, { playerId: leaOther.id })).status, 409, 'déjà dedans');
     assert.equal((await other.c.lea.ok('GET', `/api/groups/${address}`)).me.role, 'member');
     await adm.ok('PATCH', `/api/admin/members/${memberId}`, { role: 'admin' });
-    // Retirer la seule autre admin : le groupe garde un admin (le plus ancien membre).
+    // Bannir la seule admin restante : refusé tant qu'aucun autre admin n'est nommé (personne n'est promu d'office).
     await adm.ok('DELETE', `/api/admin/members/${g.id.lea}`);
+    const refused = await adm.req('DELETE', `/api/admin/members/${memberId}`);
+    assert.deepEqual([refused.status, refused.body.error], [409, 'C’est le seul admin du groupe : nomme d’abord un autre admin.']);
+    await adm.ok('PATCH', `/api/admin/members/${g.id.max}`, { role: 'admin' });
     await adm.ok('DELETE', `/api/admin/members/${memberId}`);
     ({ group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`));
     assert.deepEqual(group.members.filter((m) => m.status === 'active').map((m) => [m.pseudo, m.role]), [[g.pseudo.max, 'admin']]);
+    // Le dernier membre : on ne le bannit pas, on supprime le groupe.
+    const last = await adm.req('DELETE', `/api/admin/members/${g.id.max}`);
+    assert.deepEqual([last.status, last.body.error], [409, 'C’est le dernier membre du groupe : supprime plutôt le groupe.']);
     const feed = (await g.c.max.ok('GET', `/api/groups/${address}/feed`)).events.map((e) => [e.type, e.data.admin ?? null]);
     assert.ok(feed.some(([type, adminDid]) => type === 'member_removed' && adminDid), 'le fil du groupe dit « par l’admin du site »');
   });

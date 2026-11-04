@@ -1,6 +1,6 @@
 import { DEFAULT_THEME, themeOf } from '../core/themes.js';
 import { tx } from '../db.js';
-import { badRequest, HttpError, notFound } from '../lib/errors.js';
+import { badRequest, conflict, HttpError, notFound } from '../lib/errors.js';
 import { hashPin, PIN_PARAMS, verifyPin } from '../lib/pin.js';
 import { DAY, HOUR, MINUTE, newToken, sha256 } from '../lib/util.js';
 import { couponState } from './coupons.js';
@@ -245,11 +245,16 @@ export class AdminService {
         (SELECT COUNT(*) FROM picks k WHERE k.member_id = m.id) AS picks
         FROM members m JOIN groups g ON g.id = m.group_id WHERE m.player_id = ? ORDER BY m.status = 'active' DESC, m.created_at`).all(p.id);
     const sessions = this.db.prepare('SELECT COUNT(*) AS n, MAX(last_seen_at) AS last FROM player_sessions WHERE player_id = ? AND expires_at > ?').get(p.id, now);
+    const standing = this.groups.standingOf(p.id);
     return {
       id: p.id, pseudo: p.pseudo, avatar: p.avatar, createdAt: p.created_at,
       state: PIN_STATE(p, now, this.accounts.needsNewPin(p)), lockedUntil: p.locked_until > now ? p.locked_until : null, failedPins: p.failed_pins,
       devices: sessions.n, lastSeenAt: sessions.last,
-      groups: groups.map((g) => ({ memberId: g.member_id, id: g.id, name: g.name, emoji: g.emoji, role: g.role, status: g.status, joinedAt: g.created_at, picks: g.picks })),
+      // alone : dernier membre (le groupe part avec le compte) ; lastAdmin : seul admin (nommer un autre admin d'abord).
+      groups: groups.map((g) => ({
+        memberId: g.member_id, id: g.id, name: g.name, emoji: g.emoji, role: g.role, status: g.status, joinedAt: g.created_at, picks: g.picks,
+        alone: standing.alone.some((x) => x.id === g.id), lastAdmin: standing.lastAdmin.some((x) => x.id === g.id),
+      })),
       coupons: this.db.prepare('SELECT * FROM coupons WHERE used_by = ? ORDER BY used_at DESC').all(p.id).map((c) => ({ id: c.id, hint: c.hint, usedAt: c.used_at, groupName: c.group_name })),
     };
   }
@@ -361,7 +366,18 @@ export class AdminService {
   deletePlayer(id, ip) {
     const p = this.#player(id);
     const gone = { id: null, pseudo: `${p.pseudo} (supprimé)` };
+    // Seul admin d'un groupe où il reste du monde : personne ne devient admin sans avoir été choisi.
+    const { alone, lastAdmin } = this.groups.standingOf(p.id);
+    if (lastAdmin.length) {
+      const names = lastAdmin.map((g) => `« ${g.name} »`).join(', ').replace(/, ([^,]*)$/, ' et $1');
+      throw conflict(`${p.pseudo} est le seul admin de ${names} : nomme d’abord un autre admin, ou supprime ${lastAdmin.length > 1 ? 'ces groupes' : 'ce groupe'}.`);
+    }
     tx(this.db, () => {
+      // Dernier membre d'un groupe : le groupe part avec lui.
+      for (const g of alone) {
+        this.groups.deleteGroup(g.id);
+        this.log('group_deleted', { target: `group:${g.id}`, player: p, summary: `Groupe « ${g.name} » supprimé avec le compte de son dernier membre « ${PLAYER} »`, ip });
+      }
       this.groups.forgetPlayer(p.id);
       // Le journal et les coupons le nomment désormais « Max (supprimé) » ; plus rien n'y renvoie vers le compte.
       this.db.prepare('UPDATE admin_log SET player_id = NULL, player_pseudo = ? WHERE player_id = ?').run(gone.pseudo, p.id);

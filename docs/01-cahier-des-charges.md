@@ -292,6 +292,14 @@ PC (pour chacun de ses groupes dont on est admin) et dans l'en-tête du groupe s
   * dans les deux cas, ses pronostics sur les paris encore ouverts sont retirés au départ ; ceux des paris clos restent ;
   * la mention suit son pseudo (« Maxime (parti) » s'il en change) ; « (parti) », « (banni) » et « (supprimé) » sont
     réservés.
+* **Toujours un admin, jamais un groupe vide** (2026-11-04) : personne ne devient admin sans avoir été choisi.
+  * Le seul admin qui veut partir alors qu'il reste du monde nomme d'abord son successeur (« Passer le relais ») ou
+    supprime le groupe (en retapant son nom : tous les membres en sortent, leurs comptes restent).
+  * Le dernier membre qui part emporte le groupe (paris, classements, historique) ; la confirmation le dit, et que ceux
+    qui en sont partis ou bannis ne pourront plus y revenir.
+  * L'admin du site ne peut pas bannir le seul admin (il en nomme d'abord un autre) ni le dernier membre (il supprime le
+    groupe) ; il ne peut pas supprimer le compte du seul admin d'un groupe où il reste du monde ; supprimer le compte du
+    dernier membre d'un groupe supprime aussi ce groupe (la fiche du compte le dit avant).
 * **Réglages** : points (§ 7.6), délais (validation 24 h, vote 48 h) ; types de paris, catégories et sources de données sur la page « Réglages des paris » (§ 7.11).
 * **Export** de tout le groupe en JSON (Bonus).
 

@@ -179,20 +179,56 @@ export class GroupService {
 
   /**
    * Quitter le groupe : il y devient « Max (parti) », ses pronostics sur les paris encore ouverts sont retirés. Il peut
-   * revenir quand il veut par le lien du groupe et retrouve sa place, ses points et son historique.
+   * revenir quand il veut par le lien du groupe et retrouve sa place, ses points et son historique. Personne ne devient
+   * admin sans avoir été choisi (demande du 2026-11-04) : le seul admin, s'il reste du monde, nomme d'abord son successeur
+   * (sinon 409 last_admin : il peut aussi supprimer le groupe) ; le dernier membre qui part supprime le groupe.
+   * Rend { deleted } : le groupe supprimé, ou null.
    */
-  leave(me) {
-    tx(this.db, () => {
+  leave(me, { successor = null } = {}) {
+    return tx(this.db, () => {
+      const { alone, lastAdmin } = this.#standing(me);
+      if (alone) {
+        const group = this.find(me.group_id);
+        this.deleteGroup(group.id);
+        return { deleted: group };
+      }
+      if (lastAdmin) {
+        if (!successor) throw new HttpError(409, 'Tu es le seul admin : nomme un autre admin avant de partir, ou supprime le groupe.', 'last_admin');
+        if (successor === me.id) throw badRequest('Choisis un autre membre pour prendre le relais.');
+        this.#changeRole(this.#target(me, successor), 'admin');
+      }
       this.#depart(me, 'left');
-      this.#event(me.group_id, 'member_left', me.id, {});
+      this.#event(me.group_id, 'member_left', me.id, lastAdmin ? { successor } : {});
+      return { deleted: null };
     });
+  }
+
+  /**
+   * Sa place dans le groupe : alone, il en est le dernier membre actif ; lastAdmin, il en est le seul admin alors qu'il
+   * reste du monde. Le groupe ne doit jamais rester sans admin ni sans membre.
+   */
+  #standing(member) {
+    const others = this.db.prepare(`SELECT COUNT(*) AS n, COALESCE(SUM(role = 'admin'), 0) AS admins FROM members
+        WHERE group_id = ? AND status = 'active' AND id != ?`).get(member.group_id, member.id);
+    return { alone: others.n === 0, lastAdmin: member.role === 'admin' && others.n > 0 && others.admins === 0 };
+  }
+
+  /** Ses groupes où ce compte est le dernier membre (alone), ou le seul admin alors qu'il reste du monde (lastAdmin). */
+  standingOf(playerId) {
+    const alone = [];
+    const lastAdmin = [];
+    for (const m of this.db.prepare("SELECT * FROM members WHERE player_id = ? AND status = 'active'").all(playerId)) {
+      const s = this.#standing(m);
+      if (s.alone) alone.push(this.find(m.group_id));
+      else if (s.lastAdmin) lastAdmin.push(this.find(m.group_id));
+    }
+    return { alone, lastAdmin };
   }
 
   /** Un membre actif qui n'est plus dans le groupe (parti, banni) : son nom le dit, il est déconnecté du groupe. */
   #depart(member, status) {
     this.db.prepare("UPDATE members SET status = ?, pseudo = ?, role = 'member' WHERE id = ?").run(status, memberPseudo(member.pseudo, status), member.id);
     this.#detach(member.id);
-    if (member.role === 'admin') this.#ensureAdmin(member.group_id);
   }
 
   // ——— Administration
@@ -328,13 +364,6 @@ export class GroupService {
       .run(memberId, this.clock.now());
   }
 
-  #ensureAdmin(groupId) {
-    const admins = this.db.prepare("SELECT COUNT(*) AS n FROM members WHERE group_id = ? AND status = 'active' AND role = 'admin'").get(groupId).n;
-    if (admins > 0) return;
-    const oldest = this.db.prepare("SELECT id FROM members WHERE group_id = ? AND status = 'active' ORDER BY created_at LIMIT 1").get(groupId);
-    if (oldest) this.db.prepare("UPDATE members SET role = 'admin' WHERE id = ?").run(oldest.id);
-  }
-
   // ——— Admin de l'instance (src/services/admin.js) : les mêmes règles, sans être admin du groupe
 
   #active(memberId) {
@@ -367,9 +396,12 @@ export class GroupService {
     this.#changeRole(this.#active(memberId), role);
   }
 
-  /** Retire un membre ; le dernier admin retiré, le plus ancien membre le devient. */
+  /** Bannir depuis l'admin du site : jamais le dernier membre (supprimer le groupe), ni le seul admin (en nommer un autre). */
   expel(memberId) {
     const target = this.#active(memberId);
+    const { alone, lastAdmin } = this.#standing(target);
+    if (alone) throw conflict('C’est le dernier membre du groupe : supprime plutôt le groupe.');
+    if (lastAdmin) throw conflict('C’est le seul admin du groupe : nomme d’abord un autre admin.');
     this.#remove(target, { admin: true });
     return target;
   }
@@ -395,7 +427,6 @@ export class GroupService {
           .run(deletedPseudo(this.db, m.group_id, pseudo ?? m.pseudo), m.id);
         if (m.status !== 'active') continue;
         this.#detach(m.id);
-        if (m.role === 'admin') this.#ensureAdmin(m.group_id);
         this.#event(m.group_id, 'member_left', m.id, { admin: true });
       }
       this.db.prepare('UPDATE members SET player_id = NULL WHERE player_id = ?').run(playerId);

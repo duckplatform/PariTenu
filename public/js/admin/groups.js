@@ -166,8 +166,14 @@ export async function groupView({ id, refresh, tab = 'members' }) {
 
   const setRole = (m, role) => act(null, () => apatch(`/members/${m.id}`, { role }), role === 'admin' ? `${m.pseudo} est admin du groupe.` : `${m.pseudo} n’est plus admin.`);
   const expel = async (m) => {
-    const last = m.role === 'admin' && active.filter((x) => x.role === 'admin').length === 1;
-    if (await confirmSheet(`Bannir ${m.pseudo} ?`, `Il apparaîtra comme « ${m.pseudo} (banni) » ; ses pronostics sur les paris encore ouverts sont retirés. Il ne pourra pas revenir de lui-même par le lien : seul un admin pourra le réintégrer.${last ? ' C’est le dernier admin : le plus ancien membre le deviendra.' : ''}`, { confirm: 'Bannir', danger: true })) {
+    // Jamais le dernier membre (supprimer le groupe), ni le seul admin (en nommer un autre d'abord) : personne n'est promu
+    // d'office (le serveur refuse aussi).
+    if (active.length === 1) { toast('C’est le dernier membre du groupe : supprime plutôt le groupe.', 'error'); return; }
+    if (m.role === 'admin' && active.filter((x) => x.role === 'admin').length === 1) {
+      toast('C’est le seul admin du groupe : rends d’abord un autre membre admin du groupe.', 'error');
+      return;
+    }
+    if (await confirmSheet(`Bannir ${m.pseudo} ?`, `Il apparaîtra comme « ${m.pseudo} (banni) » ; ses pronostics sur les paris encore ouverts sont retirés. Il ne pourra pas revenir de lui-même par le lien : seul un admin pourra le réintégrer.`, { confirm: 'Bannir', danger: true })) {
       act(null, () => adel(`/members/${m.id}`), `${m.pseudo} est banni du groupe.`);
     }
   };
