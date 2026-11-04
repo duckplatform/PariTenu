@@ -1,4 +1,4 @@
-// Groupes : la liste ; un groupe (onglets Membres, Classements, Réglages ; à côté : invitation, origine, suppression) ;
+// Groupes : la liste ; un groupe (onglets Membres, Classements, Réglages ; à côté : lien du groupe, origine, suppression) ;
 // la modification de tous ses réglages ; la création pour un compte.
 import { faceText } from '../avatars.js';
 import { appUrl } from '../brand.js';
@@ -11,7 +11,7 @@ import {
   adel, aget, ago, apatch, apost, avatar, badge, button, card, copy, facts, filters, go, moreMenu, pageHead, plural, table, tile, when,
 } from './kit.js';
 
-const inviteUrl = (token) => appUrl(`/invite/${token}`);
+const groupLink = (address) => appUrl(`/${address}`);
 const SEASON = { current: ['En cours', 'ok'], ending: ['Derniers résultats', 'warn'], closed: ['Close', 'muted'], upcoming: ['À venir', 'info'] };
 const STATUS = { left: ['A quitté', 'muted'], removed: ['Retiré', 'muted'] };
 
@@ -109,7 +109,7 @@ export async function groupsView() {
     title: 'Groupes',
     node: h('div.adm-page',
       pageHead({
-        title: 'Groupes', sub: 'Chaque groupe a son lien d’invitation : c’est lui qui fait entrer de nouveaux comptes.',
+        title: 'Groupes', sub: 'Chaque groupe a son lien (son adresse) : c’est lui qui fait entrer de nouveaux comptes et s’y connecter.',
         actions: [button('Nouveau groupe', { icon: 'plus', kind: 'primary', compact: true, onclick: () => newGroup() })],
       }),
       filters({
@@ -127,11 +127,11 @@ export async function groupView({ id, refresh, tab = 'members' }) {
   const { group: g } = await aget(`/groups/${id}`);
   const act = (button, fn, success) => run(button, fn, { success }).then((ok) => { if (ok) refresh(); });
   const active = g.members.filter((m) => m.status === 'active');
-  const link = inviteUrl(g.inviteToken);
+  const link = groupLink(g.address);
 
   const newLink = async () => {
-    if (await confirmSheet('Nouveau lien d’invitation ?', 'L’ancien lien ne marchera plus : seuls ceux qui reçoivent le nouveau pourront entrer. Les membres restent dans le groupe.', { confirm: 'Changer le lien' })) {
-      act(null, () => apost(`/groups/${g.id}/invite`), 'Nouveau lien prêt : copie-le.');
+    if (await confirmSheet('Nouveau lien du groupe ?', 'Le groupe prend une nouvelle adresse : l’ancienne ne permettra plus ni d’entrer ni de se connecter. Les membres restent dans le groupe et ceux déjà connectés gardent l’accès.', { confirm: 'Changer le lien' })) {
+      act(null, () => apost(`/groups/${g.id}/address`), 'Nouveau lien prêt : copie-le.');
     }
   };
 
@@ -198,10 +198,10 @@ export async function groupView({ id, refresh, tab = 'members' }) {
         sub: `${plural(active.length, 'membre')} · ${g.openBets} paris ouverts, ${g.bets} en tout · ${lastActivity}`,
         actions: [
           button('Modifier les réglages', { icon: 'pencil', compact: true, href: `/admin/groups/${g.id}/edit` }),
-          button('Copier le lien d’invitation', { icon: 'link', kind: 'primary', compact: true, onclick: () => copy(link, 'Lien d’invitation copié.') }),
+          button('Copier le lien du groupe', { icon: 'link', kind: 'primary', compact: true, onclick: () => copy(link, 'Lien du groupe copié.') }),
           moreMenu([
             { label: 'Ajouter un compte', icon: 'userPlus', onclick: addPlayer },
-            { label: 'Nouveau lien d’invitation', icon: 'refresh', onclick: newLink },
+            { label: 'Nouveau lien du groupe', icon: 'refresh', onclick: newLink },
             '-',
             { label: 'Supprimer le groupe…', icon: 'trash', danger: true, onclick: remove },
           ], { label: 'Plus d’actions sur le groupe', small: false }),
@@ -213,8 +213,8 @@ export async function groupView({ id, refresh, tab = 'members' }) {
       h('div.adm-aside-grid',
         h('div.adm-col', main),
         h('div.adm-col',
-          card('Invitation', h('div.adm-linkbox', h('code', link), h('button.btn.icon.small', { type: 'button', 'aria-label': 'Copier le lien', title: 'Copier', onclick: () => copy(link, 'Lien d’invitation copié.') }, icon('copy', 'sm'))),
-            h('p.small.muted', 'Ceux qui ont ce lien entrent dans le groupe avec un pseudo et un PIN.'),
+          card('Lien du groupe', h('div.adm-linkbox', h('code', link), h('button.btn.icon.small', { type: 'button', 'aria-label': 'Copier le lien', title: 'Copier', onclick: () => copy(link, 'Lien du groupe copié.') }, icon('copy', 'sm'))),
+            h('p.small.muted', 'Ceux qui ont ce lien entrent dans le groupe avec un pseudo et un PIN, ou s’y connectent.'),
             button('Changer le lien', { icon: 'refresh', kind: 'ghost', small: true, onclick: newLink })),
           card('Infos', facts([
             ['Créé', when(g.createdAt)],

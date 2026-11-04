@@ -66,23 +66,6 @@ const signInCard = () => h('section.card.stack#deja-un-compte', h('h2', '🔑 D�
 
 const linkHint = () => h('p.muted.center', 'Tu as reçu un lien ? Ouvre-le directement : il te fait entrer dans le groupe.');
 
-/**
- * L'adresse d'un groupe sans session, sur un appareil qui n'en garde pas le lien d'invitation (nouveau navigateur,
- * nouvelle adresse du site…) : on reste sur l'adresse et on explique comment se reconnecter. L'adresse d'un groupe
- * ne connecte pas : elle ne change jamais, seul le lien d'invitation (que les admins peuvent changer) le fait.
- */
-export function reconnectView() {
-  const node = h('main.landing',
-    h('header.landing-hero.compact', siteTop({ groupsLink: myGroups().length > 0 }), h('h1', 'Reconnecte-toi')),
-    h('section.card.stack#reconnexion',
-      h('h2', '🔑 Ce navigateur n’est pas connecté à ton compte'),
-      h('p', 'Pour entrer dans ce groupe, ouvre son lien d’invitation (celui envoyé dans WhatsApp, par exemple) : tu te connectes avec ton pseudo et ton PIN, une seule fois sur cet appareil. Tu retrouves ensuite tous tes groupes.'),
-      h('p.muted', 'Tu n’as plus le lien ? Demande-le à un membre du groupe : il le trouve dans l’app, page « Moi », « Invite tes amis ».'),
-      h('p.muted', 'Pourquoi pas ici ? Un PIN de 4 chiffres se devine vite : seul le lien d’invitation, que les admins du groupe peuvent changer, ouvre la connexion. L’adresse d’un groupe, elle, ne change jamais.')),
-    siteFoot());
-  return { node, title: 'Reconnecte-toi' };
-}
-
 /** / : l'accueil du site. Le principe et les sports de cette installation. */
 export async function siteHomeView() {
   const { instance, account, groups } = await visitor();

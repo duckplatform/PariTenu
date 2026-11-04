@@ -262,7 +262,7 @@ export class AdminService {
     const count = (sql) => this.db.prepare(sql).get(g.id).n;
     const coupon = this.db.prepare('SELECT id, hint, note, used_at FROM coupons WHERE group_id = ?').get(g.id);
     return {
-      id: g.id, name: g.name, emoji: g.emoji, createdAt: g.created_at, inviteToken: g.invite_token,
+      id: g.id, name: g.name, emoji: g.emoji, createdAt: g.created_at, address: g.address,
       bets: count('SELECT COUNT(*) AS n FROM bets WHERE group_id = ?'),
       openBets: count("SELECT COUNT(*) AS n FROM bets WHERE group_id = ? AND status = 'open'"),
       lastActivityAt: this.db.prepare('SELECT MAX(created_at) AS t FROM events WHERE group_id = ?').get(g.id).t,
@@ -415,11 +415,12 @@ export class AdminService {
     return JSON.stringify(this.sources.forGroup(groupId).map((v) => [v.id, v.selected, v.values]));
   }
 
-  regenerateInvite(id, ip) {
+  /** « Changer le lien » d'un groupe : une nouvelle adresse ; l'ancienne ne permet plus ni d'entrer ni de se connecter. */
+  changeAddress(id, ip) {
     const g = this.#group(id);
-    const token = this.groups.newInvite(g.id);
-    this.log('group_invite', { target: `group:${id}`, summary: `Nouveau lien d’invitation pour « ${g.name} » (l’ancien ne marche plus)`, ip });
-    return token;
+    const address = this.groups.newAddress(g.id);
+    this.log('group_address', { target: `group:${id}`, summary: `Nouveau lien pour « ${g.name} » (l’ancien ne marche plus)`, ip });
+    return address;
   }
 
   deleteGroup(id, ip) {

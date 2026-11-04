@@ -367,6 +367,13 @@ export const MIGRATIONS = [
   // v13 — les paris de sport s'appellent « sport · compétition · rencontre », sans « qui gagne ? » : ceux déjà ouverts
   // (et les anciens, dans l'historique et le fil) aussi.
   { run: retitleSportBets },
+  // v14 — plus de lien d'invitation : l'adresse du groupe (/<adresse>) sert à entrer et à se connecter. Celle des groupes
+  // existants est l'adresse qu'ils ont déjà (leur id) ; les anciens liens d'invitation ne marchent plus. « Changer le
+  // lien » en tire une nouvelle (l'id, interne, ne change jamais).
+  `
+  ALTER TABLE groups RENAME COLUMN invite_token TO address;
+  UPDATE groups SET address = id;
+  `,
 ];
 
 /**

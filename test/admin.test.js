@@ -148,13 +148,13 @@ describe('comptes', () => {
     const { players } = await adm.ok('GET', '/api/admin/players');
     const max = players.find((p) => p.pseudo === g.pseudo.max);
     assert.deepEqual([max.groups, max.state], [1, 'ok']);
-    for (let i = 0; i < 5; i++) await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: '0000', inviteToken: g.token });
+    for (let i = 0; i < 5; i++) await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: '0000', group: g.token });
     let { player } = await adm.ok('GET', `/api/admin/players/${max.id}`);
     assert.equal(player.state, 'locked');
     assert.deepEqual(player.groups.map((x) => [x.id, x.role, x.status]), [[g.gid, 'member', 'active']]);
     assert.equal(player.devices, 1);
     await adm.ok('POST', `/api/admin/players/${max.id}/unlock`);
-    assert.equal((await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: PIN, inviteToken: g.token })).status, 200);
+    assert.equal((await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: PIN, group: g.token })).status, 200);
     ({ player } = await adm.ok('GET', `/api/admin/players/${max.id}`));
     assert.deepEqual([player.state, player.devices], ['ok', 2]);
   });
@@ -164,11 +164,12 @@ describe('comptes', () => {
     const adm = await signIn();
     assert.equal((await adm.post('/api/admin/players', { pseudo: g.pseudo.lea, avatar: '🐺', groupId: g.gid })).status, 409, 'pseudo déjà pris');
     const { id } = await adm.ok('POST', '/api/admin/players', { pseudo: 'Nouvelle', avatar: '🐺', groupId: g.gid, role: 'admin' });
-    const info = await srv.client().ok('GET', `/api/invite/${g.token}`);
-    assert.equal(info.members.find((m) => m.pseudo === 'Nouvelle').needsNewPin, true);
+    const info = await srv.client().ok('GET', `/api/groups/${g.token}/entry`);
+    assert.deepEqual(Object.keys(info).sort(), ['account', 'group', 'signedIn'], 'ni pseudos ni avatars des membres');
     const phone = srv.client();
     assert.equal((await phone.post('/api/account/login', { pseudo: 'Nouvelle', pin: '2580' })).body.code, 'group_link_required', 'sans le lien du groupe');
-    await phone.ok('POST', '/api/account/login', { pseudo: 'Nouvelle', pin: '2580', newPin: true, inviteToken: g.token });
+    assert.equal((await phone.post('/api/account/login', { pseudo: 'Nouvelle', pin: '2580', group: g.token })).body.code, 'choose_pin', 'son pseudo suffit pour qu’on lui demande de choisir son PIN');
+    await phone.ok('POST', '/api/account/login', { pseudo: 'Nouvelle', pin: '2580', newPin: true, group: g.token });
     const { me } = await phone.ok('GET', `/api/groups/${g.gid}`);
     assert.deepEqual([me.pseudo, me.role], ['Nouvelle', 'admin']);
     assert.equal((await adm.ok('GET', `/api/admin/players/${id}`)).player.state, 'ok');
@@ -183,7 +184,7 @@ describe('comptes', () => {
     assert.deepEqual(await adm.ok('POST', `/api/admin/players/${maxId}/logout`), { devices: 1 });
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 401, 'déconnecté');
     await adm.ok('POST', `/api/admin/players/${maxId}/reset-pin`);
-    assert.equal((await srv.client().post('/api/account/login', { pseudo: 'Maxime', pin: PIN, inviteToken: g.token })).body.code, 'choose_pin');
+    assert.equal((await srv.client().post('/api/account/login', { pseudo: 'Maxime', pin: PIN, group: g.token })).body.code, 'choose_pin');
   });
 
   it('supprimer un compte : il quitte ses groupes (anonymisé, historique gardé), il faut retaper son pseudo', async () => {
@@ -197,7 +198,7 @@ describe('comptes', () => {
     assert.equal((await adm.get(`/api/admin/players/${maxId}`)).status, 404);
     const { members } = await g.c.lea.ok('GET', `/api/groups/${g.gid}`);
     assert.deepEqual(members.filter((m) => m.id === g.id.max).map((m) => [m.pseudo, m.status]), [['Ancien membre 1', 'left']]);
-    assert.equal((await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: PIN, inviteToken: g.token })).status, 404);
+    assert.equal((await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: PIN, group: g.token })).status, 404);
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 401, 'ses connexions disparaissent avec lui');
   });
 });
@@ -214,21 +215,27 @@ describe('groupes', () => {
     assert.deepEqual(group.members.map((m) => [m.pseudo, m.role]), [[g.pseudo.lea, 'admin'], [g.pseudo.max, 'member']]);
 
     await adm.ok('PATCH', `/api/admin/groups/${g.gid}`, { name: 'Les Vrais Potes', emoji: '⚡' });
-    const { inviteToken } = await adm.ok('POST', `/api/admin/groups/${g.gid}/invite`);
-    assert.equal((await srv.client().get(`/api/invite/${g.token}`)).status, 404, 'l’ancien lien ne marche plus');
-    assert.equal((await srv.client().ok('GET', `/api/invite/${inviteToken}`)).group.name, 'Les Vrais Potes');
+    // Nouveau lien : une nouvelle adresse ; l'ancienne ne mène plus à rien, même pour les membres (l'admin garde l'id).
+    const { address } = await adm.ok('POST', `/api/admin/groups/${g.gid}/address`);
+    assert.match(address, /^[0-9a-f]{16}$/);
+    assert.notEqual(address, g.token);
+    assert.equal((await srv.client().get(`/api/groups/${g.token}/entry`)).body.code, 'group_not_found', 'l’ancien lien ne marche plus');
+    assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 404);
+    assert.equal((await srv.client().ok('GET', `/api/groups/${address}/entry`)).group.name, 'Les Vrais Potes');
+    assert.equal((await g.c.max.ok('GET', '/api/account')).groups[0].id, address, 'le membre retrouve son groupe à la nouvelle adresse');
+    assert.equal((await adm.ok('GET', `/api/admin/groups/${g.gid}`)).group.address, address);
 
     const leaOther = (await adm.ok('GET', '/api/admin/players')).players.find((p) => p.pseudo === other.pseudo.lea);
     const { memberId } = await adm.ok('POST', `/api/admin/groups/${g.gid}/members`, { playerId: leaOther.id });
     assert.equal((await adm.post(`/api/admin/groups/${g.gid}/members`, { playerId: leaOther.id })).status, 409, 'déjà dedans');
-    assert.equal((await other.c.lea.ok('GET', `/api/groups/${g.gid}`)).me.role, 'member');
+    assert.equal((await other.c.lea.ok('GET', `/api/groups/${address}`)).me.role, 'member');
     await adm.ok('PATCH', `/api/admin/members/${memberId}`, { role: 'admin' });
     // Retirer la seule autre admin : le groupe garde un admin (le plus ancien membre).
     await adm.ok('DELETE', `/api/admin/members/${g.id.lea}`);
     await adm.ok('DELETE', `/api/admin/members/${memberId}`);
     ({ group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`));
     assert.deepEqual(group.members.filter((m) => m.status === 'active').map((m) => [m.pseudo, m.role]), [[g.pseudo.max, 'admin']]);
-    const feed = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feed`)).events.map((e) => [e.type, e.data.admin ?? null]);
+    const feed = (await g.c.max.ok('GET', `/api/groups/${address}/feed`)).events.map((e) => [e.type, e.data.admin ?? null]);
     assert.ok(feed.some(([type, adminDid]) => type === 'member_removed' && adminDid), 'le fil du groupe dit « par l’admin du site »');
   });
 

@@ -1,47 +1,54 @@
 import { identityFields, SPORTS } from '../avatars.js';
 import { ApiError, get, post } from '../api.js';
 import { h } from '../dom.js';
-import { loadGroup, navigate, rerender } from '../state.js';
-import { rememberGroup } from '../store.js';
+import { invalidate, rerender } from '../state.js';
 import { field, pinInput, toast } from '../ui.js';
 import { accountRow, afterLogin, loginForm, switchAccount } from './login.js';
 
+const whereIsTheLink = () => h('p.muted', 'Un membre du groupe le trouve dans l’app, page « Moi », « Invite tes amis ».');
+
+/** Un lien qui ne mène plus nulle part : ce qu'il faut demander, et « Mes groupes » (un membre y retrouve les siens). */
+function deadLinkView(title, text) {
+  const node = h('main.welcome', h('div.card.center.stack',
+    h('div.empty-emoji', '🔗'), h('h1', title), h('p', text), whereIsTheLink(),
+    h('a.btn.wide', { href: '/groups' }, 'Mes groupes')));
+  return { node, title };
+}
+
+/** /invite/<jeton> : les liens d'invitation n'existent plus (2026-11-04), un groupe se partage par son adresse. */
+export const expiredInviteView = () => deadLinkView('Lien expiré',
+  'Les liens d’invitation n’existent plus : un groupe se partage maintenant par son lien, son adresse. Demande-le à un membre du groupe.');
+
+/** L'adresse d'un groupe inconnue, ou changée par un admin (fuite du lien). */
+export const deadGroupView = (message) => deadLinkView('Lien périmé', message);
+
 /**
- * Arrivée par le lien d'invitation /invite/<jeton>. Connecté : on entre d'un geste avec son compte. Sinon : créer son compte
- * (nouveau) ou se connecter (pseudo + PIN, en touchant son avatar si on est déjà dans le groupe).
+ * L'adresse d'un groupe (/<groupe>, ou l'une de ses pages) sans en être membre : elle sert à y entrer et à s'y connecter.
+ * Connecté : on entre d'un geste avec son compte. Sinon : créer son compte (nouveau) ou se connecter (pseudo + PIN, sans
+ * rien qui montre les membres). Une fois dedans, la même adresse s'affiche (le groupe, ou le pari partagé).
  */
-export async function inviteView(route) {
+export async function entryView(route) {
   let info;
   try {
-    info = await get(`/invite/${route.token}`);
+    info = await get(`/groups/${route.gid}/entry`);
   } catch (err) {
-    if (err instanceof ApiError && err.status === 404) {
-      return {
-        node: h('main.welcome', h('div.card.center.stack',
-          h('div.empty-emoji', '🔗'), h('h1', 'Lien expiré'), h('p', err.message),
-          h('a.btn.wide', { href: '/' }, 'Accueil'))),
-      };
-    }
+    if (err instanceof ApiError && err.code === 'group_not_found') return deadGroupView(err.message);
     throw err;
   }
   const { group } = info;
-  const target = route.betId ? `/${group.id}/bet/${route.betId}` : `/${group.id}`;
-
-  // Déjà dans le groupe, connecté sur cet appareil : on entre directement.
+  const enter = (message) => {
+    if (message) toast(message, 'ok');
+    invalidate();
+    rerender();
+  };
+  // Déjà dans le groupe (connecté entre-temps, dans un autre onglet) : l'adresse s'affiche.
   if (info.signedIn) {
-    await loadGroup(group.id, { force: true });
-    navigate(target, { replace: true });
+    enter(null);
     return null;
   }
-
-  const enter = (message) => {
-    rememberGroup({ ...group, inviteToken: route.token });
-    if (message) toast(message, 'ok');
-    navigate(target, { replace: true });
-  };
   /** Rejoindre avec le compte connecté (rien à retaper). */
   const joinAsMe = async () => {
-    const { already } = await post(`/invite/${route.token}/join`, {});
+    const { already } = await post(`/groups/${route.gid}/join`, {});
     return already;
   };
 
@@ -73,8 +80,7 @@ export async function inviteView(route) {
     const showTab = (name) => {
       for (const b of tabs.children) b.setAttribute('aria-selected', String(b.dataset.tab === name));
       body.replaceChildren(name === 'new' ? joinForm() : loginForm({
-        inviteToken: route.token,
-        members: info.members,
+        group: route.gid,
         onDone: async (result) => {
           await afterLogin(result);
           // Connecté : on entre (en rejoignant le groupe si ce compte n'y était pas encore).
@@ -105,7 +111,7 @@ export async function inviteView(route) {
         if (pin.value !== pin2.value) { err.textContent = 'Les deux PIN ne sont pas identiques.'; return; }
         submit.disabled = true;
         try {
-          await post(`/invite/${route.token}/join`, { pseudo: me.pseudo, avatar: me.avatar, pin: pin.value });
+          await post(`/groups/${route.gid}/join`, { pseudo: me.pseudo, avatar: me.avatar, pin: pin.value });
           enter(`Bienvenue dans ${group.name} !`);
         } catch (error) {
           err.textContent = error.message;
@@ -120,8 +126,8 @@ export async function inviteView(route) {
   }
 
   const node = h('main.welcome',
-    h('header.hero.small', h('div.hero-emoji', group.emoji), h('p.muted', 'Tu es invité à rejoindre'), h('h1', group.name),
+    h('header.hero.small', h('div.hero-emoji', group.emoji), h('h1', group.name),
       h('p.tagline', 'Des paris gratuits entre amis : bon pronostic = des points, et un classement pour savoir qui a le plus de flair.')),
-    h('section.card.stack', panel));
-  return { node, title: `Rejoindre ${group.name}` };
+    h('section.card.stack#entree', panel));
+  return { node, title: group.name };
 }

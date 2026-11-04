@@ -3,7 +3,7 @@ import { brand, brandLogo } from './brand.js';
 import { cls, h } from './dom.js';
 import { ctx, loadGroup, navigate, setRenderer } from './state.js';
 import { icon } from './icons.js';
-import { forgetGroup, inviteTokenOf, lastGroup, myGroups, setGroups, setLastGroup } from './store.js';
+import { forgetGroup, lastGroup, myGroups, setGroups, setLastGroup } from './store.js';
 import { toast } from './ui.js';
 import { activityView } from './views/activity.js';
 import { adminView } from './views/admin.js';
@@ -13,12 +13,12 @@ import { configView } from './views/config.js';
 import { followView } from './views/follow.js';
 import { helpView } from './views/help.js';
 import { homeView } from './views/home.js';
-import { inviteView } from './views/invite.js';
 import { liveView } from './views/live.js';
 import { install, meView } from './views/me.js';
 import { memberView } from './views/member.js';
 import { rankView } from './views/rank.js';
-import { createGroupView, groupsView, reconnectView, siteHomeView } from './views/welcome.js';
+import { deadGroupView, entryView, expiredInviteView } from './views/entry.js';
+import { createGroupView, groupsView, siteHomeView } from './views/welcome.js';
 
 const root = document.getElementById('app');
 
@@ -27,16 +27,17 @@ const root = document.getElementById('app');
  *   /                        accueil du site (l'app installée s'ouvre, elle, sur le dernier groupe)
  *   /groups                  mes groupes        /groups/new[/<coupon>]   créer un groupe (seulement par le lien d'un
  *                                                                        coupon : aucun lien de l'app n'y mène)
- *   /invite/<lien>[?bet=<id>]  invitation       /help[/<section>]        aide (publique)
+ *   /invite/<jeton>          ancien lien d'invitation (expiré)     /help[/<section>]   aide (publique)
  *   /<g>  /<g>/new  /<g>/bet/<id>[/edit]  /<g>/rank[/<classement>[/<saison>]]  /<g>/activity  /<g>/members/<id>
  *   /<g>/me  /<g>/admin  /<g>/config  /<g>/follow (mes compétitions)  /<g>/live (direct : matchs et paris du jour)
- * Adresses en anglais, textes en français. Un groupe : 16 caractères hexadécimaux.
+ * Adresses en anglais, textes en français. Un groupe : son adresse, 16 caractères hexadécimaux ; elle sert aussi à y
+ * entrer et à s'y connecter (pas de lien d'invitation), et un admin du groupe peut la changer.
  */
 const GROUP_ID = /^[0-9a-f]{16}$/;
 function parseRoute() {
   const [first, second, third, fourth] = location.pathname.split('/').filter(Boolean);
   if (!first) return { name: 'start' };
-  if (first === 'invite' && second) return { name: 'invite', token: second, betId: new URLSearchParams(location.search).get('bet') };
+  if (first === 'invite' && second) return { name: 'invite' };
   if (first === 'groups') return second === 'new' ? { name: 'create', coupon: third ?? null } : { name: 'groups' };
   if (first === 'help') return { name: 'help', arg: second ?? null };
   if (GROUP_ID.test(first)) return { name: second ?? 'home', gid: first, arg: third, sub: fourth };
@@ -153,7 +154,7 @@ async function render() {
   const route = parseRoute();
   try {
     let out;
-    if (route.name === 'invite') out = await inviteView(route);
+    if (route.name === 'invite') out = expiredInviteView();
     else if (route.name === 'start') {
       // Dans un navigateur, « / » est l'accueil du site ; l'app installée, elle, s'ouvre sur le dernier groupe.
       const last = installed() ? lastGroup() : null;
@@ -181,24 +182,26 @@ async function render() {
     window.scrollTo(0, scroll);
   } catch (err) {
     if (mySeq !== seq) return;
-    if (err instanceof ApiError && err.status === 403 && err.code === 'not_member' && route.gid) {
-      // Retiré du groupe, ou un autre compte connecté sur cet appareil.
-      forgetGroup(route.gid);
-      toast(err.message, 'error');
-      navigate('/groups', { replace: true });
-      return;
-    }
-    if (err instanceof ApiError && err.status === 401 && route.gid) {
-      // Pas connecté (déconnexion, PIN réinitialisé…) : l'écran de connexion du groupe si l'appareil en garde le lien ;
-      // sinon (nouveau navigateur, nouvelle adresse du site) une page qui explique comment se reconnecter, sur place.
-      const token = inviteTokenOf(route.gid);
-      forgetGroup(route.gid);
-      if (token) { location.assign(`/invite/${token}`); return; }
-      const out = reconnectView();
+    /** Une page hors du groupe (son entrée, un lien périmé, une erreur) : sans la navigation du groupe. */
+    const showPage = (out) => {
+      if (mySeq !== seq || !out) return;
       document.title = `${out.title} — ${brand.name}`;
+      lastKey = location.pathname + location.search;
       root.replaceChildren(out.node);
       root.className = 'app';
       window.scrollTo(0, 0);
+    };
+    if (err instanceof ApiError && route.gid && (err.status === 401 || err.code === 'not_member')) {
+      // Pas connecté (nouvel appareil, déconnexion, PIN réinitialisé…), ou pas (plus) dans ce groupe : son adresse sert
+      // à y entrer ou à s'y connecter, sur place ; ensuite la même adresse s'affiche (le groupe, le pari partagé…).
+      forgetGroup(route.gid);
+      showPage(await entryView(route).catch(oops));
+      return;
+    }
+    if (err instanceof ApiError && err.code === 'group_not_found' && route.gid) {
+      // Adresse inconnue, ou changée par un admin du groupe (un membre retrouve la nouvelle dans « Mes groupes »).
+      forgetGroup(route.gid);
+      showPage(deadGroupView(err.message));
       return;
     }
     if (err instanceof ApiError && err.status === 404 && route.gid) {
@@ -207,10 +210,18 @@ async function render() {
       else { forgetGroup(route.gid); navigate('/groups', { replace: true }); }
       return;
     }
-    root.replaceChildren(h('main.welcome', h('div.card.center.stack',
-      h('div.empty-emoji', '😵'), h('h1', 'Oups'), h('p', err.message || 'Erreur inattendue.'),
-      h('button.btn.primary', { type: 'button', onclick: () => render() }, 'Réessayer'))));
+    showPage(oops(err));
   }
+}
+
+/** Une erreur inattendue : le message, et de quoi réessayer. */
+function oops(err) {
+  return {
+    title: 'Oups',
+    node: h('main.welcome', h('div.card.center.stack',
+      h('div.empty-emoji', '😵'), h('h1', 'Oups'), h('p', err.message || 'Erreur inattendue.'),
+      h('button.btn.primary', { type: 'button', onclick: () => render() }, 'Réessayer'))),
+  };
 }
 
 setRenderer(render);

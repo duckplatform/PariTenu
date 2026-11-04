@@ -18,6 +18,7 @@ export function eventText(e, { withBet = true } = {}) {
     case 'member_removed': return `a été retiré du groupe par ${d.admin ? 'l’admin du site' : memberOf(d.by).pseudo}`;
     case 'pin_reset': return `: PIN réinitialisé par ${memberOf(d.by).pseudo}`;
     case 'invite_regenerated': return 'a changé le lien d’invitation';
+    case 'address_changed': return 'a changé le lien du groupe';
     case 'created': return d.auto ? 'Pari ouvert automatiquement' : withBet ? `a lancé un pari :${on}` : 'a lancé le pari';
     case 'auto_opened': return `${d.count > 1 ? `${d.count} nouveaux paris ouverts` : 'Un nouveau pari ouvert'} automatiquement${d.labels ? ` : ${d.labels}` : ''}`;
     case 'season_closed': {

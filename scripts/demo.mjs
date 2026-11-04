@@ -30,8 +30,8 @@ async function seed() {
   const { groupId, memberId: lea } = await groups.createGroup({ name: 'Les Potes', emoji: '🏆', pseudo: 'Léa', avatar: 'j:3:1:10', pin: DEMO_PIN });
   // Un groupe neuf n'a rien d'activé : Léa ouvre les paris maison (les deux types, toutes les catégories).
   groups.updateSettings(groups.member(lea), { kinds: { yesno: true, multi: true }, categories: groups.settings(groupId).categories.map((c) => ({ ...c, hidden: false })) });
-  const token = groups.find(groupId).invite_token;
-  const join = async (pseudo, avatar) => (await groups.join(token, { pseudo, avatar, pin: DEMO_PIN })).memberId;
+  const address = groups.find(groupId).address; // le lien du groupe
+  const join = async (pseudo, avatar) => (await groups.join(address, { pseudo, avatar, pin: DEMO_PIN })).memberId;
   const max = await join('Max', 'f:fr');
   const tom = await join('Tom', '⚽');
   const ines = await join('Inès', 'j:2:1:7');
@@ -120,13 +120,13 @@ async function seed() {
 
   clock.reset();
   sweep();
-  return token;
+  return address;
 }
 
-const token = keep ? deps.db.prepare('SELECT invite_token FROM groups LIMIT 1').get().invite_token : await seed();
+const address = keep ? deps.db.prepare('SELECT address FROM groups LIMIT 1').get().address : await seed();
 const server = app.listen(config.port, config.host, () => {
   console.log('\n  🎲 Démo de Pari tenu ! prête');
-  console.log(`     http://localhost:${config.port}/invite/${token}`);
+  console.log(`     http://localhost:${config.port}/${address}`);
   console.log('     Membres : Léa (admin), Max, Tom, Inès, Sam, Julien — PIN : voir DEMO_PIN dans scripts/demo.mjs\n');
 });
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => { close(); process.exit(0); }));

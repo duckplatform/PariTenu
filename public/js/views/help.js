@@ -11,11 +11,11 @@ const SECTIONS = [
   ['start', '🚀 Commencer', [
     ['p', `${brand.name} est un jeu de pronostics entre amis : on parie sur les matchs, les courses, la météo ou la vie du groupe. Parier est gratuit, on ne mise jamais d’argent et on ne perd jamais de points : un bon pronostic en rapporte, c’est tout.`],
     ['ul', [
-      'Quelqu’un crée le groupe et partage le lien d’invitation (WhatsApp, SMS…).',
+      'Quelqu’un crée le groupe et partage son lien (WhatsApp, SMS…) : c’est l’adresse du groupe.',
       'Chacun ouvre le lien, choisit un pseudo, un avatar et un code PIN à 4 chiffres : c’est son compte. Pas d’e-mail.',
       'Ton compte vaut dans tous tes groupes : un seul pseudo (à toi sur toute l’app), un seul avatar, un seul PIN. Change-les dans « Moi » et c’est changé partout.',
       'Déjà connecté, tu entres dans un nouveau groupe d’un geste en ouvrant son lien, sans rien retaper.',
-      'Sur un autre téléphone ou sur ton PC : ouvre le lien d’un de tes groupes, « J’ai déjà un compte », ton pseudo et ton PIN, et tu retrouves tous tes groupes. On ne se connecte que par le lien d’invitation d’un groupe (pas par l’adresse de sa page) : sans lui, personne ne peut essayer de deviner ton PIN.',
+      'Sur un autre téléphone ou sur ton PC : ouvre le lien d’un de tes groupes, « J’ai déjà un compte », ton pseudo et ton PIN, et tu retrouves tous tes groupes. On ne se connecte que par le lien d’un groupe, jamais depuis l’accueil du site : sans lui, personne ne peut essayer de deviner ton PIN. Si le lien a fuité, un admin du groupe le change (Réglages du groupe → Changer le lien) : l’ancien ne mène plus à rien.',
       'PIN oublié ? Demande à un admin de ton groupe de le réinitialiser, puis rouvre le lien du groupe pour en choisir un nouveau. Si tu es dans plusieurs groupes, il faut un admin de chacun : un seul ne peut pas prendre ton compte.',
     ]],
   ]],
@@ -52,7 +52,7 @@ const SECTIONS = [
     ['p', 'Le résultat officiel arrive tout seul dès la fin de l’événement, et les points avec. Il ne se conteste pas : c’est le score officiel (si la source se trompe, un admin du groupe corrige le résultat). Match reporté ou annulé : pari annulé.'],
   ]],
   ['groups', '👥 Plusieurs groupes', [
-    ['p', `Tu peux être dans plusieurs groupes (les potes, le foot du jeudi, le bureau…) : chacun s’ouvre par son lien d’invitation. Pour en créer un, il faut un coupon : la personne qui gère ${brand.name} t’envoie son lien.`],
+    ['p', `Tu peux être dans plusieurs groupes (les potes, le foot du jeudi, le bureau…) : chacun s’ouvre par son lien. Pour en créer un, il faut un coupon : la personne qui gère ${brand.name} t’envoie son lien.`],
     ['p', 'Un pronostic sur un match compte dans tous tes groupes où ce même match est ouvert et dont tu suis la compétition : tu paries une fois, c’est pris partout.'],
     ['p', 'Les classements, eux, restent propres à chaque groupe.'],
   ]],

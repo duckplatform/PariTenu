@@ -18,6 +18,7 @@ const UNDO = {
     ALTER TABLE players DROP COLUMN failed_pins; ALTER TABLE players DROP COLUMN pin_hash;`,
   9: 'DROP TABLE admin_log; DROP TABLE admin_sessions; DROP TABLE admin_auth; DROP TABLE coupons;',
   11: 'DROP TABLE instance_settings;',
+  14: 'ALTER TABLE groups RENAME COLUMN address TO invite_token;',
 };
 
 /**
@@ -212,6 +213,21 @@ describe('v13 : les paris de sport s’appellent « sport · compétition · ren
       'Formule 1 · São Paulo · Autódromo José Carlos Pace',
       'Qui gagne le tournoi de Mario Kart ?',
     ]);
+    db.close();
+  });
+});
+
+describe('v14 : l’adresse du groupe remplace le lien d’invitation', () => {
+  it('chaque groupe garde l’adresse qu’il a déjà (son id) ; les anciens liens d’invitation ne mènent plus à rien', () => {
+    const db = reopenFrom(13, 'adresse-du-groupe', (base) => {
+      const add = base.prepare("INSERT INTO groups (id, name, emoji, invite_token, settings, created_at) VALUES (?, 'Les Potes', '🍻', ?, '{}', 1)");
+      add.run('a1b2c3d4e5f60718', 'ancien-jeton-1');
+      add.run('0123456789abcdef', 'ancien-jeton-2');
+    });
+    assert.deepEqual(db.prepare('SELECT id, address FROM groups ORDER BY id').all().map((g) => [g.id, g.address]),
+      [['0123456789abcdef', '0123456789abcdef'], ['a1b2c3d4e5f60718', 'a1b2c3d4e5f60718']]);
+    assert.ok(!db.prepare('PRAGMA table_info(groups)').all().some((c) => c.name === 'invite_token'), 'plus de colonne invite_token');
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM groups WHERE address LIKE 'ancien-jeton%'").get().n, 0);
     db.close();
   });
 });

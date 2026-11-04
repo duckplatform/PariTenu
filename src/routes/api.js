@@ -22,7 +22,7 @@ const Login = z.object({
   pseudo: z.string().trim().min(1, 'Tape ton pseudo.').max(20, 'Ton pseudo fait au plus 20 caractères.'),
   pin,
   newPin: z.boolean().optional(),             // PIN réinitialisé : le joueur a confirmé son nouveau PIN
-  inviteToken: z.string().max(60).optional(), // le lien d'un groupe ouvert pour se connecter
+  group: z.string().max(60).optional(),       // l'adresse du groupe ouverte pour se connecter
 });
 const Identity = z.object({ pseudo: pseudo.optional(), avatar: avatar.optional() });
 const question = z.string().trim().min(5, 'La question fait au moins 5 caractères.').max(140, 'La question fait au plus 140 caractères.');
@@ -129,17 +129,18 @@ export function apiRouter(deps) {
     const me = account(req, res);
     res.json({
       account: me && publicAccount(me),
-      groups: groups.playerGroups(me).map((g) => ({ id: g.id, name: g.name, emoji: g.emoji, inviteToken: g.invite_token, role: g.role })),
+      // id : l'adresse du groupe (/<adresse>), la seule que l'app connaisse ; l'id interne ne sort pas du serveur.
+      groups: groups.playerGroups(me).map((g) => ({ id: g.address, name: g.name, emoji: g.emoji, role: g.role })),
     });
   });
 
-  // Se connecter (pseudo + PIN) : seulement depuis le lien d'un groupe. Un PIN de 4 chiffres se devine vite : sans lien
-  // (secret, partagé entre amis), personne ne peut essayer des pseudos depuis l'accueil du site.
+  // Se connecter (pseudo + PIN) : seulement depuis l'adresse d'un groupe. Un PIN de 4 chiffres se devine vite : sans
+  // elle (secrète, partagée entre amis), personne ne peut essayer des pseudos depuis l'accueil du site.
   router.post('/account/login', authLimit, async (req, res) => {
     const input = parse(Login, req.body);
-    if (!input.inviteToken) throw new HttpError(403, 'Pour te connecter, ouvre le lien d’un de tes groupes (demande-le à un ami du groupe).', 'group_link_required');
-    const invite = groups.byToken(input.inviteToken); // lien inconnu : 404
-    const { player, token, newPin, unified } = await accounts.login(input, { inviteGroupId: invite.id });
+    if (!input.group) throw new HttpError(403, 'Pour te connecter, ouvre le lien d’un de tes groupes (demande-le à un ami du groupe).', 'group_link_required');
+    const group = groups.byAddress(input.group); // adresse inconnue ou changée : 404
+    const { player, token, newPin, unified } = await accounts.login(input, { groupId: group.id });
     setSession(req, res, token);
     res.json({ account: publicAccount(player), newPin, unified });
   });
@@ -170,25 +171,26 @@ export function apiRouter(deps) {
     const newAccount = me ? {} : parse(NewAccount, req.body);
     coupons.check(input.coupon); // avant de calculer le PIN
     let used = null;
-    const { groupId, token } = await groups.createGroup({ name: input.name, emoji: input.emoji, ...newAccount }, me, {
+    const { groupId, address, token } = await groups.createGroup({ name: input.name, emoji: input.emoji, ...newAccount }, me, {
       redeem: (created) => { coupons.redeem(input.coupon, created); used = created; },
     });
     admin.log('coupon_used', { target: `group:${groupId}`, summary: `Coupon …${normalizeCoupon(input.coupon).slice(-4)} utilisé par « ${used.pseudo} » : groupe « ${used.groupName} » créé`, ip: req.ip });
     setSession(req, res, token);
-    res.status(201).json({ groupId });
+    res.status(201).json({ groupId: address });
   });
 
-  router.get('/invite/:token', (req, res) => {
+  // L'adresse d'un groupe ouverte sans en être membre : de quoi y entrer ou s'y connecter (son nom, jamais ses membres).
+  router.get('/groups/:gid/entry', (req, res) => {
     const me = account(req, res);
-    res.json({ ...groups.inviteInfo(req.params.token, me), account: me && publicAccount(me) });
+    res.json({ ...groups.entry(req.params.gid, me), account: me && publicAccount(me) });
   });
 
   // Connecté : on entre d'un geste, avec son pseudo et son avatar. Sinon pseudo + avatar + PIN créent le compte.
-  router.post('/invite/:token/join', authLimit, async (req, res) => {
+  router.post('/groups/:gid/join', authLimit, async (req, res) => {
     const me = account(req, res);
-    const { groupId, token, already } = await groups.join(req.params.token, me ? {} : parse(NewAccount, req.body), me);
+    const { token, already } = await groups.join(req.params.gid, me ? {} : parse(NewAccount, req.body), me);
     setSession(req, res, token);
-    res.status(already ? 200 : 201).json({ groupId, already });
+    res.status(already ? 200 : 201).json({ already });
   });
 
   router.use('/admin', adminRouter(deps, { isSecure, authLimit }));
@@ -204,12 +206,11 @@ export function apiRouter(deps) {
     });
   }
 
-  // ——— Groupe (session obligatoire)
+  // ——— Groupe (session obligatoire) : :gid est l'adresse du groupe (adresse inconnue ou changée : 404 group_not_found)
 
   const g = express.Router({ mergeParams: true });
   router.use('/groups/:gid', (req, res, next) => {
-    const group = groups.find(req.params.gid);
-    if (!group) throw notFound('Groupe introuvable.');
+    const group = groups.byAddress(req.params.gid);
     req.me = groups.requireMember(group.id, account(req, res));
     req.group = group;
     bets.sweep(group.id);
@@ -220,7 +221,7 @@ export function apiRouter(deps) {
   g.get('/', (req, res) => {
     res.json({
       now: clock.now(),
-      group: { id: req.group.id, name: req.group.name, emoji: req.group.emoji, inviteToken: req.group.invite_token, createdAt: req.group.created_at },
+      group: { id: req.group.address, name: req.group.name, emoji: req.group.emoji, createdAt: req.group.created_at },
       settings: groups.settings(req.group.id),
       me: publicMember(req.me),
       members: groups.members(req.group.id).map(publicMember),
@@ -281,8 +282,9 @@ export function apiRouter(deps) {
     res.json({ places: await sources.places(parse(PlaceQuery, req.query).q) });
   });
 
-  g.post('/invite/regenerate', (req, res) => {
-    res.json({ inviteToken: groups.regenerateInvite(req.me) });
+  // « Changer le lien » (admin du groupe) : la nouvelle adresse ; l'ancienne ne mène plus à rien.
+  g.post('/address', (req, res) => {
+    res.json({ id: groups.changeAddress(req.me) });
   });
 
   g.get('/bets', (req, res) => {

@@ -30,7 +30,7 @@ export const brand = read();
 // Le dépôt du logiciel libre : vide tant qu'il n'est pas publié (le crédit s'affiche alors sans lien).
 export const PROJECT_URL = '';
 
-/** Une adresse à partager (invitation, coupon, pari) : sur l'adresse publique si elle est réglée, sinon sur celle de la page. */
+/** Une adresse à partager (groupe, coupon, pari) : sur l'adresse publique si elle est réglée, sinon sur celle de la page. */
 export const appUrl = (path) => `${brand.publicUrl || location.origin}${path}`;
 
 /** Le logo de la marque, pour les en-têtes. */

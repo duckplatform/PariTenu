@@ -97,7 +97,8 @@ export const plain = (pseudo) => pseudo.replace(/ \d+$/, '');
  * Un groupe prêt à jouer : Léa (admin, créatrice) puis les pseudos demandés, chacun avec son compte ; paris maison activés
  * (un groupe neuf n'a rien d'activé), sauf avec { house: false }.
  * Un pseudo est unique sur toute l'instance : du deuxième groupe d'un même serveur, ce sont « Léa 2 », « Max 2 »…
- * Renvoie { gid, token, c: { lea, max, … }, id: { lea, max, … }, pseudo: { lea: 'Léa 2', … } }.
+ * Renvoie { gid, token, c: { lea, max, … }, id: { lea, max, … }, pseudo: { lea: 'Léa 2', … } } ; gid et token : l'adresse du
+ * groupe (elle sert aussi à y entrer et à s'y connecter).
  */
 export async function setupGroup(srv, names = ['max', 'tom', 'ines'], { house = true } = {}) {
   srv.groupCount = (srv.groupCount ?? 0) + 1;
@@ -106,14 +107,14 @@ export async function setupGroup(srv, names = ['max', 'tom', 'ines'], { house = 
   const { groupId: gid } = await lea.ok('POST', '/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: `Léa${suffix}`, avatar: '🦊', pin: PIN, coupon: coupon(srv) });
   if (house) await enableHouseBets(lea, gid);
   const group = await lea.ok('GET', `/api/groups/${gid}`);
-  const token = group.group.inviteToken;
+  const token = group.group.id; // l'adresse du groupe : elle sert à y entrer et à s'y connecter
   const c = { lea };
   const id = { lea: group.me.id };
   const pseudos = { lea: `Léa${suffix}` };
   for (const name of names) {
     const client = srv.client();
     const pseudo = (PSEUDOS[name] ?? name[0].toUpperCase() + name.slice(1)) + suffix;
-    await client.ok('POST', `/api/invite/${token}/join`, { pseudo, avatar: '🐻', pin: PIN });
+    await client.ok('POST', `/api/groups/${token}/join`, { pseudo, avatar: '🐻', pin: PIN });
     c[name] = client;
     id[name] = (await client.ok('GET', `/api/groups/${gid}`)).me.id;
     pseudos[name] = pseudo;

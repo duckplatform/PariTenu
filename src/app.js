@@ -126,18 +126,16 @@ export function createApp(config, { db, clock = createClock(), logger = silentLo
     if (!body) return res.status(404).type('text/plain').send('Icône introuvable.');
     res.set({ 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }).send(body);
   });
-  // Les adresses de l'app, en anglais (/, /groups, /groups/new[/<coupon>], /help[/<section>], /invite/<lien>,
-  // /<groupe>/…) : la même coquille, le routeur de public/js/main.js choisit l'écran. Un groupe = 16 caractères
-  // hexadécimaux (newId).
+  // Les adresses de l'app, en anglais (/, /groups, /groups/new[/<coupon>], /help[/<section>], /<groupe>/…) : la même
+  // coquille, le routeur de public/js/main.js choisit l'écran. Un groupe = son adresse, 16 caractères hexadécimaux
+  // (newId), qui sert aussi à y entrer et à s'y connecter. /invite/<jeton> : un ancien lien d'invitation, l'app dit
+  // qu'il a expiré.
   app.get(['/', '/groups', '/groups/new', '/groups/new/:code', '/help', '/help/:section', '/invite/:token'], sendIndex);
   app.get(/^\/[0-9a-f]{16}(\/.*)?$/, sendIndex);
   // Les anciennes adresses, déjà partagées (WhatsApp, favoris) : vers leur équivalent.
   const to = (res, path, query = '') => res.redirect(302, path + query);
   app.get('/c/:code', (req, res) => to(res, `/groups/new/${encodeURIComponent(req.params.code)}`));
-  app.get('/g/:token', (req, res) => {
-    const bet = req.query.pari ?? req.query.bet;
-    to(res, `/invite/${encodeURIComponent(req.params.token)}`, typeof bet === 'string' ? `?bet=${encodeURIComponent(bet)}` : '');
-  });
+  app.get('/g/:token', (req, res) => to(res, `/invite/${encodeURIComponent(req.params.token)}`));
   app.get(['/aide', '/aide/:section'], (req, res) => to(res, req.params.section ? `/help/${encodeURIComponent(req.params.section)}` : '/help'));
   // Admin de l'instance (/admin, /admin/users, /admin/groups/<id>…) : une page à part, jamais en cache ni indexée.
   app.get(/^\/admin(\/.*)?$/, (req, res) => {

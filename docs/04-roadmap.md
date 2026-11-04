@@ -337,7 +337,7 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
 
 ### 2026-11-04 : « Reconnecte-toi » sur l'adresse d'un groupe
 
-* ✅ Demande : « quand j'utilise le lien de groupe (`/9fb047ac2a0b6f9c`) je n'y accède pas et on ne me propose pas
+* ✅ Demande : « quand j'utilise le lien de groupe (`/<groupe>`) je n'y accède pas et on ne me propose pas
   l'authentification ; pourquoi je dois absolument utiliser un lien d'invitation pour me reconnecter ? ». Constat : l'app
   passée sur `pronos.entrecouilles.fr`, aucun appareil n'y a de session ni le lien du groupe en mémoire (propres à
   chaque adresse) ; l'adresse du groupe renvoyait alors sur « Mes groupes » avec un message éphémère et « Tu n'es dans
@@ -351,7 +351,35 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   `39-reconnecte-toi`).
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge). Chaque joueur
   rouvre une fois le lien d'invitation sur `pronos.entrecouilles.fr` (un admin le repartage : Réglages du groupe →
-  Partager).
+  Partager). Remplacé le jour même par l'entrée suivante.
+
+### 2026-11-04 : le lien du groupe fait tout (plus de lien d'invitation)
+
+* ✅ Demande : « on peut s'en foutre du lien d'invitation, ce que je veux c'est juste partager le lien du groupe […]
+  éventuellement on garde la possibilité de changer le lien du groupe en cas de compromission. On supprime le système
+  de liens d'invitation, le lien du groupe fait tout. Par contre sur la page de login je ne veux pas voir de proposition
+  d'identité, login + PIN. « Tu es dans ce groupe ? Touche ton avatar. » non ». Proposition validée ; anciens liens
+  d'invitation : « sans redirection ».
+* ✅ Le lien d'un groupe est son adresse (`/<groupe>`, 64 bits). Sans être membre, elle propose « Je suis nouveau » ou
+  « J'ai déjà un compte » (pseudo + PIN) sur place, puis s'affiche ; même chose pour l'adresse d'un pari, qui remplace
+  `/invite/…?bet=` dans les partages. Plus aucune liste de membres pour qui n'en est pas (le serveur ne l'envoie plus) :
+  ni pseudos ni avatars à toucher. Un PIN réinitialisé se choisit toujours là (le serveur demande le nouveau PIN).
+* ✅ « Changer le lien » (Réglages du groupe ; admin du site, page du groupe) : une nouvelle adresse ; l'ancienne ne
+  permet plus ni d'entrer ni de se connecter et affiche « Lien périmé ». L'admin suit le groupe à la nouvelle adresse, les
+  autres membres connectés la retrouvent dans « Mes groupes ». L'id interne du groupe ne change jamais.
+* ✅ Anciens liens d'invitation (`/invite/…`, `/g/…`) : page « Lien expiré » (demander le lien du groupe à un membre).
+  La page « Reconnecte-toi » de la veille disparaît. Partages, page « Moi », Réglages, admin du site (« Copier le lien
+  du groupe »), aperçu de la page Configuration, aide, démo (`npm run demo` affiche le lien du groupe).
+* ✅ Migration v14 : `groups.invite_token` devient `groups.address`, égale à l'id pour les groupes existants (leurs liens,
+  favoris et apps installées marchent toujours ; les anciens liens d'invitation, non). Essayée sur une copie de la vraie
+  base du PC : schéma 13 → 14, le groupe garde son adresse, 241 paris intacts.
+* ✅ API : `GET /api/groups/:g/entry`, `POST /api/groups/:g/join`, `POST /api/groups/:g/address` ; connexion avec
+  `group` (l'adresse) ; `:g` est partout l'adresse (inconnue ou changée : `404 group_not_found`) ; admin du site
+  `POST /api/admin/groups/:id/address`. 224 tests (dont la migration v14 et le changement de lien), 30 scénarios Edge.
+* ⚠️ Le dépôt GitHub est public et la feuille de route citait l'adresse réelle du groupe (retirée, mais dans
+  l'historique Git) : après la mise en ligne, un admin du groupe la change (Réglages du groupe → Changer le lien) et
+  repartage le nouveau lien.
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
 ### À vérifier en vrai
 

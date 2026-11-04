@@ -10,7 +10,7 @@ const PICKS_GAP = 3 * HOUR; // pronostics d'une même personne à moins de 3 h d
 const FLAIR_ODDS = 2.5; // « coup de flair » : un bon pronostic à cette cote au moins
 // Sans intérêt pour le fil : les votes un par un, les retouches, les réglages ; la clôture et le résultat officiel d'un
 // pari de source (sa carte de résultat dit tout).
-const hidden = (e) => ['voted', 'edited', 'pin_reset', 'invite_regenerated'].includes(e.type)
+const hidden = (e) => ['voted', 'edited', 'pin_reset', 'invite_regenerated', 'address_changed'].includes(e.type)
   || (e.type === 'closed' && !e.memberId) || (e.type === 'resolved' && e.data.auto);
 const RESULTS_GROUP = 3; // résultats d'une même compétition le même jour : une seule carte à partir de 3
 

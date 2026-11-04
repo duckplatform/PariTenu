@@ -5,7 +5,7 @@ import { cls, fill, h } from '../dom.js';
 import {
   CANCEL_REASONS, dateTime, fromLocalInput, odds, plural, pointsFor, relative, signedPts, syncClock, toLocalInput,
 } from '../format.js';
-import { activeMembers, categoryOf, ctx, inviteUrl, memberOf, navigate } from '../state.js';
+import { activeMembers, categoryOf, ctx, groupUrl, memberOf, navigate } from '../state.js';
 import { eventLine } from '../texts.js';
 import {
   avatar, confirmSheet, field, openSheet, promptSheet, REACTIONS, run, share, toast, who,
@@ -58,7 +58,8 @@ export function shareBet(bet) {
   const text = bet.status === 'open'
     ? `🎲 Nouveau pari : ${bet.question} Pronostics jusqu’à ${dateTime(bet.closesAt)}.`
     : `🎲 Pari : ${bet.question}`;
-  return share({ title: brand.name, text, url: `${inviteUrl()}?bet=${bet.id}` });
+  // L'adresse du pari : un membre y arrive directement ; les autres s'y connectent ou entrent dans le groupe d'abord.
+  return share({ title: brand.name, text, url: groupUrl(`/bet/${bet.id}`) });
 }
 
 function renderBet(bet, ctxBet) {

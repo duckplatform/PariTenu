@@ -103,7 +103,10 @@ export class StatsService {
       .map((r) => ({ ...parseEvent(r), question: r.question ?? null }));
   }
 
-  /** Tout le groupe en JSON, sans les secrets (lien d'invitation, PIN, sessions). */
+  /**
+   * Tout le groupe en JSON, sans les secrets (PIN, sessions). L'id du groupe y figure : c'est aussi son adresse tant qu'un
+   * admin ne l'a pas changée, et seul un admin du groupe exporte.
+   */
   export(groupId) {
     const all = (sql) => this.db.prepare(sql).all(groupId);
     const group = this.groups.find(groupId);

@@ -62,7 +62,7 @@ Les applications existantes ne conviennent pas :
 |---|---|---|
 | **Membre** | Tout ami qui a rejoint le groupe | Créer des paris, parier, contester, voter, commenter |
 | **Arbitre** (d'un pari) | Le créateur du pari, ou le membre qu'il désigne | Clôturer plus tôt, trancher ou annuler ce pari. Il ne peut pas parier dessus. |
-| **Admin du groupe** | Le créateur du groupe et ceux qu'il nomme | Gérer le lien d'invitation, les membres et les réglages ; trancher à la place d'un arbitre absent ; corriger un résultat |
+| **Admin du groupe** | Le créateur du groupe et ceux qu'il nomme | Gérer le lien du groupe (le changer s'il a fuité), les membres et les réglages ; trancher à la place d'un arbitre absent ; corriger un résultat |
 | **Admin du site** (2026-11-01) | La personne qui héberge l'app (mot de passe choisi sur le serveur) | Tous les comptes et tous les groupes (`/admin`) ; générer et suivre les coupons de création de groupe (§ 7.14) |
 
 ## 6. Glossaire
@@ -93,11 +93,11 @@ l'app n'y mène) :
 
 * nom et emoji du groupe, puis son propre pseudo, son avatar et son PIN ;
 * il faut un **coupon** (depuis le 2026-11-01, à la place du code d'instance) : généré par l'admin du site, il crée un seul groupe et expire en servant ; son lien `/groups/new/<code>` ouvre le formulaire, coupon rempli (les anciens liens `/c/<code>` y mènent aussi ; § 7.14 et 7.16) ;
-* on obtient le lien d'invitation `https://…/invite/<jeton>` (les anciens liens `/g/<jeton>` y mènent), à coller dans le groupe WhatsApp (bouton Partager ; QR code en bonus).
+* on obtient le lien du groupe, son adresse `https://…/<groupe>`, à coller dans le groupe WhatsApp (bouton Partager ; QR code en bonus). Plus de lien d'invitation à part depuis le 2026-11-04 (§ 7.19).
 
 **Rejoindre** :
 
-* on ouvre le lien, puis « Qui es-tu ? », puis « Je suis nouveau » ;
+* on ouvre le lien du groupe, puis « Je suis nouveau » ;
 * on choisit un pseudo (unique sur toute l'instance, de 2 à 20 caractères), un avatar emoji et un PIN à 4 chiffres, saisi deux fois : c'est son compte ;
 * déjà connecté à son compte : un bouton « Entrer dans <groupe> » suffit, avec son pseudo et son avatar.
 
@@ -107,15 +107,10 @@ tous ses groupes ; une connexion par appareil vaut pour tous ses groupes. Les ch
 **Revenir ou changer d'appareil** :
 
 * la session dure un an sur l'appareil utilisé ;
-* sur un autre appareil : « J'ai déjà un compte » sur le lien d'un de ses groupes (toucher son avatar remplit le
-  pseudo), son pseudo et son PIN : on retrouve tous ses groupes. Pas de connexion depuis l'accueil du site (demande du
-  2026-11-03 : « les tentatives de login ne sont possibles que depuis les liens de groupe ») : il dit d'ouvrir le lien
-  d'un groupe, ou de le demander à un ami (page « Moi », « Invite tes amis ») ;
-* l'adresse d'un groupe (`/<groupe>`) ne connecte pas non plus : elle ne change jamais, alors qu'un admin peut changer
-  le lien d'invitation. Sans session, si l'appareil garde le lien du groupe, l'app ouvre l'écran de connexion de ce
-  lien ; sinon (nouveau navigateur, nouvelle adresse du site) une page « Reconnecte-toi », sur l'adresse même, explique
-  d'ouvrir le lien d'invitation et où un membre le trouve (demande du 2026-11-04 : « quand j'utilise le lien du groupe,
-  je n'y accède pas et on ne me propose pas l'authentification ») ;
+* sur un autre appareil : le lien d'un de ses groupes (son adresse) propose « J'ai déjà un compte » : son pseudo et
+  son PIN, sans rien qui montre les membres du groupe (§ 7.19), et on retrouve tous ses groupes. Pas de connexion
+  depuis l'accueil du site (demande du 2026-11-03 : « les tentatives de login ne sont possibles que depuis les liens de
+  groupe ») : il dit d'ouvrir le lien d'un groupe, ou de le demander à un ami (page « Moi », « Invite tes amis ») ;
 * « Me déconnecter de cet appareil » (page « Moi ») le déconnecte de tous ses groupes, pas ses autres appareils.
 
 **Plusieurs groupes (V3)** :
@@ -287,7 +282,7 @@ Page « ⚙️ Réglages du groupe », réservée aux admins : l'engrenage à c�
 PC (pour chacun de ses groupes dont on est admin) et dans l'en-tête du groupe sur téléphone (2026-10-31 : plus depuis
 « Moi »).
 
-* **Lien d'invitation** : copier, partager, régénérer ; QR code en bonus.
+* **Lien du groupe** (son adresse) : copier, partager, changer (une nouvelle adresse, l'ancienne ne mène plus à rien) ; QR code en bonus.
 * **Membres** : nommer ou retirer un admin, réinitialiser un PIN, retirer un membre. Ses pronostics sur les paris encore ouverts sont retirés ; son historique reste visible sous son pseudo.
 * **Réglages** : points (§ 7.6), délais (validation 24 h, vote 48 h) ; types de paris, catégories et sources de données sur la page « Réglages des paris » (§ 7.11).
 * **Export** de tout le groupe en JSON (Bonus).
@@ -436,7 +431,7 @@ faut le lien d'un groupe. »
   ses groupes comme « Ancien membre », points et historique gardés). Nouveau compte : pseudo, avatar et un groupe ; il
   choisit son PIN en ouvrant le lien du groupe.
 * **Groupes** : liste (recherche ; avec membres, vides), fiche (membres, rôles, coupon d'origine, paris, activité, lien,
-  réglages en un coup d'œil). Boutons : copier le lien d'invitation, modifier, ajouter un compte, rendre ou retirer admin, retirer un
+  réglages en un coup d'œil). Boutons : copier le lien du groupe, modifier, ajouter un compte, rendre ou retirer admin, retirer un
   membre (le groupe garde toujours un admin), nouveau lien, supprimer (en retapant le nom). Nouveau groupe : pour un
   compte existant, qui en devient l'admin.
 * **Modifier un groupe** (demande du 2026-11-01 : « configurer les settings des groupes depuis l'admin, dans la partie
@@ -473,7 +468,7 @@ Couilles », nom court « EntreCouilles », `https://paris.entrecouilles.fr`, h�
 
 * **Page ⚙️ Configuration** de l'admin du site (elle remplace la page Apparence, dont l'adresse y mène) :
   * **Identité** : nom (onglet, en-têtes, messages partagés), nom court (sous l'icône du téléphone, 14 caractères),
-    adresse publique (`https://…`, sans chemin). Aperçu en direct : onglet, nom sous l'icône, lien d'invitation.
+    adresse publique (`https://…`, sans chemin). Aperçu en direct : onglet, nom sous l'icône, lien d'un groupe.
   * **Page d'accueil** : accroche (le titre ; sa dernière phrase en valeur), présentation (aussi la description du site
     pour les aperçus de liens), note de pied de page.
   * **Hébergement** : « Hébergé par … » avec son lien, en bas de l'accueil et de l'aide.
@@ -482,7 +477,7 @@ Couilles », nom court « EntreCouilles », `https://paris.entrecouilles.fr`, h�
   * **Apparence** : les thèmes, comme avant.
   Les textes s'enregistrent d'un coup (journal : « Nom : « Pari tenu ! » → « Paris entre Couilles » ») ; l'icône et le
   thème s'appliquent tout de suite, après confirmation. Chaque joueur voit le changement à sa page suivante.
-* **Adresse publique : seulement les liens** (choix de l'utilisateur) : les liens d'invitation, de coupon et de partage
+* **Adresse publique : seulement les liens** (choix de l'utilisateur) : les liens des groupes, des coupons et des paris partagés
   la prennent ; pas de redirection, les autres adresses du site continuent de marcher.
 * **Crédit** (choix de l'utilisateur : « petit crédit en pied, et mentionner l'hébergement par Duck Platform ») : une
   installation renommée affiche « Propulsé par PariTenu, logiciel libre » en pied de l'accueil et de l'aide, puis
@@ -519,7 +514,7 @@ Demande : « revois toutes les routes pour les faire correspondre à des termes 
 seuls les textes sont français. »
 
 * **App** : `/help[/<section>]` (sections : start, betting, points, competitions, groups, rankings, referee, badges,
-  install), `/invite/<jeton>[?bet=<id>]`, `/<groupe>/members/<id>` ; le reste était déjà en anglais (`/groups`,
+  install), `/invite/<jeton>[?bet=<id>]` (depuis le 2026-11-04 : un ancien lien, qui dit qu'il a expiré ; § 7.19), `/<groupe>/members/<id>` ; le reste était déjà en anglais (`/groups`,
   `/groups/new`, `/<groupe>/bet/<id>`, `/rank`, `/activity`, `/me`, `/admin`, `/config`, `/follow`, `/live`).
 * **Admin du site**, sans `#` : `/admin`, `/admin/users[/<id>]`, `/admin/groups[/<id>[/edit]]`, `/admin/coupons`,
   `/admin/sources[/<id>]`, `/admin/configuration`, `/admin/log`.
@@ -534,12 +529,35 @@ Demande : « il faut s'assurer que les robots du net ne soient pas en mesure de 
 page d'index peut être indexée. »
 
 * Seul l'accueil du site (`/`) peut apparaître dans Google, Bing, DuckDuckGo, Qwant…
-* `robots.txt` interdit tout le reste aux robots (pages de groupe, liens d'invitation, mes groupes, création de groupe,
+* `robots.txt` interdit tout le reste aux robots (pages de groupe, dont leur adresse qui sert à y entrer, mes groupes, création de groupe,
   aide, admin, API), en leur laissant ce qu'il faut pour afficher l'accueil (styles, scripts, polices, icônes).
 * Chaque réponse autre que l'accueil porte aussi « ne pas indexer, ne pas suivre les liens » (`X-Robots-Tag`), pour les
   robots qui passeraient outre `robots.txt`.
-* Les données d'un groupe ne sont lisibles qu'avec un compte du groupe ; seul le lien d'invitation montre son nom et ses
-  membres, et il n'est jamais indexé.
+* Les données d'un groupe ne sont lisibles qu'avec un compte du groupe ; son adresse ne montre à qui n'en est pas que
+  son nom et son emoji (jamais ses membres), et elle n'est jamais indexée.
+
+### 7.19 Le lien du groupe fait tout (2026-11-04)
+
+Demande : « on supprime le système de liens d'invitation, le lien du groupe fait tout. Par contre sur la page de login
+je ne veux pas voir de proposition d'identité, login + PIN » ; « éventuellement on garde la possibilité de changer le
+lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans redirection (choix de l'utilisateur).
+
+* Le lien d'un groupe est son adresse, `https://…/<groupe>` (16 caractères hexadécimaux : 64 bits tirés au hasard).
+  Les boutons Partager (accueil du groupe, « Moi », Réglages du groupe) la partagent ; un pari se partage par son
+  adresse, `/<groupe>/bet/<id>`.
+* Ouverte par quelqu'un qui n'est pas dans le groupe, la même adresse (ou celle d'un pari) montre le nom et l'emoji du
+  groupe et propose « Je suis nouveau » (pseudo, avatar, PIN) ou « J'ai déjà un compte » (pseudo + PIN). Déjà connecté à
+  son compte : « Entrer dans <groupe> ». Ensuite, l'adresse s'affiche : le groupe, ou le pari partagé.
+* Rien n'y montre les membres : ni pseudos ni avatars à toucher (le serveur ne les envoie qu'aux membres). Un PIN
+  réinitialisé s'y choisit aussi : on tape son pseudo, l'app demande le nouveau PIN.
+* « Changer le lien » (Réglages du groupe, et l'admin du site) donne au groupe une nouvelle adresse : l'ancienne ne
+  permet plus ni d'entrer ni de se connecter, elle ne mène plus au groupe (« Lien périmé »). Les membres connectés
+  gardent l'accès : l'admin qui change le lien suit le groupe, les autres le retrouvent dans « Mes groupes ».
+* Les anciens liens d'invitation (`/invite/…`, `/g/…`) ne marchent plus : une page dit de demander le lien du groupe à
+  un membre. Les groupes existants gardent leur adresse : liens déjà partagés, favoris et apps installées marchent.
+* Sécurité (choix assumé) : quelqu'un qui a vu l'adresse (historique, capture d'écran, ancien membre) peut entrer dans le
+  groupe ou essayer des PIN, freiné par les blocages (5 erreurs par compte, puis deux fois plus long à chaque fois ;
+  30 essais par adresse IP en 5 minutes), et il doit connaître un pseudo. D'où « Changer le lien ».
 
 ## 8. Exigences non fonctionnelles
 
@@ -550,7 +568,7 @@ page d'index peut être indexée. »
 | Rapidité | Créer un pari en moins d'une minute, parier en 2 touches, pages affichées en moins d'une seconde en 4G |
 | Fiabilité des points | Chaque attribution de points se fait dans une transaction, et le score de chacun est toujours égal à la somme de son journal (vérifié par les tests) |
 | Heure | Fuseau Europe/Paris ; l'heure du serveur fait foi ; affichage relatif (« dans 2 h ») |
-| Sécurité | Jeton d'invitation de 128 bits, PIN haché, nombre d'essais limité, cookie de session `HttpOnly` + `Secure` + `SameSite=Lax`, CSP stricte, aucun contenu affiché sans échappement |
+| Sécurité | Adresse de groupe de 64 bits tirés au hasard (changeable par un admin), PIN haché, nombre d'essais limité, cookie de session `HttpOnly` + `Secure` + `SameSite=Lax`, CSP stricte, aucun contenu affiché sans échappement |
 | Vie privée | Ni e-mail, ni téléphone, ni vrai nom demandés. « Quitter le groupe » anonymise le pseudo (« Ancien membre »). |
 | Volume | Quelques groupes de 5 à 30 personnes : aucune contrainte de charge |
 | Sauvegarde | Toute la base tient dans un fichier SQLite à sauvegarder |
@@ -569,14 +587,14 @@ Je propose de reprendre la stack de tes projets récents (DuckSafe, DuckAsso) :
 
 ### Hébergement
 
-* **Phase de test : ton PC, exposé avec Tailscale Funnel.** L'app reçoit une adresse publique en HTTPS (`https://<nom-du-pc>.<ton-tailnet>.ts.net`). Tes amis n'ont rien à installer : ils ouvrent le lien WhatsApp. Le lien d'invitation reste le seul secret. Limite : l'app n'est joignable que quand le PC est allumé.
+* **Phase de test : ton PC, exposé avec Tailscale Funnel.** L'app reçoit une adresse publique en HTTPS (`https://<nom-du-pc>.<ton-tailnet>.ts.net`). Tes amis n'ont rien à installer : ils ouvrent le lien WhatsApp. Le lien du groupe reste le seul secret. Limite : l'app n'est joignable que quand le PC est allumé.
 * **Plus tard** : Docker + Caddy (HTTPS automatique) sur un petit serveur, pour une app disponible en permanence. La base SQLite se déplace telle quelle.
 
 ### Modèle de données (esquisse)
 
 | Table | Contenu principal |
 |---|---|
-| `groups` | Nom, emoji, jeton d'invitation, réglages (JSON) |
+| `groups` | Nom, emoji, adresse (le lien du groupe), réglages (JSON) |
 | `players` | Le compte : pseudo (unique), avatar, hash du PIN, essais ratés, blocages |
 | `player_sessions` | Compte, hash du jeton de session, dernière activité |
 | `members` | Compte, groupe, pseudo et avatar (recopiés du compte), rôle, statut |

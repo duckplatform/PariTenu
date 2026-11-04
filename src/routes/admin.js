@@ -110,7 +110,7 @@ export function adminRouter(deps, { isSecure, authLimit }) {
     res.json({ ok: true, removed });
   });
 
-  r.post('/groups/:id/invite', (req, res) => res.json({ inviteToken: admin.regenerateInvite(req.params.id, ip(req)) }));
+  r.post('/groups/:id/address', (req, res) => res.json({ address: admin.changeAddress(req.params.id, ip(req)) }));
 
   r.delete('/groups/:id', (req, res) => {
     const { confirm } = parse(Confirm, req.body);

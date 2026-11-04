@@ -14,19 +14,19 @@ function write(key, value) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* stockage indisponible */ }
 }
 
-/** Groupes connus sur cet appareil : [{ id, name, emoji, inviteToken, role }]. */
+/** Groupes connus sur cet appareil : [{ id, name, emoji, role }] (id : l'adresse du groupe). */
 export const myGroups = () => read('pt:groups', []);
 
-export function rememberGroup({ id, name, emoji, inviteToken, role }) {
+export function rememberGroup({ id, name, emoji, role }) {
   const previous = myGroups().find((g) => g.id === id);
   const list = myGroups().filter((g) => g.id !== id);
-  list.unshift({ id, name, emoji, inviteToken, role: role ?? previous?.role ?? null });
+  list.unshift({ id, name, emoji, role: role ?? previous?.role ?? null });
   write('pt:groups', list.slice(0, 20));
 }
 
 /** Mes groupes, tels que mon compte les connaît (connecté) : remplacent ceux gardés sur l'appareil. */
 export function setGroups(list) {
-  write('pt:groups', list.map(({ id, name, emoji, inviteToken, role }) => ({ id, name, emoji, inviteToken, role: role ?? null })));
+  write('pt:groups', list.map(({ id, name, emoji, role }) => ({ id, name, emoji, role: role ?? null })));
   if (lastGroup() && !list.some((g) => g.id === lastGroup())) write('pt:last', null);
 }
 
@@ -34,8 +34,6 @@ export function forgetGroup(id) {
   write('pt:groups', myGroups().filter((g) => g.id !== id));
   if (lastGroup() === id) write('pt:last', null);
 }
-
-export const inviteTokenOf = (id) => myGroups().find((g) => g.id === id)?.inviteToken ?? null;
 
 export const lastGroup = () => read('pt:last', null);
 export const setLastGroup = (id) => write('pt:last', id);

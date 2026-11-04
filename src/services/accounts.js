@@ -120,22 +120,19 @@ export class AccountService {
   }
 
   /**
-   * Connexion : rend { player, token, newPin, unified }.
-   * inviteGroupId : le groupe dont on a ouvert le lien ; seul ce lien (secret, contrairement au pseudo) permet de choisir
-   * un nouveau PIN après une réinitialisation. newPin : le joueur a confirmé son nouveau PIN.
+   * Connexion : rend { player, token, newPin, unified }. Pseudo + PIN, seulement depuis l'adresse d'un groupe (groupId :
+   * ce groupe), jamais depuis l'accueil du site. N'importe quelle adresse valable : un joueur d'un autre groupe s'y
+   * connecte, puis rejoint ce groupe. Seule l'adresse d'un de ses groupes (secrète, contrairement au pseudo) permet de
+   * choisir un nouveau PIN après une réinitialisation. newPin : le joueur a confirmé son nouveau PIN.
    */
-  /**
-   * Connexion : pseudo + PIN, seulement depuis le lien d'un groupe (inviteGroupId), jamais depuis l'accueil du site.
-   * N'importe quel lien valable : un joueur d'un autre groupe s'y connecte, puis rejoint ce groupe.
-   */
-  async login({ pseudo, pin, newPin = false }, { inviteGroupId = null } = {}) {
-    if (!inviteGroupId) throw new HttpError(403, 'Pour te connecter, ouvre le lien d’un de tes groupes (demande-le à un ami du groupe).', 'group_link_required');
+  async login({ pseudo, pin, newPin = false }, { groupId = null } = {}) {
+    if (!groupId) throw new HttpError(403, 'Pour te connecter, ouvre le lien d’un de tes groupes (demande-le à un ami du groupe).', 'group_link_required');
     const player = this.byPseudo(pseudo);
     if (!player) throw notFound('Aucun compte avec ce pseudo. Vérifie l’orthographe, ou crée ton compte (« Je suis nouveau »).');
     this.#assertNotLocked(player);
 
     if (this.needsNewPin(player)) {
-      if (!this.#inGroup(player.id, inviteGroupId)) {
+      if (!this.#inGroup(player.id, groupId)) {
         throw new HttpError(403, 'Ton PIN a été réinitialisé : ouvre le lien d’un de tes groupes pour en choisir un nouveau.', 'pin_reset');
       }
       if (!newPin) throw new HttpError(409, 'Ton PIN a été réinitialisé : choisis-en un nouveau.', 'choose_pin');

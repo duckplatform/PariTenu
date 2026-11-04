@@ -1,7 +1,7 @@
 import { avatarPicker, face } from '../avatars.js';
 import { patch, post } from '../api.js';
 import { h } from '../dom.js';
-import { ctx, inviteUrl, invalidate, navigate } from '../state.js';
+import { ctx, groupUrl, invalidate, navigate } from '../state.js';
 import { forgetGroup, setGroups } from '../store.js';
 import { confirmSheet, field, pinInput, run, toast } from '../ui.js';
 import { inviteCard } from './home.js';
@@ -87,7 +87,7 @@ export async function meView() {
       h('p.muted', `${me.role === 'admin' ? 'Admin de' : 'Membre de'} ${ctx.group.emoji} ${ctx.group.name}`),
       h('a.btn', { href: `/${ctx.gid}/members/${me.id}` }, 'Mon profil et mes stats')),
     inviteCard(),
-    h('p.invite-link', h('code', inviteUrl())),
+    h('p.invite-link', h('code', groupUrl())),
     installCard(),
     h('a.card.list-item', { href: `/${ctx.gid}/follow` }, h('span.big-emoji', '🏟️'), h('span.grow', h('b', 'Mes compétitions'),
       h('br'), h('small.muted', 'Choisis les compétitions du groupe dont tu veux voir les paris')), h('span.chev', '›')),

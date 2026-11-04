@@ -29,11 +29,10 @@ export async function afterLogin({ account, newPin, unified }) {
 }
 
 /**
- * Se connecter à son compte : pseudo + PIN, seulement depuis le lien d'un groupe (inviteToken : le serveur refuse sans).
- * Ses membres s'affichent : toucher son avatar remplit le pseudo ; c'est aussi là qu'on choisit un nouveau PIN après une
- * réinitialisation.
+ * Se connecter à son compte : pseudo + PIN, seulement depuis l'adresse d'un groupe (group : le serveur refuse sans).
+ * Rien n'y montre les membres du groupe (ni pseudos ni avatars) ; un PIN réinitialisé s'y choisit (le serveur le dit).
  */
-export function loginForm({ inviteToken, members = [], onDone }) {
+export function loginForm({ group, onDone }) {
   const pseudo = h('input', { name: 'login-pseudo', maxlength: 20, placeholder: 'Ton pseudo', autocomplete: 'username', required: true });
   const pin = pinInput({ name: 'login-pin', 'aria-label': 'PIN' });
   const pin2 = pinInput({ name: 'login-pin2', 'aria-label': 'PIN (confirmation)' });
@@ -49,16 +48,6 @@ export function loginForm({ inviteToken, members = [], onDone }) {
     notice.textContent = message;
   };
 
-  const grid = members.length ? h('div.member-grid', members.map((m) => h('button.member-choice', {
-    type: 'button', dataset: { memberId: m.id },
-    onclick: (e) => {
-      for (const b of grid.children) b.setAttribute('aria-pressed', String(b === e.currentTarget));
-      pseudo.value = m.pseudo;
-      choose(m.needsNewPin, `Salut ${m.pseudo} ! Ton PIN a été réinitialisé : choisis-en un nouveau.`);
-      pin.focus();
-    },
-  }, h('span.avatar.lg', face(m.avatar)), h('span', m.pseudo)))) : null;
-
   return h('form.stack', {
     onsubmit: async (e) => {
       e.preventDefault();
@@ -68,7 +57,7 @@ export function loginForm({ inviteToken, members = [], onDone }) {
       submit.disabled = true;
       try {
         const result = await post('/account/login', {
-          pseudo: pseudo.value.trim(), pin: pin.value, inviteToken, ...(choosing ? { newPin: true } : {}),
+          pseudo: pseudo.value.trim(), pin: pin.value, group, ...(choosing ? { newPin: true } : {}),
         });
         await onDone(result);
       } catch (error) {
@@ -85,7 +74,6 @@ export function loginForm({ inviteToken, members = [], onDone }) {
       }
     },
   },
-  grid ? [h('p.muted', 'Tu es dans ce groupe ? Touche ton avatar.'), grid] : null,
   field('Ton pseudo', pseudo),
   field('Ton PIN', pin),
   notice, confirmRow, err, submit);

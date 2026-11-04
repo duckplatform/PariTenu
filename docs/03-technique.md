@@ -14,7 +14,8 @@ src/
   core/themes.js       les 6 habillages (Stade d'origine + 5 thèmes) : nom, style, polices, couleurs d'aperçu
   services/follows.js  compétitions suivies par chaque membre (feedOf : le « fil » d'un pari de source)
   services/accounts.js le compte d'un joueur : pseudo, avatar, PIN, sessions, connexion, réinitialisation du PIN
-  services/groups.js   groupes, membres (le compte dans chaque groupe), invitations, administration (du groupe et du site)
+  services/groups.js   groupes, membres (le compte dans chaque groupe), adresse du groupe (y entrer, s'y connecter, la
+                       changer), administration (du groupe et du site)
   services/coupons.js  coupons de création de groupe : générés, vérifiés, consommés dans la transaction qui crée le groupe
   services/admin.js    admin du site : mot de passe, sessions, lectures (comptes, groupes, tableau de bord), actions, journal
   services/bets.js     cycle de vie d'un pari, permissions, échéances (sweep), paris ouverts automatiquement (createAuto)
@@ -42,8 +43,8 @@ public/
   fonts/<id>/          polices des thèmes, hébergées par l'app (woff2 « latin » de Google Fonts, licence SIL OFL)
   img/themes/<id>.jpg  aperçus des thèmes (page Configuration) (scripts/theme-previews.mjs, d'après les captures des tests e2e)
   js/icons.js          icônes au trait (Lucide) de la navigation, des titres de section et des états des paris
-  js/main.js           routeur (adresses en anglais : /, /groups, /groups/new[/<coupon>], /help, /invite/<jeton>,
-                       /<groupe>/…, liens internes sans rechargement, anciennes adresses converties), mise en page,
+  js/main.js           routeur (adresses en anglais : /, /groups, /groups/new[/<coupon>], /help, /<groupe>/… ;
+                       /invite/<jeton> : ancien lien, expiré ; liens internes sans rechargement, anciennes adresses converties), mise en page,
                        rafraîchissement au retour dans l'app
   js/views/*.js        un écran par fichier (welcome : accueil du site, mes groupes, créer un groupe ; help : aide ; follow : mes compétitions ;
                        live : page Direct ; match.js : écussons, tableau de score, podium ; facts.js : bloc « Le match »
@@ -107,7 +108,7 @@ fonction) : `<title>`, meta description, `apple-mobile-web-app-title`, liens d'i
 (« Pari tenu ! »). Une fois renommée, l'accueil et l'aide disent « Propulsé par PariTenu, logiciel libre »
 (`PROJECT_URL` dans `brand.js` : le lien du dépôt, vide tant qu'il n'est pas publié).
 
-L'adresse publique ne sert qu'aux **liens** (invitation, coupon, partage d'un pari : `appUrl()`) : rien n'est redirigé,
+L'adresse publique ne sert qu'aux **liens** (lien d'un groupe, coupon, partage d'un pari : `appUrl()`) : rien n'est redirigé,
 les autres adresses du site continuent de marcher. Derrière un proxy (hébergeur), ses requêtes passent le contrôle
 d'origine et ses cookies restent `Secure` même si le proxy parle en http au serveur.
 
@@ -237,16 +238,16 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 |---|---|---|
 | GET | `/api/instance` | Mon compte, sports et compétitions proposés (`catalog`), thème, identité de l'installation (`brand`) |
 | GET · PATCH | `/api/account` | Mon compte et mes groupes · changer pseudo et avatar (partout) |
-| POST | `/api/account/login` · `logout` · `pin` | Se connecter (pseudo, PIN ; `inviteToken` + `newPin` après une réinitialisation) · se déconnecter de l'appareil · changer de PIN |
+| POST | `/api/account/login` · `logout` · `pin` | Se connecter (pseudo, PIN, `group` : l'adresse du groupe ouvert ; `newPin` après une réinitialisation) · se déconnecter de l'appareil · changer de PIN |
 | POST | `/api/groups` | Créer un groupe avec un `coupon` (connecté : nom et emoji ; sinon aussi pseudo, avatar, PIN : crée le compte) |
-| GET | `/api/invite/:token` | Infos du lien : groupe, membres, mon compte, déjà dedans ? |
-| POST | `/api/invite/:token/join` | Rejoindre (connecté : d'un geste ; sinon pseudo, avatar, PIN : crée le compte) |
+| GET | `/api/groups/:g/entry` | L'adresse d'un groupe pour qui n'en est pas : son nom et son emoji (jamais ses membres), mon compte, déjà dedans ? (adresse inconnue ou changée : `404 group_not_found`) |
+| POST | `/api/groups/:g/join` | Entrer dans le groupe (connecté : d'un geste ; sinon pseudo, avatar, PIN : crée le compte) |
 | GET · PATCH | `/api/groups/:g` | Groupe, réglages, moi, membres · renommer (admin) |
 | PATCH | `/api/groups/:g/settings` | Points, plafond, prime, délais, types de paris, catégories, sources (admin) |
 | GET | `/api/groups/:g/sources` | Sources du groupe : compétitions, compétitions activées, active ou non |
 | POST | `…/bets/:id/check` | Demander le résultat à la source (une fois par minute au plus) |
 | GET | `/api/groups/:g/places?q=` | Recherche de ville pour la météo (admin) |
-| POST | `/api/groups/:g/invite/regenerate` | Nouveau lien (admin) |
+| POST | `/api/groups/:g/address` | Changer le lien : une nouvelle adresse, `{ id }` (admin du groupe) |
 | GET · POST | `/api/groups/:g/bets` | Liste (`?all=1` : tout l'historique) · créer |
 | GET · PATCH · DELETE | `/api/groups/:g/bets/:id` | Fiche · modifier · supprimer (créateur, sans pronostic) |
 | POST | `…/bets/:id/pick` · `details` · `postpone` · `arbiter` · `withdraw` | Parier (ou changer d'avis jusqu'à la clôture) · préciser · repousser · changer d'arbitre · se désister |
@@ -274,7 +275,7 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | GET · POST | `/api/admin/groups` | Groupes · créer pour un compte (`{ name, emoji, playerId }`, sans coupon) |
 | GET · PATCH · DELETE | `/api/admin/groups/:id` | Fiche (avec réglages et compétitions) · nom, emoji et réglages (`{ name, emoji, settings? }` → `{ removed }`, tout ou rien) · supprimer (`{ confirm: nom }`) |
 | GET | `…/groups/:id/settings` · `/api/admin/places?q=` | Réglages du groupe, ses sources telles qu'il les a réglées, sources coupées (`off`) · chercher une ville (météo) |
-| POST | `…/groups/:id/invite` · `members` | Nouveau lien · ajouter un compte (`{ playerId, role }`) |
+| POST | `…/groups/:id/address` · `members` | Changer le lien (`{ address }`) · ajouter un compte (`{ playerId, role }`) |
 | GET | `…/groups/:id/rankings[/:classement?season=]` | Classements du groupe · une saison d'un classement (comme `/api/groups/:g/rankings`) |
 | GET · PATCH | `/api/admin/sources[/:id]` | Sources (état, clé et sa variable `keyName`, groupes, paris en cours, dernière lecture réussie `readAt`, `failingSince` et `error` si elle ne répond plus) · couper ou rallumer pour tout le site (`{ enabled }` → `{ removed }`) |
 | PATCH · DELETE | `/api/admin/members/:id` | Rôle (`{ role }`) · retirer du groupe |
@@ -287,13 +288,16 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 
 ## Sécurité
 
-* **Accès** : le jeton du lien (128 bits) est le secret du groupe ; la session est celle du compte (cookie
+* **Accès** : l'adresse du groupe (`groups.address`, 64 bits tirés au hasard, `:g` de l'API) est son secret : elle
+  sert à y entrer et à s'y connecter (2026-11-04 : plus de lien d'invitation), et « Changer le lien » en tire une autre
+  (l'ancienne : `404 group_not_found`). L'id interne du groupe ne change jamais ; il ne sort que dans l'export et
+  l'admin du site. La session est celle du compte (cookie
   `pt_session`), `HttpOnly`, `SameSite=Lax`, `Secure` en HTTPS et sur `*.ts.net`, valable un an et prolongée à
   chaque visite ; elle n'ouvre que les groupes dont le compte est membre (`403 not_member` sinon).
 * **PIN** : scrypt (N = 2^14, r = 8, p = 5 : 16 MiB ; les hachages Argon2id d'avant restent acceptés là où Node le permet). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
-  d'un groupe (`inviteToken` ; sans : `403 group_link_required`, lien inconnu : `404`), contrôlé aussi par
-  `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03), l'adresse d'un groupe non plus
-  (un `401` y ouvre `/invite/<lien>` si l'appareil le garde, sinon `reconnectView()` de `welcome.js`, sur place). 5 erreurs (connexion ou
+  d'un groupe (`group` : son adresse ; sans : `403 group_link_required`, adresse inconnue : `404`), contrôlé aussi
+  par `AccountService.login` ; l'accueil n'a plus de formulaire de connexion (2026-11-03). Sur l'adresse d'un groupe,
+  un `401` ou `403 not_member` affiche `entryView()` (`views/entry.js`), sur place : rien n'y montre les membres. 5 erreurs (connexion ou
   changement de PIN) bloquent le compte 15 minutes, chaque blocage suivant dure deux fois plus (24 h
   au plus ; on repart de 15 minutes un jour après le dernier), plus la limite de 30 tentatives par adresse toutes les
   5 minutes. Après une réinitialisation, le nouveau PIN ne se choisit que depuis le lien d'un de ses groupes ; la
@@ -312,12 +316,11 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   pour la seule icône (`/api/admin/icon`, admin du site).
 * **XSS** : CSP sans `unsafe-inline` ; l'interface ne construit le DOM qu'avec `textContent` et des attributs
   (`h()` refuse les URL non sûres et les styles en ligne).
-* **Moteurs de recherche** : seul l'accueil (`/`) peut être indexé. Toutes les autres réponses (groupes, invitations,
+* **Moteurs de recherche** : seul l'accueil (`/`) peut être indexé. Toutes les autres réponses (groupes, anciens liens d'invitation,
   mes groupes, aide, admin, API, images, redirections) portent `X-Robots-Tag: noindex, nofollow`, et `/robots.txt`
   (écrit dans `src/app.js`) n'autorise que `/` (`Allow: /$`) et ce qu'il faut pour l'afficher (css, js, polices, icônes,
-  `/api/instance`) : les robots polis ne chargent même pas un lien d'invitation (qui montre le nom du groupe et les
-  pseudos des membres).
-* **Données** : ni e-mail, ni téléphone, ni vrai nom. L'export JSON exclut PIN, sessions et lien d'invitation.
+  `/api/instance`) : les robots polis ne chargent même pas l'adresse d'un groupe (qui montre le nom du groupe).
+* **Données** : ni e-mail, ni téléphone, ni vrai nom. L'export JSON (admins du groupe) exclut PIN et sessions ; il contient l'id du groupe, qui est aussi son adresse tant qu'un admin ne l'a pas changée.
 * **Sources de données** : appelées par le serveur seulement (la CSP du navigateur reste `'self'`), avec un délai de
   10 s et un cache (5 min à 1 h). Le client choisit un événement et un marché ; le serveur les retrouve chez la source
   et n'accepte du client ni options ni référence. Les textes venus des sources sont coupés à la bonne longueur et
@@ -350,4 +353,4 @@ les captures du parcours sont jointes au résultat. Les deux passent aussi en UT
 | `stats.test.js` | Classement d'une saison, fin de saison (champion, classement figé, remise à zéro, historique), saison qui attend ses derniers résultats, profil, séries, badges, fil d'activité |
 | `time.test.js` | Débuts de mois à Paris, changements d'heure |
 | `invariants.test.js` | 3 simulations de 120 paris au hasard : barème respecté, corrections exactement compensées, score de saison = journal, somme des saisons = journal |
-| `e2e/run.mjs` | 22 scénarios dans Edge sur 4 téléphones, des invitations au mode sombre, avec captures (dont la page Réglages des paris, les compétitions proposées, les paris ouverts tout seuls, un match à cote des bookmakers, le classement de la Ligue 1 et un parcours sur PC : barre latérale, site, aide) |
+| `e2e/run.mjs` | 30 scénarios dans Edge sur 4 téléphones, de l'entrée par le lien du groupe au mode sombre, avec captures (dont la page Réglages des paris, les compétitions proposées, les paris ouverts tout seuls, un match à cote des bookmakers, le classement de la Ligue 1 et un parcours sur PC : barre latérale, site, aide) |

@@ -27,7 +27,8 @@ export const invalidate = () => { ctx.loadedAt = 0; };
 export const memberOf = (id) => ctx.members.get(id) ?? { id, pseudo: '?', avatar: '❔', status: 'removed' };
 export const categoryOf = (id) => ctx.settings?.categories.find((c) => c.id === id) ?? { id, emoji: '🎲', label: 'Autre' };
 export const activeMembers = () => [...ctx.members.values()].filter((m) => m.status === 'active');
-export const inviteUrl = () => appUrl(`/invite/${ctx.group.inviteToken}`);
+/** Le lien du groupe à partager (son adresse : elle sert à entrer et à se connecter), ou d'une de ses pages. */
+export const groupUrl = (path = '') => appUrl(`/${ctx.gid}${path}`);
 
 let renderer = () => {};
 export const setRenderer = (fn) => { renderer = fn; };

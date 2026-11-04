@@ -2,7 +2,7 @@ import { face } from '../avatars.js';
 import { api, get, patch, post } from '../api.js';
 import { brand } from '../brand.js';
 import { h } from '../dom.js';
-import { activeMembers, ctx, inviteUrl, invalidate, navigate, rerender } from '../state.js';
+import { activeMembers, ctx, groupUrl, invalidate, navigate, rerender } from '../state.js';
 import { pointsEditor } from '../settings-editor.js';
 import { forgetGroup, rememberGroup } from '../store.js';
 import { confirmSheet, emojiPicker, field, GROUP_EMOJIS, promptSheet, run, share, toast } from '../ui.js';
@@ -16,23 +16,23 @@ export async function adminView() {
   const s = ctx.settings;
   const reload = async () => { invalidate(); rerender(); };
 
-  // Lien d'invitation
-  const linkCode = h('code', inviteUrl());
+  // Le lien du groupe : son adresse, pour entrer et se connecter. Le changer en donne une nouvelle (fuite du lien).
   const inviteSection = h('section.card.stack',
-    h('h2', '🔗 Lien d’invitation'),
-    h('p.invite-link', linkCode),
+    h('h2', '🔗 Lien du groupe'),
+    h('p.invite-link', h('code', groupUrl())),
+    h('p.muted', 'C’est l’adresse du groupe : elle sert à y entrer et à s’y connecter.'),
     h('div.row-wrap',
-      h('button.btn.primary', { type: 'button', onclick: () => share({ title: ctx.group.name, text: `🎲 Rejoins « ${ctx.group.name} » sur ${brand.name}`, url: inviteUrl() }) }, 'Partager'),
+      h('button.btn.primary', { type: 'button', onclick: () => share({ title: ctx.group.name, text: `🎲 Rejoins « ${ctx.group.name} » sur ${brand.name}`, url: groupUrl() }) }, 'Partager'),
       h('button.btn.danger', {
         type: 'button',
         onclick: async (e) => {
-          const ok = await confirmSheet('Changer le lien ?', 'L’ancien lien ne marchera plus. Les membres déjà connectés le restent. Tu devras partager le nouveau lien.', { confirm: 'Changer le lien', danger: true });
+          const ok = await confirmSheet('Changer le lien ?', 'Le groupe prend une nouvelle adresse : l’ancienne ne permettra plus ni d’entrer ni de se connecter. Les membres déjà connectés gardent l’accès. Tu devras partager le nouveau lien.', { confirm: 'Changer le lien', danger: true });
           if (!ok) return;
-          const r = await run(e.currentTarget, () => post(`${base}/invite/regenerate`), { success: 'Nouveau lien créé.' });
+          const r = await run(e.currentTarget, () => post(`${base}/address`), { success: 'Nouveau lien créé.' });
           if (r) {
-            ctx.group.inviteToken = r.inviteToken;
-            rememberGroup(ctx.group);
-            linkCode.textContent = inviteUrl();
+            forgetGroup(ctx.gid);
+            rememberGroup({ ...ctx.group, id: r.id, role: ctx.me.role });
+            navigate(`/${r.id}/admin`, { replace: true });
           }
         },
       }, 'Changer le lien')));

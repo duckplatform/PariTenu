@@ -1,7 +1,7 @@
 import { tx } from '../db.js';
 import { newGroupSettings, readSettings } from '../core/settings.js';
 import { badRequest, conflict, forbidden, HttpError, notFound, unauthorized } from '../lib/errors.js';
-import { newId, newToken } from '../lib/util.js';
+import { newId } from '../lib/util.js';
 import { addEvent } from './events.js';
 
 export const publicMember = (m) => ({
@@ -13,7 +13,7 @@ export const publicMember = (m) => ({
   createdAt: m.created_at,
 });
 
-/** Groupes, membres (le compte d'un joueur dans chacun de ses groupes), invitations et administration du groupe. */
+/** Groupes, membres (le compte d'un joueur dans chacun de ses groupes), adresse du groupe et administration du groupe. */
 export class GroupService {
   constructor(db, clock, accounts) {
     this.db = db;
@@ -27,9 +27,10 @@ export class GroupService {
     return this.db.prepare('SELECT * FROM groups WHERE id = ?').get(groupId) ?? null;
   }
 
-  byToken(token) {
-    const group = this.db.prepare('SELECT * FROM groups WHERE invite_token = ?').get(String(token));
-    if (!group) throw notFound("Ce lien d'invitation ne marche pas (ou plus). Demande le lien à jour dans le groupe.");
+  /** Le groupe d'une adresse (/<adresse>) : elle sert à entrer et à se connecter ; un admin peut la changer. */
+  byAddress(address) {
+    const group = this.db.prepare('SELECT * FROM groups WHERE address = ?').get(String(address));
+    if (!group) throw new HttpError(404, 'Ce lien ne mène à aucun groupe : il a peut-être été changé. Demande le lien à jour à un membre du groupe.', 'group_not_found');
     return group;
   }
 
@@ -65,39 +66,32 @@ export class GroupService {
     return tx(this.db, () => {
       const playerId = account?.id ?? this.accounts.insert({ pseudo, avatar, pinHash });
       const groupId = newId();
-      this.db.prepare('INSERT INTO groups (id, name, emoji, invite_token, settings, created_at) VALUES (?, ?, ?, ?, ?, ?)')
-        .run(groupId, name, emoji, newToken(16), JSON.stringify(newGroupSettings()), this.clock.now());
+      // L'adresse du groupe est d'abord son id ; « Changer le lien » en tire une autre.
+      this.db.prepare('INSERT INTO groups (id, name, emoji, address, settings, created_at) VALUES (?, ?, ?, ?, ?, ?)')
+        .run(groupId, name, emoji, groupId, JSON.stringify(newGroupSettings()), this.clock.now());
       const player = this.accounts.find(playerId);
       const memberId = this.#insertMember(groupId, player, 'admin');
       this.#event(groupId, 'group_created', memberId, { name });
       redeem?.({ playerId, pseudo: player.pseudo, groupId, groupName: name });
-      return { groupId, memberId, playerId, token: account ? null : this.accounts.createSession(playerId) };
+      return { groupId, address: groupId, memberId, playerId, token: account ? null : this.accounts.createSession(playerId) };
     });
   }
 
-  /** Le lien d'invitation : le groupe, ses membres (pour se reconnecter en touchant son avatar) et si j'en suis. */
-  inviteInfo(token, account = null) {
-    const group = this.byToken(token);
-    const members = this.db.prepare(`SELECT m.id, m.pseudo, m.avatar, p.id AS player_id, p.pin_hash FROM members m
-        LEFT JOIN players p ON p.id = m.player_id WHERE m.group_id = ? AND m.status = 'active' ORDER BY m.created_at`).all(group.id);
-    return {
-      group: { id: group.id, name: group.name, emoji: group.emoji },
-      members: members.map((m) => ({
-        id: m.id, pseudo: m.pseudo, avatar: m.avatar,
-        needsNewPin: !!m.player_id && this.accounts.needsNewPin({ id: m.player_id, pin_hash: m.pin_hash }),
-      })),
-      signedIn: !!this.memberOf(account, group.id),
-    };
+  /** L'adresse d'un groupe ouverte sans en être membre : son nom et son emoji, jamais ses membres. */
+  entry(address, account = null) {
+    const group = this.byAddress(address);
+    return { group: { id: group.address, name: group.name, emoji: group.emoji }, signedIn: !!this.memberOf(account, group.id) };
   }
 
-  async join(token, { pseudo, avatar, pin } = {}, account = null) {
+  /** Entrer dans un groupe par son adresse : avec le compte connecté, sinon pseudo + avatar + PIN en créent un. */
+  async join(address, { pseudo, avatar, pin } = {}, account = null) {
     if (!account) {
       this.accounts.assertPseudoFree(pseudo);
-      this.#assertPseudoFree(this.byToken(token).id, pseudo);
+      this.#assertPseudoFree(this.byAddress(address).id, pseudo);
     }
     const pinHash = account ? null : await this.accounts.hashPin(pin);
     return tx(this.db, () => {
-      const group = this.byToken(token);
+      const group = this.byAddress(address);
       const already = this.memberOf(account, group.id);
       if (already) return { groupId: group.id, memberId: already.id, playerId: account.id, token: null, already: true };
       const playerId = account?.id ?? this.accounts.insert({ pseudo, avatar, pinHash });
@@ -115,7 +109,7 @@ export class GroupService {
   /** Mes groupes : de quoi passer de l'un à l'autre. */
   playerGroups(account) {
     if (!account) return [];
-    return this.db.prepare(`SELECT g.id, g.name, g.emoji, g.invite_token, m.id AS member_id, m.role FROM members m
+    return this.db.prepare(`SELECT g.id, g.name, g.emoji, g.address, m.id AS member_id, m.role FROM members m
         JOIN groups g ON g.id = m.group_id WHERE m.player_id = ? AND m.status = 'active' ORDER BY g.created_at`).all(account.id);
   }
 
@@ -215,16 +209,17 @@ export class GroupService {
     return this.settings(groupId);
   }
 
-  regenerateInvite(me) {
+  /** « Changer le lien » : une nouvelle adresse ; l'ancienne ne permet plus ni d'entrer ni de se connecter. */
+  changeAddress(me) {
     this.#requireAdmin(me);
-    return this.#newInvite(me.group_id, me.id, {});
+    return this.#newAddress(me.group_id, me.id, {});
   }
 
-  #newInvite(groupId, memberId, data) {
-    const token = newToken(16);
-    this.db.prepare('UPDATE groups SET invite_token = ? WHERE id = ?').run(token, groupId);
-    this.#event(groupId, 'invite_regenerated', memberId, data);
-    return token;
+  #newAddress(groupId, memberId, data) {
+    const address = newId();
+    this.db.prepare('UPDATE groups SET address = ? WHERE id = ?').run(address, groupId);
+    this.#event(groupId, 'address_changed', memberId, data);
+    return address;
   }
 
   setRole(me, memberId, role) {
@@ -313,8 +308,8 @@ export class GroupService {
     this.db.prepare('UPDATE groups SET name = ?, emoji = ? WHERE id = ?').run(name, emoji, groupId);
   }
 
-  newInvite(groupId) {
-    return this.#newInvite(groupId, null, { admin: true });
+  newAddress(groupId) {
+    return this.#newAddress(groupId, null, { admin: true });
   }
 
   /** Compte supprimé : il quitte chacun de ses groupes (pseudo anonymisé, historique gardé) et ses membres s'en détachent. */

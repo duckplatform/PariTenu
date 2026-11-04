@@ -4,7 +4,7 @@ import { brand } from '../brand.js';
 import { cls, fill, h } from '../dom.js';
 import { now, plural, pts, relative, syncClock } from '../format.js';
 import { icon } from '../icons.js';
-import { activeMembers, ctx, inviteUrl, rerender } from '../state.js';
+import { activeMembers, ctx, groupUrl, rerender } from '../state.js';
 import { pref, setPref, visitBaseline } from '../store.js';
 import { eventLine } from '../texts.js';
 import { empty, meLink, run, share } from '../ui.js';
@@ -18,8 +18,8 @@ export function inviteCard() {
     h('p', 'Partage le lien du groupe dans WhatsApp : ils entrent avec un pseudo et un PIN (déjà inscrits : d’un geste), sans e-mail.'),
     h('button.btn.primary.wide', {
       type: 'button',
-      onclick: () => share({ title: ctx.group.name, text: `🎲 Rejoins « ${ctx.group.name} » sur ${brand.name}\nDes paris gratuits entre nous :`, url: inviteUrl() }),
-    }, 'Partager le lien d’invitation'));
+      onclick: () => share({ title: ctx.group.name, text: `🎲 Rejoins « ${ctx.group.name} » sur ${brand.name}\nDes paris gratuits entre nous :`, url: groupUrl() }),
+    }, 'Partager le lien du groupe'));
 }
 
 /** Les compétitions que le groupe propose et auxquelles je n'ai pas encore répondu : un bandeau compact. */
@@ -71,7 +71,7 @@ async function sideRail(bets, filter) {
         h('span.grow', r.member.pseudo, r.member.id === ctx.me.id ? h('small.muted', ' toi') : null), h('b.num', pts(r.score)))))
         : h('p.muted', 'Personne n’a encore de points cette saison.')) : null,
     feed.events.length ? card('Activité', `/${ctx.gid}/activity`, h('ul.rail-feed', feed.events
-      .filter((e) => !['voted', 'edited', 'pin_reset', 'invite_regenerated'].includes(e.type)).slice(0, 4)
+      .filter((e) => !['voted', 'edited', 'pin_reset', 'invite_regenerated', 'address_changed'].includes(e.type)).slice(0, 4)
       .map((e) => h('li', eventLine(e), h('small.muted', relative(e.createdAt)))))) : null);
 }
 const WIDE = '(min-width: 1280px)';

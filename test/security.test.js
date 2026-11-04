@@ -23,7 +23,7 @@ describe('en-têtes et garde-fous HTTP', () => {
     assert.equal(api.headers.get('cache-control'), 'no-store');
   });
 
-  it('l’adresse d’invitation sert l’app, le manifeste a le bon type', async () => {
+  it('un ancien lien d’invitation sert l’app (qui dit qu’il a expiré), le manifeste a le bon type', async () => {
     const c = srv.client();
     const invite = await c.req('GET', '/g/nimportequoi', { raw: true });
     assert.equal(invite.status, 200);
@@ -40,7 +40,7 @@ describe('en-têtes et garde-fous HTTP', () => {
     const robots = async (url) => (await fetch(srv.base + url, { redirect: 'manual' })).headers.get('x-robots-tag');
     assert.equal(await robots('/'), null, 'l’accueil reste indexable');
     for (const url of ['/groups', '/groups/new', '/groups/new/ABCD', '/help', '/invite/abc', '/g/abc', `/${g.gid}`, `/${g.gid}/bet/x`,
-      '/admin', '/admin/users', '/api/instance', `/api/invite/${g.token}`, '/css/app.css', '/icons/icon-192.png', '/manifest.webmanifest', '/nexiste/pas']) {
+      '/admin', '/admin/users', '/api/instance', `/api/groups/${g.token}/entry`, '/css/app.css', '/icons/icon-192.png', '/manifest.webmanifest', '/nexiste/pas']) {
       assert.equal(await robots(url), 'noindex, nofollow', url);
     }
     const res = await fetch(`${srv.base}/robots.txt`);
@@ -63,9 +63,9 @@ describe('en-têtes et garde-fous HTTP', () => {
       assert.deepEqual([res.status, res.headers.get('cache-control'), res.headers.get('x-robots-tag')], [200, 'no-store', 'noindex, nofollow'], url);
       assert.match(await res.text(), /\/js\/admin\/main\.js/, url);
     }
-    // Les liens déjà partagés (coupon, invitation, aide) : vers leur nouvelle adresse.
+    // Les liens déjà partagés (coupon, aide ; une ancienne invitation : la page qui dit qu'elle a expiré).
     for (const [url, to] of [['/c/ABCD-EFGH-JKMN', '/groups/new/ABCD-EFGH-JKMN'], ['/g/abc', '/invite/abc'],
-      ['/g/abc?pari=x1', '/invite/abc?bet=x1'], ['/aide', '/help'], ['/aide/points', '/help/points']]) {
+      ['/g/abc?pari=x1', '/invite/abc'], ['/aide', '/help'], ['/aide/points', '/help/points']]) {
       const res = await fetch(srv.base + url, { redirect: 'manual' });
       assert.deepEqual([res.status, res.headers.get('location')], [302, to], url);
     }
@@ -109,7 +109,8 @@ describe('en-têtes et garde-fous HTTP', () => {
       assert.equal((await anon.get(`/api/groups/${g.gid}${path}`)).status, 401, path);
     }
     assert.equal((await anon.get('/api/groups/inconnu/bets')).status, 404);
-    assert.equal((await anon.get('/api/invite/inconnu')).status, 404);
+    assert.equal((await anon.get('/api/groups/inconnu/entry')).body.code, 'group_not_found');
+    assert.equal((await anon.get('/api/invite/inconnu')).status, 404, 'plus d’API d’invitation');
   });
 
   it('un pari d’un autre groupe est introuvable', async () => {
@@ -180,7 +181,7 @@ describe('coupons de création de groupe et limitation des essais', () => {
       const url = `http://127.0.0.1:${server.address().port}/api/account/login`;
       const statuses = [];
       for (let i = 0; i < 5; i++) {
-        const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pseudo: 'Personne', pin: '0000', inviteToken: 'lien-inconnu' }) });
+        const res = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pseudo: 'Personne', pin: '0000', group: 'lien-inconnu' }) });
         statuses.push(res.status);
       }
       assert.deepEqual(statuses, [404, 404, 404, 429, 429]);

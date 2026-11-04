@@ -26,7 +26,7 @@ async function simulate(seed) {
   const { groupId, memberId: adminId } = await groups.createGroup({ name: 'Sim', emoji: '🎲', pseudo: 'Admin', avatar: '🦊', pin: '0000' });
   // Un groupe neuf n'a rien d'activé : l'admin ouvre les paris maison.
   groups.updateSettings(groups.member(adminId), { kinds: { yesno: true, multi: true }, categories: groups.settings(groupId).categories.map((c) => ({ ...c, hidden: false })) });
-  const token = groups.find(groupId).invite_token;
+  const token = groups.find(groupId).address;
   for (let i = 0; i < 7; i++) await groups.join(token, { pseudo: `Joueur${i}`, avatar: '🐻', pin: '0000' });
   const me = (id) => groups.member(id);
   const active = () => groups.activeMembers(groupId);

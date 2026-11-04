@@ -52,7 +52,7 @@ export async function configurationView({ refresh, tab: wanted }) {
     preview.tab.textContent = v.name || '—';
     preview.phone.textContent = v.shortName || '—';
     preview.share.textContent = `Rejoins « Les Potes » sur ${v.name || '—'}`;
-    preview.invite.textContent = `${(v.publicUrl || location.origin).replace(/\/+$/, '')}/invite/…`;
+    preview.invite.textContent = `${(v.publicUrl || location.origin).replace(/\/+$/, '')}/a1b2c3d4e5f60718`; // une adresse de groupe pour l'exemple
     counter.textContent = `${v.shortName.length} / 14`;
     const changed = Object.keys(v).filter((k) => v[k] !== initial[k]).length;
     pending.textContent = `${plural(changed, 'modification non enregistrée', 'modifications non enregistrées')}`;
@@ -73,14 +73,14 @@ export async function configurationView({ refresh, tab: wanted }) {
       card('Identité',
         field(h('span.adm-label-row', 'Nom'), inputs.name, 'Dans l’onglet, en haut de chaque page et dans les messages partagés. Le logiciel reste PariTenu : le pied de page le dit (« Propulsé par PariTenu »).'),
         field(h('span.adm-label-row', 'Nom court', counter), inputs.shortName, 'Sous l’icône de l’app sur l’écran d’accueil du téléphone : 14 caractères au plus.'),
-        field('Adresse publique', inputs.publicUrl, 'Les liens d’invitation, de coupon et de partage commencent par elle. Vide : l’adresse de la page ouverte. L’app reste joignable à ses autres adresses, rien n’est redirigé.'),
+        field('Adresse publique', inputs.publicUrl, 'Les liens des groupes, des coupons et des paris partagés commencent par elle. Vide : l’adresse de la page ouverte. L’app reste joignable à ses autres adresses, rien n’est redirigé.'),
         field('Hébergeur', inputs.hostName, '« Hébergé par … » en bas de l’accueil et de l’aide. Sans nom, rien n’est affiché.'),
         field('Adresse de l’hébergeur', inputs.hostUrl)),
       card('Aperçu', h('div.adm-preview',
         h('div.adm-pv-tab', h('img', { src: icons?.tab ?? '/icons/icon.svg', alt: '', width: 16, height: 16 }), preview.tab, icon('x', 'xs')),
         h('div.adm-pv-row',
           h('div.adm-pv-home', h('img', { src: icons?.phone ?? '/icons/apple-touch-icon.png', alt: '', width: 56, height: 56 }), preview.phone),
-          h('div.adm-pv-msg', h('b', 'Invitation partagée'), h('p', preview.share), preview.invite))))),
+          h('div.adm-pv-msg', h('b', 'Lien du groupe partagé'), h('p', preview.share), preview.invite))))),
     home: h('div.adm-form-col', card('Page d’accueil',
       field('Accroche', inputs.tagline, 'Le titre de l’accueil ; sa dernière phrase est mise en valeur.'),
       field('Présentation', inputs.intro, 'Sous le titre, et comme description du site (aperçu des liens partagés, moteurs de recherche).'),

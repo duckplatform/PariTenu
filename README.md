@@ -15,7 +15,7 @@ npm start
 ```
 
 L'app écoute sur http://localhost:5190 (et sur l'adresse du PC dans le réseau local). La première personne crée le
-groupe depuis l'accueil, avec un coupon, puis partage le lien d'invitation dans WhatsApp.
+groupe depuis l'accueil, avec un coupon, puis partage le lien du groupe dans WhatsApp.
 
 **Admin du site** (`/admin`, pages `/admin/users`, `/admin/groups`, `/admin/coupons`, `/admin/sources`,
 `/admin/configuration`, `/admin/log`) : choisis d'abord son mot de passe sur le serveur, jamais depuis le site :
@@ -29,7 +29,7 @@ partout, supprimer ; les classements et tous les réglages de chaque groupe : po
 compétitions), tu coupes ou rallumes une **source** de données pour tous les
 groupes (foot, padel, météo…), et tu règles la **Configuration** du site (nom, adresse publique, textes de l'accueil, hébergeur,
 icône, thème), et tu génères les **coupons** : créer un groupe (et le compte qui va avec) en demande un, à usage
-unique ; tu suis lequel a servi, à qui, pour quel groupe. Pour rejoindre un groupe, son lien d'invitation suffit. Le
+unique ; tu suis lequel a servi, à qui, pour quel groupe. Pour rejoindre un groupe, son lien suffit (c'est aussi là qu'on se connecte). Le
 lien d'un coupon (`/groups/new/<code>`) ouvre le formulaire de création, coupon rempli. Mot de passe oublié ou admin bloqué : relance
 `npm run admin`.
 
@@ -49,7 +49,7 @@ saisons. À la fin de la saison, le meilleur score est sacré champion et tout r
 champions et leurs paris restent consultables.
 
 **Démo** : `npm run demo` recrée `data/demo.db` avec un groupe « Les Potes » (6 membres, 10 paris dans tous les états)
-et lance l'app. Le lien d'invitation s'affiche dans le terminal ; le PIN des membres est `DEMO_PIN` dans
+et lance l'app. Le lien du groupe s'affiche dans le terminal ; le PIN des membres est `DEMO_PIN` dans
 `scripts/demo.mjs`. `npm run demo -- --keep` relance sans recréer la base.
 
 ### Pour tes amis : Tailscale Funnel
@@ -58,7 +58,7 @@ Funnel donne au PC une adresse publique en HTTPS (`https://<nom-du-pc>.<tailnet>
 n'installent rien, et le HTTPS permet d'installer l'app sur l'écran d'accueil des téléphones.
 
 1. Choisis le mot de passe de l'admin (`npm run admin`) : l'adresse est publique, et seuls ceux à qui tu envoies un
-   coupon (généré dans `/admin`) peuvent créer un groupe sur ton PC ; les amis entrent avec le lien d'invitation.
+   coupon (généré dans `/admin`) peuvent créer un groupe sur ton PC ; les amis entrent avec le lien du groupe.
 2. Lance l'app (`npm start`), puis ouvre Funnel :
 
 ```bash
@@ -73,7 +73,7 @@ remplacerait). La première fois, Tailscale demande d'autoriser Funnel pour ce P
 tailscale funnel --https=8443 off
 ```
 
-L'app n'est joignable que quand le PC est allumé et que `npm start` tourne. Le lien d'invitation est le seul secret :
+L'app n'est joignable que quand le PC est allumé et que `npm start` tourne. Le lien du groupe est le seul secret :
 ne le partage que dans le groupe (l'admin peut le changer à tout moment).
 
 ### Configuration (variables d'environnement ou `.env`)

@@ -7,8 +7,8 @@ let srv;
 before(async () => { srv = await startServer(); });
 after(() => srv.stop());
 
-/** Se connecter depuis le lien d'un groupe (token ; null : sans lien, comme depuis l'accueil du site). */
-const login = (client, token, pseudo, pin = PIN, extra = {}) => client.post('/api/account/login', { pseudo, pin, ...(token ? { inviteToken: token } : {}), ...extra });
+/** Se connecter depuis le lien d'un groupe (token : son adresse ; null : sans lien, comme depuis l'accueil du site). */
+const login = (client, token, pseudo, pin = PIN, extra = {}) => client.post('/api/account/login', { pseudo, pin, ...(token ? { group: token } : {}), ...extra });
 /** Mon membre dans ce groupe (son id change d'un groupe à l'autre). */
 const meIn = async (client, gid) => (await client.ok('GET', `/api/groups/${gid}`)).me;
 
@@ -28,35 +28,36 @@ describe('un compte par joueur', () => {
 
   it('rejoindre par le lien crée le compte : pseudo unique sur toute l’instance (sans tenir compte des majuscules), PIN à 4 chiffres', async () => {
     const g = await setupGroup(srv, ['max']);
-    const info = await srv.client().ok('GET', `/api/invite/${g.token}`);
+    const info = await srv.client().ok('GET', `/api/groups/${g.token}/entry`);
     assert.equal(info.group.name, 'Les Potes');
-    assert.deepEqual(info.members.map((m) => m.pseudo), [g.pseudo.lea, g.pseudo.max]);
+    assert.equal(info.members, undefined, 'ni pseudos ni avatars des membres pour qui n’en est pas');
+    assert.deepEqual(info.group, { id: g.token, name: 'Les Potes', emoji: '🍻' });
     assert.equal(info.signedIn, false);
     assert.equal(info.account, null);
-    assert.equal((await g.c.max.ok('GET', `/api/invite/${g.token}`)).signedIn, true);
-    const dup = await srv.client().post(`/api/invite/${g.token}/join`, { pseudo: g.pseudo.max.toUpperCase(), avatar: '🐯', pin: PIN });
+    assert.equal((await g.c.max.ok('GET', `/api/groups/${g.token}/entry`)).signedIn, true);
+    const dup = await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: g.pseudo.max.toUpperCase(), avatar: '🐯', pin: PIN });
     assert.equal(dup.status, 409);
     assert.equal(dup.body.error, 'Ce pseudo est déjà pris : choisis-en un autre.');
     // Un pseudo pris dans un autre groupe l'est aussi ici : c'est le même compte partout.
     const other = await setupGroup(srv, []);
-    assert.equal((await srv.client().post(`/api/invite/${g.token}/join`, { pseudo: other.pseudo.lea, avatar: '🐯', pin: PIN })).status, 409);
+    assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: other.pseudo.lea, avatar: '🐯', pin: PIN })).status, 409);
     for (const pin of ['123', '12345', 'abcd', '12a4']) {
-      const r = await srv.client().post(`/api/invite/${g.token}/join`, { pseudo: 'Tomate', avatar: '🐯', pin });
+      const r = await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'Tomate', avatar: '🐯', pin });
       assert.equal(r.status, 400);
       assert.equal(r.body.error, 'Le PIN fait 4 chiffres.');
     }
-    assert.equal((await srv.client().post(`/api/invite/${g.token}/join`, { pseudo: 'T', avatar: '🐯', pin: PIN })).body.error,
+    assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'T', avatar: '🐯', pin: PIN })).body.error,
       'Ton pseudo fait au moins 2 caractères.');
-    assert.equal((await srv.client().post(`/api/invite/${g.token}/join`, { pseudo: 'Ancien membre 7', avatar: '🐯', pin: PIN })).status, 400, 'réservé aux membres partis');
+    assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'Ancien membre 7', avatar: '🐯', pin: PIN })).status, 400, 'réservé aux membres partis');
   });
 
   it('connecté, on rejoint un autre groupe d’un geste ; sur un autre appareil, pseudo + PIN ouvrent tous ses groupes', async () => {
     const a = await setupGroup(srv, ['max']);
     const b = await setupGroup(srv, []);
-    const join = await a.c.max.post(`/api/invite/${b.token}/join`, {});
+    const join = await a.c.max.post(`/api/groups/${b.token}/join`, {});
     assert.equal(join.status, 201);
     assert.equal((await meIn(a.c.max, b.gid)).pseudo, a.pseudo.max, 'son pseudo et son avatar, sans rien retaper');
-    assert.equal((await a.c.max.post(`/api/invite/${b.token}/join`, {})).body.already, true, 'déjà dedans : on y entre simplement');
+    assert.equal((await a.c.max.post(`/api/groups/${b.token}/join`, {})).body.already, true, 'déjà dedans : on y entre simplement');
 
     const pc = srv.client();
     assert.equal((await pc.get(`/api/groups/${a.gid}`)).status, 401);
@@ -79,7 +80,7 @@ describe('un compte par joueur', () => {
     // Le lien d'un groupe où il n'est pas : il s'y connecte (puis peut le rejoindre d'un geste).
     const pc = srv.client();
     assert.equal((await login(pc, other.token, g.pseudo.max)).status, 200);
-    assert.equal((await pc.post(`/api/invite/${other.token}/join`, {})).status, 201);
+    assert.equal((await pc.post(`/api/groups/${other.token}/join`, {})).status, 201);
   });
 
   it('changer de PIN : les essais ratés comptent comme à la connexion, 5 bloquent le compte', async () => {
@@ -127,25 +128,29 @@ describe('un compte par joueur', () => {
 });
 
 describe('administration du groupe', () => {
-  it('régénérer le lien : l’ancien ne marche plus, les sessions restent', async () => {
+  it('changer le lien : une nouvelle adresse ; l’ancienne ne permet plus ni d’entrer ni de se connecter, les sessions restent', async () => {
     const g = await setupGroup(srv, ['max']);
-    assert.equal((await g.c.max.post(`/api/groups/${g.gid}/invite/regenerate`)).status, 403);
-    const { inviteToken } = await g.c.lea.ok('POST', `/api/groups/${g.gid}/invite/regenerate`);
-    assert.notEqual(inviteToken, g.token);
-    assert.ok(inviteToken.length >= 22, '128 bits en base64url');
-    const old = await srv.client().get(`/api/invite/${g.token}`);
+    assert.equal((await g.c.max.post(`/api/groups/${g.gid}/address`)).status, 403);
+    const { id: address } = await g.c.lea.ok('POST', `/api/groups/${g.gid}/address`);
+    assert.notEqual(address, g.token);
+    assert.match(address, /^[0-9a-f]{16}$/, '64 bits, comme une adresse de groupe');
+    const old = await srv.client().get(`/api/groups/${g.token}/entry`);
     assert.equal(old.status, 404);
+    assert.equal(old.body.code, 'group_not_found');
     assert.match(old.body.error, /lien/);
-    assert.equal((await srv.client().get(`/api/invite/${inviteToken}`)).status, 200);
-    assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 200);
+    assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'Intrus', avatar: '🐯', pin: PIN })).status, 404, 'plus personne n’entre par l’ancienne');
+    assert.equal((await login(srv.client(), g.token, g.pseudo.max)).status, 404, 'ni ne s’y connecte');
+    assert.equal((await login(srv.client(), address, g.pseudo.max)).status, 200);
+    assert.equal((await srv.client().get(`/api/groups/${address}/entry`)).status, 200);
+    assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 404, 'l’ancienne adresse ne mène plus au groupe');
+    assert.equal((await g.c.max.ok('GET', `/api/groups/${address}`)).group.id, address, 'sa session reste : il y est à la nouvelle');
+    assert.deepEqual((await g.c.max.ok('GET', '/api/account')).groups.map((x) => x.id), [address]);
   });
 
   it('réinitialiser un PIN : connexions coupées, le prochain PIN tapé depuis le lien du groupe devient le nouveau', async () => {
     const g = await setupGroup(srv, ['max']);
     assert.deepEqual(await g.c.lea.ok('POST', `/api/groups/${g.gid}/members/${g.id.max}/reset-pin`), { done: true, waiting: 0 });
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 401);
-    const info = await srv.client().ok('GET', `/api/invite/${g.token}`);
-    assert.equal(info.members.find((m) => m.id === g.id.max).needsNewPin, true);
     // Le pseudo n'est pas secret : sans le lien du groupe, impossible de se connecter, ni d'y choisir le nouveau PIN.
     assert.equal((await login(g.c.max, null, g.pseudo.max, '9876')).body.code, 'group_link_required');
     assert.equal((await login(g.c.max, (await setupGroup(srv, [])).token, g.pseudo.max, '9876')).body.code, 'pin_reset', 'le lien d’un groupe où il n’est pas');
@@ -159,7 +164,7 @@ describe('administration du groupe', () => {
   it('un compte dans plusieurs groupes : il faut la réinitialisation d’un admin de chacun', async () => {
     const a = await setupGroup(srv, ['max']);
     const b = await setupGroup(srv, []);
-    await a.c.max.ok('POST', `/api/invite/${b.token}/join`, {});
+    await a.c.max.ok('POST', `/api/groups/${b.token}/join`, {});
     const maxInB = (await meIn(a.c.max, b.gid)).id;
     assert.deepEqual(await a.c.lea.ok('POST', `/api/groups/${a.gid}/members/${a.id.max}/reset-pin`), { done: false, waiting: 1 });
     assert.equal((await a.c.max.get(`/api/groups/${a.gid}`)).status, 200, 'rien ne change encore : l’admin d’un groupe ne prend pas le compte');
@@ -168,14 +173,14 @@ describe('administration du groupe', () => {
 
     // Un admin qui l'est aussi dans l'autre groupe le couvre d'un coup.
     const c = await setupGroup(srv, ['jo']);
-    await c.c.jo.ok('POST', `/api/invite/${b.token}/join`, {});
-    await b.c.lea.ok('POST', `/api/invite/${c.token}/join`, {});
+    await c.c.jo.ok('POST', `/api/groups/${b.token}/join`, {});
+    await b.c.lea.ok('POST', `/api/groups/${c.token}/join`, {});
     await c.c.lea.ok('POST', `/api/groups/${c.gid}/members/${(await meIn(b.c.lea, c.gid)).id}/role`, { role: 'admin' });
     assert.deepEqual(await b.c.lea.ok('POST', `/api/groups/${b.gid}/members/${(await meIn(c.c.jo, b.gid)).id}/reset-pin`), { done: true, waiting: 0 });
 
     // Le joueur se connecte avec son PIN entre-temps : il ne l'a pas oublié, la demande en cours tombe.
     const d = await setupGroup(srv, ['sam']);
-    await d.c.sam.ok('POST', `/api/invite/${b.token}/join`, {});
+    await d.c.sam.ok('POST', `/api/groups/${b.token}/join`, {});
     await d.c.lea.ok('POST', `/api/groups/${d.gid}/members/${d.id.sam}/reset-pin`);
     assert.equal((await login(srv.client(), d.token, d.pseudo.sam)).status, 200);
     assert.deepEqual(await b.c.lea.ok('POST', `/api/groups/${b.gid}/members/${(await meIn(d.c.sam, b.gid)).id}/reset-pin`), { done: false, waiting: 1 });
@@ -206,7 +211,7 @@ describe('administration du groupe', () => {
     assert.equal(members.find((m) => m.id === g.id.max).status, 'removed');
     assert.equal((await g.c.lea.post(`/api/groups/${g.gid}/members/${g.id.lea}/remove`)).status, 400);
     // Revenu par le lien : il retrouve sa place et son historique.
-    await g.c.max.ok('POST', `/api/invite/${g.token}/join`, {});
+    await g.c.max.ok('POST', `/api/groups/${g.token}/join`, {});
     assert.equal((await meIn(g.c.max, g.gid)).id, g.id.max);
   });
 
@@ -250,7 +255,7 @@ describe('administration du groupe', () => {
     assert.equal(bet.awards.find((a) => a.kind === 'gain').amount, 150, 'cote 5 plafonnée à 3, × 50');
   });
 
-  it('export JSON réservé aux admins, sans PIN ni lien secret', async () => {
+  it('export JSON réservé aux admins, sans PIN ni session', async () => {
     const g = await setupGroup(srv, ['max']);
     await createBet(srv, g);
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}/export`)).status, 403);
@@ -259,7 +264,7 @@ describe('administration du groupe', () => {
     assert.match(r.headers.get('content-disposition'), /attachment/);
     const text = JSON.stringify(r.body);
     assert.equal(r.body.bets.length, 1);
-    assert.ok(!text.includes(g.token), 'pas de lien d’invitation');
+    // L'id du groupe y figure (c'est aussi son adresse tant qu'un admin ne l'a pas changée) : l'admin la connaît déjà.
     assert.ok(!/\$(scrypt|argon2id)\$/.test(text), 'pas de hash de PIN');
   });
 });
@@ -304,7 +309,7 @@ describe('mon compte', () => {
   it('se déconnecter : de tous ses groupes sur cet appareil, pas sur les autres', async () => {
     const a = await setupGroup(srv, ['max']);
     const b = await setupGroup(srv, []);
-    await a.c.max.ok('POST', `/api/invite/${b.token}/join`, {});
+    await a.c.max.ok('POST', `/api/groups/${b.token}/join`, {});
     const pc = srv.client();
     await login(pc, a.token, a.pseudo.max);
     await a.c.max.ok('POST', '/api/account/logout');
@@ -338,7 +343,7 @@ describe('comptes d’avant (une connexion et un PIN par groupe)', () => {
   it('un appareil connecté à un groupe le reste : sa session devient celle du compte, pour tous ses groupes', async () => {
     const a = await setupGroup(srv, ['max']);
     const b = await setupGroup(srv, []);
-    await a.c.max.ok('POST', `/api/invite/${b.token}/join`, {});
+    await a.c.max.ok('POST', `/api/groups/${b.token}/join`, {});
     await legacy(a.c.max, [a.gid], ['1111']);
     assert.equal((await a.c.max.get(`/api/groups/${a.gid}`)).status, 200);
     assert.ok(a.c.max.cookies.has('pt_session'), 'session de compte posée');
@@ -348,7 +353,7 @@ describe('comptes d’avant (une connexion et un PIN par groupe)', () => {
   it('plusieurs PIN (un par groupe) : n’importe lequel ouvre le compte une fois, puis devient son PIN', async () => {
     const a = await setupGroup(srv, ['max']);
     const b = await setupGroup(srv, []);
-    await a.c.max.ok('POST', `/api/invite/${b.token}/join`, {});
+    await a.c.max.ok('POST', `/api/groups/${b.token}/join`, {});
     await legacy(a.c.max, [a.gid, b.gid], ['1111', '2222']);
     const r = await login(srv.client(), a.token, a.pseudo.max, '2222');
     assert.equal(r.status, 200);
@@ -362,7 +367,7 @@ describe('supprimer son groupe', () => {
   it('un admin du groupe, en retapant son nom : tout disparaît, les comptes et leurs autres groupes restent', async () => {
     const g = await setupGroup(srv, ['max']);
     const other = await setupGroup(srv, []);
-    await g.c.max.ok('POST', `/api/invite/${other.token}/join`, {});
+    await g.c.max.ok('POST', `/api/groups/${other.token}/join`, {});
     await createBet(srv, g, { question: 'Ce pari va disparaître ?' });
     const { group } = await g.c.lea.ok('GET', `/api/groups/${g.gid}`);
     assert.equal((await g.c.max.req('DELETE', `/api/groups/${g.gid}`, { body: { confirm: group.name } })).status, 403, 'un simple membre non');

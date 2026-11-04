@@ -142,7 +142,7 @@ const lea = await phone('Léa');
 const max = await phone('Max');
 const tom = await phone('Tom');
 const ines = await phone('Inès');
-let invite;
+let groupLink; // le lien du groupe : son adresse (elle sert à y entrer et à s'y connecter)
 let betUrl;
 let kartUrl;
 
@@ -177,31 +177,34 @@ await test('l’accueil du site, puis créer un groupe par le lien d’un coupon
   await shot(page, '02-groupe-vide');
 });
 
-await test('partager le lien d’invitation', async () => {
+await test('partager le lien du groupe : son adresse', async () => {
   const { page } = lea;
-  await page.getByRole('button', { name: 'Partager le lien d’invitation' }).click();
+  await page.getByRole('button', { name: 'Partager le lien du groupe' }).click();
   const [msg] = await shared(page);
-  assert.match(msg.url, /\/invite\/[\w-]{22}$/);
+  assert.match(msg.url, GROUP_URL);
+  assert.equal(msg.url, page.url(), 'le lien du groupe est son adresse');
   assert.match(msg.text, /Les Potes/);
-  invite = msg.url;
+  groupLink = msg.url;
 });
 
 await test('rejoindre par le lien en moins de 30 secondes (Max, Tom, Inès)', async () => {
   for (const [p, pseudo, pin] of [[max, 'Max', PINS.max], [tom, 'Tom', PINS.tom], [ines, 'Inès', PINS.ines]]) {
     const t0 = Date.now();
-    await p.page.goto(invite);
+    await p.page.goto(groupLink);
     await p.page.getByLabel('Ton pseudo').fill(pseudo);
     await p.page.locator('input[name=pin]').fill(pin);
     await p.page.locator('input[name=pin2]').fill(pin);
     if (pseudo === 'Max') await shot(p.page, '03-invitation');
     await p.page.getByRole('button', { name: 'Entrer dans le groupe' }).click();
+    await p.page.locator('#entree').waitFor({ state: 'detached' });
     await waitText(p.page, 'Les Potes');
-    await p.page.waitForURL(GROUP_URL);
+    assert.equal(p.page.url(), groupLink, 'on reste sur l’adresse du groupe');
     assert.ok(Date.now() - t0 < 30_000);
   }
   // Le lien rouvert sur un téléphone déjà connecté entre directement dans le groupe.
-  await max.page.goto(invite);
-  await max.page.waitForURL(GROUP_URL);
+  await max.page.goto(groupLink);
+  await max.page.locator('nav.nav').waitFor();
+  assert.equal(await max.page.locator('#entree').count(), 0);
 });
 
 await test('un seul compte : connexion par le lien du groupe (jamais depuis l’accueil), un 2e groupe, on y entre d’un geste', async () => {
@@ -214,28 +217,24 @@ await test('un seul compte : connexion par le lien du groupe (jamais depuis l’
   assert.equal(await pc.page.getByRole('button', { name: 'Me connecter' }).count(), 0);
   const refused = await pc.page.evaluate(async () => (await fetch('/api/account/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pseudo: 'Max', pin: '0000' }) })).status);
   assert.equal(refused, 403, 'sans lien de groupe, le serveur refuse aussi');
-  // L'adresse du groupe ne connecte pas : sur un navigateur qui n'en garde pas le lien, une page explique quoi faire,
-  // sans quitter l'adresse.
-  const groupHome = max.page.url();
-  assert.match(groupHome, GROUP_URL);
-  await pc.page.goto(groupHome);
-  const reconnect = pc.page.locator('#reconnexion');
-  await reconnect.waitFor();
-  assert.equal(pc.page.url(), groupHome, 'on reste sur l’adresse du groupe');
-  assert.match(await reconnect.textContent(), /ouvre son lien d’invitation[\s\S]*page « Moi », « Invite tes amis »/);
-  assert.equal(await pc.page.locator('input[name=login-pin]').count(), 0, 'pas de PIN à taper sur l’adresse du groupe');
-  assert.match(await pc.page.title(), /^Reconnecte-toi — /);
-  await shot(pc.page, '39-reconnecte-toi');
   await pc.page.goto(`${ORIGIN}/groups`);
   await waitText(pc.page, 'Aucun compte connecté sur cet appareil.');
-  // Le lien du groupe : son pseudo et son PIN, il retrouve son groupe.
-  await pc.page.goto(invite);
+  // Le lien du groupe (son adresse) dans un navigateur neuf : on s'y connecte sur place, pseudo + PIN, sans rien qui
+  // montre les membres (ni pseudos ni avatars à toucher).
+  await pc.page.goto(groupLink);
+  const entry = pc.page.locator('#entree');
+  await entry.waitFor();
+  assert.equal(pc.page.url(), groupLink, 'on reste sur l’adresse du groupe');
+  assert.equal(await pc.page.title(), 'Les Potes — Pari tenu !');
   await pc.page.getByRole('tab', { name: 'J’ai déjà un compte' }).click();
+  assert.equal(await pc.page.locator('.member-choice').count(), 0, 'aucun avatar de membre');
+  assert.doesNotMatch(await entry.textContent(), /Touche ton avatar|Léa|Tom|Inès/);
   await pc.page.getByLabel('Ton pseudo').fill('max');
   await pc.page.locator('input[name=login-pin]').fill(PINS.max);
   await shot(pc.page, '39-connexion-lien-groupe');
   await pc.page.getByRole('button', { name: 'Me connecter' }).click();
-  await pc.page.waitForURL(GROUP_URL);
+  await entry.waitFor({ state: 'detached' });
+  assert.equal(pc.page.url(), groupLink);
   await waitText(pc.page, 'Les Potes');
   // Un deuxième groupe : connecté, un nom et un emoji suffisent.
   await pc.page.goto(`${ORIGIN}/groups/new`);
@@ -247,14 +246,15 @@ await test('un seul compte : connexion par le lien du groupe (jamais depuis l’
   await create.getByRole('button', { name: 'Créer le groupe' }).click();
   await waitText(pc.page, 'Aucun pari pour l’instant');
   assert.match(await pc.page.title(), /Le Foot du jeudi/);
-  await pc.page.getByRole('button', { name: 'Partager le lien d’invitation' }).click();
+  await pc.page.getByRole('button', { name: 'Partager le lien du groupe' }).click();
   const [msg] = await shared(pc.page);
   // Tom, déjà inscrit : un bouton, et il est dedans avec son pseudo et son avatar.
   await tom.page.goto(msg.url);
   assert.match(await tom.page.locator('.identity-row').innerText(), /Tom/);
   await shot(tom.page, '40-rejoindre-un-geste');
   await tom.page.getByRole('button', { name: 'Entrer dans Le Foot du jeudi' }).click();
-  await tom.page.waitForURL(GROUP_URL);
+  await tom.page.locator('#entree').waitFor({ state: 'detached' });
+  assert.equal(tom.page.url(), msg.url);
   await waitText(tom.page, 'Le Foot du jeudi');
   await pc.context.close();
 });
@@ -297,7 +297,7 @@ await test('créer un pari Oui/Non en moins d’une minute et le partager', asyn
   await page.getByRole('button', { name: '📤 Partager dans le groupe' }).click();
   const last = (await shared(page)).at(-1);
   assert.match(last.text, /Nouveau pari : Julien arrive après 20 h 15 samedi \?/);
-  assert.match(last.url, /\/invite\/[\w-]+\?bet=\w+$/);
+  assert.equal(last.url, betUrl, 'l’adresse du pari');
   // Le lien partagé ouvre directement le pari chez un ami déjà connecté.
   await tom.page.goto(last.url);
   await tom.page.waitForURL(/\/bet\//);
@@ -511,10 +511,10 @@ await test('fil d’activité : à la une, résultats en cartes, pronostics regr
 await test('5 PIN faux bloquent le compte', async () => {
   const thief = await phone('Voleur');
   const { page } = thief;
-  await page.goto(invite);
+  await page.goto(groupLink);
   await page.getByRole('tab', { name: 'J’ai déjà un compte' }).click();
-  await page.locator('.member-choice', { hasText: 'Max' }).click();
-  assert.equal(await page.getByLabel('Ton pseudo').inputValue(), 'Max', 'toucher son avatar remplit le pseudo');
+  assert.equal(await page.locator('.member-choice').count(), 0, 'aucun avatar à toucher : il faut connaître le pseudo');
+  await page.getByLabel('Ton pseudo').fill('Max');
   for (let i = 1; i <= 5; i++) {
     await page.locator('input[name=login-pin]').fill('0000');
     await page.getByRole('button', { name: 'Me connecter' }).click();
@@ -527,28 +527,45 @@ await test('5 PIN faux bloquent le compte', async () => {
   await thief.context.close();
 });
 
-await test('admin : changer le lien rend l’ancien inutilisable', async () => {
+await test('admin : changer le lien donne une nouvelle adresse, l’ancienne ne mène plus à rien', async () => {
   const { page } = lea;
   await page.goto(`${betUrl.split('/bet/')[0]}/me`);
   assert.equal(await page.getByRole('link', { name: /Réglages du groupe|Administration/ }).count(), 0, 'plus dans « Moi »');
   // Les réglages du groupe : l'engrenage à côté de son nom (sur téléphone, dans l'en-tête du groupe).
   await page.goto(betUrl.split('/bet/')[0]);
   await page.locator('.topbar').getByRole('link', { name: 'Réglages du groupe' }).click();
-  await waitText(page, 'Lien d’invitation');
+  await waitText(page, 'Lien du groupe');
   assert.match(await page.title(), /^Réglages du groupe · Les Potes/);
+  assert.equal(await page.locator('.invite-link code').innerText(), groupLink);
   await shot(page, '16-administration', { fullPage: true });
+  const before = gidOf(groupLink);
   await page.getByRole('button', { name: 'Changer le lien' }).click();
   await dialog(page).getByRole('button', { name: 'Changer le lien' }).click();
   await waitText(page, 'Nouveau lien créé.');
+  await page.waitForURL((url) => url.pathname.endsWith('/admin') && !url.pathname.startsWith(`/${before}/`));
   const fresh = await page.locator('.invite-link code').innerText();
-  assert.notEqual(fresh, invite);
+  const after = gidOf(fresh);
+  assert.match(fresh, GROUP_URL);
+  assert.notEqual(after, before);
+  assert.equal(gidOf(page.url()), after, 'Léa suit le groupe à sa nouvelle adresse');
+  // Les adresses gardées pour les scénarios suivants passent à la nouvelle.
+  betUrl = betUrl.replace(before, after);
+  kartUrl = kartUrl.replace(before, after);
+  // Un inconnu avec l'ancien lien : plus rien ; avec le nouveau : de quoi entrer.
   const stranger = await phone('Inconnu');
-  await stranger.page.goto(invite);
-  await waitText(stranger.page, 'Lien expiré');
+  await stranger.page.goto(groupLink);
+  await waitText(stranger.page, 'Lien périmé');
+  assert.equal(await stranger.page.locator('#entree').count(), 0);
   await shot(stranger.page, '17-lien-expire');
   await stranger.page.goto(fresh);
-  await waitText(stranger.page, 'Tu es invité à rejoindre');
+  await stranger.page.locator('#entree').waitFor();
   await stranger.context.close();
+  // Max, connecté, avec l'ancienne adresse : elle ne mène plus au groupe ; « Mes groupes » donne la nouvelle.
+  await max.page.goto(groupLink);
+  await waitText(max.page, 'Lien périmé');
+  await max.page.getByRole('link', { name: 'Mes groupes' }).click();
+  await max.page.locator(`a.group-tile[href="/${after}"]`).waitFor();
+  groupLink = fresh;
 });
 
 await test('réglages des paris : couper un type, une catégorie ; activer des compétitions', async () => {
@@ -835,7 +852,7 @@ await test('sur PC : barre latérale, mes groupes, page d’accueil du site et a
   // Les réglages du groupe : l'engrenage à côté de son nom, dans le menu de gauche (pas dans l'en-tête sur PC).
   assert.equal(await page.locator('.topbar').getByRole('link', { name: 'Réglages du groupe' }).count(), 0);
   await page.locator('.sidebar').getByRole('link', { name: 'Réglages du groupe Les Potes' }).click();
-  await waitText(page, 'Lien d’invitation');
+  await waitText(page, 'Lien du groupe');
   assert.equal(await page.locator('.side-gear[aria-current="page"]').count(), 1, 'engrenage allumé');
   await page.locator('.sidebar .side-group').filter({ hasText: 'Les Potes' }).screenshot({ path: `${OUT}41-pc-engrenage.png` });
   await shot(page, '42-pc-reglages-groupe');
@@ -974,7 +991,7 @@ await test('admin du site : mot de passe choisi sur le serveur, coupon, son lien
 
   // La fiche du groupe (depuis le coupon), puis celle du compte : boutons rapides.
   await row.getByRole('link', { name: 'Chez Sofiane' }).click();
-  await waitText(pc.page, 'Copier le lien d’invitation');
+  await waitText(pc.page, 'Copier le lien du groupe');
   assert.match(await pc.page.locator('.adm-facts').first().innerText(), new RegExp(`…${code.slice(-4)} \\(Sofiane\\)`));
   await pc.page.locator('.adm-table').getByRole('link', { name: 'Sofiane' }).click();
   await waitText(pc.page, 'Réinitialiser le PIN');
@@ -982,9 +999,11 @@ await test('admin du site : mot de passe choisi sur le serveur, coupon, son lien
   await dialog(pc.page).getByRole('button', { name: 'Réinitialiser' }).click();
   await waitText(pc.page, 'PIN à choisir');
   await shot(pc.page, '46-admin-compte');
-  // Sofiane est déconnecté : il rouvre le lien de son groupe et choisit un nouveau PIN.
+  // Sofiane est déconnecté : l'adresse de son groupe lui propose de s'y reconnecter (et d'y choisir un nouveau PIN).
+  const sofianeAt = sofiane.page.url();
   await sofiane.page.reload();
-  await sofiane.page.waitForURL(/\/invite\//);
+  await sofiane.page.locator('#entree').waitFor();
+  assert.equal(sofiane.page.url(), sofianeAt);
   await sofiane.context.close();
 
   // La liste des comptes (Léa, Max…) et le journal.
@@ -1190,7 +1209,7 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   await input('hostName').fill('Duck Platform');
   await input('hostUrl').fill('https://duckplatform.net');
   // Aperçu en direct, avant d'enregistrer.
-  assert.match(await adm.page.locator('.adm-preview').innerText(), /Paris entre Couilles[\s\S]*EntreCouilles[\s\S]*https:\/\/paris\.entrecouilles\.fr\/invite\/…/);
+  assert.match(await adm.page.locator('.adm-preview').innerText(), /Paris entre Couilles[\s\S]*EntreCouilles[\s\S]*https:\/\/paris\.entrecouilles\.fr\/a1b2c3d4e5f60718/);
   await adm.page.getByRole('button', { name: 'Enregistrer' }).click();
   await waitText(adm.page, 'Configuration enregistrée');
   await adm.page.locator('.adm-side .adm-brand', { hasText: 'Paris entre Couilles' }).waitFor();
@@ -1239,10 +1258,10 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   await lea.page.goto(`${home}/admin`);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/invite\/[\w-]+$/); // jeton en base64url : « - » et « _ »
+  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/[0-9a-f]{16}$/);
   await lea.page.getByRole('button', { name: 'Partager', exact: true }).click();
   const sent = await lea.page.evaluate(() => window.__shared.at(-1));
-  assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/invite\//);
+  assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/[0-9a-f]{16}$/);
   assert.match(sent.text, /sur Paris entre Couilles$/);
   assert.match(await lea.page.title(), / — Paris entre Couilles$/);
 
@@ -1257,7 +1276,7 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   assert.deepEqual(reset, [200, 200]);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), new RegExp(`^${ORIGIN}/invite/`));
+  assert.match(await lea.page.locator('.invite-link code').innerText(), new RegExp(`^${ORIGIN}/[0-9a-f]{16}$`));
   assert.match(await lea.page.title(), / — Pari tenu !$/);
   await adm.context.close();
 });

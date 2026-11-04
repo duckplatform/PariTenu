@@ -94,7 +94,7 @@ npm run admin
 ## 6. Régler l'installation
 
 Dans `https://paris.example.fr/admin` → **Configuration** : le nom, le nom court, l'**adresse publique**
-(`https://paris.example.fr` : les liens d'invitation et de coupon la prennent), les textes de l'accueil, l'hébergeur
+(`https://paris.example.fr` : les liens des groupes et des coupons la prennent), les textes de l'accueil, l'hébergeur
 et l'icône.
 
 ## 7. Vérifier l'adresse des visiteurs
@@ -129,9 +129,9 @@ source /home/<utilisateur>/nodevenv/paritenu/24/bin/activate && cd /home/<utilis
 
 ## 9. Quitter l'ancienne installation
 
-Les liens d'invitation déjà envoyés pointent vers l'ancienne adresse. Une fois la nouvelle en place :
+Les liens des groupes déjà envoyés pointent vers l'ancienne adresse du site. Une fois la nouvelle en place :
 
-1. dans chaque groupe, un admin repartage le lien d'invitation (page Réglages du groupe → Partager) : il part sur la
+1. dans chaque groupe, un admin repartage le lien du groupe (page Réglages du groupe → Partager) : il part sur la
    nouvelle adresse ;
 2. les joueurs ouvrent ce nouveau lien et se reconnectent (pseudo et PIN : ce sont les mêmes) ; une app installée sur
    l'écran d'accueil se réinstalle depuis la nouvelle adresse ;
