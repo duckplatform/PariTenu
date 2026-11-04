@@ -114,17 +114,20 @@ export async function configurationView({ refresh, tab: wanted }) {
 }
 
 /**
- * Réinitialiser le site : comptes, groupes, paris, pronostics et classements effacés, tout le monde déconnecté ; la
- * configuration, les sources, les coupons et ce qui est à l'admin restent. Une copie de la base est faite juste avant.
+ * Réinitialiser le site : on repart de zéro. Comptes, groupes, paris, pronostics, classements, coupons et journal
+ * effacés, tout le monde déconnecté ; seuls la configuration et le mot de passe de l'admin restent. Une copie de la
+ * base est faite juste avant.
  */
 function resetPanel({ data, refresh }) {
-  const empty = !data.players && !data.groups && !data.bets && !data.picks;
-  const erased = `${plural(data.players, 'compte')}, ${plural(data.groups, 'groupe')}, ${plural(data.bets, 'pari')} et ${plural(data.picks, 'pronostic')}`;
+  // Le journal ne compte pas : il a toujours au moins la connexion en cours.
+  const empty = !data.players && !data.groups && !data.bets && !data.picks && !data.coupons;
+  const erased = `${plural(data.players, 'compte')}, ${plural(data.groups, 'groupe')}, ${plural(data.bets, 'pari')}, ${plural(data.picks, 'pronostic')}, `
+    + `${plural(data.coupons, 'coupon')} et ${plural(data.log, 'ligne du journal', 'lignes du journal')}`;
   const reset = async (el) => {
     const typed = await openSheet('Réinitialiser le site', (close) => {
       const confirm = h('input', { name: 'confirm', autocomplete: 'off', placeholder: RESET_WORD });
       return h('form.stack', { onsubmit: (e) => { e.preventDefault(); close(confirm.value); } },
-        h('p', `${erased} disparaissent, avec les points, les classements et l’historique des groupes. Tous les joueurs sont déconnectés. La configuration du site reste. Irréversible : une copie de la base est faite juste avant.`),
+        h('p', `${erased} disparaissent, avec les points, les classements et l’historique des groupes. Tous les joueurs sont déconnectés. Seule la configuration du site reste. Irréversible : une copie de la base est faite juste avant.`),
         field(`Tape « ${RESET_WORD} » pour confirmer`, confirm),
         h('div.row-end', h('button.btn', { type: 'button', onclick: () => close(null) }, 'Retour'), h('button.btn.danger', { type: 'submit' }, 'Tout effacer')));
     });
@@ -136,15 +139,16 @@ function resetPanel({ data, refresh }) {
   };
   return h('div.adm-aside-grid',
     card('Réinitialiser le site', { tone: 'danger' },
-      h('p', 'Pour repartir de zéro : tous les comptes et tous les groupes sont effacés, avec leurs paris, pronostics, points, classements, commentaires et leur historique. Tous les joueurs sont déconnectés.'),
-      facts([['Comptes', String(data.players)], ['Groupes', String(data.groups)], ['Paris', String(data.bets)], ['Pronostics', String(data.picks)]]),
+      h('p', 'Pour repartir de zéro : tous les comptes et tous les groupes sont effacés, avec leurs paris, pronostics, points, classements, commentaires et leur historique, ainsi que les coupons et le journal de l’admin. Tous les joueurs sont déconnectés.'),
+      facts([['Comptes', String(data.players)], ['Groupes', String(data.groups)], ['Paris', String(data.bets)], ['Pronostics', String(data.picks)],
+        ['Coupons', String(data.coupons)], ['Journal', plural(data.log, 'ligne')]]),
       h('small.hint', empty ? 'Rien à effacer : le site est déjà vierge.' : 'Une copie de la base est faite juste avant, dans le dossier backups/ à côté de la base (comme « npm run backup »).'),
       h('div.row-wrap', button('Réinitialiser le site…', { icon: 'trash', kind: 'danger', disabled: empty, onclick: (e) => reset(e.currentTarget) }))),
     card('Ce qui reste', facts([
       ['Configuration', 'nom, adresse publique, textes, icône et thème'],
       ['Sources', 'allumées ou coupées, comme avant'],
-      ['Coupons', 'ceux pas encore servis marchent toujours'],
-      ['Admin', 'mot de passe, connexions et journal (la réinitialisation y est notée)'],
+      ['Admin', 'mot de passe, et tu restes connecté'],
+      ['Journal', 'repart d’une seule ligne : la réinitialisation, avec le nom de la copie'],
     ])));
 }
 

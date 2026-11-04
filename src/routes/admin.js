@@ -162,7 +162,7 @@ export function adminRouter(deps, { isSecure, authLimit }) {
   // ——— Configuration de l'installation : nom, adresse publique, textes de l'accueil, hébergeur, icône, thème
 
   // data : ce qu'effacerait la réinitialisation (onglet « Réinitialisation »).
-  r.get('/configuration', (req, res) => res.json({ branding: branding.get(), icons: iconUrls(), theme: admin.theme(), themes: THEMES, data: admin.playerData() }));
+  r.get('/configuration', (req, res) => res.json({ branding: branding.get(), icons: iconUrls(), theme: admin.theme(), themes: THEMES, data: admin.erasable() }));
 
   // Réinitialiser le site : comptes, groupes, paris et classements effacés, configuration gardée ; on retape le mot.
   r.post('/reset', (req, res) => {

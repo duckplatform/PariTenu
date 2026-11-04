@@ -11,13 +11,15 @@ Pour publier une version, voir [Publier une version](README.md#publier-une-versi
 
 ## [Non publié]
 
+## [1.0.1] - 2026-11-04
+
 ### Ajouté
 
 - Le crédit du pied de page (« PariTenu v… ») renvoie au dépôt GitHub du projet ; adresse du dépôt dans `package.json`.
-- **Réinitialiser le site** (`/admin/configuration/reset`) : efface tous les comptes, groupes, paris, pronostics,
-  points, classements et l'historique des joueurs, en gardant la configuration (nom, textes, icône, thème), les
-  sources coupées, les coupons, le mot de passe et le journal de l'admin. On retape « réinitialiser » ; une copie de la
-  base est faite juste avant dans `backups/`.
+- **Réinitialiser le site** (`/admin/configuration/reset`) : repart de zéro en effaçant tous les comptes, groupes,
+  paris, pronostics, points, classements, l'historique des joueurs, les coupons et le journal de l'admin. Seuls
+  restent la configuration (nom, adresse, textes, icône, thème, sources coupées) et le mot de passe de l'admin. On
+  retape « réinitialiser » ; une copie de la base est faite juste avant dans `backups/`.
 
 ## [1.0.0] - 2026-11-04
 

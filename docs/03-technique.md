@@ -91,12 +91,12 @@ gauche), `--pick-*` (option choisie), `--gain` (la cote « 2,50 » sous chaque o
 
 `/admin/configuration/reset` (`AdminService.resetInstance`) : repartir de zéro sans tout réinstaller. Une copie de
 la base est faite d'abord (`VACUUM INTO` dans `<dossier de la base>/backups/`, comme `npm run backup` ; si elle échoue,
-rien n'est effacé), puis, en une transaction, les tables des joueurs sont vidées (`PLAYER_DATA` : comptes et leurs
-sessions, groupes, membres, paris, pronostics, points, saisons, historique, suivis, `source_events`…). Restent
-`instance_settings` (configuration, thème, sources coupées), `coupons`, `admin_auth`, `admin_sessions`, `admin_log` et
-`meta`. Comme pour un compte supprimé, le journal et les coupons nomment les comptes effacés « Max (supprimé) » et
-les lignes du journal ne mènent plus à un compte ni à un groupe. Une table ajoutée plus tard pour les joueurs va dans
-`PLAYER_DATA` (le test de `admin.test.js` vérifie que toute table hors des réglages gardés est vide après).
+rien n'est effacé), puis, en une transaction, tout est vidé sauf la configuration (`ERASED` : comptes et leurs
+sessions, groupes, membres, paris, pronostics, points, saisons, historique, suivis, `source_events`, `coupons` et
+`admin_log`). Restent `instance_settings` (configuration, thème, sources coupées), `admin_auth` (mot de passe),
+`admin_sessions` (l'admin reste connecté) et `meta`. Le journal repart d'une seule ligne, `instance_reset`, qui compte
+ce qui est parti et donne le nom de la copie. Une table ajoutée plus tard va dans `ERASED` si elle n'est pas de la
+configuration (le test de `admin.test.js` vérifie que toute table hors de celles gardées est vide après).
 
 ### Configuration de l'installation
 
@@ -298,7 +298,7 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | POST | `/api/admin/members/:id/reinstate` | Réintégrer un banni |
 | GET · POST | `/api/admin/coupons` | Coupons · créer (`{ note, days: 7 \| 30 \| 90 \| null }` → `{ id, code, expiresAt }`, seule fois où le code est rendu) |
 | POST | `…/coupons/:id/revoke` | Annuler un coupon disponible |
-| GET | `/api/admin/configuration` | Identité de l'installation (`branding`), icône (`icons` : onglet, téléphone, logo, ou `null`), thème et thèmes, ce qu'effacerait la réinitialisation (`data` : `{ players, groups, bets, picks }`) |
+| GET | `/api/admin/configuration` | Identité de l'installation (`branding`), icône (`icons` : onglet, téléphone, logo, ou `null`), thème et thèmes, ce qu'effacerait la réinitialisation (`data` : `{ players, groups, bets, picks, coupons, log }`) |
 | POST | `/api/admin/reset` | Réinitialiser le site (`{ confirm: "réinitialiser" }`, sans tenir compte des accents ni des majuscules → ce qui a été effacé et `backup`, le nom de la copie faite avant, ou `null` pour une base en mémoire) |
 | PATCH | `/api/admin/branding` | Nom, nom court, adresse publique, textes de l'accueil, hébergeur (seuls les champs changés → `{ branding, brand, changed }`) |
 | PUT · DELETE | `/api/admin/icon` | Nouvelle icône (`{ png }` en base64 ; 3 Mo de JSON acceptés sur ce seul chemin) · retour à l'icône de PariTenu |
@@ -377,7 +377,7 @@ les captures du parcours sont jointes au résultat. Les deux passent aussi en UT
 | `members.test.js` | Comptes : créer, rejoindre d'un geste, se connecter ailleurs, blocages croissants, réinitialisation à plusieurs admins, comptes d'avant ; administration, réglages, export |
 | `sources.test.js` | Chaque source sur de vraies réponses capturées : événements, questions, clôtures, résultats, reports, pannes, cache |
 | `migrations.test.js` | Migrations v5 et v6 rejouées sur une base remise à la version d'avant : catégories et compétitions séparées ; pseudo et avatar par joueur |
-| `admin.test.js` | Configuration de l'installation (nom, adresse publique, textes, hébergeur : coquille, manifeste, API, messages ; texte échappé ; adresses refusées ; origine publique et cookie Secure ; icône recadrée et déclinée, refus, retour à l'origine) ; admin du site : pas de mot de passe sans le serveur, cookie (HttpOnly, Strict, chemin), autre origine refusée, blocages croissants, sessions (2 h, 12 h), `npm run admin` ; coupons (création, suivi, annulation) ; comptes (fiche, débloquer, créer sans PIN, modifier, réinitialiser, déconnecter, supprimer) ; groupes (renommer, lien, ajouter, rôle, retirer, créer pour un compte, supprimer un groupe rempli) ; tableau de bord et journal |
+| `admin.test.js` | Configuration de l'installation (nom, adresse publique, textes, hébergeur : coquille, manifeste, API, messages ; texte échappé ; adresses refusées ; origine publique et cookie Secure ; icône recadrée et déclinée, refus, retour à l'origine) ; admin du site : pas de mot de passe sans le serveur, cookie (HttpOnly, Strict, chemin), autre origine refusée, blocages croissants, sessions (2 h, 12 h), `npm run admin` ; coupons (création, suivi, annulation) ; comptes (fiche, débloquer, créer sans PIN, modifier, réinitialiser, déconnecter, supprimer) ; groupes (renommer, lien, ajouter, rôle, retirer, créer pour un compte, supprimer un groupe rempli) ; tableau de bord et journal ; réinitialisation du site (tout effacé sauf la configuration, copie avant) |
 | `live.test.js` | Équipes et logos d'un match, photos des pilotes (recadrées en 160 px), direct minute par minute (une requête pour tous les groupes), mi-temps, score final, podium, F1 et tennis, relais d'images (liste blanche) |
 | `config.test.js` | Réglages (types, catégories, compétitions, paris maison et compétitions à part, groupe sans paris maison), ouverture automatique (doublons, types coupés, compétition coupée, pari jamais joué, source en panne), NFL, Top 14, NBA, tennis, UFC, résultats automatiques, contestation, source muette, bouton « Vérifier » |
 | `seasons.test.js` | Équinoxes et solstices (à la minute), saisons de l'année, saisons officielles et de secours, libellés |

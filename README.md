@@ -46,8 +46,9 @@ c'est aussi par lui qu'ils se connectent. Un coupon ne sert qu'une fois ; l'admi
 
 **Personnaliser** : `/admin` → **Configuration** règle le nom de l'installation, son adresse publique (celle des liens
 partagés), les textes de l'accueil, l'hébergeur affiché en pied de page, l'icône et le thème. Son onglet
-**Réinitialisation** repart de zéro (comptes, groupes, paris et classements effacés) en gardant tous ces réglages,
-les sources coupées et les coupons ; une copie de la base est faite juste avant dans `backups/`.
+**Réinitialisation** repart de zéro (comptes, groupes, paris, classements, coupons et journal effacés) en gardant
+seulement ces réglages, les sources coupées et le mot de passe de l'admin ; une copie de la base est faite juste avant
+dans `backups/`.
 
 **Paris automatiques** : dans les réglages d'un groupe (l'engrenage à côté de son nom) → Réglages des paris, un admin
 du groupe active des compétitions ou des sources. Rien n'est activé d'office. L'admin du site peut couper une source

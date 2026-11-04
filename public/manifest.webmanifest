@@ -1,7 +1,7 @@
 {
   "name": "Pari tenu !",
   "short_name": "Pari tenu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Le jeu de pronostics entre amis : foot, rugby, NBA, F1… sans miser un centime.",
   "lang": "fr",
   "start_url": "/",

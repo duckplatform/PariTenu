@@ -778,11 +778,12 @@ describe('classements et sources', () => {
 });
 
 describe('réinitialisation du site', () => {
-  // Ce qui n'est pas aux joueurs : la configuration du site, les coupons et tout ce qui est à l'admin. Toute autre table
-  // (une nouvelle aussi) doit être vide après la réinitialisation.
-  const KEPT = ['meta', 'instance_settings', 'admin_auth', 'admin_sessions', 'admin_log', 'coupons'];
+  // On repart de zéro sauf la configuration : le site (meta, instance_settings) et le mot de passe et les sessions de
+  // l'admin. Le journal repart d'une ligne, celle de la réinitialisation. Toute autre table (une nouvelle aussi) doit être
+  // vide après la réinitialisation.
+  const KEPT = ['meta', 'instance_settings', 'admin_auth', 'admin_sessions', 'admin_log'];
 
-  it('efface comptes, groupes, paris et classements ; garde configuration, sources, coupons et admin ; copie la base avant', async () => {
+  it('efface comptes, groupes, paris, classements, coupons et journal ; garde la configuration ; copie la base avant', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'paritenu-reset-'));
     const s = await startServer({ PT_DB_PATH: path.join(dir, 'paritenu.db') });
     try {
@@ -805,7 +806,8 @@ describe('réinitialisation du site', () => {
       await adm.ok('PATCH', '/api/admin/sources/meteo', { enabled: false });
       const spare = await adm.ok('POST', '/api/admin/coupons', { note: 'Pour plus tard' });
       const before = (await adm.ok('GET', '/api/admin/configuration')).data;
-      assert.deepEqual(before, { players: 3, groups: 1, bets: 1, picks: 2 });
+      assert.deepEqual({ ...before, log: 0 }, { players: 3, groups: 1, bets: 1, picks: 2, coupons: 2, log: 0 }, 'le coupon du groupe et celui de côté');
+      assert.equal(before.log, count('admin_log'));
 
       // Il faut retaper le mot, et être l'admin du site.
       assert.equal((await adm.post('/api/admin/reset', { confirm: 'oui' })).status, 400);
@@ -818,15 +820,16 @@ describe('réinitialisation du site', () => {
       assert.match(result.backup, /^paritenu-.*-avant-reinitialisation\.db$/);
       // La copie d'avant a tout.
       const copy = new DatabaseSync(path.join(dir, 'backups', result.backup), { readOnly: true });
-      assert.deepEqual(['players', 'groups', 'bets', 'picks'].map((t) => copy.prepare(`SELECT COUNT(*) AS n FROM ${t}`).get().n), [3, 1, 1, 2]);
+      assert.deepEqual(['players', 'groups', 'bets', 'picks', 'coupons', 'admin_log'].map((t) => copy.prepare(`SELECT COUNT(*) AS n FROM ${t}`).get().n),
+        [3, 1, 1, 2, 2, before.log]);
       copy.close();
 
-      // Plus rien des joueurs.
+      // Plus rien, sauf la configuration.
       const tables = s.deps.db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'").all().map((t) => t.name);
       for (const table of tables.filter((t) => !KEPT.includes(t))) assert.equal(count(table), 0, table);
       assert.deepEqual(await g.c.lea.ok('GET', '/api/account'), { account: null, groups: [] }, 'tout le monde est déconnecté');
       assert.equal((await s.client().get(`/api/groups/${g.token}/entry`)).body.code, 'group_not_found');
-      assert.deepEqual((await adm.ok('GET', '/api/admin/configuration')).data, { players: 0, groups: 0, bets: 0, picks: 0 });
+      assert.deepEqual((await adm.ok('GET', '/api/admin/configuration')).data, { players: 0, groups: 0, bets: 0, picks: 0, coupons: 0, log: 1 });
 
       // La configuration reste, l'admin aussi (toujours connecté).
       const config = await adm.ok('GET', '/api/admin/configuration');
@@ -834,21 +837,20 @@ describe('réinitialisation du site', () => {
       assert.equal((await adm.ok('GET', '/api/admin/sources')).sources.find((x) => x.id === 'meteo').enabled, false);
       assert.equal(count('admin_auth'), 1);
 
-      // Le journal le raconte ; ses anciennes lignes nomment « Léa (supprimé) » et ne mènent plus nulle part.
+      // Le journal repart d'une seule ligne : la réinitialisation, qui dit ce qui est parti et où est la copie.
       const { entries } = await adm.ok('GET', '/api/admin/log');
-      assert.equal(entries[0].action, 'instance_reset');
-      assert.match(entries[0].summary, /^Site réinitialisé : 3 comptes, 1 groupe, 1 pari et 2 pronostics effacés, configuration gardée \(copie d’avant : backups\/paritenu-/);
-      const used = entries.find((e) => e.action === 'coupon_used');
-      assert.match(used.summary, new RegExp(`utilisé par « ${g.pseudo.lea} \\(supprimé\\) »`));
-      assert.equal(used.target, '');
-      assert.ok(entries.every((e) => !/^(player|group):/.test(e.target)));
+      assert.deepEqual(entries.map((e) => e.action), ['instance_reset']);
+      assert.equal(entries[0].summary, `Site réinitialisé : 3 comptes, 1 groupe, 1 pari, 2 pronostics, 2 coupons et ${before.log} lignes du journal `
+        + `effacés, configuration gardée (copie d’avant : backups/${result.backup})`);
 
-      // Les coupons restent : celui qui a servi garde son histoire, celui pas encore servi crée un groupe, et les pseudos
-      // sont libres.
-      const { coupons } = await adm.ok('GET', '/api/admin/coupons');
-      assert.equal(coupons.find((c) => c.state === 'used').usedByPseudo, `${g.pseudo.lea} (supprimé)`);
-      await s.client().ok('POST', '/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN, coupon: spare.code });
-      assert.deepEqual((await adm.ok('GET', '/api/admin/configuration')).data, { players: 1, groups: 1, bets: 0, picks: 0 });
+      // Plus de coupons : celui de côté ne sert plus ; un nouveau crée un groupe, et les anciens pseudos sont libres.
+      assert.deepEqual((await adm.ok('GET', '/api/admin/coupons')).coupons, []);
+      const refused = await s.client().post('/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN, coupon: spare.code });
+      assert.equal(refused.body.code, 'coupon_invalid');
+      const restart = await adm.ok('POST', '/api/admin/coupons', { note: 'Nouveau départ' });
+      await s.client().ok('POST', '/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN, coupon: restart.code });
+      const after = (await adm.ok('GET', '/api/admin/configuration')).data;
+      assert.deepEqual([after.players, after.groups, after.coupons], [1, 1, 1]);
     } finally {
       await s.stop();
       fs.rmSync(dir, { recursive: true, force: true });
@@ -858,7 +860,10 @@ describe('réinitialisation du site', () => {
   it('base en mémoire : pas de copie, et rien à effacer n’est pas une erreur', () => fresh(async (s) => {
     await s.deps.admin.setPassword(PASSWORD);
     const adm = await signIn(s);
-    assert.deepEqual(await adm.ok('POST', '/api/admin/reset', { confirm: 'réinitialiser' }), { players: 0, groups: 0, bets: 0, picks: 0, backup: null });
-    assert.match((await adm.ok('GET', '/api/admin/log')).entries[0].summary, /^Site réinitialisé : 0 compte, 0 groupe, 0 pari et 0 pronostic effacés, configuration gardée$/);
+    // Le journal a déjà le mot de passe choisi et la connexion.
+    assert.deepEqual(await adm.ok('POST', '/api/admin/reset', { confirm: 'réinitialiser' }), { players: 0, groups: 0, bets: 0, picks: 0, coupons: 0, log: 2, backup: null });
+    const { entries } = await adm.ok('GET', '/api/admin/log');
+    assert.deepEqual(entries.map((e) => e.summary),
+      ['Site réinitialisé : 0 compte, 0 groupe, 0 pari, 0 pronostic, 0 coupon et 2 lignes du journal effacés, configuration gardée']);
   }));
 });
