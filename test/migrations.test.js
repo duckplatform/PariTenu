@@ -19,6 +19,7 @@ const UNDO = {
   9: 'DROP TABLE admin_log; DROP TABLE admin_sessions; DROP TABLE admin_auth; DROP TABLE coupons;',
   11: 'DROP TABLE instance_settings;',
   14: 'ALTER TABLE groups RENAME COLUMN address TO invite_token;',
+  15: 'DROP INDEX admin_log_player; ALTER TABLE admin_log DROP COLUMN player_pseudo; ALTER TABLE admin_log DROP COLUMN player_id;',
 };
 
 /**

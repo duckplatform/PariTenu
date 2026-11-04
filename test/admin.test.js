@@ -187,7 +187,7 @@ describe('comptes', () => {
     assert.equal((await srv.client().post('/api/account/login', { pseudo: 'Maxime', pin: PIN, group: g.token })).body.code, 'choose_pin');
   });
 
-  it('supprimer un compte : il quitte ses groupes (anonymisé, historique gardé), il faut retaper son pseudo', async () => {
+  it('supprimer un compte : il quitte ses groupes en « Max (supprimé) » (historique gardé), il faut retaper son pseudo', async () => {
     const g = await setupGroup(srv, ['max']);
     const { betId, opt } = await createBet(srv, g, { closesIn: HOUR });
     await g.c.max.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Oui });
@@ -197,9 +197,71 @@ describe('comptes', () => {
     await adm.ok('DELETE', `/api/admin/players/${maxId}`, { confirm: g.pseudo.max.toLowerCase() });
     assert.equal((await adm.get(`/api/admin/players/${maxId}`)).status, 404);
     const { members } = await g.c.lea.ok('GET', `/api/groups/${g.gid}`);
-    assert.deepEqual(members.filter((m) => m.id === g.id.max).map((m) => [m.pseudo, m.status]), [['Ancien membre 1', 'left']]);
-    assert.equal((await srv.client().post('/api/account/login', { pseudo: g.pseudo.max, pin: PIN, group: g.token })).status, 404);
+    assert.deepEqual(members.filter((m) => m.id === g.id.max).map((m) => [m.pseudo, m.status]), [[`${g.pseudo.max} (supprimé)`, 'left']]);
+    // Personne ne se connecte plus : ni avec son ancien pseudo, ni avec le nouveau, que personne ne peut prendre.
+    for (const pseudo of [g.pseudo.max, `${g.pseudo.max} (supprimé)`]) {
+      assert.equal((await srv.client().post('/api/account/login', { pseudo, pin: PIN, group: g.token })).status, 404, pseudo);
+    }
+    const reserved = await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'Tom (supprimé)', avatar: '🐯', pin: PIN });
+    assert.deepEqual([reserved.status, reserved.body.error], [400, 'Ce pseudo est réservé : choisis-en un autre.']);
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 401, 'ses connexions disparaissent avec lui');
+    // « Max » se libère : un nouveau Max entre dans le même groupe, sans confusion avec l'ancien.
+    const newMax = srv.client();
+    await newMax.ok('POST', `/api/groups/${g.token}/join`, { pseudo: g.pseudo.max, avatar: '🐼', pin: PIN });
+    const after = (await g.c.lea.ok('GET', `/api/groups/${g.gid}`)).members.filter((m) => m.pseudo.startsWith(g.pseudo.max));
+    assert.deepEqual(after.map((m) => [m.pseudo, m.status]), [[`${g.pseudo.max} (supprimé)`, 'left'], [g.pseudo.max, 'active']]);
+  });
+
+  it('retiré de son groupe puis compte supprimé : son pseudo se libère aussi dans ce groupe (on rejoue l’arrivée)', async () => {
+    // Demande du 2026-11-04 : groupe vidé de son seul membre, compte supprimé, puis le même pseudo par le lien du groupe :
+    // « Ce pseudo est déjà pris dans le groupe ».
+    const g = await setupGroup(srv, []);
+    const adm = await signIn();
+    await adm.ok('DELETE', `/api/admin/members/${g.id.lea}`);
+    const leaId = (await adm.ok('GET', '/api/admin/players')).players.find((p) => p.pseudo === g.pseudo.lea).id;
+    await adm.ok('DELETE', `/api/admin/players/${leaId}`, { confirm: g.pseudo.lea.toLowerCase() });
+    const { group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`);
+    assert.deepEqual(group.members.map((m) => [m.pseudo, m.status]), [[`${g.pseudo.lea} (supprimé)`, 'removed']], 'toujours « retiré »');
+    const again = srv.client();
+    const join = await again.post(`/api/groups/${g.token}/join`, { pseudo: g.pseudo.lea, avatar: '🦊', pin: PIN });
+    assert.equal(join.status, 201, join.body.error);
+    const { me } = await again.ok('GET', `/api/groups/${g.gid}`);
+    assert.deepEqual([me.pseudo, me.status], [g.pseudo.lea, 'active']);
+  });
+
+  it('journal et coupons suivent le pseudo du compte : Max, puis Maxime, puis Maxime (supprimé)', async () => {
+    // Demande du 2026-11-04 : « il faut que les lignes d'événements et de journal suivent le nom, que ce soit Max, Maxime ou
+    // Max (supprimé) ». Le pseudo n'est plus figé dans le texte : la ligne garde le compte, le nom se lit à l'affichage.
+    const g = await setupGroup(srv, ['max']);
+    await g.c.max.ok('POST', '/api/groups', { name: 'Chez lui', emoji: '🍕', coupon: coupon(srv) });
+    const adm = await signIn();
+    const maxId = (await adm.ok('GET', '/api/admin/players')).players.find((p) => p.pseudo === g.pseudo.max).id;
+    const journal = async () => (await adm.ok('GET', '/api/admin/log')).entries;
+    const usedBy = async () => (await adm.ok('GET', '/api/admin/coupons')).coupons.find((c) => c.groupName === 'Chez lui');
+    const coupon1 = async () => (await journal()).find((e) => e.action === 'coupon_used' && e.summary.endsWith('« Chez lui » créé')).summary;
+    assert.match(await coupon1(), new RegExp(`utilisé par « ${g.pseudo.max} »`));
+
+    // Il change de pseudo lui-même (page « Moi ») : le journal, le coupon et le groupe suivent.
+    const renamed = `${g.pseudo.max} bis`;
+    await g.c.max.ok('PATCH', '/api/account', { pseudo: renamed });
+    assert.match(await coupon1(), new RegExp(`utilisé par « ${renamed} »`));
+    assert.equal((await usedBy()).usedByPseudo, renamed);
+    await adm.ok('DELETE', `/api/admin/members/${g.id.max}`);
+    assert.equal((await journal())[0].summary, `« ${renamed} » retiré de « Les Potes »`);
+
+    // Compte supprimé : « … (supprimé) » partout, plus de renvoi vers le compte ; les autres restent nommés.
+    await adm.ok('DELETE', `/api/admin/players/${maxId}`, { confirm: renamed.toLowerCase() });
+    const gone = `${renamed} (supprimé)`;
+    const entries = await journal();
+    assert.deepEqual({ action: entries[0].action, target: entries[0].target, summary: entries[0].summary }, { action: 'player_deleted', target: '', summary: `Compte « ${gone} » supprimé` });
+    assert.match(await coupon1(), new RegExp(`utilisé par « ${gone.replace(/[()]/g, '\\$&')} »`));
+    assert.equal(entries.find((e) => e.action === 'member_removed').summary, `« ${gone} » retiré de « Les Potes »`);
+    for (const pseudo of [g.pseudo.max, renamed]) assert.ok(!JSON.stringify(entries).includes(`« ${pseudo} »`), `plus de « ${pseudo} » tout court`);
+    assert.ok(!JSON.stringify(entries).includes(`player:${maxId}`), 'plus de renvoi vers un compte qui n’existe plus');
+    assert.ok(JSON.stringify(entries).includes(`« ${g.pseudo.lea} »`), 'les autres comptes restent nommés');
+    assert.deepEqual([(await usedBy()).usedByPseudo, (await usedBy()).usedBy], [gone, null]);
+    const { group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`);
+    assert.deepEqual(group.members.filter((m) => m.status === 'removed').map((m) => m.pseudo), [gone], 'le groupe aussi');
   });
 });
 

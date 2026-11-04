@@ -11,6 +11,10 @@ export const ADMIN_MAX_MS = 12 * HOUR;  // … et au plus tard 12 h après la co
 export const MAX_FAILURES = 5;
 export const LOCK_MS = 15 * MINUTE;     // puis deux fois plus à chaque nouveau blocage (24 h au plus)
 const LOG_PAGE = 200;
+
+/** Dans une phrase du journal, la place du pseudo du compte dont elle parle (remplie à l'affichage, toujours à jour). */
+export const PLAYER = '{joueur}';
+const named = (summary, pseudo) => (pseudo == null ? summary : summary.replaceAll(PLAYER, pseudo));
 const PICK_DAYS = 14; // tableau de bord : pronostics par jour
 const COUPON_SOON = 3 * DAY; // « à traiter » : un coupon pas encore utilisé qui expire bientôt…
 const IDLE_GROUP = 3 * DAY; // … un groupe toujours sans pari 3 jours après sa création
@@ -34,9 +38,13 @@ export class AdminService {
     this.pinParams = pinParams;
   }
 
-  log(action, { target = '', summary = '', ip = '' } = {}) {
-    this.db.prepare('INSERT INTO admin_log (at, action, target, summary, ip) VALUES (?, ?, ?, ?, ?)')
-      .run(this.clock.now(), action, target, summary, ip);
+  /**
+   * Une ligne du journal. player : le compte dont elle parle ({ id, pseudo }) ; « {joueur} » dans summary devient son
+   * pseudo du moment à l'affichage (Max, Maxime après un renommage, Max (supprimé) une fois le compte supprimé).
+   */
+  log(action, { target = '', summary = '', ip = '', player = null } = {}) {
+    this.db.prepare('INSERT INTO admin_log (at, action, target, summary, ip, player_id, player_pseudo) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      .run(this.clock.now(), action, target, summary, ip, player?.id ?? null, player?.pseudo ?? null);
   }
 
   // ——— Mot de passe et sessions
@@ -287,8 +295,9 @@ export class AdminService {
   }
 
   logEntries() {
-    return this.db.prepare('SELECT * FROM admin_log ORDER BY id DESC LIMIT ?').all(LOG_PAGE)
-      .map((e) => ({ id: e.id, at: e.at, action: e.action, target: e.target, summary: e.summary, ip: e.ip }));
+    return this.db.prepare(`SELECT l.*, p.pseudo AS current FROM admin_log l LEFT JOIN players p ON p.id = l.player_id
+        ORDER BY l.id DESC LIMIT ?`).all(LOG_PAGE)
+      .map((e) => ({ id: e.id, at: e.at, action: e.action, target: e.target, summary: named(e.summary, e.current ?? e.player_pseudo), ip: e.ip }));
   }
 
   // ——— Comptes
@@ -312,7 +321,7 @@ export class AdminService {
     return tx(this.db, () => {
       const id = this.accounts.insert({ pseudo, avatar, pinHash: null });
       this.groups.addPlayer(group.id, this.accounts.find(id), role);
-      this.log('player_created', { target: `player:${id}`, summary: `Compte « ${pseudo} » créé dans « ${group.name} »${role === 'admin' ? ' (admin)' : ''}`, ip });
+      this.log('player_created', { target: `player:${id}`, player: { id, pseudo }, summary: `Compte « ${PLAYER} » créé dans « ${group.name} »${role === 'admin' ? ' (admin)' : ''}`, ip });
       return id;
     });
   }
@@ -320,36 +329,46 @@ export class AdminService {
   updatePlayer(id, { pseudo, avatar }, ip) {
     const before = this.#player(id);
     this.accounts.updateIdentity(before.id, { pseudo, avatar });
-    const renamed = pseudo && pseudo !== before.pseudo ? `« ${before.pseudo} » devient « ${pseudo} »` : `« ${before.pseudo} » modifié`;
-    this.log('player_updated', { target: `player:${id}`, summary: `Compte ${renamed}`, ip });
+    // Le changement de pseudo garde l'ancien et le nouveau en clair : c'est ce que la ligne raconte.
+    const summary = pseudo && pseudo !== before.pseudo ? `Compte « ${PLAYER} » : pseudo « ${before.pseudo} » changé en « ${pseudo} »` : `Compte « ${PLAYER} » modifié`;
+    this.log('player_updated', { target: `player:${id}`, player: { id: before.id, pseudo: pseudo ?? before.pseudo }, summary, ip });
   }
 
   unlockPlayer(id, ip) {
     const p = this.#player(id);
     this.accounts.unlock(p.id);
-    this.log('player_unlocked', { target: `player:${id}`, summary: `Compte « ${p.pseudo} » débloqué`, ip });
+    this.log('player_unlocked', { target: `player:${id}`, player: p, summary: `Compte « ${PLAYER} » débloqué`, ip });
   }
 
   resetPlayerPin(id, ip) {
     const p = this.#player(id);
     this.accounts.forceReset(p.id);
-    this.log('player_pin_reset', { target: `player:${id}`, summary: `PIN de « ${p.pseudo} » réinitialisé (à choisir depuis le lien d’un groupe)`, ip });
+    this.log('player_pin_reset', { target: `player:${id}`, player: p, summary: `PIN de « ${PLAYER} » réinitialisé (à choisir depuis le lien d’un groupe)`, ip });
   }
 
   logoutPlayer(id, ip) {
     const p = this.#player(id);
     const devices = this.accounts.endSessions(p.id);
-    this.log('player_logged_out', { target: `player:${id}`, summary: `« ${p.pseudo} » déconnecté de ${devices} appareil${devices > 1 ? 's' : ''}`, ip });
+    this.log('player_logged_out', { target: `player:${id}`, player: p, summary: `« ${PLAYER} » déconnecté de ${devices} appareil${devices > 1 ? 's' : ''}`, ip });
     return devices;
   }
 
-  /** Il quitte ses groupes (pseudo anonymisé, historique et points gardés), puis le compte disparaît. */
+  /**
+   * Compte supprimé (demande du 2026-11-04) : il devient « Max (supprimé) » dans ses groupes (historique et points gardés,
+   * lisibles), le journal et les coupons ; le compte disparaît, plus personne ne peut s'y connecter, et « Max » se libère
+   * pour un autre sans qu'on les confonde.
+   */
   deletePlayer(id, ip) {
     const p = this.#player(id);
+    const gone = { id: null, pseudo: `${p.pseudo} (supprimé)` };
     tx(this.db, () => {
       this.groups.forgetPlayer(p.id);
+      // Le journal et les coupons le nomment désormais « Max (supprimé) » ; plus rien n'y renvoie vers le compte.
+      this.db.prepare('UPDATE admin_log SET player_id = NULL, player_pseudo = ? WHERE player_id = ?').run(gone.pseudo, p.id);
+      this.db.prepare("UPDATE admin_log SET target = '' WHERE target = ?").run(`player:${p.id}`);
+      this.db.prepare('UPDATE coupons SET used_by_pseudo = ? WHERE used_by = ?').run(gone.pseudo, p.id);
       this.db.prepare('DELETE FROM players WHERE id = ?').run(p.id);
-      this.log('player_deleted', { target: `player:${id}`, summary: `Compte « ${p.pseudo} » supprimé`, ip });
+      this.log('player_deleted', { player: gone, summary: `Compte « ${PLAYER} » supprimé`, ip });
     });
   }
 
@@ -359,7 +378,7 @@ export class AdminService {
   async createGroup({ name, emoji, playerId }, ip) {
     const owner = this.#player(playerId);
     const { groupId } = await this.groups.createGroup({ name, emoji }, owner);
-    this.log('group_created', { target: `group:${groupId}`, summary: `Groupe « ${name} » créé pour « ${owner.pseudo} »`, ip });
+    this.log('group_created', { target: `group:${groupId}`, player: owner, summary: `Groupe « ${name} » créé pour « ${PLAYER} »`, ip });
     return groupId;
   }
 
@@ -438,7 +457,7 @@ export class AdminService {
     const g = this.#group(groupId);
     const p = this.#player(playerId);
     const memberId = this.groups.addPlayer(g.id, p, role);
-    this.log('member_added', { target: `group:${g.id}`, summary: `« ${p.pseudo} » ajouté à « ${g.name} »${role === 'admin' ? ' (admin)' : ''}`, ip });
+    this.log('member_added', { target: `group:${g.id}`, player: p, summary: `« ${PLAYER} » ajouté à « ${g.name} »${role === 'admin' ? ' (admin)' : ''}`, ip });
     return memberId;
   }
 
@@ -447,13 +466,13 @@ export class AdminService {
     if (!m) throw notFound('Membre introuvable.');
     this.groups.changeRole(m.id, role);
     const g = this.groups.find(m.group_id);
-    this.log('member_role', { target: `group:${g.id}`, summary: `« ${m.pseudo} » ${role === 'admin' ? 'devient admin' : 'n’est plus admin'} de « ${g.name} »`, ip });
+    this.log('member_role', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » ${role === 'admin' ? 'devient admin' : 'n’est plus admin'} de « ${g.name} »`, ip });
   }
 
   removeMember(memberId, ip) {
     const m = this.groups.expel(memberId);
     const g = this.groups.find(m.group_id);
-    this.log('member_removed', { target: `group:${g.id}`, summary: `« ${m.pseudo} » retiré de « ${g.name} »`, ip });
+    this.log('member_removed', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » retiré de « ${g.name} »`, ip });
   }
 
   // ——— Sources de données, pour tout le site

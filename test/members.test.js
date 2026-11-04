@@ -295,12 +295,14 @@ describe('mon compte', () => {
     const taken = await lea.patch('/api/account', { pseudo: g.pseudo.max.toLowerCase() });
     assert.equal(taken.status, 409);
     assert.equal(taken.body.error, 'Ce pseudo est déjà pris : choisis-en un autre.');
-    // Le pseudo d'un membre retiré de mon groupe (qui en a changé depuis) : toujours affiché dans l'historique du groupe.
+    // Un membre retiré de mon groupe qui change de pseudo : son nom suit dans l'historique du groupe (demande du
+    // 2026-11-04 : les lignes suivent le nom), et l'ancien se libère.
     await lea.ok('POST', `/api/groups/${g.gid}/members/${g.id.tom}/remove`);
-    await g.c.tom.ok('PATCH', '/api/account', { pseudo: `Tomtom ${g.pseudo.tom}`.slice(0, 20) });
-    const old = await lea.patch('/api/account', { pseudo: g.pseudo.tom });
-    assert.equal(old.body.error, 'Ce pseudo est déjà pris dans « Les Potes », un de tes groupes.');
-    assert.equal(await me(g2), 'Lélé j:3:1:10');
+    const tomtom = `Tomtom ${g.pseudo.tom}`.slice(0, 20);
+    await g.c.tom.ok('PATCH', '/api/account', { pseudo: tomtom });
+    assert.equal((await lea.ok('GET', `/api/groups/${g.gid}`)).members.find((m) => m.id === g.id.tom).pseudo, tomtom);
+    await lea.ok('PATCH', '/api/account', { pseudo: g.pseudo.tom });
+    assert.equal(await me(g2), `${g.pseudo.tom} j:3:1:10`);
     // Le numéro du maillot fait deux chiffres au plus.
     const big = await lea.patch('/api/account', { avatar: 'j:3:1:100' });
     assert.equal(big.body.error, 'Le numéro du maillot fait deux chiffres au plus.');

@@ -435,8 +435,14 @@ faut le lien d'un groupe. »
   coupon, groupe, compte) ; derniers groupes, dernières actions, sessions admin ouvertes (adresse, navigateur).
 * **Comptes** : liste (recherche ; tous, bloqués, PIN à choisir, sans groupe), fiche (groupes et rôles, appareils,
   dernière visite, coupons utilisés). Boutons : modifier (pseudo, avatar), ajouter à un groupe, débloquer, réinitialiser
-  le PIN (choisi ensuite depuis le lien d'un groupe), déconnecter partout, supprimer (en retapant le pseudo : il quitte
-  ses groupes comme « Ancien membre », points et historique gardés). Nouveau compte : pseudo, avatar et un groupe ; il
+  le PIN (choisi ensuite depuis le lien d'un groupe), déconnecter partout, supprimer (en retapant le pseudo). Règle du
+  2026-11-04 : tant que le compte existe, il garde son lien avec ses groupes (il y retrouve sa place s'il revient) ;
+  supprimé, il devient « Max (supprimé) » partout (« Max (supprimé 2) » si le groupe a déjà eu un Max supprimé) : dans
+  ses groupes, qu'il quitte (ou là où il avait été retiré), son historique et ses points restent lisibles ; dans les
+  coupons et le journal de l'admin aussi. Personne ne peut plus s'y connecter ni choisir un pseudo en « (supprimé) »,
+  et « Max » se libère pour quelqu'un d'autre, sans confusion. Les lignes d'événements des groupes, du journal et des
+  coupons suivent toujours le nom du compte : Max, Maxime après un changement de pseudo (même depuis la page « Moi »,
+  même pour un membre retiré), puis « Maxime (supprimé) ». Nouveau compte : pseudo, avatar et un groupe ; il
   choisit son PIN en ouvrant le lien du groupe.
 * **Groupes** : liste (recherche ; avec membres, vides), fiche (membres, rôles, coupon d'origine, paris, activité, lien,
   réglages en un coup d'œil). Boutons : copier le lien du groupe, modifier, ajouter un compte, rendre ou retirer admin, retirer un

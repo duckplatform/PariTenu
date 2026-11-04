@@ -20,7 +20,7 @@ export function couponState(c, now) {
 
 export const publicCoupon = (c, now) => ({
   id: c.id, hint: c.hint, note: c.note, state: couponState(c, now), createdAt: c.created_at, expiresAt: c.expires_at,
-  revokedAt: c.revoked_at, usedAt: c.used_at, usedBy: c.used_by, usedByPseudo: c.used_by_pseudo, groupId: c.group_id, groupName: c.group_name,
+  revokedAt: c.revoked_at, usedAt: c.used_at, usedBy: c.used_by, usedByPseudo: c.current_pseudo ?? c.used_by_pseudo, groupId: c.group_id, groupName: c.group_name,
 });
 
 const REFUSED = {
@@ -59,7 +59,9 @@ export class CouponService {
 
   list() {
     const now = this.clock.now();
-    return this.db.prepare('SELECT * FROM coupons ORDER BY created_at DESC').all().map((c) => publicCoupon(c, now));
+    // Celui qui l'a utilisé, sous son pseudo du moment ; compte supprimé : « Max (supprimé) », gardé dans le coupon.
+    return this.db.prepare(`SELECT c.*, p.pseudo AS current_pseudo FROM coupons c LEFT JOIN players p ON p.id = c.used_by
+        ORDER BY c.created_at DESC`).all().map((c) => publicCoupon(c, now));
   }
 
   revoke(id) {

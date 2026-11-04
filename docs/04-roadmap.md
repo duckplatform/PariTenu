@@ -413,6 +413,42 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   encore choisi », basculer puis revenir, l'état enregistré (capture `26c-mes-competitions`).
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
+### Correctif du 2026-11-04 : un compte supprimé devient « Max (supprimé) », son pseudo se libère
+
+* ✅ Constat de l'utilisateur·ice : « via l'admin UI j'ai vidé un groupe de ses membres (il n'y en avait qu'un) et
+  supprimé le compte pour rejouer la user story du début ; en réutilisant le pseudo du compte supprimé : « Ce pseudo est
+  déjà pris dans le groupe » ». Reproduit par un test : supprimer un compte anonymisait ses membres actifs (« Ancien
+  membre N »), mais pas ceux déjà retirés d'un groupe ; détachés de tout compte, ils gardaient leur pseudo, pris pour
+  toujours dans ce groupe (contrôle du service, et contrainte `UNIQUE (group_id, pseudo)` de la base).
+* ✅ Supprimer un compte touche aussi ses membres retirés (ils restent « retirés » dans l'historique). Pas de
+  migration pour réparer les données déjà touchées (« on s'en fout de la réparation de la base […] personne ne
+  l'utilise à part moi, je peux repartir de 0 à chaque fois pour le moment ») : la base en ligne repart de zéro.
+* ✅ 226 tests, dont l'histoire rejouée (membre retiré, compte supprimé, même pseudo par le lien du groupe : il entre).
+* Laissé tel quel (choix déjà testé) : un membre retiré qui change ensuite de pseudo garde l'ancien dans l'historique du
+  groupe, qui reste pris dans ce groupe tant qu'il n'y revient pas.
+* ✅ Règle posée par l'utilisateur·ice : « tant que le compte n'est pas supprimé, il a un lien avec le groupe en cas
+  d'entrées/sorties. En revanche en cas de suppression du compte, il ne doit plus subsister de lien avec ce joueur dans
+  le groupe ou l'app entière ». Vérifié sur une base de test (un joueur qui parie, commente, crée son groupe avec un
+  coupon, est retiré puis supprimé) : dans les groupes, plus rien ne le relie à lui (« Ancien membre N », sans compte) ;
+  son pseudo restait en clair dans le coupon utilisé et le journal de l'admin.
+* ✅ Puis, à la place de « Ancien membre N » : « si juste renommer suffit à garder le lien et l'historique proprement,
+  que la connexion avec ce username renommé est bloquée, et que ça libère le login original pour qu'un autre user
+  s'inscrive sans qu'il y ait de confusion […] c'est un cas débile mais réel ». Un compte supprimé devient
+  « Max (supprimé) » dans ses groupes (« Max (supprimé 2) » si le groupe en a déjà un), le journal de l'admin (ses
+  anciens pseudos aussi, quand l'admin l'avait renommé) et les coupons ; la suppression s'écrit « Compte supprimé : il
+  apparaît désormais comme « Max (supprimé) » » ; ses lignes ne renvoient plus vers un compte disparu. Connexion
+  impossible (plus de compte) ; un pseudo en « (supprimé) » est réservé ; « Max » se libère. 227 tests (dont un nouveau
+  Max dans le même groupe, à côté de « Max (supprimé) »).
+* ✅ Relecture du code : le journal figeait le pseudo dans sa phrase, d'où une réécriture fragile à la suppression (les
+  pseudos changés depuis « Moi » restaient en clair, un nom de groupe identique était touché). Demande : « il faut que
+  les lignes d'événements et de journal suivent le nom, que ce soit Max, Maxime ou Max (supprimé) ». Migration v15 :
+  chaque ligne du journal garde le compte dont elle parle et son pseudo à l'écriture ; « {joueur} » devient son pseudo
+  du moment à l'affichage ; à la suppression, une seule mise à jour (« Maxime (supprimé) »), plus aucune réécriture des
+  phrases. Les coupons affichent aussi le pseudo du moment. Un membre retiré suit désormais les changements de pseudo
+  de son compte (avant : l'historique gardait l'ancien, qui restait pris dans le groupe). 227 tests (Max, puis Maxime
+  changé depuis « Moi », puis « Maxime (supprimé) » dans le journal, le coupon et le groupe).
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

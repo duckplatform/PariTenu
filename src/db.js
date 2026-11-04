@@ -374,6 +374,13 @@ export const MIGRATIONS = [
   ALTER TABLE groups RENAME COLUMN invite_token TO address;
   UPDATE groups SET address = id;
   `,
+  // v15 — le journal de l'admin nomme les comptes par leur pseudo du moment (Max, Maxime, Max (supprimé)) : chaque ligne
+  // garde le compte dont elle parle et son pseudo à l'écriture, « {joueur} » dans la phrase est remplacé à l'affichage.
+  `
+  ALTER TABLE admin_log ADD COLUMN player_id TEXT;
+  ALTER TABLE admin_log ADD COLUMN player_pseudo TEXT;
+  CREATE INDEX admin_log_player ON admin_log(player_id);
+  `,
 ];
 
 /**

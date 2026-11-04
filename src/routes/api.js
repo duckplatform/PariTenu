@@ -4,6 +4,7 @@ import { forbidden, HttpError, notFound } from '../lib/errors.js';
 import { RateLimiter } from '../lib/rateLimit.js';
 import { DAY } from '../lib/util.js';
 import { publicAccount } from '../services/accounts.js';
+import { PLAYER } from '../services/admin.js';
 import { normalizeCoupon } from '../services/coupons.js';
 import { feedOf } from '../services/follows.js';
 import { publicMember } from '../services/groups.js';
@@ -174,7 +175,7 @@ export function apiRouter(deps) {
     const { groupId, address, token } = await groups.createGroup({ name: input.name, emoji: input.emoji, ...newAccount }, me, {
       redeem: (created) => { coupons.redeem(input.coupon, created); used = created; },
     });
-    admin.log('coupon_used', { target: `group:${groupId}`, summary: `Coupon …${normalizeCoupon(input.coupon).slice(-4)} utilisé par « ${used.pseudo} » : groupe « ${used.groupName} » créé`, ip: req.ip });
+    admin.log('coupon_used', { target: `group:${groupId}`, player: { id: used.playerId, pseudo: used.pseudo }, summary: `Coupon …${normalizeCoupon(input.coupon).slice(-4)} utilisé par « ${PLAYER} » : groupe « ${used.groupName} » créé`, ip: req.ip });
     setSession(req, res, token);
     res.status(201).json({ groupId: address });
   });
@@ -387,7 +388,7 @@ export function apiRouter(deps) {
   // Un admin du groupe le supprime (en retapant son nom) ; l'admin du site le voit dans son journal.
   g.delete('/', (req, res) => {
     const group = groups.removeGroup(req.me, parse(z.object({ confirm: z.string().max(80).default('') }), req.body).confirm);
-    admin.log('group_deleted', { target: `group:${group.id}`, summary: `Groupe « ${group.name} » supprimé par son admin « ${req.me.pseudo} »`, ip: req.ip ?? '' });
+    admin.log('group_deleted', { target: `group:${group.id}`, player: { id: req.me.player_id, pseudo: req.me.pseudo }, summary: `Groupe « ${group.name} » supprimé par son admin « ${PLAYER} »`, ip: req.ip ?? '' });
     ok(res);
   });
 

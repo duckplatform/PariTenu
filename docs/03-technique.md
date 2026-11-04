@@ -311,7 +311,13 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   plus), en plus de la limite par adresse ; `npm run admin` débloque et ferme toutes les sessions. Session : cookie
   `pt_admin` (`HttpOnly`, `SameSite=Strict`, `Path=/api/admin`, `Secure` en HTTPS), fermée après 2 h sans activité et
   12 h au plus ; une session de joueur n'ouvre rien. Page `/admin` en `no-store` et `noindex`, hors du service worker.
-  Suppressions confirmées en retapant le nom ; journal `admin_log` (action, phrase lisible, adresse), jamais modifié.
+  Suppressions confirmées en retapant le nom ; journal `admin_log` (action, phrase lisible, adresse), jamais réécrit.
+  Le pseudo n'y est pas figé (2026-11-04, migration v15) : une ligne garde le compte dont elle parle (`player_id`) et
+  son pseudo à l'écriture (`player_pseudo`) ; « {joueur} » dans la phrase devient à l'affichage son pseudo du moment
+  (`logEntries`). Compte supprimé : `player_id` vidé, `player_pseudo` = « Max (supprimé) », comme
+  `coupons.used_by_pseudo` (la liste des coupons lit aussi le pseudo du moment) et ses membres
+  (`GroupService.forgetPlayer`). Un membre retiré suit aussi les changements de pseudo de son compte. Un pseudo en
+  « (supprimé) » est réservé (`DELETED_PSEUDO`).
 * **Coupons** : 60 bits (12 caractères sur 32), seule l'empreinte SHA-256 est gardée ; vérifiés avant de hacher le PIN,
   puis consommés par un `UPDATE … WHERE used_at IS NULL` dans la transaction qui crée le groupe (deux créations
   simultanées : une seule passe, l'autre ne crée ni groupe ni compte). Limite de 30 essais par adresse en 5 minutes.

@@ -4,6 +4,27 @@ import { badRequest, conflict, forbidden, HttpError, notFound, unauthorized } fr
 import { newId } from '../lib/util.js';
 import { addEvent } from './events.js';
 
+const pseudosIn = (db, groupId) => new Set(db.prepare('SELECT pseudo FROM members WHERE group_id = ?').all(groupId).map((m) => m.pseudo.toLowerCase()));
+
+/** « Ancien membre 3 » : le premier numéro libre dans le groupe, pour un membre qui quitte le groupe. */
+function anonymousPseudo(db, groupId) {
+  const used = pseudosIn(db, groupId);
+  let n = 1;
+  while (used.has(`ancien membre ${n}`)) n++;
+  return `Ancien membre ${n}`;
+}
+
+/** Le pseudo d'un compte supprimé : « Max (supprimé) », réservé (personne ne peut le choisir ni s'y connecter). */
+export const DELETED_PSEUDO = /\(supprimé(?: \d+)?\)$/i;
+
+/** « Max (supprimé) » dans ce groupe, « Max (supprimé 2) » s'il y a déjà eu un Max supprimé. */
+function deletedPseudo(db, groupId, pseudo) {
+  const used = pseudosIn(db, groupId);
+  let name = `${pseudo} (supprimé)`;
+  for (let n = 2; used.has(name.toLowerCase()); n++) name = `${pseudo} (supprimé ${n})`;
+  return name;
+}
+
 export const publicMember = (m) => ({
   id: m.id,
   pseudo: m.pseudo,
@@ -150,11 +171,8 @@ export class GroupService {
   }
 
   #anonymize(member, data) {
-    const used = new Set(this.members(member.group_id).map((m) => m.pseudo.toLowerCase()));
-    let n = 1;
-    while (used.has(`ancien membre ${n}`)) n++;
     this.db.prepare("UPDATE members SET status = 'left', pseudo = ?, avatar = '👤', pin_hash = NULL, role = 'member' WHERE id = ?")
-      .run(`Ancien membre ${n}`, member.id);
+      .run(anonymousPseudo(this.db, member.group_id), member.id);
     this.#detach(member.id);
     if (member.role === 'admin') this.#ensureAdmin(member.group_id);
     this.#event(member.group_id, 'member_left', member.id, data);
@@ -320,10 +338,22 @@ export class GroupService {
     return this.#newAddress(groupId, null, { admin: true });
   }
 
-  /** Compte supprimé : il quitte chacun de ses groupes (pseudo anonymisé, historique gardé) et ses membres s'en détachent. */
+  /**
+   * Compte supprimé (demande du 2026-11-04) : dans chacun de ses groupes il devient « Max (supprimé) », parti s'il y était
+   * encore, toujours « retiré » là où il l'avait été ; son historique reste lisible et ses membres se détachent du compte.
+   * Personne ne peut plus s'y connecter, et « Max » se libère pour un autre, sans confusion. Là où il avait quitté le
+   * groupe de lui-même, il est déjà « Ancien membre N ».
+   */
   forgetPlayer(playerId) {
     tx(this.db, () => {
-      for (const m of this.db.prepare("SELECT * FROM members WHERE player_id = ? AND status = 'active'").all(playerId)) this.#anonymize(m, { admin: true });
+      for (const m of this.db.prepare("SELECT * FROM members WHERE player_id = ? AND status IN ('active', 'removed')").all(playerId)) {
+        this.db.prepare("UPDATE members SET pseudo = ?, pin_hash = NULL, role = 'member', status = CASE status WHEN 'active' THEN 'left' ELSE status END WHERE id = ?")
+          .run(deletedPseudo(this.db, m.group_id, m.pseudo), m.id);
+        if (m.status !== 'active') continue;
+        this.#detach(m.id);
+        if (m.role === 'admin') this.#ensureAdmin(m.group_id);
+        this.#event(m.group_id, 'member_left', m.id, { admin: true });
+      }
       this.db.prepare('UPDATE members SET player_id = NULL WHERE player_id = ?').run(playerId);
     });
   }
