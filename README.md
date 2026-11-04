@@ -24,7 +24,7 @@ site, sans toucher au code.
 ## Installation
 
 ```bash
-git clone <adresse-du-dépôt> paritenu
+git clone https://github.com/duckplatform/PariTenu.git paritenu
 cd paritenu
 npm ci --omit=dev
 cp .env.example .env

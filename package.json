@@ -21,6 +21,14 @@
     "test:all": "npm test && npm run test:e2e"
   },
   "license": "MIT",
+  "homepage": "https://github.com/duckplatform/PariTenu#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duckplatform/PariTenu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/duckplatform/PariTenu/issues"
+  },
   "dependencies": {
     "express": "^5.3.0",
     "helmet": "^8.3.0",

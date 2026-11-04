@@ -28,8 +28,8 @@ function read() {
 /** Modifiable en place : la page Configuration de l'admin y recopie ce qu'elle vient d'enregistrer. */
 export const brand = read();
 
-// Le dépôt du logiciel libre : vide tant qu'il n'est pas publié (le crédit s'affiche alors sans lien).
-export const PROJECT_URL = '';
+// Le dépôt du logiciel libre : le crédit du pied de page (« PariTenu v1.0.0 ») y renvoie.
+export const PROJECT_URL = 'https://github.com/duckplatform/PariTenu';
 
 /** Une adresse à partager (groupe, coupon, pari) : sur l'adresse publique si elle est réglée, sinon sur celle de la page. */
 export const appUrl = (path) => `${brand.publicUrl || location.origin}${path}`;

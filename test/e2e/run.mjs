@@ -156,6 +156,8 @@ await test('l’accueil du site, puis créer un groupe par le lien d’un coupon
   assert.equal(await page.locator('a[href^="/n/"]').count(), 0, 'aucun lien vers la création d’un groupe');
   // En pied de page : le logiciel et sa version (package.json).
   assert.equal(await page.locator('.site-foot .credits').textContent(), `PariTenu v${VERSION}, logiciel libre`);
+  assert.equal(await page.locator('.site-foot .credits').getByRole('link', { name: `PariTenu v${VERSION}` }).getAttribute('href'),
+    'https://github.com/duckplatform/PariTenu', 'le crédit renvoie au dépôt du projet');
   await shot(page, '00-accueil-site', { fullPage: true });
   // Créer un groupe : seulement par le lien d'un coupon (/n sans coupon n'existe pas).
   assert.equal((await page.goto(`${ORIGIN}/n`)).status(), 404, 'pas de formulaire sans coupon dans l’adresse');

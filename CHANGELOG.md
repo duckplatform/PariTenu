@@ -11,6 +11,10 @@ Pour publier une version, voir [Publier une version](README.md#publier-une-versi
 
 ## [Non publié]
 
+### Ajouté
+
+- Le crédit du pied de page (« PariTenu v… ») renvoie au dépôt GitHub du projet ; adresse du dépôt dans `package.json`.
+
 ## [1.0.0] - 2026-11-04
 
 Première version publique.
