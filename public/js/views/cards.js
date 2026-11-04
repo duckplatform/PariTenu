@@ -58,7 +58,7 @@ export function betCard(bet, { isNew = false, onPick = null } = {}) {
     }, content);
   };
   return h('article.bet-card', { class: cls(`st-${bet.status}`, visual && 'is-match', isLive(bet) && 'is-live'), dataset: { betId: bet.id } },
-    h('a.card-link', { href: `/${ctx.gid}/bet/${bet.id}`, 'aria-label': bet.question }),
+    h('a.card-link', { href: `/g/${ctx.gid}/bet/${bet.id}`, 'aria-label': bet.question }),
     // « À toi de jouer » en tête de carte (plutôt qu'un rappel en bas de chaque carte).
     h('div.bet-card-top', h('span.cat', `${bet.ranking.emoji} ${bet.ranking.label}`),
       bet.can.pick && !bet.myPick ? h('span.tag.t-todo', 'À toi de jouer') : null, statusChip(bet, { compact: true })),

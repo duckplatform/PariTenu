@@ -7,7 +7,7 @@ import { run } from '../ui.js';
 /** Réglages des paris (admins) : types, catégories et sources de données automatiques. */
 export async function configView() {
   if (ctx.me.role !== 'admin') {
-    navigate(`/${ctx.gid}/me`, { replace: true });
+    navigate(`/g/${ctx.gid}/me`, { replace: true });
     return null;
   }
   const base = `/groups/${ctx.gid}`;
@@ -29,7 +29,7 @@ export async function configView() {
   }, 'Enregistrer les réglages');
 
   const node = h('main.config',
-    h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}/admin`, 'aria-label': 'Retour' }, '←'), h('h1', '🎛️ Réglages des paris')),
+    h('header.topbar', h('a.icon-btn', { href: `/g/${ctx.gid}/admin`, 'aria-label': 'Retour' }, '←'), h('h1', '🎛️ Réglages des paris')),
     h('section.card.stack', h('h2', '🧩 Types des paris maison'), ...editor.kinds),
     h('section.card.stack', h('h2', '🗂️ Catégories et paris automatiques'), ...editor.categories),
     h('div.save-bar', save));

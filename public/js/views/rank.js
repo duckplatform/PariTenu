@@ -26,7 +26,7 @@ function seasonLine(s) {
 
 /**
  * Classements : un par compétition (Ligue 1, NFL…) ou catégorie, saison par saison.
- * /<g>/rank[/<classement>[/<saison>]]
+ * /g/<g>/rank[/<classement>[/<saison>]]
  */
 export async function rankView(route) {
   const { now: serverNow, rankings } = await get(`/groups/${ctx.gid}/rankings`);
@@ -43,7 +43,7 @@ export async function rankView(route) {
   const data = await get(`/groups/${ctx.gid}/rankings/${encodeURIComponent(current.key)}${seasonId ? `?season=${encodeURIComponent(seasonId)}` : ''}`);
   setPref(`ranking:${ctx.gid}`, current.key);
   const s = data.season;
-  const go = (key, season) => navigate(`/${ctx.gid}/rank/${encodeURIComponent(key)}${season ? `/${encodeURIComponent(season)}` : ''}`, { replace: true });
+  const go = (key, season) => navigate(`/g/${ctx.gid}/rank/${encodeURIComponent(key)}${season ? `/g/${encodeURIComponent(season)}` : ''}`, { replace: true });
 
   const chips = h('div.chips.scroll', { role: 'tablist', 'aria-label': 'Classements' }, rankings.map((r) => h('button.chip', {
     type: 'button', role: 'tab', 'aria-selected': String(r.key === current.key), 'aria-pressed': String(r.key === current.key),
@@ -75,11 +75,11 @@ export async function rankView(route) {
       h('p.season-line', { class: cls(s.state === 'closed' && s.champions.length && 'champion') }, seasonLine(s)),
       seasonPicker),
     podium.length ? h('div.podium', podium.map((r) => h('a.podium-step', {
-      href: `/${ctx.gid}/members/${r.member.id}`, class: `p${r.rank}`,
+      href: `/g/${ctx.gid}/members/${r.member.id}`, class: `p${r.rank}`,
     }, h('span.medal', MEDALS[r.rank - 1] ?? ''), h('span.avatar.xl', face(r.member.avatar)), h('b', r.member.pseudo), h('span', pts(r.score))))) : null,
     rows.length
       ? h('ol.rank-list', rows.map((r) => h('li', h('a.rank-row', {
-        href: `/${ctx.gid}/members/${r.member.id}`, class: cls(r.member.id === ctx.me.id && 'me'),
+        href: `/g/${ctx.gid}/members/${r.member.id}`, class: cls(r.member.id === ctx.me.id && 'me'),
       },
       h('span.rank-pos', String(r.rank)),
       h('span.avatar', face(r.member.avatar)),

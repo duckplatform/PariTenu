@@ -22,7 +22,7 @@ function row(bet) {
   const versus = bet.event?.layout === 'versus';
   const onVisual = mine && versus && (mine.key === 'draw' || bet.event.competitors.some((c) => c.key === mine.key));
   const visual = matchVisual(bet, { mine: onVisual ? mine.key : null });
-  return h('a.live-row', { href: `/${ctx.gid}/bet/${bet.id}`, class: cls(isLive(bet) && 'is-live', state && `ps-${state}`), dataset: { betId: bet.id } },
+  return h('a.live-row', { href: `/g/${ctx.gid}/bet/${bet.id}`, class: cls(isLive(bet) && 'is-live', state && `ps-${state}`), dataset: { betId: bet.id } },
     h('div.live-row-top', h('span.cat', `${bet.ranking.emoji} ${bet.ranking.label}`), statusChip(bet)),
     visual && bet.event.layout === 'field' ? h('p.bet-q', bet.question) : null,
     visual ?? h('p.bet-q', bet.question),
@@ -78,7 +78,7 @@ export async function liveView() {
         section('Terminés', '🏁', done.reverse()),
       ] : empty('📺', day === '1' ? 'Rien de prévu demain' : day === '-1' ? 'Rien hier' : 'Pas de match aujourd’hui',
         'Les matchs et courses des compétitions que tu suis s’affichent ici, avec les scores en direct.',
-        h('a.btn', { href: `/${ctx.gid}/follow` }, '🏟️ Mes compétitions')));
+        h('a.btn', { href: `/g/${ctx.gid}/follow` }, '🏟️ Mes compétitions')));
   }
 
   async function refresh() {

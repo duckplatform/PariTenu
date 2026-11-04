@@ -45,9 +45,9 @@ export async function betFormView(route) {
   if (!bet && (!cats.length || !kinds.length)) {
     return {
       node: h('main.form-page',
-        h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', 'Nouveau pari')),
+        h('header.topbar', h('a.icon-btn', { href: `/g/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', 'Nouveau pari')),
         empty('📡', 'Pas de paris maison dans ce groupe', 'Ici, les paris s’ouvrent tout seuls avec les compétitions activées.',
-          ctx.me.role === 'admin' ? h('a.btn.primary', { href: `/${ctx.gid}/config` }, '🎛️ Activer les paris maison') : null)),
+          ctx.me.role === 'admin' ? h('a.btn.primary', { href: `/g/${ctx.gid}/config` }, '🎛️ Activer les paris maison') : null)),
       tab: 'home',
     };
   }
@@ -145,11 +145,11 @@ export async function betFormView(route) {
       try {
         if (bet) {
           await patch(`/groups/${ctx.gid}/bets/${bet.id}`, payload);
-          navigate(`/${ctx.gid}/bet/${bet.id}`);
+          navigate(`/g/${ctx.gid}/bet/${bet.id}`);
         } else {
           const { id } = await post(`/groups/${ctx.gid}/bets`, payload);
           markJustCreated(id);
-          navigate(`/${ctx.gid}/bet/${id}`);
+          navigate(`/g/${ctx.gid}/bet/${id}`);
         }
       } catch (error) {
         err.textContent = error.message;
@@ -170,7 +170,7 @@ export async function betFormView(route) {
 
   const node = h('main.form-page',
     h('header.topbar',
-      h('a.icon-btn', { href: bet ? `/${ctx.gid}/bet/${bet.id}` : `/${ctx.gid}`, 'aria-label': 'Retour' }, '←'),
+      h('a.icon-btn', { href: bet ? `/g/${ctx.gid}/bet/${bet.id}` : `/g/${ctx.gid}`, 'aria-label': 'Retour' }, '←'),
       h('h1', bet ? 'Modifier le pari' : 'Nouveau pari')),
     form);
   return { node, tab: 'home', title: editId ? 'Modifier le pari' : 'Nouveau pari' };

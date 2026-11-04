@@ -43,7 +43,7 @@ public/
   fonts/<id>/          polices des thèmes, hébergées par l'app (woff2 « latin » de Google Fonts, licence SIL OFL)
   img/themes/<id>.jpg  aperçus des thèmes (page Configuration) (scripts/theme-previews.mjs, d'après les captures des tests e2e)
   js/icons.js          icônes au trait (Lucide) de la navigation, des titres de section et des états des paris
-  js/main.js           routeur (adresses en anglais : /, /groups, /groups/new[/<coupon>], /help, /<groupe>/… ;
+  js/main.js           routeur (adresses en anglais : /, /g, /g/<groupe>/…, /n/<coupon>, /help ;
                        /invite/<jeton> : ancien lien, expiré ; liens internes sans rechargement, anciennes adresses converties), mise en page,
                        rafraîchissement au retour dans l'app
   js/views/*.js        un écran par fichier (welcome : accueil du site, mes groupes, créer un groupe ; help : aide ; follow : mes compétitions ;

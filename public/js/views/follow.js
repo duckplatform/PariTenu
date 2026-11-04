@@ -57,7 +57,7 @@ export async function followView() {
     : empty('🏟️', 'Aucune compétition proposée', 'Un admin du groupe peut en activer dans ⚙️ Réglages du groupe → Réglages des paris.'));
   draw();
   const node = h('main.follow',
-    h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}/me`, 'aria-label': 'Retour' }, '←'), h('h1', '🏟️ Mes compétitions')),
+    h('header.topbar', h('a.icon-btn', { href: `/g/${ctx.gid}/me`, 'aria-label': 'Retour' }, '←'), h('h1', '🏟️ Mes compétitions')),
     h('p.muted', 'Le groupe propose des compétitions : tu choisis celles qui t’intéressent. Leurs paris s’affichent chez toi, les autres restent cachés. Tu peux changer d’avis quand tu veux.'),
     list);
   return { node, tab: 'me' };

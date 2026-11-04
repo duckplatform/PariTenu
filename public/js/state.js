@@ -28,13 +28,13 @@ export const memberOf = (id) => ctx.members.get(id) ?? { id, pseudo: '?', avatar
 export const categoryOf = (id) => ctx.settings?.categories.find((c) => c.id === id) ?? { id, emoji: '🎲', label: 'Autre' };
 export const activeMembers = () => [...ctx.members.values()].filter((m) => m.status === 'active');
 /** Le lien du groupe à partager (son adresse : elle sert à entrer et à se connecter), ou d'une de ses pages. */
-export const groupUrl = (path = '') => appUrl(`/${ctx.gid}${path}`);
+export const groupUrl = (path = '') => appUrl(`/g/${ctx.gid}${path}`);
 
 let renderer = () => {};
 export const setRenderer = (fn) => { renderer = fn; };
 export const rerender = () => renderer();
 
-/** Va vers une adresse de l'app (« /groups », « /<groupe>/bet/<id> »…) sans recharger la page. */
+/** Va vers une adresse de l'app (« /g », « /g/<groupe>/bet/<id> »…) sans recharger la page. */
 export function navigate(path, { replace = false } = {}) {
   // Déjà sur cette adresse : on redessine seulement (pas de doublon dans l'historique).
   if (path !== location.pathname + location.search + location.hash) history[replace ? 'replaceState' : 'pushState'](null, '', path);

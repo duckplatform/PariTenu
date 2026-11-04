@@ -39,7 +39,7 @@ describe('en-têtes et garde-fous HTTP', () => {
     const g = await setupGroup(srv, []);
     const robots = async (url) => (await fetch(srv.base + url, { redirect: 'manual' })).headers.get('x-robots-tag');
     assert.equal(await robots('/'), null, 'l’accueil reste indexable');
-    for (const url of ['/groups', '/groups/new', '/groups/new/ABCD', '/help', '/invite/abc', '/g/abc', `/${g.gid}`, `/${g.gid}/bet/x`,
+    for (const url of ['/g', '/n', '/n/ABCD', '/groups', '/groups/new/ABCD', '/help', '/invite/abc', '/g/abc', `/g/${g.gid}`, `/g/${g.gid}/bet/x`, `/${g.gid}`,
       '/admin', '/admin/users', '/api/instance', `/api/groups/${g.token}/entry`, '/css/app.css', '/icons/icon-192.png', '/manifest.webmanifest', '/nexiste/pas']) {
       assert.equal(await robots(url), 'noindex, nofollow', url);
     }
@@ -47,13 +47,13 @@ describe('en-têtes et garde-fous HTTP', () => {
     assert.match(res.headers.get('content-type'), /^text\/plain/);
     const lines = (await res.text()).split('\n');
     for (const rule of ['User-agent: *', 'Allow: /$', 'Allow: /css/', 'Allow: /js/', 'Disallow: /']) assert.ok(lines.includes(rule), rule);
-    assert.ok(!lines.some((l) => /^Allow: \/(groups|invite|help|admin|g\/|api\/invite)/.test(l)), 'rien de privé n’est permis');
+    assert.ok(!lines.some((l) => /^Allow: \/(groups|invite|help|admin|g$|g\/|n\/|api\/invite)/.test(l)), 'rien de privé n’est permis');
   });
 
   it('les adresses de l’app et de l’admin (en anglais, sans #) servent la coquille ; les anciennes redirigent', async () => {
     const g = await setupGroup(srv, []);
-    for (const url of ['/', '/groups', '/groups/new', '/groups/new/ABCD-EFGH-JKMN', '/help', '/help/points', '/invite/abc',
-      `/${g.gid}`, `/${g.gid}/bet/abc`, `/${g.gid}/rank/espn%3Afra.1/2026`, `/${g.gid}/members/abc`]) {
+    for (const url of ['/', '/g', '/n/ABCD-EFGH-JKMN', '/help', '/help/points', '/invite/abc',
+      `/g/${g.gid}`, `/g/${g.gid}/bet/abc`, `/g/${g.gid}/rank/espn%3Afra.1/2026`, `/g/${g.gid}/members/abc`]) {
       const res = await fetch(srv.base + url, { redirect: 'manual' });
       assert.equal(res.status, 200, url);
       assert.match(await res.text(), /<div id="app"/, url);
@@ -63,14 +63,19 @@ describe('en-têtes et garde-fous HTTP', () => {
       assert.deepEqual([res.status, res.headers.get('cache-control'), res.headers.get('x-robots-tag')], [200, 'no-store', 'noindex, nofollow'], url);
       assert.match(await res.text(), /\/js\/admin\/main\.js/, url);
     }
-    // Les liens déjà partagés (coupon, aide ; une ancienne invitation : la page qui dit qu'elle a expiré).
-    for (const [url, to] of [['/c/ABCD-EFGH-JKMN', '/groups/new/ABCD-EFGH-JKMN'], ['/g/abc', '/invite/abc'],
-      ['/g/abc?pari=x1', '/invite/abc'], ['/aide', '/help'], ['/aide/points', '/help/points']]) {
+    // Les liens déjà partagés (coupon, groupe avant /g/, mes groupes, aide ; une ancienne invitation : la page qui dit
+    // qu'elle a expiré).
+    for (const [url, to] of [['/c/ABCD-EFGH-JKMN', '/n/ABCD-EFGH-JKMN'], ['/groups/new/ABCD-EFGH-JKMN', '/n/ABCD-EFGH-JKMN'],
+      ['/groups', '/g'], [`/${g.gid}`, `/g/${g.gid}`], [`/${g.gid}/bet/abc?x=1`, `/g/${g.gid}/bet/abc?x=1`],
+      [`/${g.gid}/rank/espn%3Afra.1/2026`, `/g/${g.gid}/rank/espn%3Afra.1/2026`],
+      ['/g/abc', '/invite/abc'], ['/g/abc?pari=x1', '/invite/abc'], ['/aide', '/help'], ['/aide/points', '/help/points']]) {
       const res = await fetch(srv.base + url, { redirect: 'manual' });
       assert.deepEqual([res.status, res.headers.get('location')], [302, to], url);
     }
-    // Seul un identifiant de groupe (16 caractères hexadécimaux) ouvre une page de groupe ; le reste reste introuvable.
-    for (const url of ['/xyz', `/${g.gid.slice(1)}`, '/groups/new/a/b', '/api.js', '/adminx']) {
+    // Seul un identifiant de groupe (16 caractères hexadécimaux) ouvre une page de groupe ; le formulaire de création
+    // n'existe qu'avec un coupon dans l'adresse ; le reste reste introuvable.
+    for (const url of ['/xyz', `/${g.gid.slice(1)}`, `/g/${g.gid.slice(1)}/bet`, '/n', '/n/', '/n/a/b', '/groups/new',
+      '/groups/new/a/b', '/api.js', '/adminx']) {
       assert.equal((await fetch(srv.base + url, { redirect: 'manual' })).status, 404, url);
     }
   });

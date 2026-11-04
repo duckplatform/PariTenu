@@ -9,7 +9,7 @@ import { confirmSheet, emojiPicker, field, GROUP_EMOJIS, promptSheet, run, share
 
 export async function adminView() {
   if (ctx.me.role !== 'admin') {
-    navigate(`/${ctx.gid}/me`, { replace: true });
+    navigate(`/g/${ctx.gid}/me`, { replace: true });
     return null;
   }
   const base = `/groups/${ctx.gid}`;
@@ -32,7 +32,7 @@ export async function adminView() {
           if (r) {
             forgetGroup(ctx.gid);
             rememberGroup({ ...ctx.group, id: r.id, role: ctx.me.role });
-            navigate(`/${r.id}/admin`, { replace: true });
+            navigate(`/g/${r.id}/admin`, { replace: true });
           }
         },
       }, 'Changer le lien')));
@@ -56,10 +56,10 @@ export async function adminView() {
       },
     }, 'Enregistrer les réglages'));
 
-  // Types, catégories et sources de données : page à part (/<g>/config)
+  // Types, catégories et sources de données : page à part (/g/<g>/config)
   const activeCats = s.categories.filter((c) => !c.hidden).length;
   const kindsOn = [s.kinds.yesno && 'Oui / Non', s.kinds.multi && 'choix multiples'].filter(Boolean).join(' et ') || 'aucun type de pari maison';
-  const catSection = h('a.card.list-item.config-link', { href: `/${ctx.gid}/config` },
+  const catSection = h('a.card.list-item.config-link', { href: `/g/${ctx.gid}/config` },
     h('span.big-emoji', '🎛️'),
     h('span.grow', h('b', 'Réglages des paris'), h('br'),
       h('small.muted', `${kindsOn} · ${activeCats ? `paris maison dans ${activeCats} catégorie${activeCats > 1 ? 's' : ''}` : 'pas de paris maison'} · matchs, météo, cryptos… avec résultat automatique`)),
@@ -143,13 +143,13 @@ export async function adminView() {
         if (await run(e.currentTarget, () => api('DELETE', base, { confirm: name }))) {
           forgetGroup(ctx.gid);
           toast(`Groupe « ${ctx.group.name} » supprimé.`, 'ok');
-          navigate('/groups', { replace: true });
+          navigate('/g', { replace: true });
         }
       },
     }, 'Supprimer le groupe'));
 
   const node = h('main.admin',
-    h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', '⚙️ Réglages du groupe')),
+    h('header.topbar', h('a.icon-btn', { href: `/g/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', '⚙️ Réglages du groupe')),
     inviteSection, catSection, groupSection, pointsSection, memberSection, bannedSection, exportSection, deleteSection);
   return { node, tab: 'settings' };
 }

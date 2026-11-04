@@ -88,12 +88,12 @@ Trois niveaux de priorité : **Indispensable** (la V1 ne sort pas sans), **Impor
 
 ### 7.1 Rejoindre sans inscription (Indispensable)
 
-**Créer un groupe**, depuis la page « Créer un groupe » (`/groups/new`), ouverte par le lien d'un coupon (aucun lien de
-l'app n'y mène) :
+**Créer un groupe**, depuis la page « Créer un groupe » (`/n/<coupon>`), ouverte seulement par le lien d'un coupon
+(aucun lien de l'app n'y mène, et `/n` sans coupon n'existe pas ; § 7.20) :
 
 * nom et emoji du groupe, puis son propre pseudo, son avatar et son PIN ;
-* il faut un **coupon** (depuis le 2026-11-01, à la place du code d'instance) : généré par l'admin du site, il crée un seul groupe et expire en servant ; son lien `/groups/new/<code>` ouvre le formulaire, coupon rempli (les anciens liens `/c/<code>` y mènent aussi ; § 7.14 et 7.16) ;
-* on obtient le lien du groupe, son adresse `https://…/<groupe>`, à coller dans le groupe WhatsApp (bouton Partager ; QR code en bonus). Plus de lien d'invitation à part depuis le 2026-11-04 (§ 7.19).
+* il faut un **coupon** (depuis le 2026-11-01, à la place du code d'instance) : généré par l'admin du site, il crée un seul groupe et expire en servant ; son lien `/n/<code>` ouvre le formulaire, coupon rempli (les anciens liens `/groups/new/<code>` et `/c/<code>` y mènent aussi ; § 7.14, 7.16 et 7.20) ;
+* on obtient le lien du groupe, son adresse `https://…/g/<groupe>`, à coller dans le groupe WhatsApp (bouton Partager ; QR code en bonus). Plus de lien d'invitation à part depuis le 2026-11-04 (§ 7.19).
 
 **Rejoindre** :
 
@@ -588,6 +588,26 @@ lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans
 * Sécurité (choix assumé) : quelqu'un qui a vu l'adresse (historique, capture d'écran, ancien membre) peut entrer dans le
   groupe ou essayer des PIN, freiné par les blocages (5 erreurs par compte, puis deux fois plus long à chaque fois ;
   30 essais par adresse IP en 5 minutes), et il doit connaître un pseudo. D'où « Changer le lien ».
+
+### 7.20 Adresses courtes : /g et /n/<coupon> (2026-11-04)
+
+Demande : « /g remplace /groups. /g/:groupid remplace /:groupid pour aller sur la page d'un groupe. Et /groups/new
+devient /n/:couponid. La page de formulaire /n n'est pas accessible sans l'id coupon dans l'URL : ça protègera le
+formulaire. »
+
+* **`/g` : mes groupes** (avant `/groups`).
+* **`/g/<groupe>` : un groupe**, et toutes ses pages : `/g/<groupe>/bet/<id>[/edit]`, `/new`, `/rank[/<classement>[/<saison>]]`,
+  `/activity`, `/members/<id>`, `/me`, `/admin`, `/config`, `/follow`, `/live` (avant `/<groupe>/…`). Le lien du groupe
+  que l'on partage est donc `https://…/g/<groupe>`.
+* **`/n/<coupon>` : créer un groupe** (avant `/groups/new[/<coupon>]`). `/n` seul répond « Page introuvable » : le
+  formulaire ne s'ouvre qu'avec un coupon dans l'adresse (le lien que copie l'admin du site). Le coupon reste dans la
+  barre d'adresse (avant : il la quittait aussitôt), pour qu'un rechargement garde le formulaire ; il sert une fois.
+  Le coupon de l'adresse n'est vérifié qu'à la création du groupe (comme avant) : un faux coupon ouvre le formulaire,
+  qui le refuse.
+* **Rien ne casse** : le serveur redirige les adresses déjà partagées : `/<groupe>/…` → `/g/<groupe>/…` (query
+  comprise), `/groups` → `/g`, `/groups/new/<coupon>` et `/c/<coupon>` → `/n/<coupon>` ; l'app convertit aussi les
+  anciennes adresses en `/#/…`. `/g/<jeton>` (autre chose qu'une adresse de groupe) reste un ancien lien d'invitation,
+  qui dit qu'il a expiré.
 
 ## 8. Exigences non fonctionnelles
 

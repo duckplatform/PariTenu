@@ -6,7 +6,7 @@ import { confirmSheet, field, openSheet, run, share } from '../ui.js';
 import { aget, apost, button, COUPON_STATES, copy, filters, moreMenu, pageHead, soon, stateBadge, table, when } from './kit.js';
 
 const DAYS = [[7, '7 jours'], [30, '30 jours'], [90, '90 jours'], [null, 'Sans limite']];
-export const couponLink = (code) => appUrl(`/groups/new/${code}`);
+export const couponLink = (code) => appUrl(`/n/${code}`);
 
 /** Nouveau coupon : pour qui, combien de temps. Rend le coupon créé (après l'avoir montré), ou null. */
 export async function newCoupon() {

@@ -121,9 +121,9 @@ async function reload(page) {
   await page.waitForSelector('#app main');
 }
 const dialog = (page) => page.getByRole('dialog');
-// Les adresses de l'app : /<groupe>[/…], le groupe en 16 caractères hexadécimaux.
-const GROUP_URL = /\/[0-9a-f]{16}$/;
-const gidOf = (url) => new URL(url).pathname.split('/')[1];
+// Les adresses de l'app : /g/<groupe>[/…], le groupe en 16 caractères hexadécimaux.
+const GROUP_URL = /\/g\/[0-9a-f]{16}$/;
+const gidOf = (url) => new URL(url).pathname.split('/')[2];
 
 async function waitText(page, needle, timeout = 5000) {
   await page.locator('body').getByText(needle, { exact: false }).filter({ visible: true }).first().waitFor({ timeout });
@@ -152,14 +152,15 @@ await test('l’accueil du site, puis créer un groupe par le lien d’un coupon
   // L'accueil du site : le principe et les sports, sans formulaire ni lien vers la création d'un groupe.
   await page.locator('.landing-hero h1').waitFor();
   assert.equal(await page.locator('form').count(), 0, 'pas de formulaire sur l’accueil');
-  assert.equal(await page.locator('a[href^="/groups/new"]').count(), 0, 'aucun lien vers la création d’un groupe');
+  assert.equal(await page.locator('a[href^="/n/"]').count(), 0, 'aucun lien vers la création d’un groupe');
   await shot(page, '00-accueil-site', { fullPage: true });
-  // Créer un groupe : seulement par le lien d'un coupon (ici la page sans coupon : Léa le tape).
-  await page.goto(`${ORIGIN}/groups/new`);
+  // Créer un groupe : seulement par le lien d'un coupon (/n sans coupon n'existe pas).
+  assert.equal((await page.goto(`${ORIGIN}/n`)).status(), 404, 'pas de formulaire sans coupon dans l’adresse');
+  await page.goto(`${ORIGIN}/n/AAAA-BBBB-CCCC`);
   const create = page.locator('#creer');
   await create.waitFor();
-  // Sans coupon (ou avec un faux) : refusé.
-  await create.getByLabel('Ton coupon').fill('AAAA-BBBB-CCCC');
+  // Un faux coupon dans le lien : refusé (Léa tape ensuite le bon).
+  assert.equal(await create.getByLabel('Ton coupon').inputValue(), 'AAAA-BBBB-CCCC', 'le coupon du lien est rempli');
   await create.getByLabel('Nom du groupe').fill('Les Potes');
   await create.getByLabel('Ton pseudo').fill('Léa');
   await create.locator('input[name=pin]').fill(PINS.lea);
@@ -217,7 +218,7 @@ await test('un seul compte : connexion par le lien du groupe (jamais depuis l’
   assert.equal(await pc.page.getByRole('button', { name: 'Me connecter' }).count(), 0);
   const refused = await pc.page.evaluate(async () => (await fetch('/api/account/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pseudo: 'Max', pin: '0000' }) })).status);
   assert.equal(refused, 403, 'sans lien de groupe, le serveur refuse aussi');
-  await pc.page.goto(`${ORIGIN}/groups`);
+  await pc.page.goto(`${ORIGIN}/g`);
   await waitText(pc.page, 'Aucun compte connecté sur cet appareil.');
   // Le lien du groupe (son adresse) dans un navigateur neuf : on s'y connecte sur place, pseudo + PIN, sans rien qui
   // montre les membres (ni pseudos ni avatars à toucher).
@@ -237,12 +238,11 @@ await test('un seul compte : connexion par le lien du groupe (jamais depuis l’
   assert.equal(pc.page.url(), groupLink);
   await waitText(pc.page, 'Les Potes');
   // Un deuxième groupe : connecté, un nom et un emoji suffisent.
-  await pc.page.goto(`${ORIGIN}/groups/new`);
+  await pc.page.goto(`${ORIGIN}/n/${newCoupon()}`);
   const create = pc.page.locator('#creer');
   assert.match(await create.locator('.identity-row').innerText(), /Max/);
   assert.equal(await create.getByLabel('Ton pseudo').count(), 0, 'pas de pseudo ni de PIN à retaper');
   await create.getByLabel('Nom du groupe').fill('Le Foot du jeudi');
-  await create.getByLabel('Ton coupon').fill(newCoupon());
   await create.getByRole('button', { name: 'Créer le groupe' }).click();
   await waitText(pc.page, 'Aucun pari pour l’instant');
   assert.match(await pc.page.title(), /Le Foot du jeudi/);
@@ -305,7 +305,7 @@ await test('créer un pari Oui/Non en moins d’une minute et le partager', asyn
 
 await test('idées de paris : un modèle « Qui… ? » passe en choix multiples', async () => {
   const { page } = lea;
-  await page.goto(`${ORIGIN}/${gidOf(betUrl)}/new`);
+  await page.goto(`${ORIGIN}/g/${gidOf(betUrl)}/new`);
   await page.getByRole('button', { name: '💡 Idées de paris' }).click();
   await dialog(page).getByRole('button', { name: 'Qui gagne le tournoi de Mario Kart ?' }).click();
   assert.equal(await page.locator('textarea[name=question]').inputValue(), 'Qui gagne le tournoi de Mario Kart ?');
@@ -385,7 +385,7 @@ await test('après la clôture, plus aucun pronostic n’est accepté', async ()
 });
 
 await test('trancher, contester, voter : le vote renverse le verdict', async () => {
-  await lea.page.goto(`${ORIGIN}/${gidOf(betUrl)}`);
+  await lea.page.goto(`${ORIGIN}/g/${gidOf(betUrl)}`);
   await waitText(lea.page, 'À toi de trancher');
   await shot(lea.page, '08-accueil-a-trancher');
   await open(lea.page, betUrl);
@@ -542,7 +542,7 @@ await test('admin : changer le lien donne une nouvelle adresse, l’ancienne ne 
   await page.getByRole('button', { name: 'Changer le lien' }).click();
   await dialog(page).getByRole('button', { name: 'Changer le lien' }).click();
   await waitText(page, 'Nouveau lien créé.');
-  await page.waitForURL((url) => url.pathname.endsWith('/admin') && !url.pathname.startsWith(`/${before}/`));
+  await page.waitForURL((url) => url.pathname.endsWith('/admin') && !url.pathname.startsWith(`/g/${before}/`));
   const fresh = await page.locator('.invite-link code').innerText();
   const after = gidOf(fresh);
   assert.match(fresh, GROUP_URL);
@@ -564,7 +564,7 @@ await test('admin : changer le lien donne une nouvelle adresse, l’ancienne ne 
   await max.page.goto(groupLink);
   await waitText(max.page, 'Lien périmé');
   await max.page.getByRole('link', { name: 'Mes groupes' }).click();
-  await max.page.locator(`a.group-tile[href="/${after}"]`).waitFor();
+  await max.page.locator(`a.group-tile[href="/g/${after}"]`).waitFor();
   groupLink = fresh;
 });
 
@@ -598,7 +598,7 @@ await test('bannir, réintégrer, partir et revenir : « (banni) », « (parti) 
   await zoe.page.goto(`${groupLink}/me`);
   await zoe.page.getByRole('button', { name: 'Quitter le groupe' }).click();
   await dialog(zoe.page).getByRole('button', { name: 'Quitter' }).click();
-  await zoe.page.waitForURL(/\/groups$/);
+  await zoe.page.waitForURL(/\/g$/);
   await page.goto(`${groupLink}/activity`);
   await waitText(page, 'Zoé (parti)');
   await zoe.page.goto(groupLink);
@@ -938,9 +938,9 @@ await test('sur PC : barre latérale, mes groupes, page d’accueil du site et a
   await page.locator('.sidebar .side-group').filter({ hasText: 'Les Potes' }).screenshot({ path: `${OUT}41-pc-engrenage.png` });
   await shot(page, '42-pc-reglages-groupe');
   // Aucun lien vers la création d'un groupe dans le menu : on n'y arrive que par le lien d'un coupon.
-  assert.equal(await page.locator('.sidebar a[href^="/groups/new"]').count(), 0, 'pas de lien vers la création dans le menu');
+  assert.equal(await page.locator('.sidebar a[href^="/n/"]').count(), 0, 'pas de lien vers la création dans le menu');
   assert.equal(await page.locator('.sidebar').getByRole('link', { name: /créer|rejoindre/i }).count(), 0, 'ni « Créer », ni « Rejoindre » dans le menu');
-  await page.goto(`${ORIGIN}/groups/new`);
+  await page.goto(`${ORIGIN}/n/${newCoupon()}`);
   await page.locator('#creer').waitFor();
   assert.equal(await page.locator('#creer input[name=coupon]').count(), 1, 'même connectée : un coupon par groupe');
   // Connectée : son compte sert pour le prochain groupe, sans pseudo ni PIN à retaper ; pas de formulaire de connexion.
@@ -950,9 +950,9 @@ await test('sur PC : barre latérale, mes groupes, page d’accueil du site et a
   await shot(page, '29-pc-creer-groupe');
   // Mes groupes : son compte et ses groupes, sans présentation ni formulaire.
   await page.locator('.landing-top').getByRole('link', { name: 'Mes groupes' }).click();
-  await page.waitForURL(`${ORIGIN}/groups`);
+  await page.waitForURL(`${ORIGIN}/g`);
   assert.match(await page.locator('.my-groups').innerText(), /Les Potes/);
-  assert.equal(await page.locator('a[href^="/groups/new"]').count(), 0, 'pas de bouton « Créer un groupe »');
+  assert.equal(await page.locator('a[href^="/n/"]').count(), 0, 'pas de bouton « Créer un groupe »');
   assert.match(await page.locator('.landing-section .identity-row').innerText(), /Léa[\s\S]*Connecté sur cet appareil/, 'mon compte, connecté');
   assert.equal(await page.locator('form').count(), 0);
   assert.equal(await page.locator('.sports-grid').count(), 0, 'pas la présentation des sports');
@@ -963,7 +963,7 @@ await test('sur PC : barre latérale, mes groupes, page d’accueil du site et a
   await page.locator('.sports-grid').waitFor(); // l'accueil (Mes groupes a aussi un titre dans son bandeau)
   assert.match(await text(page), /Pronostique\. Chambre tes potes\./);
   assert.equal(await page.locator('form').count(), 0);
-  assert.equal(await page.locator('a[href^="/groups/new"]').count(), 0);
+  assert.equal(await page.locator('a[href^="/n/"]').count(), 0);
   await shot(page, '29-pc-site', { fullPage: true });
   // Le maillot de son avatar (page Moi) : deux chiffres au plus, qui tiennent dans le maillot.
   await page.goto(`${betUrl.split('/bet/')[0]}/me`);
@@ -979,7 +979,7 @@ await test('sur PC : barre latérale, mes groupes, page d’accueil du site et a
   });
   assert.ok(box.left >= 13.5 && box.right <= 26.5 && box.top >= 15 && box.bottom <= 36, `numéro dans le maillot ${JSON.stringify(box)}`);
   await page.locator('.avatar-picker .picker-head').screenshot({ path: `${OUT}32-maillot.png` });
-  await page.goto(`${ORIGIN}/groups`);
+  await page.goto(`${ORIGIN}/g`);
   await page.locator('.landing-top').getByRole('link', { name: 'Aide' }).click();
   await page.waitForURL(`${ORIGIN}/help`);
   await page.locator('#help-points').waitFor();
@@ -1039,10 +1039,10 @@ await test('admin du site : mot de passe choisi sur le serveur, coupon, son lien
 
   // Sofiane ouvre le lien : le formulaire de création, coupon rempli.
   const sofiane = await phone('Sofiane');
-  await sofiane.page.goto(`${ORIGIN}/groups/new/${code}`);
+  await sofiane.page.goto(`${ORIGIN}/n/${code}`);
   const create = sofiane.page.locator('#creer');
   assert.equal(await create.getByLabel('Ton coupon').inputValue(), code);
-  assert.equal(new URL(sofiane.page.url()).pathname, '/groups/new', 'le code quitte la barre d’adresse');
+  assert.equal(new URL(sofiane.page.url()).pathname, `/n/${code}`, 'le code reste dans l’adresse (sans lui, pas de formulaire)');
   await create.getByLabel('Nom du groupe').fill('Chez Sofiane');
   await create.getByLabel('Ton pseudo').fill('Sofiane');
   await create.locator('input[name=pin]').fill('3579');
@@ -1051,10 +1051,10 @@ await test('admin du site : mot de passe choisi sur le serveur, coupon, son lien
   await waitText(sofiane.page, 'Aucun pari pour l’instant');
   // Le même lien une deuxième fois : déjà servi.
   const again = await phone('Sofiane bis');
-  await again.page.goto(`${ORIGIN}/c/${code}`); // ancien format de lien : redirigé
+  await again.page.goto(`${ORIGIN}/groups/new/${code}`); // ancien format de lien : redirigé
   const form = again.page.locator('#creer');
   assert.equal(await form.getByLabel('Ton coupon').inputValue(), code);
-  assert.equal(new URL(again.page.url()).pathname, '/groups/new');
+  assert.equal(new URL(again.page.url()).pathname, `/n/${code}`);
   await form.getByLabel('Nom du groupe').fill('Encore');
   await form.getByLabel('Ton pseudo').fill('Sofiane2');
   await form.locator('input[name=pin]').fill('3579');
@@ -1194,7 +1194,7 @@ await test('installable : manifeste, icônes et service worker', async () => {
   await app.page.waitForURL(GROUP_URL);
   // Les anciennes adresses en « #/ » (favoris, applis installées avant) mènent à la même page, sans #.
   await app.page.goto(`${ORIGIN}/#/${gidOf(betUrl)}/rank`);
-  await app.page.waitForURL(`${ORIGIN}/${gidOf(betUrl)}/rank`);
+  await app.page.waitForURL(`${ORIGIN}/g/${gidOf(betUrl)}/rank`);
   await app.page.locator('.rank-row').first().waitFor();
   // … et les anciennes adresses en français : l'aide (et ses sections) devient /help.
   await app.page.goto(`${ORIGIN}/#/aide/installer`);
@@ -1339,10 +1339,10 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   await lea.page.goto(`${home}/admin`);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/[0-9a-f]{16}$/);
+  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/g\/[0-9a-f]{16}$/);
   await lea.page.getByRole('button', { name: 'Partager', exact: true }).click();
   const sent = await lea.page.evaluate(() => window.__shared.at(-1));
-  assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/[0-9a-f]{16}$/);
+  assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/g\/[0-9a-f]{16}$/);
   assert.match(sent.text, /sur Paris entre Couilles$/);
   assert.match(await lea.page.title(), / — Paris entre Couilles$/);
 
@@ -1357,7 +1357,7 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   assert.deepEqual(reset, [200, 200]);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), new RegExp(`^${ORIGIN}/[0-9a-f]{16}$`));
+  assert.match(await lea.page.locator('.invite-link code').innerText(), new RegExp(`^${ORIGIN}/g/[0-9a-f]{16}$`));
   assert.match(await lea.page.title(), / — Pari tenu !$/);
   await adm.context.close();
 });
@@ -1366,24 +1366,23 @@ await test('un admin supprime son groupe, en retapant son nom', async () => {
   const { page } = max;
   const groupsOf = () => page.evaluate(async () => (await (await fetch('/api/account')).json()).groups);
   const jeudi = (await groupsOf()).find((g) => g.name === 'Le Foot du jeudi');
-  await page.goto(`${ORIGIN}/${jeudi.id}/admin`);
+  await page.goto(`${ORIGIN}/g/${jeudi.id}/admin`);
   await page.getByRole('button', { name: 'Supprimer le groupe' }).click();
   const box = dialog(page);
   await box.getByLabel('Retape le nom du groupe pour confirmer').fill('le foot du jeudi');
   await shot(page, '55-supprimer-groupe', { keepOverlays: true });
   await box.getByRole('button', { name: 'Supprimer définitivement' }).click();
   await waitText(page, 'Groupe « Le Foot du jeudi » supprimé.');
-  await page.waitForURL(/\/groups$/);
+  await page.waitForURL(/\/g$/);
   assert.ok(!(await groupsOf()).some((g) => g.name === 'Le Foot du jeudi'));
   assert.ok((await groupsOf()).some((g) => g.name === 'Les Potes'), 'ses autres groupes restent');
 });
 
 await test('quitter : le seul admin passe le relais ; le dernier membre emporte le groupe', async () => {
   // Demande du 2026-11-04 : personne n'est promu admin d'office, et un groupe n'est jamais vide.
-  await tom.page.goto(`${ORIGIN}/groups/new`);
+  await tom.page.goto(`${ORIGIN}/n/${newCoupon()}`);
   const create = tom.page.locator('#creer');
   await create.getByLabel('Nom du groupe').fill('Le Bureau');
-  await create.getByLabel('Ton coupon').fill(newCoupon());
   await create.getByRole('button', { name: 'Créer le groupe' }).click();
   await waitText(tom.page, 'Aucun pari pour l’instant');
   const bureau = tom.page.url();
@@ -1397,7 +1396,7 @@ await test('quitter : le seul admin passe le relais ; le dernier membre emporte 
   await relay.getByLabel('Nouvel admin').selectOption({ label: 'Inès' });
   await shot(tom.page, '56-passer-le-relais', { keepOverlays: true });
   await relay.getByRole('button', { name: 'Nommer et partir' }).click();
-  await tom.page.waitForURL(/\/groups$/);
+  await tom.page.waitForURL(/\/g$/);
   // Inès, devenue admin, est la dernière : partir supprime le groupe, et on le lui dit avant.
   await ines.page.goto(`${bureau}/me`);
   await ines.page.getByRole('button', { name: 'Quitter le groupe' }).click();

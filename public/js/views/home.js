@@ -35,7 +35,7 @@ function proposals(feeds, redraw) {
       ? 'Tu participes ? Leurs paris s’afficheront ici ; sinon, ils ne t’encombreront pas.'
       : 'Tu participes ? Ses paris s’afficheront ici ; sinon, ils ne t’encombreront pas.'),
     pending.map((f) => feedChoice(f, redraw)),
-    h('a.btn.ghost.small', { href: `/${ctx.gid}/follow` }, 'Mes compétitions ›'));
+    h('a.btn.ghost.small', { href: `/g/${ctx.gid}/follow` }, 'Mes compétitions ›'));
 }
 
 // Les 4 sections de la liste (demande du 2026-11-03 : voir d'un coup d'œil s'il y a quelque chose à faire) : titre,
@@ -61,21 +61,21 @@ async function sideRail(bets, filter) {
   const card = (title, link, ...body) => h('section.rail-card',
     h('div.rail-head', h('h2', title), link ? h('a.rail-more', { href: link }, 'Tout voir') : null), body);
   return h('aside.home-rail', { 'aria-label': 'En ce moment dans le groupe' },
-    live.length ? card([h('span.live-dot', { 'aria-hidden': 'true' }), ' En direct'], `/${ctx.gid}/live`, live.slice(0, 3).map((b) => {
+    live.length ? card([h('span.live-dot', { 'aria-hidden': 'true' }), ' En direct'], `/g/${ctx.gid}/live`, live.slice(0, 3).map((b) => {
       const [a, z] = b.event.competitors;
       const score = b.event.live?.scores;
       const mine = b.options.find((o) => o.id === b.myPick);
-      return h('a.rail-live', { href: `/${ctx.gid}/bet/${b.id}` },
+      return h('a.rail-live', { href: `/g/${ctx.gid}/bet/${b.id}` },
         h('span.rail-match', crest(a, { size: 'sm' }), h('span', a.name),
           h('b.num', score && score[a.key] != null ? `${score[a.key]} – ${score[z.key]}` : '–'), h('span', z.name), crest(z, { size: 'sm' })),
         h('small.muted', b.event.live?.clock ?? 'En cours', mine ? [` · Ton prono : ${shortLabel(b, mine)} `, pickBadge(b)] : ''));
     })) : null,
-    board ? card(`Classement · ${board.label}`, `/${ctx.gid}/rank/${encodeURIComponent(board.key)}`,
+    board ? card(`Classement · ${board.label}`, `/g/${ctx.gid}/rank/${encodeURIComponent(board.key)}`,
       board.season.standings.length ? h('ol.rail-rank', board.season.standings.slice(0, 5).map((r) => h('li', { class: cls(r.member.id === ctx.me.id && 'me') },
         h('span.num.rail-pos', String(r.rank)), h('span.avatar.xs', { 'aria-hidden': 'true' }, face(r.member.avatar)),
         h('span.grow', r.member.pseudo, r.member.id === ctx.me.id ? h('small.muted', ' toi') : null), h('b.num', pts(r.score)))))
         : h('p.muted', 'Personne n’a encore de points cette saison.')) : null,
-    feed.events.length ? card('Activité', `/${ctx.gid}/activity`, h('ul.rail-feed', feed.events
+    feed.events.length ? card('Activité', `/g/${ctx.gid}/activity`, h('ul.rail-feed', feed.events
       .filter((e) => !['voted', 'edited', 'pin_reset', 'invite_regenerated', 'address_changed'].includes(e.type)).slice(0, 4)
       .map((e) => h('li', eventLine(e), h('small.muted', relative(e.createdAt)))))) : null);
 }
@@ -144,10 +144,10 @@ export async function homeView() {
 
     fill(node,
       h('header.topbar',
-        h('h1.group-title', h('a.group-switch', { href: '/groups', title: 'Mes groupes', 'aria-label': `${ctx.group.name} : changer de groupe` },
+        h('h1.group-title', h('a.group-switch', { href: '/g', title: 'Mes groupes', 'aria-label': `${ctx.group.name} : changer de groupe` },
           h('span.group-emoji', { 'aria-hidden': 'true' }, ctx.group.emoji), h('span.group-name', ctx.group.name), icon('down', 'sm'))),
         // Sur téléphone (pas de menu de gauche) : les réglages du groupe à côté de son nom.
-        ctx.me.role === 'admin' ? h('a.icon-btn.group-settings', { href: `/${ctx.gid}/admin`, 'aria-label': 'Réglages du groupe', title: 'Réglages du groupe' }, icon('settings')) : null,
+        ctx.me.role === 'admin' ? h('a.icon-btn.group-settings', { href: `/g/${ctx.gid}/admin`, 'aria-label': 'Réglages du groupe', title: 'Réglages du groupe' }, icon('settings')) : null,
         meLink()),
       activeMembers().length < 2 ? inviteCard() : null,
       offer,
@@ -156,10 +156,10 @@ export async function homeView() {
       data.bets.length === 0
         ? [Object.values(ctx.settings.kinds).some(Boolean) && ctx.settings.categories.some((c) => !c.hidden)
           ? empty('🎲', 'Aucun pari pour l’instant', 'Lance le premier : une question, des options, une heure de clôture.',
-            h('a.btn.primary', { href: `/${ctx.gid}/new` }, '＋ Lancer le premier pari'))
+            h('a.btn.primary', { href: `/g/${ctx.gid}/new` }, '＋ Lancer le premier pari'))
           // Pas de paris maison dans ce groupe : tout vient des compétitions activées.
           : empty('📡', 'Aucun pari pour l’instant', 'Ici, les paris s’ouvrent tout seuls avec les compétitions choisies par le groupe.',
-            ctx.me.role === 'admin' ? h('a.btn.primary', { href: `/${ctx.gid}/config` }, '🎛️ Choisir des compétitions') : null)]
+            ctx.me.role === 'admin' ? h('a.btn.primary', { href: `/g/${ctx.gid}/config` }, '🎛️ Choisir des compétitions') : null)]
         : sections,
       visible.length === 0 && data.bets.length ? h('p.muted.center', 'Aucun pari ici pour le moment.') : null,
       rail,

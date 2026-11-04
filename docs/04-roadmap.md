@@ -480,6 +480,21 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   `56-passer-le-relais`, `57-dernier-membre`). Cache `pari-tenu-v12`.
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
+### 2026-11-04 : adresses courtes, /g et /n/<coupon>
+
+* ✅ Demande : « /g remplace /groups. /g/:groupid remplace /:groupid pour aller sur la page d'un groupe. Et
+  /groups/new devient /n/:couponid. La page de formulaire /n n'est pas accessible sans l'id coupon dans l'URL : ça
+  protègera le formulaire » (cahier des charges § 7.20).
+* ✅ `/g` : mes groupes ; `/g/<groupe>/…` : un groupe et toutes ses pages (le lien partagé devient `https://…/g/<groupe>`) ;
+  `/n/<coupon>` : créer un groupe, le coupon reste dans l'adresse ; `/n` seul : « Page introuvable ». Le lien d'un
+  coupon dans l'admin du site est `/n/<code>`, celui d'un groupe `/g/<adresse>`.
+* ✅ Aucun lien cassé : le serveur redirige `/<groupe>/…` → `/g/<groupe>/…` (query comprise), `/groups` → `/g`,
+  `/groups/new/<coupon>` et `/c/<coupon>` → `/n/<coupon>` ; `/g/<jeton>` (pas une adresse de groupe) reste un ancien
+  lien d'invitation (« Lien expiré ») ; l'app convertit les mêmes adresses en `/#/…`. Cache `pari-tenu-v14`.
+* ✅ 230 tests (adresses servies, redirections, `/n` et `/n/a/b` introuvables) ; 32 scénarios Edge : `/n` en 404, faux
+  coupon du lien refusé, coupon gardé dans l'adresse, ancien lien `/groups/new/<code>` redirigé.
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

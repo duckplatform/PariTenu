@@ -11,7 +11,7 @@ const whereIsTheLink = () => h('p.muted', 'Un membre du groupe le trouve dans l�
 function deadLinkView(title, text) {
   const node = h('main.welcome', h('div.card.center.stack',
     h('div.empty-emoji', '🔗'), h('h1', title), h('p', text), whereIsTheLink(),
-    h('a.btn.wide', { href: '/groups' }, 'Mes groupes')));
+    h('a.btn.wide', { href: '/g' }, 'Mes groupes')));
   return { node, title };
 }
 
@@ -23,7 +23,7 @@ export const expiredInviteView = () => deadLinkView('Lien expiré',
 export const deadGroupView = (message) => deadLinkView('Lien périmé', message);
 
 /**
- * L'adresse d'un groupe (/<groupe>, ou l'une de ses pages) sans en être membre : elle sert à y entrer et à s'y connecter.
+ * L'adresse d'un groupe (/g/<groupe>, ou l'une de ses pages) sans en être membre : elle sert à y entrer et à s'y connecter.
  * Connecté : on entre d'un geste avec son compte. Sinon : créer son compte (nouveau) ou se connecter (pseudo + PIN, sans
  * rien qui montre les membres). Une fois dedans, la même adresse s'affiche (le groupe, ou le pari partagé).
  */

@@ -39,7 +39,7 @@ export async function betView(route) {
   const composer = ctx.settings.comments === false ? null : commentComposer(base, () => refresh({ force: true }));
   const node = h('main.bet-page',
     h('header.topbar',
-      h('a.icon-btn', { href: `/${ctx.gid}`, 'aria-label': 'Retour aux paris' }, '←'),
+      h('a.icon-btn', { href: `/g/${ctx.gid}`, 'aria-label': 'Retour aux paris' }, '←'),
       h('span.grow'),
       h('button.icon-btn', { type: 'button', 'aria-label': 'Partager ce pari', onclick: () => shareBet(bet) }, '📤')),
     body, composer);
@@ -111,7 +111,7 @@ function metaLine(bet) {
     : ['⚖️ Arbitre : ', bet.arbiterId ? who(bet.arbiterId) : h('em', 'à désigner')];
   return h('div.meta',
     h('p', bet.creatorId ? ['Lancé par ', who(bet.creatorId)] : '📡 Ouvert automatiquement', ' · ', judge),
-    h('p', 'Compte pour le classement ', h('a', { href: `/${ctx.gid}/rank/${encodeURIComponent(bet.ranking.key)}/${encodeURIComponent(bet.seasonId ?? '')}` },
+    h('p', 'Compte pour le classement ', h('a', { href: `/g/${ctx.gid}/rank/${encodeURIComponent(bet.ranking.key)}/${encodeURIComponent(bet.seasonId ?? '')}` },
       `${bet.ranking.emoji} ${bet.ranking.label}`)),
     h('p', bet.status === 'open' ? `Pronostics jusqu’au ${dateTime(bet.closesAt)} (${relative(bet.closesAt)})` : `Pronostics clos le ${dateTime(bet.closedAt ?? bet.closesAt)}`),
     bet.expectedAt ? h('p', `Résultat attendu le ${dateTime(bet.expectedAt)}`) : null);
@@ -334,10 +334,10 @@ function actionsBar(bet, { base, refresh }) {
       if (note !== null) await after(run(e.target, () => post(`${base}/cancel`, { note }), { success: 'Pari annulé.' }));
     }, 'danger') : null,
     c.correct ? btn('Corriger le résultat', () => correctSheet(bet, base, refresh)) : null,
-    c.edit ? h('a.btn', { href: `/${ctx.gid}/bet/${bet.id}/edit` }, 'Modifier') : null,
+    c.edit ? h('a.btn', { href: `/g/${ctx.gid}/bet/${bet.id}/edit` }, 'Modifier') : null,
     c.delete ? btn('Supprimer', async (e) => {
       if (await confirmSheet('Supprimer ce pari ?', 'Personne n’a encore parié : il disparaît complètement.', { confirm: 'Supprimer', danger: true })) {
-        if (await run(e.target, () => del(base), { success: 'Pari supprimé.' })) navigate(`/${ctx.gid}`);
+        if (await run(e.target, () => del(base), { success: 'Pari supprimé.' })) navigate(`/g/${ctx.gid}`);
       }
     }, 'danger') : null,
     c.addDetail ? btn('Ajouter une précision', async (e) => {

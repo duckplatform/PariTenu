@@ -126,15 +126,21 @@ export function createApp(config, { db, clock = createClock(), logger = silentLo
     if (!body) return res.status(404).type('text/plain').send('Icône introuvable.');
     res.set({ 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' }).send(body);
   });
-  // Les adresses de l'app, en anglais (/, /groups, /groups/new[/<coupon>], /help[/<section>], /<groupe>/…) : la même
-  // coquille, le routeur de public/js/main.js choisit l'écran. Un groupe = son adresse, 16 caractères hexadécimaux
-  // (newId), qui sert aussi à y entrer et à s'y connecter. /invite/<jeton> : un ancien lien d'invitation, l'app dit
-  // qu'il a expiré.
-  app.get(['/', '/groups', '/groups/new', '/groups/new/:code', '/help', '/help/:section', '/invite/:token'], sendIndex);
-  app.get(/^\/[0-9a-f]{16}(\/.*)?$/, sendIndex);
-  // Les anciennes adresses, déjà partagées (WhatsApp, favoris) : vers leur équivalent.
+  // Les adresses de l'app, en anglais (/, /g, /g/<groupe>/…, /n/<coupon>, /help[/<section>]) : la même coquille, le
+  // routeur de public/js/main.js choisit l'écran. Un groupe = son adresse, 16 caractères hexadécimaux (newId), qui sert
+  // aussi à y entrer et à s'y connecter. Le formulaire de création n'existe qu'avec un coupon (/n seul : introuvable).
+  // /invite/<jeton> : un ancien lien d'invitation, l'app dit qu'il a expiré.
+  app.get(['/', '/g', '/n/:code', '/help', '/help/:section', '/invite/:token'], sendIndex);
+  app.get(/^\/g\/[0-9a-f]{16}(\/.*)?$/, sendIndex);
+  // Les anciennes adresses, déjà partagées (WhatsApp, favoris, applis installées) : vers leur équivalent.
   const to = (res, path, query = '') => res.redirect(302, path + query);
-  app.get('/c/:code', (req, res) => to(res, `/groups/new/${encodeURIComponent(req.params.code)}`));
+  const query = (req) => req.originalUrl.slice(req.path.length);
+  // Un groupe avant /g/ (/<groupe>/…) : la même page, query comprise (?bet=…). La nouvelle adresse commence par
+  // « /g/ » : elle reste sur ce site.
+  app.get(/^\/[0-9a-f]{16}(\/.*)?$/, (req, res) => to(res, `/g${req.path}`, query(req)));
+  app.get('/groups', (req, res) => to(res, '/g'));
+  app.get(['/c/:code', '/groups/new/:code'], (req, res) => to(res, `/n/${encodeURIComponent(req.params.code)}`));
+  // « /g/<jeton> » (pas une adresse de groupe) : un ancien lien d'invitation.
   app.get('/g/:token', (req, res) => to(res, `/invite/${encodeURIComponent(req.params.token)}`));
   app.get(['/aide', '/aide/:section'], (req, res) => to(res, req.params.section ? `/help/${encodeURIComponent(req.params.section)}` : '/help'));
   // Admin de l'instance (/admin, /admin/users, /admin/groups/<id>…) : une page à part, jamais en cache ni indexée.

@@ -40,7 +40,7 @@ export async function meView() {
       const body = { pseudo: pseudo.value.trim(), avatar: picker.value };
       if (await run(e.currentTarget, () => patch('/account', body), { success: 'C’est changé dans tous tes groupes.' })) {
         invalidate();
-        navigate(`/${ctx.gid}/me`);
+        navigate(`/g/${ctx.gid}/me`);
       }
     },
   }, 'Enregistrer');
@@ -82,7 +82,7 @@ export async function meView() {
           h('p', 'Tu es le seul admin du groupe : avant de partir, choisis parmi les membres qui prend le relais.'),
           field('Nouvel admin', who),
           h('p.muted', `Après ton départ, ton nom s’affichera « ${ctx.me.pseudo} (parti) » dans le groupe. ${back}`),
-          h('button.btn.ghost.small', { type: 'button', onclick: () => { close(null); navigate(`/${ctx.gid}/admin`); } }, 'Supprimer plutôt le groupe pour tout le monde…'),
+          h('button.btn.ghost.small', { type: 'button', onclick: () => { close(null); navigate(`/g/${ctx.gid}/admin`); } }, 'Supprimer plutôt le groupe pour tout le monde…'),
           h('div.row-end', h('button.btn', { type: 'button', onclick: () => close(null) }, 'Retour'), h('button.btn.danger', { type: 'submit' }, 'Nommer et partir')));
       });
       if (!successor) return;
@@ -95,13 +95,13 @@ export async function meView() {
     if (!result) return;
     forgetGroup(ctx.gid);
     toast(result.deleted ? 'Tu as quitté le groupe : il est supprimé.' : 'Tu as quitté le groupe.', 'ok');
-    navigate('/groups');
+    navigate('/g');
   };
   const logout = async (e) => {
     if (await run(e.currentTarget, () => post('/account/logout'))) {
       setGroups([]);
       toast('Déconnecté de tous tes groupes sur cet appareil. Ton pseudo et ton PIN te reconnectent.', 'ok');
-      navigate('/groups');
+      navigate('/g');
     }
   };
 
@@ -111,11 +111,11 @@ export async function meView() {
       h('div.profile-avatar', face(me.avatar)),
       h('h1', me.pseudo),
       h('p.muted', `${me.role === 'admin' ? 'Admin de' : 'Membre de'} ${ctx.group.emoji} ${ctx.group.name}`),
-      h('a.btn', { href: `/${ctx.gid}/members/${me.id}` }, 'Mon profil et mes stats')),
+      h('a.btn', { href: `/g/${ctx.gid}/members/${me.id}` }, 'Mon profil et mes stats')),
     inviteCard(),
     h('p.invite-link', h('code', groupUrl())),
     installCard(),
-    h('a.card.list-item', { href: `/${ctx.gid}/follow` }, h('span.big-emoji', '🏟️'), h('span.grow', h('b', 'Mes compétitions'),
+    h('a.card.list-item', { href: `/g/${ctx.gid}/follow` }, h('span.big-emoji', '🏟️'), h('span.grow', h('b', 'Mes compétitions'),
       h('br'), h('small.muted', 'Choisis les compétitions du groupe dont tu veux voir les paris')), h('span.chev', '›')),
     h('a.card.list-item', { href: '/help' }, h('span.big-emoji', '❓'), h('span.grow', h('b', 'Aide et règles'),
       h('br'), h('small.muted', 'Comment se calculent les points, les saisons, les compétitions…')), h('span.chev', '›')),
@@ -124,7 +124,7 @@ export async function meView() {
       field('Mon pseudo', pseudo), picker.el, saveIdentity),
     h('section.card.stack', h('h2', 'Mon PIN'), pinForm),
     h('section.card.stack',
-      h('a.btn', { href: '/groups' }, 'Mes groupes'),
+      h('a.btn', { href: '/g' }, 'Mes groupes'),
       h('button.btn', { type: 'button', onclick: logout }, 'Me déconnecter de cet appareil (tous mes groupes)'),
       h('button.btn.danger', { type: 'button', onclick: leave }, 'Quitter le groupe')));
   return { node, tab: 'me' };

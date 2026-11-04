@@ -9,8 +9,8 @@ import { accountRow, switchAccount } from './login.js';
 
 // Les pages du site, hors d'un groupe (aucun lien de l'app ne mène à la création d'un groupe : seul le lien d'un coupon) :
 //   /                       l'accueil : le principe, les sports, pourquoi c'est mieux (sans formulaire)
-//   /groups                 mes groupes (compte de l'appareil, groupes, « Déjà un compte ? »)
-//   /groups/new[/<coupon>]  créer un groupe, par le lien que l'admin du site envoie (coupon rempli)
+//   /g                      mes groupes (compte de l'appareil, groupes, « Déjà un compte ? »)
+//   /n/<coupon>             créer un groupe, par le lien que l'admin du site envoie (coupon rempli ; /n seul n'existe pas)
 
 // Les sports viennent du serveur (les sources disponibles sur cette instance) : la liste suit toute seule les ajouts.
 const SHORT = { meteo: 'Pluie et températures de ta ville', crypto: 'Bitcoin, Ether… le cours de demain', manifold: 'Les questions oui/non qui font l’actu' };
@@ -51,7 +51,7 @@ async function visitor() {
 const siteTop = ({ groupsLink }) => h('div.landing-top',
   h('a.brand', { href: '/' }, brandLogo(40), brand.name),
   h('div.row-wrap',
-    groupsLink ? h('a.btn.small', { href: '/groups' }, 'Mes groupes') : null,
+    groupsLink ? h('a.btn.small', { href: '/g' }, 'Mes groupes') : null,
     h('a.btn.small', { href: '/help' }, 'Aide')));
 
 const siteFoot = () => h('footer.site-foot',
@@ -105,10 +105,10 @@ export async function siteHomeView() {
   return { node };
 }
 
-/** /groups : mes groupes et le compte connecté sur l'appareil. */
+/** /g : mes groupes et le compte connecté sur l'appareil. */
 export async function groupsView() {
   const { account, groups } = await visitor();
-  const rerender = () => navigate('/groups', { replace: true });
+  const rerender = () => navigate('/g', { replace: true });
 
   const node = h('main.landing',
     h('header.landing-hero.compact', siteTop({ groupsLink: false }), h('h1', 'Mes groupes')),
@@ -117,7 +117,7 @@ export async function groupsView() {
         note: 'Connecté sur cet appareil',
         onSwitch: () => switchAccount(() => { toast('Déconnecté de cet appareil.', 'ok'); rerender(); }),
       }) : null,
-      groups.length ? h('div.my-groups', groups.map((g) => h('a.group-tile', { href: `/${g.id}` },
+      groups.length ? h('div.my-groups', groups.map((g) => h('a.group-tile', { href: `/g/${g.id}` },
         h('span.big-emoji', { 'aria-hidden': 'true' }, g.emoji), h('span.grow', h('b', g.name)), h('span.chev', { 'aria-hidden': 'true' }, '›'))))
         : h('p.muted', account ? 'Tu n’es dans aucun groupe pour l’instant : ouvre le lien qu’on t’a envoyé.' : 'Aucun compte connecté sur cet appareil.')),
     account ? null : signInCard(),
@@ -126,10 +126,11 @@ export async function groupsView() {
   return { node, title: 'Mes groupes' };
 }
 
-/** /groups/new[/<coupon>] : le formulaire de création d'un groupe. Le coupon du lien est rempli, puis quitte l'adresse. */
-export async function createGroupView({ coupon = null } = {}) {
-  // Le code ne reste ni dans la barre d'adresse ni dans l'historique : le formulaire le garde.
-  if (coupon) history.replaceState(null, '', '/groups/new');
+/**
+ * /n/<coupon> : le formulaire de création d'un groupe, seulement par le lien d'un coupon (/n seul n'existe pas). Le
+ * coupon reste dans l'adresse (recharger la page garde le formulaire) et remplit le champ.
+ */
+export async function createGroupView({ coupon }) {
   const { instance, account, groups } = await visitor();
   const node = h('main.landing',
     h('header.landing-hero.compact',
@@ -157,7 +158,7 @@ function createGroupForm(instance, couponCode) {
   const pin2 = account ? null : pinInput({ name: 'pin2', 'aria-label': 'PIN (confirmation)' });
   const code = h('input', {
     name: 'coupon', autocomplete: 'off', autocapitalize: 'characters', spellcheck: 'false', required: true, maxlength: 20,
-    placeholder: 'ABCD-EFGH-JKMN', value: couponCode ?? '',
+    placeholder: 'ABCD-EFGH-JKMN', value: couponCode,
   });
   const err = h('p.form-error', { role: 'alert' });
   const submit = h('button.btn.primary.wide', { type: 'submit' }, 'Créer le groupe');
@@ -176,7 +177,7 @@ function createGroupForm(instance, couponCode) {
           coupon: code.value,
         });
         toast('Groupe créé ! Invite tes amis avec le lien.', 'ok');
-        navigate(`/${groupId}`);
+        navigate(`/g/${groupId}`);
       } catch (error) {
         err.textContent = error instanceof ApiError ? error.message : 'Erreur inattendue.';
       } finally {
@@ -184,7 +185,7 @@ function createGroupForm(instance, couponCode) {
       }
     },
   },
-  field('Ton coupon', code, couponCode ? 'Rempli par ton lien : il sert une seule fois.' : `Un coupon par groupe : demande-le à la personne qui gère ${brand.name} (pour rejoindre un groupe, il suffit de son lien).`),
+  field('Ton coupon', code, 'Rempli par ton lien : il sert une seule fois.'),
   field('Nom du groupe', name),
   h('div.field', h('span.label', 'Emoji du groupe'), groupEmoji.el),
   account ? accountRow(account, { note: 'Tu seras admin avec ton compte' }) : [

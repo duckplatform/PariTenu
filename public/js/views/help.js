@@ -98,7 +98,7 @@ export async function helpView(route) {
   const sections = SECTIONS.map(([id, title, blocks]) => h('section.card', { id: `help-${id}` }, h('h2', title), blocks.map(block)));
   const node = h('main.help',
     h('header.topbar',
-      h('a.icon-btn', { href: back ? `/${back}` : '/', 'aria-label': 'Retour' }, '←'),
+      h('a.icon-btn', { href: back ? `/g/${back}` : '/', 'aria-label': 'Retour' }, '←'),
       h('h1', '❓ Aide et règles')),
     h('nav.help-toc', { 'aria-label': 'Sommaire' }, SECTIONS.map(([id, title]) => h('button.chip', {
       type: 'button', onclick: () => document.getElementById(`help-${id}`)?.scrollIntoView({ behavior: 'smooth' }),

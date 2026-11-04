@@ -42,7 +42,7 @@ const who = (id) => {
   const m = memberOf(id);
   return [h('span.avatar.xs', { 'aria-hidden': 'true' }, face(m.avatar)), h('b', ` ${m.pseudo}`)];
 };
-const betLink = (betId, ...content) => h('a.act-bet', { href: `/${ctx.gid}/bet/${betId}` }, content);
+const betLink = (betId, ...content) => h('a.act-bet', { href: `/g/${ctx.gid}/bet/${betId}` }, content);
 const meta = (...parts) => h('p.act-meta', parts.filter(Boolean).map((p, i) => [i ? ' · ' : '', p]));
 
 /** Le score d'une rencontre à deux (écussons, noms, score final), sinon son titre. */
@@ -109,7 +109,7 @@ function openedLine(item) {
   return h('div.act-line',
     h('span', { 'aria-hidden': 'true' }, '📡'),
     h('span.grow', h('b', `${item.count} nouveau${item.count > 1 ? 'x' : ''} pari${item.count > 1 ? 's' : ''}`), list ? ` · ${list}` : ''),
-    h('a.act-go', { href: `/${ctx.gid}` }, 'Parier ›'));
+    h('a.act-go', { href: `/g/${ctx.gid}` }, 'Parier ›'));
 }
 
 function commentCard(item) {
@@ -128,7 +128,7 @@ function seasonCard(s) {
 function lineItem(item) {
   const e = item.event;
   const text = eventLine(e);
-  return h('div.act-line', e.betId ? h('a.grow', { href: `/${ctx.gid}/bet/${e.betId}` }, text) : h('span.grow', text), h('time.muted', hour(item.at)));
+  return h('div.act-line', e.betId ? h('a.grow', { href: `/g/${ctx.gid}/bet/${e.betId}` }, text) : h('span.grow', text), h('time.muted', hour(item.at)));
 }
 
 const RENDER = { result: resultCard, results: resultsCard, picks: picksCard, opened: openedLine, comment: commentCard, season: seasonCard, line: lineItem };
@@ -144,7 +144,7 @@ function highlightsCard(hl) {
       hl.gains.map((g) => h('div.act-tile', h('small', memberOf(g.memberId).pseudo), h('b.num.ok', signedPts(g.amount))))),
     flair ? h('p.act-flair', h('span', { 'aria-hidden': 'true' }, '🔥 '), 'Coup de flair : ', h('b', flair.memberIds.map((id) => memberOf(id).pseudo).join(', ')),
       ' sur ', betLink(flair.betId, `« ${flair.label} »`), ` (cote ${odds(flair.odds)}) · ${signedPts(flair.amount)}`) : null,
-    hl.leaders.length ? h('div.act-chips', hl.leaders.map((l) => h('a.act-chip', { href: `/${ctx.gid}/rank/${encodeURIComponent(l.key)}`, class: cls(l.change && 'hot') },
+    hl.leaders.length ? h('div.act-chips', hl.leaders.map((l) => h('a.act-chip', { href: `/g/${ctx.gid}/rank/${encodeURIComponent(l.key)}`, class: cls(l.change && 'hot') },
       `${l.emoji} ${l.label} : `, h('b', memberOf(l.memberId).pseudo), l.change ? ' passe en tête' : ' en tête'))) : null,
     hl.champions.map((c) => h('p.act-flair', '🏆 ', h('b', (c.champions ?? []).map((id) => memberOf(id).pseudo).join(' et ') || 'Pas de champion'), ` · ${c.emoji} ${c.name} ${c.label}`)));
 }

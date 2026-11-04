@@ -11,7 +11,7 @@ import {
   adel, aget, ago, apatch, apost, avatar, badge, button, card, copy, facts, filters, go, moreMenu, pageHead, plural, table, tile, when,
 } from './kit.js';
 
-const groupLink = (address) => appUrl(`/${address}`);
+const groupLink = (address) => appUrl(`/g/${address}`);
 const SEASON = { current: ['En cours', 'ok'], ending: ['Derniers résultats', 'warn'], closed: ['Close', 'muted'], upcoming: ['À venir', 'info'] };
 const STATUS = { left: ['Parti', 'muted'], removed: ['Banni', 'warn'] };
 

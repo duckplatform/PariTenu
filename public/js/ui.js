@@ -83,7 +83,7 @@ export function avatar(id, { size = '', withName = false } = {}) {
 }
 
 /** Mon avatar et mon pseudo, en haut des pages principales (Paris, Direct, Classements, Activité) : mène à « Moi ». */
-export const meLink = () => h('a.me-link', { href: `/${ctx.gid}/me`, title: 'Moi', 'aria-label': `Moi : ${ctx.me.pseudo}` },
+export const meLink = () => h('a.me-link', { href: `/g/${ctx.gid}/me`, title: 'Moi', 'aria-label': `Moi : ${ctx.me.pseudo}` },
   h('span.avatar', { 'aria-hidden': 'true' }, face(ctx.me.avatar)), h('span.me-name', { 'aria-hidden': 'true' }, ctx.me.pseudo));
 
 export const who = (id) => {

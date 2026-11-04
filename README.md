@@ -30,7 +30,7 @@ compétitions), tu coupes ou rallumes une **source** de données pour tous les
 groupes (foot, padel, météo…), et tu règles la **Configuration** du site (nom, adresse publique, textes de l'accueil, hébergeur,
 icône, thème), et tu génères les **coupons** : créer un groupe (et le compte qui va avec) en demande un, à usage
 unique ; tu suis lequel a servi, à qui, pour quel groupe. Pour rejoindre un groupe, son lien suffit (c'est aussi là qu'on se connecte). Le
-lien d'un coupon (`/groups/new/<code>`) ouvre le formulaire de création, coupon rempli. Mot de passe oublié ou admin bloqué : relance
+lien d'un coupon (`/n/<code>`) ouvre le formulaire de création, coupon rempli (sans coupon dans l'adresse, pas de formulaire). Mot de passe oublié ou admin bloqué : relance
 `npm run admin`.
 
 **Paris automatiques** : dans ⚙️ Réglages du groupe (l'engrenage à côté de son nom) → Réglages des paris, un admin active des compétitions (Ligue 1, NFL,
