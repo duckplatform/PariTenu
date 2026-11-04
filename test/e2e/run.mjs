@@ -760,6 +760,10 @@ await test('paris automatiques : la Ligue 1 activée, ses matchs s’ouvrent et 
 
   // Les points vont au classement de la Ligue 1, sur sa saison officielle.
   await max.page.getByRole('link', { name: '⚽ Ligue 1' }).click();
+  // On attend les lignes elles-mêmes, pas seulement le titre : sur une machine lente (GitHub Actions), le titre pouvait
+  // déjà répondre alors que les lignes n'étaient pas encore là (lignes lues vides : rows[0] undefined).
+  await max.page.waitForURL(/\/rank\/foot%3Afra\.1\//);
+  await max.page.waitForFunction(() => document.querySelectorAll('.rank-row').length >= 3);
   await waitText(max.page, '⚽ Ligue 1 ·');
   const rows = (await max.page.locator('.rank-row').allInnerTexts()).map((r) => r.replace(/\s+/g, ' '));
   assert.match(rows[0], /^1 .*Max .*250 pts$/);
