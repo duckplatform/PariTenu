@@ -262,8 +262,8 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | GET | `/api/groups/:g/rankings/:classement?season=` | Une saison d'un classement (en cours par défaut) et la liste de ses saisons |
 | GET | `/api/groups/:g/seasons/:s/bets` | Les paris d'une saison (historique) |
 | GET | `/api/groups/:g/feed` · `members/:m` · `export` | Activité · profil · export (admin) |
-| POST | `…/members/:m/role` · `reset-pin` · `remove` | Administration des membres (`reset-pin` rend `{ done, waiting }`) |
-| POST | `…/me/leave` | Quitter le groupe |
+| POST | `…/members/:m/role` · `reset-pin` · `remove` · `reinstate` | Administration des membres (`reset-pin` rend `{ done, waiting }` ; `remove` bannit, `reinstate` réintègre un banni) |
+| POST | `…/me/leave` | Quitter le groupe (« Max (parti) » ; il revient par le lien et retrouve sa place) |
 | POST | `/api/_test/clock` | Avancer l'horloge (uniquement avec `PT_TEST_HOOKS=1`) |
 
 **Admin du site** (`/api/admin`, session admin obligatoire sauf les trois premières) :
@@ -282,7 +282,8 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | POST | `…/groups/:id/address` · `members` | Changer le lien (`{ address }`) · ajouter un compte (`{ playerId, role }`) |
 | GET | `…/groups/:id/rankings[/:classement?season=]` | Classements du groupe · une saison d'un classement (comme `/api/groups/:g/rankings`) |
 | GET · PATCH | `/api/admin/sources[/:id]` | Sources (état, clé et sa variable `keyName`, groupes, paris en cours, dernière lecture réussie `readAt`, `failingSince` et `error` si elle ne répond plus) · couper ou rallumer pour tout le site (`{ enabled }` → `{ removed }`) |
-| PATCH · DELETE | `/api/admin/members/:id` | Rôle (`{ role }`) · retirer du groupe |
+| PATCH · DELETE | `/api/admin/members/:id` | Rôle (`{ role }`) · bannir du groupe |
+| POST | `/api/admin/members/:id/reinstate` | Réintégrer un banni |
 | GET · POST | `/api/admin/coupons` | Coupons · créer (`{ note, days: 7 \| 30 \| 90 \| null }` → `{ id, code, expiresAt }`, seule fois où le code est rendu) |
 | POST | `…/coupons/:id/revoke` | Annuler un coupon disponible |
 | GET | `/api/admin/configuration` | Identité de l'installation (`branding`), icône (`icons` : onglet, téléphone, logo, ou `null`), thème et thèmes |
@@ -316,8 +317,13 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   son pseudo à l'écriture (`player_pseudo`) ; « {joueur} » dans la phrase devient à l'affichage son pseudo du moment
   (`logEntries`). Compte supprimé : `player_id` vidé, `player_pseudo` = « Max (supprimé) », comme
   `coupons.used_by_pseudo` (la liste des coupons lit aussi le pseudo du moment) et ses membres
-  (`GroupService.forgetPlayer`). Un membre retiré suit aussi les changements de pseudo de son compte. Un pseudo en
-  « (supprimé) » est réservé (`DELETED_PSEUDO`).
+  (`GroupService.forgetPlayer`).
+* **Partir, être banni** (2026-11-04) : `members.status` `left` (parti de lui-même) ou `removed` (banni), `pseudo` =
+  « Max (parti) » / « Max (banni) » (`memberPseudo`), qui suit les changements de pseudo du compte. Une place partie ou
+  bannie garde son compte (`player_id`) : `#enter` la réactive (points, pronostics, historique) ; une place bannie
+  seulement par un admin (`reinstate`, ou l'admin du site), sinon `403 banned`. Au départ, les pronostics sur les paris
+  encore ouverts (`closes_at` à venir, pas seulement `status`) sont retirés. « (parti) », « (banni) », « (supprimé) »
+  sont réservés (`RESERVED_PSEUDO`).
 * **Coupons** : 60 bits (12 caractères sur 32), seule l'empreinte SHA-256 est gardée ; vérifiés avant de hacher le PIN,
   puis consommés par un `UPDATE … WHERE used_at IS NULL` dans la transaction qui crée le groupe (deux créations
   simultanées : une seule passe, l'autre ne crée ni groupe ni compte). Limite de 30 essais par adresse en 5 minutes.

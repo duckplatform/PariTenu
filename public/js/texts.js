@@ -14,9 +14,12 @@ export function eventText(e, { withBet = true } = {}) {
   switch (e.type) {
     case 'group_created': return 'a créé le groupe';
     // d.admin : fait par l'admin du site (/admin), pas par un membre du groupe.
-    case 'member_joined': return d.admin ? 'a été ajouté au groupe par l’admin du site 👋' : 'a rejoint le groupe 👋';
-    case 'member_left': return d.admin ? 'a quitté le groupe (compte supprimé)' : 'a quitté le groupe';
-    case 'member_removed': return `a été retiré du groupe par ${d.admin ? 'l’admin du site' : memberOf(d.by).pseudo}`;
+    case 'member_joined':
+      // d.back : il retrouve sa place (parti puis revenu, ou banni puis réintégré par un admin).
+      if (d.back) return d.by ? `a été réintégré par ${memberOf(d.by).pseudo} 👋` : d.admin ? 'a été réintégré par l’admin du site 👋' : 'est revenu dans le groupe 👋';
+      return d.admin ? 'a été ajouté au groupe par l’admin du site 👋' : 'a rejoint le groupe 👋';
+    case 'member_left': return 'a quitté le groupe';
+    case 'member_removed': return `a été banni du groupe par ${d.admin ? 'l’admin du site' : memberOf(d.by).pseudo}`;
     case 'pin_reset': return `: PIN réinitialisé par ${memberOf(d.by).pseudo}`;
     case 'invite_regenerated': return 'a changé le lien d’invitation';
     case 'address_changed': return 'a changé le lien du groupe';

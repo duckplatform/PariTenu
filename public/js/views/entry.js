@@ -53,7 +53,12 @@ export async function entryView(route) {
   };
 
   const panel = h('div.stack');
-  if (info.account) {
+  if (info.account && info.banned) {
+    // Banni par un admin : il ne revient pas de lui-même (demande du 2026-11-04).
+    panel.append(
+      accountRow(info.account, { note: 'Ton compte', onSwitch: () => switchAccount(rerender) }),
+      h('p.notice#banni', 'Un admin t’a banni de ce groupe : seul un admin peut te réintégrer.'));
+  } else if (info.account) {
     const err = h('p.form-error', { role: 'alert' });
     const submit = h('button.btn.primary.wide', {
       type: 'button',
@@ -83,8 +88,14 @@ export async function entryView(route) {
         group: route.gid,
         onDone: async (result) => {
           await afterLogin(result);
-          // Connecté : on entre (en rejoignant le groupe si ce compte n'y était pas encore).
-          const already = await joinAsMe();
+          // Connecté : on entre (en rejoignant le groupe si ce compte n'y était pas encore). Banni : la page le dit.
+          let already;
+          try {
+            already = await joinAsMe();
+          } catch (error) {
+            if (error instanceof ApiError && error.code === 'banned') { rerender(); return; }
+            throw error;
+          }
           enter(already ? null : `Bienvenue dans ${group.name} !`);
         },
       }));

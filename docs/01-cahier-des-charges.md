@@ -283,7 +283,15 @@ PC (pour chacun de ses groupes dont on est admin) et dans l'en-tête du groupe s
 « Moi »).
 
 * **Lien du groupe** (son adresse) : copier, partager, changer (une nouvelle adresse, l'ancienne ne mène plus à rien) ; QR code en bonus.
-* **Membres** : nommer ou retirer un admin, réinitialiser un PIN, retirer un membre. Ses pronostics sur les paris encore ouverts sont retirés ; son historique reste visible sous son pseudo.
+* **Membres** : nommer ou retirer un admin, réinitialiser un PIN, bannir un membre, réintégrer un banni. Règle du 2026-11-04 :
+  * **parti de lui-même** (« Quitter le groupe ») : il y apparaît comme « Max (parti) » ; il revient quand il veut par
+    le lien du groupe et retrouve sa place, ses points, ses pronostics et son historique ;
+  * **banni par un admin** : « Max (banni) » ; il ne revient pas de lui-même, même avec le lien (l'adresse du groupe le
+    lui dit) ; un admin du groupe le réintègre (Réglages du groupe → Bannis → Réintégrer), ou l'admin du site, et il
+    retrouve tout pareil ;
+  * dans les deux cas, ses pronostics sur les paris encore ouverts sont retirés au départ ; ceux des paris clos restent ;
+  * la mention suit son pseudo (« Maxime (parti) » s'il en change) ; « (parti) », « (banni) » et « (supprimé) » sont
+    réservés.
 * **Réglages** : points (§ 7.6), délais (validation 24 h, vote 48 h) ; types de paris, catégories et sources de données sur la page « Réglages des paris » (§ 7.11).
 * **Export** de tout le groupe en JSON (Bonus).
 
@@ -583,7 +591,7 @@ lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans
 | Fiabilité des points | Chaque attribution de points se fait dans une transaction, et le score de chacun est toujours égal à la somme de son journal (vérifié par les tests) |
 | Heure | Fuseau Europe/Paris ; l'heure du serveur fait foi ; affichage relatif (« dans 2 h ») |
 | Sécurité | Adresse de groupe de 64 bits tirés au hasard (changeable par un admin), PIN haché, nombre d'essais limité, cookie de session `HttpOnly` + `Secure` + `SameSite=Lax`, CSP stricte, aucun contenu affiché sans échappement |
-| Vie privée | Ni e-mail, ni téléphone, ni vrai nom demandés. « Quitter le groupe » anonymise le pseudo (« Ancien membre »). |
+| Vie privée | Ni e-mail, ni téléphone, ni vrai nom demandés. « Quitter le groupe » laisse « Max (parti) » (il peut revenir) ; un compte supprimé devient « Max (supprimé) ». |
 | Volume | Quelques groupes de 5 à 30 personnes : aucune contrainte de charge |
 | Sauvegarde | Toute la base tient dans un fichier SQLite à sauvegarder |
 | Langue et ton | Français, ton détendu |

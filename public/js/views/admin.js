@@ -92,11 +92,25 @@ export async function adminView() {
         h('button.btn.small.danger', {
           type: 'button',
           onclick: async (e) => {
-            if (await confirmSheet(`Retirer ${m.pseudo} ?`, 'Ses pronostics sur les paris ouverts sont retirés. Son historique reste visible.', { confirm: 'Retirer', danger: true })) {
-              if (await run(e.currentTarget, () => post(`${base}/members/${m.id}/remove`), { success: `${m.pseudo} a été retiré.` })) await reload();
+            if (await confirmSheet(`Bannir ${m.pseudo} ?`, `Il apparaîtra comme « ${m.pseudo} (banni) » et ses pronostics sur les paris ouverts sont retirés. Il ne pourra pas revenir de lui-même, même avec le lien du groupe : seul un admin pourra le réintégrer, et il retrouvera alors sa place, ses points et son historique.`, { confirm: 'Bannir', danger: true })) {
+              if (await run(e.currentTarget, () => post(`${base}/members/${m.id}/remove`), { success: `${m.pseudo} est banni du groupe.` })) await reload();
             }
           },
-        }, 'Retirer'))))));
+        }, 'Bannir'))))));
+
+  // Bannis : seul un admin les fait revenir (ceux qui sont partis d'eux-mêmes reviennent par le lien).
+  const banned = [...ctx.members.values()].filter((m) => m.status === 'removed');
+  const bannedSection = banned.length ? h('section.card.stack', h('h2', `🚫 Bannis (${banned.length})`),
+    h('p.muted', 'Ils ne peuvent pas revenir d’eux-mêmes. Réintégré, un membre retrouve sa place, ses points et son historique.'),
+    h('ul.list', banned.map((m) => h('li.member-row', { dataset: { memberId: m.id } },
+      h('span.avatar', face(m.avatar)),
+      h('span.grow', h('b', m.pseudo)),
+      h('button.btn.small', {
+        type: 'button',
+        onclick: async (e) => {
+          if (await run(e.currentTarget, () => post(`${base}/members/${m.id}/reinstate`), { success: 'Membre réintégré.' })) await reload();
+        },
+      }, 'Réintégrer'))))) : null;
 
   // Export
   const exportSection = h('section.card.stack', h('h2', '💾 Export'),
@@ -136,6 +150,6 @@ export async function adminView() {
 
   const node = h('main.admin',
     h('header.topbar', h('a.icon-btn', { href: `/${ctx.gid}`, 'aria-label': 'Retour' }, '←'), h('h1', '⚙️ Réglages du groupe')),
-    inviteSection, catSection, groupSection, pointsSection, memberSection, exportSection, deleteSection);
+    inviteSection, catSection, groupSection, pointsSection, memberSection, bannedSection, exportSection, deleteSection);
   return { node, tab: 'settings' };
 }

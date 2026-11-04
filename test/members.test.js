@@ -48,7 +48,9 @@ describe('un compte par joueur', () => {
     }
     assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'T', avatar: '🐯', pin: PIN })).body.error,
       'Ton pseudo fait au moins 2 caractères.');
-    assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: 'Ancien membre 7', avatar: '🐯', pin: PIN })).status, 400, 'réservé aux membres partis');
+    for (const reserved of ['Ancien membre 7', 'Max (parti)', 'Max (banni)', 'Max (supprimé)']) {
+      assert.equal((await srv.client().post(`/api/groups/${g.token}/join`, { pseudo: reserved, avatar: '🐯', pin: PIN })).status, 400, `« ${reserved} » réservé`);
+    }
   });
 
   it('connecté, on rejoint un autre groupe d’un geste ; sur un autre appareil, pseudo + PIN ouvrent tous ses groupes', async () => {
@@ -195,7 +197,7 @@ describe('administration du groupe', () => {
     assert.equal(last.status, 409);
   });
 
-  it('retirer un membre : ses pronostics sur les paris ouverts disparaissent, son historique reste', async () => {
+  it('bannir un membre : « (banni) », ses pronostics ouverts disparaissent ; il ne revient pas seul, l’admin le réintègre', async () => {
     const g = await setupGroup(srv, ['max', 'tom', 'ines']);
     const done = await createBet(srv, g);
     await g.c.max.ok('POST', betUrl(g, done.betId, 'pick'), { optionId: done.opt.Oui });
@@ -208,22 +210,48 @@ describe('administration du groupe', () => {
     assert.equal((await g.c.lea.ok('GET', betUrl(g, open.betId))).bet.participants, 0);
     assert.equal((await g.c.lea.ok('GET', betUrl(g, done.betId))).bet.participants, 2);
     const members = (await g.c.lea.ok('GET', `/api/groups/${g.gid}`)).members;
-    assert.equal(members.find((m) => m.id === g.id.max).status, 'removed');
+    assert.deepEqual([members.find((m) => m.id === g.id.max).pseudo, members.find((m) => m.id === g.id.max).status], [`${g.pseudo.max} (banni)`, 'removed']);
     assert.equal((await g.c.lea.post(`/api/groups/${g.gid}/members/${g.id.lea}/remove`)).status, 400);
-    // Revenu par le lien : il retrouve sa place et son historique.
-    await g.c.max.ok('POST', `/api/groups/${g.token}/join`, {});
-    assert.equal((await meIn(g.c.max, g.gid)).id, g.id.max);
+    // Banni : le lien du groupe ne le fait plus entrer (demande du 2026-11-04), l'adresse le lui dit.
+    assert.equal((await g.c.max.ok('GET', `/api/groups/${g.token}/entry`)).banned, true);
+    const back = await g.c.max.post(`/api/groups/${g.token}/join`, {});
+    assert.deepEqual([back.status, back.body.code], [403, 'banned']);
+    // Seul un admin le réintègre : il retrouve sa place, son nom et son historique.
+    assert.equal((await g.c.max.post(`/api/groups/${g.gid}/members/${g.id.tom}/reinstate`)).status, 403);
+    assert.equal((await g.c.tom.post(`/api/groups/${g.gid}/members/${g.id.max}/reinstate`)).status, 403, 'réservé aux admins');
+    await g.c.lea.ok('POST', `/api/groups/${g.gid}/members/${g.id.max}/reinstate`);
+    const me = await meIn(g.c.max, g.gid);
+    assert.deepEqual([me.id, me.pseudo, me.status], [g.id.max, g.pseudo.max, 'active']);
+    assert.equal((await g.c.lea.ok('GET', betUrl(g, done.betId))).bet.participants, 2, 'son pronostic d’avant est là');
+    assert.equal((await g.c.lea.post(`/api/groups/${g.gid}/members/${g.id.max}/reinstate`)).status, 404, 'déjà revenu');
   });
 
-  it('quitter le groupe : pseudo anonymisé, un autre membre devient admin si besoin', async () => {
-    const g = await setupGroup(srv, ['max']);
+  it('quitter le groupe : « (parti) », un autre membre devient admin ; il revient seul et retrouve ses points', async () => {
+    const g = await setupGroup(srv, ['max', 'tom']);
+    const { betId, opt } = await createBet(srv, g, { by: 'max' });
+    await g.c.lea.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Oui });
+    await g.c.tom.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Non });
+    srv.clock.advance(2 * HOUR);
+    await g.c.max.ok('POST', betUrl(g, betId, 'resolve'), { optionId: opt.Oui });
+    srv.clock.advance(25 * HOUR);
+    // Ses stats (points, pronostics, badges…), hors de sa fiche de membre : partie admin, elle revient simple membre.
+    const points = async (client) => (({ member, ...stats }) => stats)((await client.ok('GET', `/api/groups/${g.gid}/members/${g.id.lea}`)).profile);
+    const before = await points(g.c.lea);
+
     await g.c.lea.ok('POST', `/api/groups/${g.gid}/me/leave`);
     const data = await g.c.max.ok('GET', `/api/groups/${g.gid}`);
     const lea = data.members.find((m) => m.id === g.id.lea);
-    assert.equal(lea.pseudo, 'Ancien membre 1');
-    assert.equal(lea.status, 'left');
+    assert.deepEqual([lea.pseudo, lea.status], [`${g.pseudo.lea} (parti)`, 'left']);
     assert.equal(data.me.role, 'admin');
     assert.equal((await g.c.lea.get(`/api/groups/${g.gid}`)).status, 403);
+    // Elle revient d'elle-même par le lien : sa place, son nom, ses points.
+    assert.equal((await g.c.lea.ok('GET', `/api/groups/${g.token}/entry`)).banned, false);
+    await g.c.lea.ok('POST', `/api/groups/${g.token}/join`, {});
+    const me = await meIn(g.c.lea, g.gid);
+    assert.deepEqual([me.id, me.pseudo, me.status, me.role], [g.id.lea, g.pseudo.lea, 'active', 'member']);
+    assert.deepEqual(await points(g.c.lea), before, 'ses stats telles qu’elle les avait laissées');
+    const back = (await g.c.max.ok('GET', `/api/groups/${g.gid}/feed`)).events.find((e) => e.type === 'member_joined' && e.memberId === g.id.lea && e.data.back);
+    assert.ok(back, 'le fil dit qu’elle est revenue');
   });
 
   it('réglages : bornes, catégories masquables mais pas supprimables', async () => {
@@ -300,7 +328,7 @@ describe('mon compte', () => {
     await lea.ok('POST', `/api/groups/${g.gid}/members/${g.id.tom}/remove`);
     const tomtom = `Tomtom ${g.pseudo.tom}`.slice(0, 20);
     await g.c.tom.ok('PATCH', '/api/account', { pseudo: tomtom });
-    assert.equal((await lea.ok('GET', `/api/groups/${g.gid}`)).members.find((m) => m.id === g.id.tom).pseudo, tomtom);
+    assert.equal((await lea.ok('GET', `/api/groups/${g.gid}`)).members.find((m) => m.id === g.id.tom).pseudo, `${tomtom} (banni)`);
     await lea.ok('PATCH', '/api/account', { pseudo: g.pseudo.tom });
     assert.equal(await me(g2), `${g.pseudo.tom} j:3:1:10`);
     // Le numéro du maillot fait deux chiffres au plus.

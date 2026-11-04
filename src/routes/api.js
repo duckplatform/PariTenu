@@ -375,6 +375,12 @@ export function apiRouter(deps) {
     res.json(groups.resetPin(req.me, req.params.mid));
   });
 
+  // Réintégrer un membre banni : il retrouve sa place (admin du groupe).
+  g.post('/members/:mid/reinstate', (req, res) => {
+    groups.reinstate(req.me, req.params.mid);
+    ok(res);
+  });
+
   g.post('/members/:mid/remove', (req, res) => {
     groups.removeMember(req.me, req.params.mid);
     ok(res);

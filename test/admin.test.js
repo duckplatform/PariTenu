@@ -165,7 +165,7 @@ describe('comptes', () => {
     assert.equal((await adm.post('/api/admin/players', { pseudo: g.pseudo.lea, avatar: '🐺', groupId: g.gid })).status, 409, 'pseudo déjà pris');
     const { id } = await adm.ok('POST', '/api/admin/players', { pseudo: 'Nouvelle', avatar: '🐺', groupId: g.gid, role: 'admin' });
     const info = await srv.client().ok('GET', `/api/groups/${g.token}/entry`);
-    assert.deepEqual(Object.keys(info).sort(), ['account', 'group', 'signedIn'], 'ni pseudos ni avatars des membres');
+    assert.deepEqual(Object.keys(info).sort(), ['account', 'banned', 'group', 'signedIn'], 'ni pseudos ni avatars des membres');
     const phone = srv.client();
     assert.equal((await phone.post('/api/account/login', { pseudo: 'Nouvelle', pin: '2580' })).body.code, 'group_link_required', 'sans le lien du groupe');
     assert.equal((await phone.post('/api/account/login', { pseudo: 'Nouvelle', pin: '2580', group: g.token })).body.code, 'choose_pin', 'son pseudo suffit pour qu’on lui demande de choisir son PIN');
@@ -229,6 +229,24 @@ describe('comptes', () => {
     assert.deepEqual([me.pseudo, me.status], [g.pseudo.lea, 'active']);
   });
 
+  it('bannir puis réintégrer depuis l’admin du site : il retrouve sa place, « (banni) » disparaît', async () => {
+    const g = await setupGroup(srv, ['max', 'tom']);
+    const { betId, opt } = await createBet(srv, g);
+    await g.c.max.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Oui });
+    await g.c.tom.ok('POST', betUrl(g, betId, 'pick'), { optionId: opt.Non });
+    srv.clock.advance(2 * HOUR); // pari clos : bannir ne retire que les pronostics des paris encore ouverts
+    const adm = await signIn();
+    await adm.ok('DELETE', `/api/admin/members/${g.id.max}`);
+    let { group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`);
+    assert.deepEqual(group.members.filter((m) => m.id === g.id.max).map((m) => [m.pseudo, m.status]), [[`${g.pseudo.max} (banni)`, 'removed']]);
+    assert.equal((await g.c.max.post(`/api/groups/${g.token}/join`, {})).body.code, 'banned', 'pas de retour de lui-même');
+    await adm.ok('POST', `/api/admin/members/${g.id.max}/reinstate`);
+    ({ group } = await adm.ok('GET', `/api/admin/groups/${g.gid}`));
+    assert.deepEqual(group.members.filter((m) => m.id === g.id.max).map((m) => [m.pseudo, m.status]), [[g.pseudo.max, 'active']]);
+    assert.equal((await g.c.max.ok('GET', betUrl(g, betId))).bet.myPick, opt.Oui, 'son pronostic est toujours là');
+    assert.equal((await adm.ok('GET', '/api/admin/log')).entries[0].summary, `« ${g.pseudo.max} » réintégré dans « Les Potes »`);
+  });
+
   it('journal et coupons suivent le pseudo du compte : Max, puis Maxime, puis Maxime (supprimé)', async () => {
     // Demande du 2026-11-04 : « il faut que les lignes d'événements et de journal suivent le nom, que ce soit Max, Maxime ou
     // Max (supprimé) ». Le pseudo n'est plus figé dans le texte : la ligne garde le compte, le nom se lit à l'affichage.
@@ -247,7 +265,7 @@ describe('comptes', () => {
     assert.match(await coupon1(), new RegExp(`utilisé par « ${renamed} »`));
     assert.equal((await usedBy()).usedByPseudo, renamed);
     await adm.ok('DELETE', `/api/admin/members/${g.id.max}`);
-    assert.equal((await journal())[0].summary, `« ${renamed} » retiré de « Les Potes »`);
+    assert.equal((await journal())[0].summary, `« ${renamed} » banni de « Les Potes »`);
 
     // Compte supprimé : « … (supprimé) » partout, plus de renvoi vers le compte ; les autres restent nommés.
     await adm.ok('DELETE', `/api/admin/players/${maxId}`, { confirm: renamed.toLowerCase() });
@@ -255,7 +273,7 @@ describe('comptes', () => {
     const entries = await journal();
     assert.deepEqual({ action: entries[0].action, target: entries[0].target, summary: entries[0].summary }, { action: 'player_deleted', target: '', summary: `Compte « ${gone} » supprimé` });
     assert.match(await coupon1(), new RegExp(`utilisé par « ${gone.replace(/[()]/g, '\\$&')} »`));
-    assert.equal(entries.find((e) => e.action === 'member_removed').summary, `« ${gone} » retiré de « Les Potes »`);
+    assert.equal(entries.find((e) => e.action === 'member_removed').summary, `« ${gone} » banni de « Les Potes »`);
     for (const pseudo of [g.pseudo.max, renamed]) assert.ok(!JSON.stringify(entries).includes(`« ${pseudo} »`), `plus de « ${pseudo} » tout court`);
     assert.ok(!JSON.stringify(entries).includes(`player:${maxId}`), 'plus de renvoi vers un compte qui n’existe plus');
     assert.ok(JSON.stringify(entries).includes(`« ${g.pseudo.lea} »`), 'les autres comptes restent nommés');

@@ -13,7 +13,7 @@ import {
 
 const groupLink = (address) => appUrl(`/${address}`);
 const SEASON = { current: ['En cours', 'ok'], ending: ['Derniers résultats', 'warn'], closed: ['Close', 'muted'], upcoming: ['À venir', 'info'] };
-const STATUS = { left: ['A quitté', 'muted'], removed: ['Retiré', 'muted'] };
+const STATUS = { left: ['Parti', 'muted'], removed: ['Banni', 'warn'] };
 
 /**
  * Les classements du groupe (un par compétition ou catégorie) : une puce par classement, la saison choisie (en cours par
@@ -167,10 +167,11 @@ export async function groupView({ id, refresh, tab = 'members' }) {
   const setRole = (m, role) => act(null, () => apatch(`/members/${m.id}`, { role }), role === 'admin' ? `${m.pseudo} est admin du groupe.` : `${m.pseudo} n’est plus admin.`);
   const expel = async (m) => {
     const last = m.role === 'admin' && active.filter((x) => x.role === 'admin').length === 1;
-    if (await confirmSheet(`Retirer ${m.pseudo} ?`, `Ses pronostics sur les paris encore ouverts sont retirés ; il pourra revenir par le lien.${last ? ' C’est le dernier admin : le plus ancien membre le deviendra.' : ''}`, { confirm: 'Retirer', danger: true })) {
-      act(null, () => adel(`/members/${m.id}`), `${m.pseudo} est retiré du groupe.`);
+    if (await confirmSheet(`Bannir ${m.pseudo} ?`, `Il apparaîtra comme « ${m.pseudo} (banni) » ; ses pronostics sur les paris encore ouverts sont retirés. Il ne pourra pas revenir de lui-même par le lien : seul un admin pourra le réintégrer.${last ? ' C’est le dernier admin : le plus ancien membre le deviendra.' : ''}`, { confirm: 'Bannir', danger: true })) {
+      act(null, () => adel(`/members/${m.id}`), `${m.pseudo} est banni du groupe.`);
     }
   };
+  const reinstate = (m) => act(null, () => apost(`/members/${m.id}/reinstate`), 'Membre réintégré : il retrouve sa place.');
 
   const members = () => card(null, { flush: true }, table([
     ['Membre', (m) => (m.playerId ? h('a.adm-who', { href: `/admin/users/${m.playerId}` }, avatar(m.avatar), h('b', m.pseudo)) : h('span.adm-who', avatar(m.avatar), m.pseudo)), { sort: (m) => m.pseudo }],
@@ -181,8 +182,9 @@ export async function groupView({ id, refresh, tab = 'members' }) {
       m.playerId ? { label: `Voir le compte de ${m.pseudo}`, icon: 'user', href: `/admin/users/${m.playerId}` } : null,
       m.role === 'admin' ? { label: 'Retirer le rôle d’admin', icon: 'shield', onclick: () => setRole(m, 'member') } : { label: 'Rendre admin du groupe', icon: 'shield', onclick: () => setRole(m, 'admin') },
       '-',
-      { label: 'Retirer du groupe…', icon: 'userMinus', danger: true, onclick: () => expel(m) },
-    ], { label: `Actions pour ${m.pseudo}` }) : null)],
+      { label: 'Bannir du groupe…', icon: 'userMinus', danger: true, onclick: () => expel(m) },
+    ], { label: `Actions pour ${m.pseudo}` })
+      : m.status === 'removed' && m.playerId ? button('Réintégrer', { icon: 'userPlus', kind: 'ghost', small: true, onclick: () => reinstate(m) }) : null)],
   ], g.members, { emptyText: 'Personne dans ce groupe.', rowClass: (m) => (m.status === 'active' ? '' : 'is-gone'), label: 'Membres' }));
 
   const playerOf = new Map(g.members.filter((m) => m.playerId).map((m) => [m.id, m.playerId]));

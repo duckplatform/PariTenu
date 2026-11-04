@@ -141,6 +141,11 @@ export function adminRouter(deps, { isSecure, authLimit }) {
     ok(res);
   });
 
+  r.post('/members/:id/reinstate', (req, res) => {
+    admin.reinstateMember(req.params.id, ip(req));
+    ok(res);
+  });
+
   // ——— Sources de données, pour tout le site
 
   r.get('/sources', (req, res) => res.json({ sources: admin.sourceList() }));

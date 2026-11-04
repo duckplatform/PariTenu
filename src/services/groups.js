@@ -4,22 +4,19 @@ import { badRequest, conflict, forbidden, HttpError, notFound, unauthorized } fr
 import { newId } from '../lib/util.js';
 import { addEvent } from './events.js';
 
-const pseudosIn = (db, groupId) => new Set(db.prepare('SELECT pseudo FROM members WHERE group_id = ?').all(groupId).map((m) => m.pseudo.toLowerCase()));
+/**
+ * Le nom d'un membre qui n'est plus dans le groupe suit son pseudo, avec la raison (demande du 2026-11-04) : parti de
+ * lui-même (il revient quand il veut), banni par un admin (seul un admin le réintègre), compte supprimé.
+ */
+const GONE = { left: 'parti', removed: 'banni' };
+export const memberPseudo = (pseudo, status) => (GONE[status] ? `${pseudo} (${GONE[status]})` : pseudo);
 
-/** « Ancien membre 3 » : le premier numéro libre dans le groupe, pour un membre qui quitte le groupe. */
-function anonymousPseudo(db, groupId) {
-  const used = pseudosIn(db, groupId);
-  let n = 1;
-  while (used.has(`ancien membre ${n}`)) n++;
-  return `Ancien membre ${n}`;
-}
-
-/** Le pseudo d'un compte supprimé : « Max (supprimé) », réservé (personne ne peut le choisir ni s'y connecter). */
-export const DELETED_PSEUDO = /\(supprimé(?: \d+)?\)$/i;
+/** Ces mentions sont réservées : personne ne peut choisir « Max (parti) », « Max (banni) » ni « Max (supprimé) ». */
+export const RESERVED_PSEUDO = /\((?:parti|banni|supprimé(?: \d+)?)\)$/i;
 
 /** « Max (supprimé) » dans ce groupe, « Max (supprimé 2) » s'il y a déjà eu un Max supprimé. */
 function deletedPseudo(db, groupId, pseudo) {
-  const used = pseudosIn(db, groupId);
+  const used = new Set(db.prepare('SELECT pseudo FROM members WHERE group_id = ?').all(groupId).map((m) => m.pseudo.toLowerCase()));
   let name = `${pseudo} (supprimé)`;
   for (let n = 2; used.has(name.toLowerCase()); n++) name = `${pseudo} (supprimé ${n})`;
   return name;
@@ -98,10 +95,14 @@ export class GroupService {
     });
   }
 
-  /** L'adresse d'un groupe ouverte sans en être membre : son nom et son emoji, jamais ses membres. */
+  /**
+   * L'adresse d'un groupe ouverte sans en être membre : son nom et son emoji, jamais ses membres ; banned : le compte
+   * connecté en a été banni (seul un admin peut le réintégrer).
+   */
   entry(address, account = null) {
     const group = this.byAddress(address);
-    return { group: { id: group.address, name: group.name, emoji: group.emoji }, signedIn: !!this.memberOf(account, group.id) };
+    const banned = !!account && this.#formerPlace(group.id, account.id)?.status === 'removed';
+    return { group: { id: group.address, name: group.name, emoji: group.emoji }, signedIn: !!this.memberOf(account, group.id), banned };
   }
 
   /** Entrer dans un groupe par son adresse : avec le compte connecté, sinon pseudo + avatar + PIN en créent un. */
@@ -148,34 +149,50 @@ export class GroupService {
     return id;
   }
 
-  /** Entre dans le groupe : retiré puis revenu, il retrouve sa place et son historique. */
-  #enter(groupId, player, role, data, mine = false) {
-    const removed = this.db.prepare("SELECT id FROM members WHERE group_id = ? AND player_id = ? AND status = 'removed' ORDER BY created_at DESC LIMIT 1")
-      .get(groupId, player.id);
-    this.#assertPseudoFree(groupId, player.pseudo, removed?.id, mine);
-    let memberId = removed?.id;
+  /** Sa dernière place dans le groupe s'il n'y est plus (partie ou bannie), sinon null. */
+  #formerPlace(groupId, playerId) {
+    return this.db.prepare(`SELECT id, status FROM members WHERE group_id = ? AND player_id = ? AND status IN ('left', 'removed')
+        ORDER BY created_at DESC LIMIT 1`).get(groupId, playerId) ?? null;
+  }
+
+  /**
+   * Entre dans le groupe. Parti puis revenu, il retrouve sa place : ses points, ses pronostics, son historique. Banni par un
+   * admin, il ne revient pas de lui-même : seul un admin le réintègre (reinstate), et il retrouve tout pareil.
+   */
+  #enter(groupId, player, role, data, mine = false, { reinstate = false } = {}) {
+    const former = this.#formerPlace(groupId, player.id);
+    if (former?.status === 'removed' && !reinstate) {
+      throw new HttpError(403, 'Un admin t’a banni de ce groupe : seul un admin peut te réintégrer.', 'banned');
+    }
+    this.#assertPseudoFree(groupId, player.pseudo, former?.id, mine);
+    let memberId = former?.id;
     if (memberId) {
       this.db.prepare("UPDATE members SET status = 'active', role = ?, pseudo = ?, avatar = ? WHERE id = ?").run(role, player.pseudo, player.avatar, memberId);
     } else {
       memberId = this.#insertMember(groupId, player, role);
     }
-    this.#event(groupId, 'member_joined', memberId, data);
+    this.#event(groupId, 'member_joined', memberId, former ? { ...data, back: true } : data);
     return memberId;
   }
 
   // ——— Mon groupe
 
-  /** Quitter le groupe : le pseudo est anonymisé, les pronostics sur les paris encore ouverts sont retirés. */
+  /**
+   * Quitter le groupe : il y devient « Max (parti) », ses pronostics sur les paris encore ouverts sont retirés. Il peut
+   * revenir quand il veut par le lien du groupe et retrouve sa place, ses points et son historique.
+   */
   leave(me) {
-    tx(this.db, () => this.#anonymize(me, {}));
+    tx(this.db, () => {
+      this.#depart(me, 'left');
+      this.#event(me.group_id, 'member_left', me.id, {});
+    });
   }
 
-  #anonymize(member, data) {
-    this.db.prepare("UPDATE members SET status = 'left', pseudo = ?, avatar = '👤', pin_hash = NULL, role = 'member' WHERE id = ?")
-      .run(anonymousPseudo(this.db, member.group_id), member.id);
+  /** Un membre actif qui n'est plus dans le groupe (parti, banni) : son nom le dit, il est déconnecté du groupe. */
+  #depart(member, status) {
+    this.db.prepare("UPDATE members SET status = ?, pseudo = ?, role = 'member' WHERE id = ?").run(status, memberPseudo(member.pseudo, status), member.id);
     this.#detach(member.id);
     if (member.role === 'admin') this.#ensureAdmin(member.group_id);
-    this.#event(member.group_id, 'member_left', member.id, data);
   }
 
   // ——— Administration
@@ -279,19 +296,36 @@ export class GroupService {
     this.#remove(this.#target(me, memberId), { by: me.id });
   }
 
+  /** Bannir : « Max (banni) » ; il ne revient pas de lui-même, seul un admin le réintègre. */
   #remove(target, data) {
     tx(this.db, () => {
-      this.db.prepare("UPDATE members SET status = 'removed', role = 'member' WHERE id = ?").run(target.id);
-      this.#detach(target.id);
-      if (target.role === 'admin') this.#ensureAdmin(target.group_id);
+      this.#depart(target, 'removed');
       this.#event(target.group_id, 'member_removed', target.id, data);
     });
   }
 
-  /** Coupe les sessions et retire les pronostics sur les paris encore ouverts. */
+  /** Réintégrer un membre banni (admin du groupe) : il retrouve sa place, ses points et son historique. */
+  reinstate(me, memberId) {
+    this.#requireAdmin(me);
+    const target = this.member(memberId);
+    if (!target || target.group_id !== me.group_id || target.status !== 'removed') throw notFound('Membre banni introuvable.');
+    return this.#reinstate(target, { by: me.id });
+  }
+
+  #reinstate(target, data) {
+    const player = target.player_id ? this.accounts.find(target.player_id) : null;
+    if (!player) throw conflict('Son compte a été supprimé : il ne peut plus revenir.');
+    return tx(this.db, () => this.#enter(target.group_id, player, 'member', data, false, { reinstate: true }));
+  }
+
+  /**
+   * Coupe les sessions et retire les pronostics sur les paris encore ouverts. Un pari dont la clôture est passée reste
+   * « open » jusqu'au prochain balayage : ses pronostics sont joués, ils restent (d'où closes_at, pas seulement status).
+   */
   #detach(memberId) {
     this.db.prepare('DELETE FROM sessions WHERE member_id = ?').run(memberId);
-    this.db.prepare("DELETE FROM picks WHERE member_id = ? AND bet_id IN (SELECT id FROM bets WHERE status = 'open')").run(memberId);
+    this.db.prepare("DELETE FROM picks WHERE member_id = ? AND bet_id IN (SELECT id FROM bets WHERE status = 'open' AND closes_at > ?)")
+      .run(memberId, this.clock.now());
   }
 
   #ensureAdmin(groupId) {
@@ -310,13 +344,23 @@ export class GroupService {
     return member;
   }
 
-  /** Ajoute un compte au groupe (rôle au choix) ; data.admin : l'historique du groupe dit « par l'admin du site ». */
+  /**
+   * Ajoute un compte au groupe (rôle au choix) ; data.admin : l'historique du groupe dit « par l'admin du site ». Parti ou
+   * banni, il retrouve sa place (l'admin du site peut réintégrer un banni).
+   */
   addPlayer(groupId, player, role = 'member') {
     return tx(this.db, () => {
       if (!this.find(groupId)) throw notFound('Groupe introuvable.');
       if (this.memberOf(player, groupId)) throw conflict('Ce compte est déjà dans le groupe.');
-      return this.#enter(groupId, player, role, { admin: true });
+      return this.#enter(groupId, player, role, { admin: true }, false, { reinstate: true });
     });
+  }
+
+  /** Réintégrer un membre banni, depuis l'admin du site. */
+  adminReinstate(memberId) {
+    const target = this.member(memberId);
+    if (!target || target.status !== 'removed') throw notFound('Membre banni introuvable.');
+    return this.#reinstate(target, { admin: true });
   }
 
   changeRole(memberId, role) {
@@ -340,15 +384,15 @@ export class GroupService {
 
   /**
    * Compte supprimé (demande du 2026-11-04) : dans chacun de ses groupes il devient « Max (supprimé) », parti s'il y était
-   * encore, toujours « retiré » là où il l'avait été ; son historique reste lisible et ses membres se détachent du compte.
-   * Personne ne peut plus s'y connecter, et « Max » se libère pour un autre, sans confusion. Là où il avait quitté le
-   * groupe de lui-même, il est déjà « Ancien membre N ».
+   * encore, toujours parti ou banni là où il l'était ; son historique reste lisible et ses membres se détachent du compte.
+   * Personne ne peut plus s'y connecter, et « Max » se libère pour un autre, sans confusion.
    */
   forgetPlayer(playerId) {
+    const pseudo = this.accounts.find(playerId)?.pseudo;
     tx(this.db, () => {
-      for (const m of this.db.prepare("SELECT * FROM members WHERE player_id = ? AND status IN ('active', 'removed')").all(playerId)) {
+      for (const m of this.db.prepare('SELECT * FROM members WHERE player_id = ?').all(playerId)) {
         this.db.prepare("UPDATE members SET pseudo = ?, pin_hash = NULL, role = 'member', status = CASE status WHEN 'active' THEN 'left' ELSE status END WHERE id = ?")
-          .run(deletedPseudo(this.db, m.group_id, m.pseudo), m.id);
+          .run(deletedPseudo(this.db, m.group_id, pseudo ?? m.pseudo), m.id);
         if (m.status !== 'active') continue;
         this.#detach(m.id);
         if (m.role === 'admin') this.#ensureAdmin(m.group_id);

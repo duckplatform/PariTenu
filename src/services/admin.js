@@ -469,10 +469,19 @@ export class AdminService {
     this.log('member_role', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » ${role === 'admin' ? 'devient admin' : 'n’est plus admin'} de « ${g.name} »`, ip });
   }
 
+  /** Bannir d'un groupe : il ne revient pas de lui-même, seul un admin le réintègre. */
   removeMember(memberId, ip) {
     const m = this.groups.expel(memberId);
     const g = this.groups.find(m.group_id);
-    this.log('member_removed', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » retiré de « ${g.name} »`, ip });
+    this.log('member_removed', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » banni de « ${g.name} »`, ip });
+  }
+
+  /** Réintégrer un banni : il retrouve sa place, ses points et son historique. */
+  reinstateMember(memberId, ip) {
+    this.groups.adminReinstate(memberId);
+    const m = this.groups.member(memberId);
+    const g = this.groups.find(m.group_id);
+    this.log('member_reinstated', { target: `group:${g.id}`, player: { id: m.player_id, pseudo: m.pseudo }, summary: `« ${PLAYER} » réintégré dans « ${g.name} »`, ip });
   }
 
   // ——— Sources de données, pour tout le site

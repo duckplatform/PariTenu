@@ -568,6 +568,46 @@ await test('admin : changer le lien donne une nouvelle adresse, l’ancienne ne 
   groupLink = fresh;
 });
 
+await test('bannir, réintégrer, partir et revenir : « (banni) », « (parti) », chacun retrouve sa place', async () => {
+  // Demande du 2026-11-04 : parti de lui-même, on revient seul ; banni, seul un admin réintègre ; le nom le dit.
+  const zoe = await phone('Zoé');
+  await zoe.page.goto(groupLink);
+  await zoe.page.getByLabel('Ton pseudo').fill('Zoé');
+  await zoe.page.locator('input[name=pin]').fill(PINS.ines);
+  await zoe.page.locator('input[name=pin2]').fill(PINS.ines);
+  await zoe.page.getByRole('button', { name: 'Entrer dans le groupe' }).click();
+  await zoe.page.locator('#entree').waitFor({ state: 'detached' });
+  // Léa la bannit depuis les réglages du groupe.
+  const { page } = lea;
+  await page.goto(`${groupLink}/admin`);
+  await page.locator('.member-row', { hasText: 'Zoé' }).getByRole('button', { name: 'Bannir' }).click();
+  await dialog(page).getByRole('button', { name: 'Bannir' }).click();
+  await page.locator('.member-row', { hasText: 'Zoé (banni)' }).waitFor();
+  await shot(page, '17c-bannis', { fullPage: true });
+  // Zoé, toujours connectée : l'adresse du groupe lui dit qu'elle est bannie, sans bouton pour entrer.
+  await zoe.page.goto(groupLink);
+  await zoe.page.locator('#banni').waitFor();
+  assert.equal(await zoe.page.getByRole('button', { name: /Entrer dans/ }).count(), 0, 'pas de retour d’elle-même');
+  await shot(zoe.page, '17b-banni');
+  // Léa la réintègre : elle retrouve sa place.
+  await page.locator('.member-row', { hasText: 'Zoé (banni)' }).getByRole('button', { name: 'Réintégrer' }).click();
+  await page.locator('.member-row', { hasText: 'Zoé (banni)' }).waitFor({ state: 'detached' });
+  await zoe.page.reload();
+  await zoe.page.locator('nav.nav').waitFor();
+  // Elle part d'elle-même (Moi → Quitter le groupe) : « Zoé (parti) » dans l'Activité ; puis elle revient par le lien.
+  await zoe.page.goto(`${groupLink}/me`);
+  await zoe.page.getByRole('button', { name: 'Quitter le groupe' }).click();
+  await dialog(zoe.page).getByRole('button', { name: 'Quitter' }).click();
+  await zoe.page.waitForURL(/\/groups$/);
+  await page.goto(`${groupLink}/activity`);
+  await waitText(page, 'Zoé (parti)');
+  await zoe.page.goto(groupLink);
+  await zoe.page.getByRole('button', { name: 'Entrer dans Les Potes' }).click();
+  await zoe.page.locator('#entree').waitFor({ state: 'detached' });
+  await zoe.page.locator('nav.nav').waitFor();
+  await zoe.context.close();
+});
+
 await test('réglages des paris : couper un type, une catégorie ; activer des compétitions', async () => {
   const { page } = lea;
   await page.goto(`${betUrl.split('/bet/')[0]}/admin`);

@@ -64,7 +64,7 @@ export async function meView() {
   h('button.btn', { type: 'submit' }, 'Changer mon PIN'));
 
   const leave = async (e) => {
-    const ok = await confirmSheet('Quitter le groupe ?', 'Ton pseudo sera anonymisé et tes pronostics sur les paris encore ouverts seront retirés. Tes points restent dans l’historique.', { confirm: 'Quitter', danger: true });
+    const ok = await confirmSheet('Quitter le groupe ?', `Tu y apparaîtras comme « ${ctx.me.pseudo} (parti) » et tes pronostics sur les paris encore ouverts seront retirés. Tu pourras revenir quand tu veux par le lien du groupe : tu retrouveras ta place, tes points et ton historique.`, { confirm: 'Quitter', danger: true });
     if (ok && await run(e.currentTarget, () => post(`/groups/${ctx.gid}/me/leave`))) {
       forgetGroup(ctx.gid);
       toast('Tu as quitté le groupe.', 'ok');

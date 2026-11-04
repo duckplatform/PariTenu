@@ -2,7 +2,7 @@ import { tx } from '../db.js';
 import { badRequest, conflict, HttpError, notFound } from '../lib/errors.js';
 import { hashPin, PIN_PARAMS, verifyPin } from '../lib/pin.js';
 import { DAY, HOUR, MINUTE, newId, newToken, sha256 } from '../lib/util.js';
-import { DELETED_PSEUDO } from './groups.js';
+import { memberPseudo, RESERVED_PSEUDO } from './groups.js';
 
 export const SESSION_TTL = 365 * DAY;
 export const MAX_PIN_FAILURES = 5;
@@ -45,8 +45,8 @@ export class AccountService {
 
   /** Le pseudo d'un nouveau compte doit être libre partout (vérifié avant de calculer le PIN, puis dans la transaction). */
   assertPseudoFree(pseudo, playerId = null) {
-    // Réservés : « Ancien membre 3 » (parti d'un groupe), « Max (supprimé) » (compte supprimé).
-    if (/^ancien membre \d+$/i.test(pseudo) || DELETED_PSEUDO.test(pseudo)) throw badRequest('Ce pseudo est réservé : choisis-en un autre.');
+    // Réservés : « Ancien membre 3 » (les anciens départs), « Max (parti) », « Max (banni) », « Max (supprimé) ».
+    if (/^ancien membre \d+$/i.test(pseudo) || RESERVED_PSEUDO.test(pseudo)) throw badRequest('Ce pseudo est réservé : choisis-en un autre.');
     const other = this.byPseudo(pseudo);
     if (other && other.id !== playerId) throw conflict('Ce pseudo est déjà pris : choisis-en un autre.');
   }
@@ -197,13 +197,17 @@ export class AccountService {
       pseudo ??= player.pseudo;
       avatar ??= player.avatar;
       if (pseudo.toLowerCase() !== String(player.pseudo).toLowerCase()) this.assertPseudoFree(pseudo, playerId);
-      // Dans ses groupes (même ceux d'où il a été retiré), quelqu'un d'autre (même parti) peut encore porter ce pseudo.
+      // Dans ses groupes (même ceux qu'il a quittés ou d'où il a été banni), quelqu'un d'autre peut encore porter ce pseudo.
       const taken = this.db.prepare(`SELECT g.name FROM members m JOIN members o ON o.group_id = m.group_id AND o.id != m.id
-          JOIN groups g ON g.id = m.group_id WHERE m.player_id = ? AND m.status IN ('active', 'removed') AND o.pseudo = ? LIMIT 1`).get(playerId, pseudo);
+          JOIN groups g ON g.id = m.group_id WHERE m.player_id = ? AND m.status = 'active' AND o.pseudo = ? LIMIT 1`).get(playerId, pseudo);
       if (taken) throw conflict(`Ce pseudo est déjà pris dans « ${taken.name} », un de tes groupes.`);
       this.db.prepare('UPDATE players SET pseudo = ?, avatar = ? WHERE id = ?').run(pseudo, avatar, playerId);
-      // Son nom suit le compte partout où il est ou a été retiré : les lignes d'événements des groupes le nomment à jour.
-      this.db.prepare("UPDATE members SET pseudo = ?, avatar = ? WHERE player_id = ? AND status IN ('active', 'removed')").run(pseudo, avatar, playerId);
+      // Son nom suit le compte dans tous ses groupes, avec la mention là où il n'est plus (« Maxime (parti) ») : les lignes
+      // d'événements le nomment à jour. OR IGNORE : une ancienne place en double (d'avant 2026-11-04) garde son nom.
+      const rename = this.db.prepare('UPDATE OR IGNORE members SET pseudo = ?, avatar = ? WHERE id = ?');
+      for (const m of this.db.prepare("SELECT id, status FROM members WHERE player_id = ? AND status IN ('active', 'left', 'removed')").all(playerId)) {
+        rename.run(memberPseudo(pseudo, m.status), avatar, m.id);
+      }
     });
   }
 

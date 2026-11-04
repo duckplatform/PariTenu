@@ -449,6 +449,29 @@ Tout le cahier des charges V1 (docs/01-cahier-des-charges.md) :
   changé depuis « Moi », puis « Maxime (supprimé) » dans le journal, le coupon et le groupe).
 * ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
 
+### 2026-11-04 : « (parti) » revient seul, « (banni) » attend un admin
+
+* ✅ Relecture du code : un membre retiré par un admin revenait d'un geste par l'adresse du groupe. Demande : « quand
+  il part je veux bien que son pseudo soit mentionné « Parti » ou qqch de similaire. S'il est parti de lui-même il peut
+  revenir spontanément et récupère ses stats, ses paris etc. tels que laissés avant de partir. S'il est banni on le
+  précise également sur son pseudo […] mais il ne peut revenir que sur réintégration par l'admin ou via l'admin UI,
+  donc il récupérerait aussi ses stats, ses paris etc. ».
+* ✅ Parti de lui-même : « Max (parti) » (avant : « Ancien membre N », anonyme, et un retour repartait de zéro) ; il
+  revient par le lien et retrouve sa place (même fiche : points, pronostics, badges, historique) ; le fil dit « est
+  revenu dans le groupe ». Banni (le bouton « Retirer » devient « Bannir », avec une confirmation qui l'explique) :
+  « Max (banni) » ; ni le lien ni la connexion ne le font revenir (« Un admin t'a banni de ce groupe : seul un admin
+  peut te réintégrer ») ; Réglages du groupe → « 🚫 Bannis » → « Réintégrer », ou l'admin du site (page du groupe), et
+  il retrouve tout pareil. La mention suit son pseudo ; « (parti) », « (banni) » et « (supprimé) » sont réservés ;
+  journal de l'admin : « banni de », « réintégré dans ».
+* ✅ Bug trouvé par les tests : au départ (ou au bannissement), les pronostics d'un pari dont la clôture était passée
+  mais pas encore enregistrée (le balayage se fait à la visite suivante) étaient effacés comme s'il était ouvert. Seuls
+  les paris dont la clôture est à venir perdent ses pronostics.
+* ✅ 228 tests (partir et revenir avec ses stats, bannir puis réintégrer par l'admin du groupe et par l'admin du site,
+  pseudos réservés) ; scénario Edge : Zoé bannie (captures `17b-banni`, `17c-bannis`), réintégrée, partie puis revenue.
+  Cache du service worker `pari-tenu-v11`.
+* ⏳ Point 2 de la relecture (un groupe vide n'a plus d'admin) : à décider.
+* ⏳ En ligne : à pousser avec GitHub Desktop puis à déployer dans cPanel (l'utilisateur·ice s'en charge).
+
 ### À vérifier en vrai
 
 * 🧪 Les thèmes sur de vrais téléphones (polices, flou d'Arène sur un vieil Android).

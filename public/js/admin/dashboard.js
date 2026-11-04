@@ -14,7 +14,7 @@ const LOG_ICONS = {
   player_created: ['userPlus', 'ok'], player_updated: ['pencil', 'info'], player_unlocked: ['unlock', 'ok'], player_pin_reset: ['key', 'warn'],
   player_logged_out: ['phone', 'muted'], player_deleted: ['trash', 'bad'],
   group_created: ['users', 'ok'], group_updated: ['pencil', 'info'], group_invite: ['refresh', 'info'], group_address: ['refresh', 'info'], group_deleted: ['trash', 'bad'],
-  member_added: ['userPlus', 'ok'], member_role: ['shield', 'info'], member_removed: ['userMinus', 'bad'],
+  member_added: ['userPlus', 'ok'], member_role: ['shield', 'info'], member_removed: ['userMinus', 'bad'], member_reinstated: ['userPlus', 'ok'],
   source_disabled: ['pause', 'bad'], source_enabled: ['play', 'ok'], theme_changed: ['palette', 'info'], branding_changed: ['settings', 'info'], icon_changed: ['image', 'info'],
 };
 // Les filtres du journal : les actions de chaque famille.
