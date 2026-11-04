@@ -48,7 +48,7 @@ Les applications existantes ne conviennent pas :
 
 1. **Gratuit, on ne perd jamais.** Parier ne coûte rien. Un bon pronostic rapporte des points, une erreur en rapporte zéro.
 2. **Le groupe fait le contenu.** Les paris viennent des amis. L'app propose des idées, pas un catalogue.
-3. **Pari tenu.** Un pronostic ne se retire pas. Jusqu'à la clôture, on peut changer d'option (demande du 2026-11-01) ;
+3. **Pari tenu.** Un pronostic ne se retire pas. Jusqu'à la clôture, on peut changer d'option ;
    ensuite, plus rien ne bouge.
 4. **Le flair paie.** Plus une bonne réponse est rare dans le groupe, plus elle rapporte : la cote vient du groupe lui-même. Avoir raison quand tout le monde a raison ne rapporte rien.
 5. **Celui qui tranche ne parie pas.** Toute décision peut être contestée, puis soumise au vote.
@@ -109,8 +109,7 @@ tous ses groupes ; une connexion par appareil vaut pour tous ses groupes. Les ch
 * la session dure un an sur l'appareil utilisé ;
 * sur un autre appareil : le lien d'un de ses groupes (son adresse) propose « J'ai déjà un compte » : son pseudo et
   son PIN, sans rien qui montre les membres du groupe (§ 7.19), et on retrouve tous ses groupes. Pas de connexion
-  depuis l'accueil du site (demande du 2026-11-03 : « les tentatives de login ne sont possibles que depuis les liens de
-  groupe ») : il dit d'ouvrir le lien d'un groupe, ou de le demander à un ami (page « Moi », « Invite tes amis ») ;
+  depuis l'accueil du site, seulement depuis le lien d'un groupe : il dit d'ouvrir le lien d'un groupe, ou de le demander à un ami (page « Moi », « Invite tes amis ») ;
 * « Me déconnecter de cet appareil » (page « Moi ») le déconnecte de tous ses groupes, pas ses autres appareils.
 
 **Plusieurs groupes (V3)** :
@@ -157,8 +156,7 @@ Tout tient sur un seul écran :
 * La liste des paris a 4 sections, les vides cachées (2026-11-03) : « À parier », « Pariés » (modifiable jusqu’à la
   clôture), « Clos » (plus rien ne change ; ce qui attend le joueur d’abord) et « Terminés ».
 * Sur la fiche, on touche une option, puis on valide. C'est gratuit. Depuis la liste des paris, on touche une option et
-  c'est parié, sans fenêtre de confirmation (demande du 2026-11-01 : « parier rapidement depuis la page liste des paris,
-  en cliquant sur le choix, pas de modale »).
+  c'est parié, sans fenêtre de confirmation.
 * Avant de valider, l'app affiche par exemple : « Si tu as raison, ça te rapporte environ 250 pts (cote 2,50), à l'heure actuelle ».
 * Règles :
   * **une seule option par membre et par pari** ;
@@ -341,9 +339,8 @@ Toutes ces sources sont gratuites et sans clé. Polymarket, bloqué en France, e
 course), cricket, cyclisme, handball, volley, Superbike (saison finie, pas d'API trouvée).
 
 **Un seul pari par match ou par course : son résultat**, titré « sport · compétition · rencontre », sans « qui
-gagne ? » (demande du 2026-11-03 : « Tennis · Rolex Paris Masters, 1er tour · Quentin Halys – Arthur Fery ») (avec le
-match nul quand il existe ; décision
-du 2026-10-30). Les paris « au moins 3 buts », « les deux équipes marquent », total de points, « le leader gagne ? »
+gagne ? » (par exemple « Tennis · Rolex Paris Masters, 1er tour · Quentin Halys – Arthur Fery »), avec le match nul
+quand il existe. Les paris « au moins 3 buts », « les deux équipes marquent », total de points, « le leader gagne ? »
 et « un Français sur le podium ? » ont été retirés ; ceux qui avaient des pronostics vont jusqu'au bout.
 
 **Les paris s'ouvrent tout seuls** (V2) : dès qu'une compétition est activée (et sa catégorie aussi), tous ses paris
@@ -352,7 +349,7 @@ du lendemain…). Le fil du groupe reçoit un résumé (« 6 nouveaux paris ouve
 
 * La question, les options, la catégorie et la clôture (le début de l'événement) viennent de la source ; personne ne
   les modifie. Un type de pari désactivé n'est pas ouvert.
-* **Ni créateur ni arbitre** : tout le monde peut parier. Le serveur demande le résultat à la source toutes les Le serveur demande le résultat à la source toutes les
+* **Ni créateur ni arbitre** : tout le monde peut parier. Le serveur demande le résultat à la source toutes les
   5 minutes après l'heure prévue (toutes les 10 minutes la première journée, puis toutes les heures), et chacun peut
   appuyer sur « Vérifier le résultat ».
 * Le résultat de la source est le **résultat officiel** (depuis le 2026-11-01, avant : proposé comme un verdict
@@ -368,10 +365,9 @@ du lendemain…). Le fil du groupe reçoit un résumé (« 6 nouveaux paris ouve
 * L'accueil filtre les paris par classement (⚽ Ligue 1, 🏈 NFL, 👥 Vie du groupe…).
 * **Chacun choisit ses compétitions (V3)** : le groupe propose les compétitions activées ; chaque membre répond « Je
   participe » ou « Non merci » (page Moi → Mes compétitions pour changer d'avis : un interrupteur par compétition,
-  allumé s'il y participe, éteint sinon, « pas encore choisi » sans réponse ; demande du 2026-11-04). Sans réponse, les paris d'une
+  allumé s'il y participe, éteint sinon, « pas encore choisi » sans réponse). Sans réponse, les paris d'une
   compétition ne s'affichent pas chez lui ; un pari sur lequel il a parié reste visible.
-* **Une nouvelle compétition s'annonce** (demande du 2026-11-04 : « il serait bon de notifier cette nouvelle catégorie
-  et de demander à l'utilisateur s'il souhaite participer ; à vérifier quand on est admin et simple membre ») :
+* **Une nouvelle compétition s'annonce** à chaque membre, admin compris, qui choisit d'y participer ou non :
   * personne n'y est inscrit d'office, pas même l'admin qui l'active (avant : lui, oui) ;
   * en haut de la page du groupe, au-dessus des paris, « 🆕 Nouvelle compétition dans le groupe », avec « Je participe »
     et « Non merci » pour chacune, jusqu'à la réponse (avant : une carte placée sous les paris à jouer) ;
@@ -394,9 +390,8 @@ du lendemain…). Le fil du groupe reçoit un résumé (« 6 nouveaux paris ouve
 
 ### 7.13 Paris de sport en images et direct (2026-10-31)
 
-Demande : « faut qu'un pari soit plus visuel que textuel, plutôt que de lire Paris – Auxerre : qui gagne ? 2000 fois ;
-les scores en live dans chaque pari, plus visibles, idem pour les scores finaux ; sinon une page live qui regroupe les
-scores et résultats des rencontres et des paris du jour pour le joueur ». Les deux sont faits :
+Un pari de sport se lit d'un coup d'œil plutôt qu'en texte : le score en direct, puis le score final, apparaissent dans
+chaque pari, et une page Direct regroupe les rencontres et les paris du jour du joueur.
 
 * **Carte d'un match** : les deux écussons et noms des équipes (ou les photos et drapeaux des joueurs au tennis et au
   MMA), l'heure du coup d'envoi au centre, puis le score en grand et le chrono en direct (« 62' », « Mi-temps »,
@@ -409,8 +404,7 @@ scores et résultats des rencontres et des paris du jour pour le joueur ». Les 
   terminés ; bilan du jour (joués, qui passent, bien vus, points gagnés).
 * Les images passent par l'app (les téléphones n'appellent jamais ESPN ou MotoGP.com) et sont réduites (une photo
   MotoGP de 4 Mo devient 35 Ko).
-* **Le match** (demande du 2026-11-01 : « qui a marqué et quand, les cartons jaunes et rouges ; les mêmes adaptations
-  pour les autres sports » ; proposition sport par sport validée, lot 1) : sur la fiche d'un pari, un bloc sous le
+* **Le match** (qui a marqué et quand, les cartons, et l'équivalent dans chaque sport) : sur la fiche d'un pari, un bloc sous le
   score, qui reste une fois le match fini ; sur la page Direct, une ligne sous le match.
   * ⚽ Foot : chronologie des buts (penalty, contre son camp) et des cartons, chaque action du côté de son équipe ;
     possession, tirs, tirs cadrés, corners, fautes, cartons. Direct : buteurs (« G. Yassine 77', 85' ») et 🟥.
@@ -438,10 +432,9 @@ scores et résultats des rencontres et des paris du jour pour le joueur ». Les 
 
 ### 7.14 Admin du site et coupons (2026-11-01)
 
-Demande : « une admin UI sécurisée simple avec CRUD user, groups, vues lecture et écriture standards + boutons rapides
-utiles ; à la création de groupe, remplacer le code du fichier .env par un code généré (coupon) via l'admin UI et suivre
-son utilisation, le coupon expire après utilisation. Pour créer un groupe + user il faut un coupon, pour créer un user il
-faut le lien d'un groupe. »
+Une administration du site sécurisée : comptes et groupes en lecture et en écriture, avec des actions rapides. Créer
+un groupe (et le compte qui va avec) demande un coupon à usage unique, généré et suivi dans l'admin, à la place d'un code
+commun dans `.env` ; créer un compte seul demande le lien d'un groupe.
 
 * **Accès** (`/admin`, page à part, jamais indexée ni gardée hors connexion) : un mot de passe d'au moins 12 caractères,
   choisi sur le serveur avec `npm run admin` (jamais depuis le site : personne ne peut le prendre en premier). 5 erreurs
@@ -464,18 +457,17 @@ faut le lien d'un groupe. »
   réglages en un coup d'œil). Boutons : copier le lien du groupe, modifier, ajouter un compte, rendre ou retirer admin, retirer un
   membre (le groupe garde toujours un admin), nouveau lien, supprimer (en retapant le nom). Nouveau groupe : pour un
   compte existant, qui en devient l'admin.
-* **Modifier un groupe** (demande du 2026-11-01 : « configurer les settings des groupes depuis l'admin, dans la partie
-  Modifier ») : une page avec tout ce que règle l'admin du groupe : nom et emoji, points et délais (points de base,
+* **Modifier un groupe** : une page avec tout ce que règle l'admin du groupe : nom et emoji, points et délais (points de base,
   plafond de cote, prime d'arbitre, délais de contestation et de vote), types des paris maison, catégories (renommer,
   activer, ajouter) et paris automatiques (compétitions, ville de la météo…), enregistrés d'un coup (tout ou rien), avec
   les mêmes garde-fous. Une compétition activée est proposée aux membres, chacun choisit d'y participer ; coupée, ses
   paris sans pronostic disparaissent. Le journal dit ce qui a changé (« points et délais, compétitions (+ ⚽ Ligue 1) »).
   Les sources coupées pour tout le site n'y apparaissent pas (signalées) ; ce que le groupe avait choisi pour elles est
   gardé.
-* **Classements d'un groupe** (fiche du groupe, demande du 2026-11-01) : une puce par classement (compétition ou
+* **Classements d'un groupe** (fiche du groupe) : une puce par classement (compétition ou
   catégorie, avec son meneur), la saison en cours ou une autre, et le classement complet : rang (🏆 pour les champions
   d'une saison close), membre, points, paris réglés, bien vus.
-* **Sources** (demande du 2026-11-01 : « activer ou désactiver certaines sources externes de manière globale ») : chaque
+* **Sources**, coupées ou rallumées pour tout le site : chaque
   source (foot, rugby, padel, F1, météo, cryptos, actu…), son fournisseur, ses compétitions, les groupes qui l'ont
   réglée, ses paris en cours, et un bouton Couper / Rallumer. Coupée : plus proposée aux groupes (réglages, accueil),
   plus aucun pari ne s'ouvre, ses paris sans pronostic disparaissent, ceux déjà joués vont jusqu'à leur résultat (direct
@@ -491,9 +483,8 @@ faut le lien d'un groupe. »
 
 ### 7.15 Configuration de l'installation (2026-11-03)
 
-Demande : « Je vais rendre ce projet open source, donc on garde le nom d'app PariTenu. Par contre on fait une page de
-configuration dans l'admin UI qui regroupe apparence et les autres settings tel que le nom qu'on veut lui donner, son
-URL etc. » Le logiciel s'appelle **PariTenu** ; chaque installation choisit son nom (par exemple « Les Pronos du
+PariTenu est un logiciel libre : une page Configuration de l'admin du site regroupe l'apparence et l'identité de
+l'installation (nom, adresse…). Le logiciel s'appelle **PariTenu** ; chaque installation choisit son nom (par exemple « Les Pronos du
 Vendredi », nom court « Pronos », `https://pronos.example.org`) et peut nommer son hébergeur.
 
 * **Page ⚙️ Configuration** de l'admin du site (elle remplace la page Apparence, dont l'adresse y mène) :
@@ -516,10 +507,9 @@ Vendredi », nom court « Pronos », `https://pronos.example.org`) et peut nomme
 
 ### 7.16 Adresses de l'app et pages du site (2026-11-03)
 
-Demande : « pourquoi la page par défaut du site est /#/groups et pas /, et pourquoi il y a un # ? Il faut une page
-d'accueil / avec le principe, les sports activés… mais pas de formulaire de création de groupe. La page /groups on la
-garde telle quelle sauf qu'on vire le bla-bla de présentation et des sports, sans formulaire. Pour la création de groupe,
-une autre adresse, avec le coupon dans l'adresse pour pré-remplir le formulaire. » Adresse choisie : `/groups/new`.
+Des adresses sans `#` ; un accueil du site (`/`) qui présente le principe et les sports, sans formulaire ; une page
+« Mes groupes » sans présentation ; la création d'un groupe à une adresse à part, coupon pré-rempli depuis l'adresse
+(`/groups/new`, devenue `/n/<coupon>`, § 7.20).
 
 * **Plus de `#`** dans les adresses de l'app : `/groups`, `/help`, `/<groupe>`, `/<groupe>/bet/<id>`… (et dans
   celles de l'admin, § 7.17). Les anciennes adresses `/#/…` (favoris, applis installées) mènent à la même
@@ -530,8 +520,8 @@ une autre adresse, avec le coupon dans l'adresse pour pré-remplir le formulaire
   d'accueil, elle, s'ouvre toujours sur le dernier groupe.
 * **`/groups` : mes groupes** : le compte connecté sur l'appareil, ses groupes, « Déjà un compte ? » (sans compte). Ni
   présentation, ni sports, ni formulaire.
-* **Aucun lien cliquable vers la création d'un groupe** (retour de l'utilisateur : « on ne peut pas rejoindre via ce lien,
-  on peut seulement créer, et encore il faut un coupon, donc ça n'a pas de sens ») : ni bouton sur l'accueil ou Mes
+* **Aucun lien cliquable vers la création d'un groupe** (il ne permettrait pas de rejoindre un groupe, et créer demande de toute façon un
+  coupon) : ni bouton sur l'accueil ou Mes
   groupes, ni « Créer ou rejoindre » dans le menu, ni « créer un groupe » sur la page Moi. On y arrive par le lien du
   coupon.
 * **`/groups/new` : créer un groupe** : le formulaire (coupon, nom, emoji, et pseudo + avatar + PIN sans compte).
@@ -540,8 +530,7 @@ une autre adresse, avec le coupon dans l'adresse pour pré-remplir le formulaire
 
 ### 7.17 Adresses en anglais (2026-11-03)
 
-Demande : « revois toutes les routes pour les faire correspondre à des termes anglais, /admin/users, /admin/groups…
-seuls les textes sont français. »
+Les adresses (routes) sont en anglais (`/admin/users`, `/admin/groups`…) ; seuls les textes sont en français.
 
 * **App** : `/help[/<section>]` (sections : start, betting, points, competitions, groups, rankings, referee, badges,
   install), `/invite/<jeton>[?bet=<id>]` (depuis le 2026-11-04 : un ancien lien, qui dit qu'il a expiré ; § 7.19), `/<groupe>/members/<id>` ; le reste était déjà en anglais (`/groups`,
@@ -555,8 +544,7 @@ seuls les textes sont français. »
 
 ### 7.18 Moteurs de recherche (2026-11-03)
 
-Demande : « il faut s'assurer que les robots du net ne soient pas en mesure de voir les pages de groupe, etc. Juste la
-page d'index peut être indexée. »
+Les robots des moteurs de recherche ne voient pas les pages des groupes : seul l'accueil peut être indexé.
 
 * Seul l'accueil du site (`/`) peut apparaître dans Google, Bing, DuckDuckGo, Qwant…
 * `robots.txt` interdit tout le reste aux robots (pages de groupe, dont leur adresse qui sert à y entrer, mes groupes, création de groupe,
@@ -568,9 +556,9 @@ page d'index peut être indexée. »
 
 ### 7.19 Le lien du groupe fait tout (2026-11-04)
 
-Demande : « on supprime le système de liens d'invitation, le lien du groupe fait tout. Par contre sur la page de login
-je ne veux pas voir de proposition d'identité, login + PIN » ; « éventuellement on garde la possibilité de changer le
-lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans redirection.
+Plus de liens d'invitation : le lien du groupe sert à tout (entrer dans le groupe, s'y connecter). La page de
+connexion ne propose aucune identité (pseudo et PIN à taper), et un admin peut changer le lien du groupe s'il a fuité.
+Les anciens liens d'invitation : sans redirection.
 
 * Le lien d'un groupe est son adresse, `https://…/<groupe>` (16 caractères hexadécimaux : 64 bits tirés au hasard).
   Les boutons Partager (accueil du groupe, « Moi », Réglages du groupe) la partagent ; un pari se partage par son
@@ -591,9 +579,8 @@ lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans
 
 ### 7.20 Adresses courtes : /g et /n/<coupon> (2026-11-04)
 
-Demande : « /g remplace /groups. /g/:groupid remplace /:groupid pour aller sur la page d'un groupe. Et /groups/new
-devient /n/:couponid. La page de formulaire /n n'est pas accessible sans l'id coupon dans l'URL : ça protègera le
-formulaire. »
+Des adresses plus courtes : `/g` remplace `/groups`, `/g/<groupe>` remplace `/<groupe>` et `/n/<coupon>` remplace
+`/groups/new`. Sans coupon dans l'adresse, pas de formulaire de création.
 
 * **`/g` : mes groupes** (avant `/groups`).
 * **`/g/<groupe>` : un groupe**, et toutes ses pages : `/g/<groupe>/bet/<id>[/edit]`, `/new`, `/rank[/<classement>[/<saison>]]`,
@@ -700,11 +687,11 @@ formulaire. »
 | Paris automatiques (2026-10-30) | Les paris des compétitions activées s'ouvrent tout seuls ; rien n'est activé d'office ; tous les sports disponibles gratuitement |
 | Grands Prix moto (2026-10-30) | Paris tout prêts sur les courses moto (MotoGP, Moto2, Moto3 ; course et sprint), comme la F1 |
 | Réglages des paris (2026-10-30) | Une page de config du groupe active ou désactive types et catégories ; une catégorie activée branche ses sources de données (paris tout prêts, résultat automatique) |
-| Un compte par joueur (2026-10-31) | « On a un compte dans chaque groupe ? » : un seul compte (pseudo unique sur l'instance, avatar, PIN) et une connexion par appareil, valables dans tous ses groupes ; connexion depuis le lien d'un groupe (plus depuis l'accueil, 2026-11-03) ; PIN oublié : un admin de chacun de ses groupes |
-| Padel (2026-10-31) | « Rajoute le padel comme sport depuis une source externe » : Premier Padel (Major, P1, P2, Finals), messieurs et dames, par Padel API (gratuit avec une clé personnelle) ; l'API officielle de Premier Padel répond mais ne publie aucun match |
-| Résultat officiel (2026-11-01) | « Pourquoi on a le droit de contester un pari, sachant que le résultat vient d'une source ? » : un pari réglé par une source ne se conteste plus ; ses points tombent dès le résultat officiel (plus de 24 h de validation) ; une erreur de la source se corrige par un admin du groupe |
+| Un compte par joueur (2026-10-31) | Un seul compte (pseudo unique sur l'instance, avatar, PIN) et une connexion par appareil, valables dans tous ses groupes ; connexion depuis le lien d'un groupe (plus depuis l'accueil, 2026-11-03) ; PIN oublié : un admin de chacun de ses groupes |
+| Padel (2026-10-31) | Premier Padel (Major, P1, P2, Finals), messieurs et dames, par Padel API (gratuit avec une clé personnelle) ; l'API officielle de Premier Padel répond mais ne publie aucun match |
+| Résultat officiel (2026-11-01) | Un pari réglé par une source ne se conteste plus ; ses points tombent dès le résultat officiel (plus de 24 h de validation) ; une erreur de la source se corrige par un admin du groupe |
 | Admin du site et coupons (2026-11-01) | Une admin `/admin` (mot de passe choisi sur le serveur) pour tous les comptes et groupes ; créer un groupe demande un coupon à usage unique, généré et suivi dans l'admin, à la place du code d'instance (§ 7.14) |
 | Paris de sport en images (2026-10-31) | Écussons, photos, score en direct et final dans chaque pari, et une page « Direct » des matchs du jour (§ 7.13) |
 | Rien d'activé dans un groupe neuf (2026-10-31) | Ni type, ni catégorie de paris maison, ni compétition ; les types ne règlent plus que les paris maison |
 | Pseudo et avatar par joueur (2026-10-31) | Les mêmes dans tous ses groupes ; migration v6 : le dernier choix de chacun gagne partout |
-| Paris maison à part (2026-10-30) | « Pourquoi j'ai un bouton Nouveau pari quand aucune catégorie manuelle n'est activée ? » : les catégories ne règlent plus que les paris maison, les compétitions se règlent à part ; sans catégorie activée, pas de bouton |
+| Paris maison à part (2026-10-30) | Les catégories ne règlent plus que les paris maison, les compétitions se règlent à part ; sans catégorie activée, pas de bouton |
