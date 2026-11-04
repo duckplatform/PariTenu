@@ -8,7 +8,8 @@ import { aget, COUPON_STATES, go } from './kit.js';
 const PAGES = [
   ['/admin', 'dashboard', 'Vue d’ensemble'], ['/admin/users', 'user', 'Comptes'], ['/admin/groups', 'users', 'Groupes'],
   ['/admin/coupons', 'ticket', 'Coupons'], ['/admin/sources', 'radio', 'Sources'], ['/admin/configuration', 'settings', 'Configuration'],
-  ['/admin/configuration/theme', 'palette', 'Thème de l’appli'], ['/admin/log', 'scroll', 'Journal'],
+  ['/admin/configuration/theme', 'palette', 'Thème de l’appli'], ['/admin/configuration/reset', 'trash', 'Réinitialiser le site'],
+  ['/admin/log', 'scroll', 'Journal'],
 ];
 const plain = (s) => String(s ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 

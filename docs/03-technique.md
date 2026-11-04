@@ -87,6 +87,17 @@ Variables principales d'`app.css` : `--bg`, `--surface`, `--ink`, `--muted`, `--
 (titres en italique et en capitales ou non), `--top-*`, `--nav-*`, `--side-*` (barre du haut, barre du bas, menu de
 gauche), `--pick-*` (option choisie), `--gain` (la cote « 2,50 » sous chaque option), `--cta-*` (bouton « Parier »), `--card-line`, `--glass`.
 
+### Réinitialisation du site
+
+`/admin/configuration/reset` (`AdminService.resetInstance`) : repartir de zéro sans tout réinstaller. Une copie de
+la base est faite d'abord (`VACUUM INTO` dans `<dossier de la base>/backups/`, comme `npm run backup` ; si elle échoue,
+rien n'est effacé), puis, en une transaction, les tables des joueurs sont vidées (`PLAYER_DATA` : comptes et leurs
+sessions, groupes, membres, paris, pronostics, points, saisons, historique, suivis, `source_events`…). Restent
+`instance_settings` (configuration, thème, sources coupées), `coupons`, `admin_auth`, `admin_sessions`, `admin_log` et
+`meta`. Comme pour un compte supprimé, le journal et les coupons nomment les comptes effacés « Max (supprimé) » et
+les lignes du journal ne mènent plus à un compte ni à un groupe. Une table ajoutée plus tard pour les joueurs va dans
+`PLAYER_DATA` (le test de `admin.test.js` vérifie que toute table hors des réglages gardés est vide après).
+
 ### Configuration de l'installation
 
 PariTenu est un logiciel libre : chaque installation se donne son nom et son allure dans `/admin/configuration`, sans
@@ -287,7 +298,8 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
 | POST | `/api/admin/members/:id/reinstate` | Réintégrer un banni |
 | GET · POST | `/api/admin/coupons` | Coupons · créer (`{ note, days: 7 \| 30 \| 90 \| null }` → `{ id, code, expiresAt }`, seule fois où le code est rendu) |
 | POST | `…/coupons/:id/revoke` | Annuler un coupon disponible |
-| GET | `/api/admin/configuration` | Identité de l'installation (`branding`), icône (`icons` : onglet, téléphone, logo, ou `null`), thème et thèmes |
+| GET | `/api/admin/configuration` | Identité de l'installation (`branding`), icône (`icons` : onglet, téléphone, logo, ou `null`), thème et thèmes, ce qu'effacerait la réinitialisation (`data` : `{ players, groups, bets, picks }`) |
+| POST | `/api/admin/reset` | Réinitialiser le site (`{ confirm: "réinitialiser" }`, sans tenir compte des accents ni des majuscules → ce qui a été effacé et `backup`, le nom de la copie faite avant, ou `null` pour une base en mémoire) |
 | PATCH | `/api/admin/branding` | Nom, nom court, adresse publique, textes de l'accueil, hébergeur (seuls les champs changés → `{ branding, brand, changed }`) |
 | PUT · DELETE | `/api/admin/icon` | Nouvelle icône (`{ png }` en base64 ; 3 Mo de JSON acceptés sur ce seul chemin) · retour à l'icône de PariTenu |
 | GET · PUT | `/api/admin/appearance` · `theme` | Thème actuel et thèmes · changer de thème (`{ theme }`) |

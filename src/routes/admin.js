@@ -2,7 +2,7 @@ import express from 'express';
 import { z } from 'zod';
 import { THEME_IDS, THEMES } from '../core/themes.js';
 import { badRequest, HttpError } from '../lib/errors.js';
-import { ADMIN_MAX_MS } from '../services/admin.js';
+import { ADMIN_MAX_MS, plainWord, RESET_WORD } from '../services/admin.js';
 import { avatar, Branding, emoji, groupName, id, parse, PlaceQuery, pseudo, readCookies, Settings } from './inputs.js';
 
 // Cookie de l'admin : réservé à /api/admin, jamais envoyé depuis un autre site (SameSite=Strict).
@@ -161,7 +161,15 @@ export function adminRouter(deps, { isSecure, authLimit }) {
 
   // ——— Configuration de l'installation : nom, adresse publique, textes de l'accueil, hébergeur, icône, thème
 
-  r.get('/configuration', (req, res) => res.json({ branding: branding.get(), icons: iconUrls(), theme: admin.theme(), themes: THEMES }));
+  // data : ce qu'effacerait la réinitialisation (onglet « Réinitialisation »).
+  r.get('/configuration', (req, res) => res.json({ branding: branding.get(), icons: iconUrls(), theme: admin.theme(), themes: THEMES, data: admin.playerData() }));
+
+  // Réinitialiser le site : comptes, groupes, paris et classements effacés, configuration gardée ; on retape le mot.
+  r.post('/reset', (req, res) => {
+    const { confirm } = parse(Confirm, req.body);
+    if (plainWord(confirm) !== plainWord(RESET_WORD)) throw badRequest(`Tape « ${RESET_WORD} » pour confirmer.`);
+    res.json(admin.resetInstance(ip(req)));
+  });
 
   r.patch('/branding', (req, res) => {
     const changes = branding.update(parse(Branding, req.body));

@@ -16,10 +16,11 @@ const LOG_ICONS = {
   group_created: ['users', 'ok'], group_updated: ['pencil', 'info'], group_invite: ['refresh', 'info'], group_address: ['refresh', 'info'], group_deleted: ['trash', 'bad'],
   member_added: ['userPlus', 'ok'], member_role: ['shield', 'info'], member_removed: ['userMinus', 'bad'], member_reinstated: ['userPlus', 'ok'],
   source_disabled: ['pause', 'bad'], source_enabled: ['play', 'ok'], theme_changed: ['palette', 'info'], branding_changed: ['settings', 'info'], icon_changed: ['image', 'info'],
+  instance_reset: ['trash', 'bad'],
 };
 // Les filtres du journal : les actions de chaque famille.
 const LOG_KINDS = {
-  access: /^(login|logout|login_failed|password_)/, players: /^player_/, groups: /^(group_|member_)/, coupons: /^coupon_/, site: /^(source_|theme_|branding_|icon_)/,
+  access: /^(login|logout|login_failed|password_)/, players: /^player_/, groups: /^(group_|member_)/, coupons: /^coupon_/, site: /^(source_|theme_|branding_|icon_|instance_)/,
 };
 
 /** Une ligne du journal mène à ce qu'elle concerne (compte, groupe ou source), s'il existe encore. */

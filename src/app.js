@@ -43,7 +43,10 @@ export function createApp(config, { db, clock = createClock(), logger = silentLo
   const stats = new StatsService(db, clock, groups, seasons);
   const activity = new ActivityService(db, clock, { bets, seasons, groups });
   const sources = new SourceService(db, clock, groups, bets, { fetch, logger, live, keys: config.sourceKeys });
-  const admin = new AdminService(db, clock, { accounts, groups, coupons, sources, seasons, pinParams: config.pinParams });
+  const admin = new AdminService(db, clock, {
+    accounts, groups, coupons, sources, seasons, pinParams: config.pinParams,
+    backupDir: config.dbPath === ':memory:' ? null : path.join(path.dirname(path.resolve(config.dbPath)), 'backups'),
+  });
   // Logos et photos des sources : gardés sur disque à côté de la base (en mémoire seulement pour une base en mémoire).
   const media = new MediaService({ fetch, clock, logger, dir: config.dbPath === ':memory:' ? null : path.join(path.dirname(path.resolve(config.dbPath)), 'media') });
   const deps = { config, db, clock, accounts, groups, coupons, admin, branding, bets, seasons, follows, stats, activity, sources, live, media, logger };

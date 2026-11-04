@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { DEFAULT_THEME, themeOf } from '../core/themes.js';
 import { tx } from '../db.js';
 import { badRequest, conflict, HttpError, notFound } from '../lib/errors.js';
@@ -21,13 +23,23 @@ const IDLE_GROUP = 3 * DAY; // … un groupe toujours sans pari 3 jours après s
 
 const PIN_STATE = (p, now, needsNewPin) => (p.locked_until > now ? 'locked' : needsNewPin ? 'new_pin' : 'ok');
 
+// Réinitialisation du site : ce que les joueurs ont créé, effacé dans cet ordre (ce qui renvoie à une ligne part avant
+// elle : les clés étrangères restent vérifiées). La configuration, les coupons et tout ce qui est à l'admin restent.
+const PLAYER_DATA = [
+  'points', 'picks', 'votes', 'disputes', 'comments', 'events', 'bet_options', 'bets', 'seasons', 'follows', 'pin_resets',
+  'sessions', 'members', 'groups', 'player_sessions', 'player_tokens', 'players', 'source_events',
+];
+/** Le mot à retaper pour réinitialiser le site (sans tenir compte des accents ni des majuscules). */
+export const RESET_WORD = 'réinitialiser';
+export const plainWord = (s) => String(s ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').trim().toLowerCase();
+
 /**
  * Admin de l'instance : la personne qui héberge Pari tenu ! (au-dessus des admins de groupe). Un mot de passe choisi sur
  * le serveur (npm run admin), jamais depuis le site ; sessions courtes ; chaque action et chaque connexion au journal.
  * Gère les comptes, les groupes et les coupons de création de groupe.
  */
 export class AdminService {
-  constructor(db, clock, { accounts, groups, coupons, sources = null, seasons = null, pinParams = PIN_PARAMS }) {
+  constructor(db, clock, { accounts, groups, coupons, sources = null, seasons = null, pinParams = PIN_PARAMS, backupDir = null }) {
     this.db = db;
     this.clock = clock;
     this.accounts = accounts;
@@ -36,6 +48,7 @@ export class AdminService {
     this.sources = sources; // SourceService : sources coupées pour tout le site (pas dans npm run admin)
     this.seasons = seasons; // SeasonService : classements des groupes
     this.pinParams = pinParams;
+    this.backupDir = backupDir; // sauvegardes faites avant une réinitialisation (null : base en mémoire, pas de copie)
   }
 
   /**
@@ -540,6 +553,53 @@ export class AdminService {
         ON CONFLICT(key) DO UPDATE SET value = excluded.value`).run(after.id);
     this.currentTheme = after.id;
     this.log('theme_changed', { target: `theme:${after.id}`, summary: `Thème « ${before.name} » remplacé par « ${after.name} » pour tout le site`, ip });
+  }
+
+  // ——— Réinitialisation : repartir de zéro en gardant la configuration du site
+
+  /** Ce que la réinitialisation effacerait, pour la page qui la propose. */
+  playerData() {
+    const count = (table) => this.db.prepare(`SELECT COUNT(*) AS n FROM ${table}`).get().n;
+    return { players: count('players'), groups: count('groups'), bets: count('bets'), picks: count('picks') };
+  }
+
+  /**
+   * Réinitialise le site (demande du 2026-11-04) : comptes, groupes, paris, pronostics, points, classements, historique et
+   * connexions des joueurs sont effacés, tout le monde est déconnecté. Restent la configuration du site (nom, textes,
+   * icône, thème, sources coupées), les coupons (ceux pas encore servis marchent toujours), le mot de passe et les
+   * sessions de l'admin, et son journal, qui le raconte. Une copie de la base est faite juste avant (dans backups/, comme
+   * « npm run backup ») : rend son nom (null sans copie) et ce qui a été effacé.
+   */
+  resetInstance(ip) {
+    const erased = this.playerData();
+    const backup = this.#backup('avant-reinitialisation'); // une copie ratée arrête tout : rien n'est effacé
+    const n = (count, one) => `${count} ${one}${count > 1 ? 's' : ''}`;
+    tx(this.db, () => {
+      // Le journal et les coupons gardent le nom des comptes effacés, comme pour un compte supprimé : « Max (supprimé) » ;
+      // ses lignes ne mènent plus à un compte ni à un groupe qui n'existe plus.
+      this.db.exec(`
+        UPDATE admin_log SET player_pseudo = (SELECT p.pseudo FROM players p WHERE p.id = admin_log.player_id) || ' (supprimé)',
+          player_id = NULL WHERE player_id IN (SELECT id FROM players);
+        UPDATE admin_log SET target = '' WHERE target LIKE 'player:%' OR target LIKE 'group:%';
+        UPDATE coupons SET used_by_pseudo = (SELECT p.pseudo FROM players p WHERE p.id = coupons.used_by) || ' (supprimé)'
+          WHERE used_by IN (SELECT id FROM players);`);
+      for (const table of PLAYER_DATA) this.db.exec(`DELETE FROM ${table}`);
+      this.log('instance_reset', {
+        target: 'instance', ip,
+        summary: `Site réinitialisé : ${n(erased.players, 'compte')}, ${n(erased.groups, 'groupe')}, ${n(erased.bets, 'pari')} et `
+          + `${n(erased.picks, 'pronostic')} effacés, configuration gardée${backup ? ` (copie d’avant : backups/${backup})` : ''}`,
+      });
+    });
+    return { ...erased, backup };
+  }
+
+  /** Copie cohérente de la base (VACUUM INTO, comme npm run backup) ; rend son nom, ou null sans dossier de sauvegarde. */
+  #backup(label) {
+    if (!this.backupDir) return null;
+    fs.mkdirSync(this.backupDir, { recursive: true });
+    const name = `paritenu-${new Date(this.clock.now()).toISOString().replace(/[:.]/g, '-')}-${label}.db`;
+    this.db.exec(`VACUUM INTO '${path.join(this.backupDir, name).replaceAll("'", "''")}'`);
+    return name;
   }
 
   // ——— Coupons
