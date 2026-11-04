@@ -1,5 +1,5 @@
 // npm run backup [-- <étiquette>] : copie cohérente de la base (VACUUM INTO), même pendant que l'app tourne, dans
-// <dossier de la base>/backups/. Sert avant une mise à jour, pour déménager l'app (vers cPanel…) et en tâche planifiée.
+// <dossier de la base>/backups/. Sert avant une mise à jour, pour déménager l'app sur un autre serveur et en tâche planifiée.
 import fs from 'node:fs';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';

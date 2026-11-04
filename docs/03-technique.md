@@ -6,7 +6,8 @@
 src/
   server.js            démarrage, adresses affichées, arrêt propre
   app.js               Express : helmet (CSP stricte), /api, fichiers statiques, erreurs, balayage des échéances
-  config.js            variables d'environnement
+  config.js            variables d'environnement (modèle commenté : .env.example)
+  version.js           la version du logiciel (celle de package.json), affichée en pied de page
   db.js                SQLite (node:sqlite), migrations versionnées, tx() réentrant
   core/scoring.js      barème pur : cotes, règlement, dépouillement des votes
   core/settings.js     réglages par défaut : catégories, types de paris, sources
@@ -58,8 +59,8 @@ public/
                        tableaux triables qui deviennent des listes sur téléphone, menus « ⋯ », filtres), search.js (Ctrl K)
 scripts/admin.mjs      npm run admin : mot de passe de l'admin du site (saisi deux fois, rien d'affiché)
 scripts/backup.mjs     npm run backup [-- étiquette] : copie cohérente de la base (VACUUM INTO) dans <dossier de la base>/backups/
-app.cjs                démarrage sous Phusion Passenger (cPanel) : charge src/server.js ; voir docs/05-installation-cpanel.md
-.cpanel.yml            déploiement par le Git de cPanel : copie dans ~/paritenu, npm install sans outils de test, redémarrage
+scripts/version.mjs    npm version patch|minor|major : reporte la version de package.json dans le manifeste et CHANGELOG.md
+app.cjs                démarrage sous Phusion Passenger (fichier CommonJS qui charge src/server.js)
 scripts/demo.mjs       groupe de démonstration ; scripts/icons.mjs : icônes PNG depuis le SVG
 scripts/theme-previews.mjs  aperçus des thèmes pour l'admin (après npm run test:e2e)
 test/                  node:test (API réelle sur port libre) ; test/e2e/run.mjs : Edge headless
@@ -75,11 +76,11 @@ L'admin du site choisit l'habillage de toute l'appli dans `/admin/configuration`
 `public/css/themes/<id>.css` (vide pour Stade) : pas de JavaScript, pas de flash de l'ancien thème. `/theme.css` part
 sans date ni ETag (une même adresse, plusieurs fichiers : un 304 garderait l'ancien thème). Les polices sont servies par
 l'app (CSP `font-src 'self'`, rien chez Google). Stade suit le mode clair ou sombre du téléphone ; Tribune, Récré et
-Vestiaire sont clairs, Nocturne et Arène sombres. Maquettes et choix des styles (skill ui-ux-pro-max) : `docs/maquettes/`.
+Vestiaire sont clairs, Nocturne et Arène sombres.
 
 L'admin du site a son propre habillage (`css/admin.css`, chargé après `app.css` dont il remplace les variables) :
 « Sobre » en mode clair (Inter) et « Cockpit » en mode sombre (Fira Sans, chiffres et codes en Fira Code), polices dans
-`public/fonts/admin/`. Maquettes : `docs/maquettes/admin/`.
+`public/fonts/admin/`.
 
 Variables principales d'`app.css` : `--bg`, `--surface`, `--ink`, `--muted`, `--line`, `--brand` (actions),
 `--accent`, `--night` (blocs foncés), `--display` et `--body-font` (polices), `--display-style` et `--display-case`
@@ -297,7 +298,7 @@ Toutes les réponses sont en JSON ; les erreurs ont la forme `{ error, code }` a
   sert à y entrer et à s'y connecter (2026-11-04 : plus de lien d'invitation), et « Changer le lien » en tire une autre
   (l'ancienne : `404 group_not_found`). L'id interne du groupe ne change jamais ; il ne sort que dans l'export et
   l'admin du site. La session est celle du compte (cookie
-  `pt_session`), `HttpOnly`, `SameSite=Lax`, `Secure` en HTTPS et sur `*.ts.net`, valable un an et prolongée à
+  `pt_session`), `HttpOnly`, `SameSite=Lax`, `Secure` en HTTPS (voir `PT_COOKIE_SECURE`), valable un an et prolongée à
   chaque visite ; elle n'ouvre que les groupes dont le compte est membre (`403 not_member` sinon).
 * **PIN** : scrypt (N = 2^14, r = 8, p = 5 : 16 MiB ; les hachages Argon2id d'avant restent acceptés là où Node le permet). Un PIN à 4 chiffres reste devinable : `POST /api/account/login` exige le lien
   d'un groupe (`group` : son adresse ; sans : `403 group_link_required`, adresse inconnue : `404`), contrôlé aussi

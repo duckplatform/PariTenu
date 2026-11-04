@@ -2,8 +2,8 @@ import crypto from 'node:crypto';
 import { promisify } from 'node:util';
 
 const scrypt = promisify(crypto.scrypt);
-// crypto.argon2 demande un Node compilé avec OpenSSL 3.2 ou plus : le Node de cPanel (lié à l'OpenSSL du système) ne
-// l'a pas (ERR_CRYPTO_ARGON2_NOT_SUPPORTED). Il ne sert plus qu'à relire les hachages Argon2id d'avant.
+// crypto.argon2 demande un Node compilé avec OpenSSL 3.2 ou plus : un Node lié à l'OpenSSL d'un système plus ancien
+// (fréquent chez les hébergeurs) ne l'a pas (ERR_CRYPTO_ARGON2_NOT_SUPPORTED). Il ne sert plus qu'à relire les hachages Argon2id d'avant.
 const argon2 = promisify(crypto.argon2);
 
 // scrypt au niveau de base OWASP (N = 2^14, r = 8, p = 5 : 16 MiB). Un PIN à 4 chiffres reste devinable en

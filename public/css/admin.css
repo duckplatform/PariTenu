@@ -1,5 +1,5 @@
 /* Admin du site (/admin), après app.css (dont il garde les panneaux, champs et notifications).
-   Deux habillages, choisis en 2026-11 sur maquettes (docs/maquettes/admin) : « Sobre » en mode clair (Inter, style
+   Deux habillages, choisis en 2026-11 sur maquettes : « Sobre » en mode clair (Inter, style
    « Minimalism & Swiss » du skill ui-ux-pro-max) et « Cockpit » en mode sombre (Fira Sans et Fira Code, palette
    « Dark tech + status green »). PC : menu à gauche ; téléphone : barre du bas, tableaux en listes. */
 
@@ -206,6 +206,9 @@ kbd { font: 600 10.5px var(--adm-font); padding: 2px 6px; border-radius: 5px; ba
 .adm-side-foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
 .adm-me { display: flex; align-items: center; gap: 8px; padding-left: 10px; font-size: 12.5px; color: var(--muted); }
 .adm-me .btn { margin-left: auto; }
+/* La version du logiciel, sous « Connecté » (et en bas du panneau « Plus » sur téléphone) */
+.adm-version { padding-left: 10px; font-size: 11.5px; color: var(--muted); }
+.adm-more-list .adm-version { padding: 10px 0 0; text-align: center; }
 .adm-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); flex: none; }
 .adm-main { min-width: 0; width: 100%; max-width: 1480px; margin: 0 auto; padding: 0 32px 64px; }
 .adm-bnav { display: none; }

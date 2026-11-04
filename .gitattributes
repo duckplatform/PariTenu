@@ -1,4 +1,4 @@
-# Fins de ligne LF partout (l'app tourne aussi sous Linux : cPanel, Passenger) ; Git reconnaît seul les fichiers binaires.
+# Fins de ligne LF partout (l'app tourne aussi sous Linux) ; Git reconnaît seul les fichiers binaires.
 * text=auto eol=lf
 *.png binary
 *.jpg binary

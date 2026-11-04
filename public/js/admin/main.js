@@ -4,7 +4,7 @@
 // Adresses en anglais, textes en français ; les anciennes (« /admin#/comptes… ») sont converties (upgradeAddress).
 // PC : menu à gauche, rangé en trois blocs ; téléphone : barre du bas (« Plus » pour le reste). Ctrl K : recherche.
 import { ApiError, get, post } from '../api.js';
-import { brand, brandLogo } from '../brand.js';
+import { brand, brandLogo, softwareLabel } from '../brand.js';
 import { cls, h } from '../dom.js';
 import { icon } from '../icons.js';
 import { field, openSheet, toast } from '../ui.js';
@@ -79,7 +79,8 @@ function layout(r, node, counts) {
           h('a', { href: '/', target: '_blank', rel: 'noopener' }, icon('external'), h('span', 'Voir le site')),
           h('div.adm-me', h('span.adm-dot', { 'aria-hidden': 'true' }),
             h('span', counts?.sessions > 1 ? `Connecté · ${plural(counts.sessions, 'session')}` : 'Connecté'),
-            h('button.btn.icon.ghost.small', { type: 'button', onclick: logout, 'aria-label': 'Se déconnecter', title: 'Se déconnecter' }, icon('logout', 'sm'))))),
+            h('button.btn.icon.ghost.small', { type: 'button', onclick: logout, 'aria-label': 'Se déconnecter', title: 'Se déconnecter' }, icon('logout', 'sm'))),
+          h('p.adm-version', softwareLabel()))),
       h('main.adm-main', node)),
     h('nav.adm-bnav', { 'aria-label': 'Admin' },
       TABS.map(([id, name, label, key]) => h('a', { href: pathOf(id), 'aria-current': r.section === id ? 'page' : null },
@@ -99,7 +100,8 @@ function morePanel(counts) {
       item('/admin/log', 'scroll', 'Journal'),
       h('button.adm-act', { type: 'button', onclick: () => { close(null); openSearch(); } }, icon('search', 'sm'), h('span.adm-grow', 'Rechercher')),
       h('a.adm-act', { href: '/', target: '_blank', rel: 'noopener' }, icon('external', 'sm'), h('span.adm-grow', 'Voir le site')),
-      h('button.adm-act.is-danger', { type: 'button', onclick: () => { close(null); logout(); } }, icon('logout', 'sm'), h('span.adm-grow', 'Se déconnecter')));
+      h('button.adm-act.is-danger', { type: 'button', onclick: () => { close(null); logout(); } }, icon('logout', 'sm'), h('span.adm-grow', 'Se déconnecter')),
+      h('p.adm-version', softwareLabel()));
   });
 }
 

@@ -94,7 +94,7 @@ describe('v6 : un pseudo et un avatar par joueur, dans tous ses groupes', () => 
       base.prepare('INSERT INTO players (id, created_at) VALUES (?, 0)').run('p1');
       const member = base.prepare("INSERT INTO members (id, group_id, pseudo, avatar, role, created_at, player_id) VALUES (?, ?, ?, ?, 'member', ?, ?)");
       member.run('a', 'feu', 'toto', '🦊', 1, 'p1');
-      member.run('b', 'bureau', 'Simon', '🐲', 2, 'p1');
+      member.run('b', 'bureau', 'Hugo', '🐲', 2, 'p1');
       member.run('c', 'foot', 'Toto', '⚽', 3, 'p1'); // son dernier choix
       member.run('d', 'bureau', 'Max', '🐻', 4, null);
       member.run('e', 'feu', 'Max', '🦉', 5, null); // les autres joueurs ne changent pas
@@ -110,12 +110,12 @@ describe('v6 : un pseudo et un avatar par joueur, dans tous ses groupes', () => 
       fillGroups(base, [{ id: 'feu', settings: {} }, { id: 'foot', settings: {} }]);
       base.prepare('INSERT INTO players (id, created_at) VALUES (?, 0)').run('p1');
       const member = base.prepare("INSERT INTO members (id, group_id, pseudo, avatar, role, created_at, player_id) VALUES (?, ?, ?, ?, 'member', ?, ?)");
-      member.run('a', 'feu', 'Simon', '🦊', 1, 'p1');
+      member.run('a', 'feu', 'Hugo', '🦊', 1, 'p1');
       member.run('x', 'feu', 'Léa', '🐻', 2, null);
       member.run('b', 'foot', 'Léa', '⚽', 3, 'p1'); // son dernier choix, déjà pris dans « feu »
     }, 6);
     const rows = Object.fromEntries(db.prepare('SELECT id, pseudo, avatar FROM members').all().map((m) => [m.id, `${m.pseudo} ${m.avatar}`]));
-    assert.deepEqual(rows, { a: 'Simon ⚽', x: 'Léa 🐻', b: 'Léa ⚽' });
+    assert.deepEqual(rows, { a: 'Hugo ⚽', x: 'Léa 🐻', b: 'Léa ⚽' });
     db.close();
   });
 });

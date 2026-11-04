@@ -58,7 +58,7 @@ export function apiRouter(deps) {
   const publicUrl = () => (branding.get().publicUrl ? new URL(branding.get().publicUrl) : null);
   const publicHost = () => publicUrl()?.host ?? null;
   const isSecure = (req) => config.cookieSecure === 'always'
-    || (config.cookieSecure === 'auto' && (req.secure || req.hostname.endsWith('.ts.net') || req.hostname === publicUrl()?.hostname));
+    || (config.cookieSecure === 'auto' && (req.secure || req.hostname === publicUrl()?.hostname));
 
   const setSession = (req, res, token) => {
     if (token) res.cookie(SESSION_COOKIE, token, { httpOnly: true, sameSite: 'lax', secure: isSecure(req), maxAge: 365 * DAY, path: '/' });
@@ -102,7 +102,7 @@ export function apiRouter(deps) {
       if (origin && origin !== 'null') {
         let host = null;
         try { host = new URL(origin).host; } catch { /* origine illisible : refusée ci-dessous */ }
-        // req.host suit X-Forwarded-Host quand le relais est de confiance (Tailscale Funnel, Caddy).
+        // req.host suit X-Forwarded-Host quand le relais est de confiance (reverse proxy, PT_TRUST_PROXY).
         // L'adresse publique de l'installation (derrière un relais qui ne transmet pas l'hôte) est la sienne aussi.
         if (host !== req.headers.host && host !== req.host && host !== publicHost()) throw forbidden('Requête refusée (origine inconnue).');
       }

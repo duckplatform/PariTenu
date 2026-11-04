@@ -438,7 +438,7 @@ textarea.copy { font-size: 0.9rem; }
 .site-foot p + p { margin-top: 6px; }
 /* Crédit « Propulsé par PariTenu » et hébergeur (public/js/brand.js : credits) */
 .credits { font-size: 0.8rem; opacity: 0.85; }
-.help-credits { margin-top: 18px; }
+.help-credits, .me-credits { margin-top: 18px; }
 
 /* ——— Aide */
 .help { padding-top: env(safe-area-inset-top); }
@@ -1158,7 +1158,7 @@ textarea.copy { font-size: 0.9rem; }
 .fx-line-sides .fx-cell.away { align-items: flex-end; }
 .fx-line-note { margin: 0; text-align: center; font-weight: 700; color: var(--ink); }
 
-/* ——— Refonte de l'ergonomie (maquettes docs/maquettes/, commune à tous les thèmes) */
+/* ——— Refonte de l'ergonomie (commune à tous les thèmes) */
 .icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
 .icon-sm { width: 16px; height: 16px; }
 .icon-xs { width: 0.95em; height: 0.95em; vertical-align: -0.12em; }

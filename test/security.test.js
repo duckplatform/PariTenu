@@ -86,13 +86,13 @@ describe('en-têtes et garde-fous HTTP', () => {
     assert.equal(form.status, 415);
     const foreign = await g.c.max.req('POST', `/api/groups/${g.gid}/me/leave`, { body: {}, headers: { origin: 'https://evil.example' } });
     assert.equal(foreign.status, 403);
-    // Derrière Tailscale Funnel : l'origine publique correspond au X-Forwarded-Host posé par le relais local.
+    // Derrière un reverse proxy : l'origine publique correspond au X-Forwarded-Host posé par le relais local.
     const relayed = await g.c.max.req('PATCH', '/api/account', {
-      body: { avatar: '🐙' }, headers: { origin: 'https://pc.tailnet.ts.net:8443', 'x-forwarded-host': 'pc.tailnet.ts.net:8443' },
+      body: { avatar: '🐙' }, headers: { origin: 'https://paris.example.org:8443', 'x-forwarded-host': 'paris.example.org:8443' },
     });
     assert.equal(relayed.status, 200);
     const spoofed = await g.c.max.req('PATCH', '/api/account', {
-      body: { avatar: '🐙' }, headers: { origin: 'https://evil.example', 'x-forwarded-host': 'pc.tailnet.ts.net:8443' },
+      body: { avatar: '🐙' }, headers: { origin: 'https://evil.example', 'x-forwarded-host': 'paris.example.org:8443' },
     });
     assert.equal(spoofed.status, 403);
     assert.equal((await g.c.max.get(`/api/groups/${g.gid}`)).status, 200, 'toujours membre');
@@ -196,7 +196,7 @@ describe('coupons de création de groupe et limitation des essais', () => {
     }
   });
 
-  it('cookie Secure derrière Tailscale Funnel (*.ts.net) et en mode always', async () => {
+  it('cookie Secure : en HTTPS derrière un proxy de confiance, et en mode always', async () => {
     const s = await startServer({ PT_COOKIE_SECURE: 'always' });
     try {
       const c = s.client();
@@ -205,9 +205,13 @@ describe('coupons de création de groupe et limitation des essais', () => {
     } finally {
       await s.stop();
     }
-    const funnel = srv.client();
-    // Tailscale Funnel relaie depuis 127.0.0.1 (proxy de confiance) avec le nom public de la machine.
-    await funnel.post('/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: 'Funnel', avatar: '🦊', pin: PIN, coupon: coupon(srv) }, { headers: { 'x-forwarded-host': 'mon-pc.tailnet.ts.net' } });
-    assert.match(funnel.setCookies[0], /Secure/);
+    // Un reverse proxy local (127.0.0.1 : proxy de confiance) qui reçoit le visiteur en HTTPS.
+    const relayed = srv.client();
+    await relayed.post('/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: 'Relais', avatar: '🦊', pin: PIN, coupon: coupon(srv) }, { headers: { 'x-forwarded-proto': 'https', 'x-forwarded-host': 'paris.example.org' } });
+    assert.match(relayed.setCookies[0], /Secure/);
+    // En HTTP (développement sur le réseau local), mode auto : pas de Secure, sinon le navigateur jetterait le cookie.
+    const plain = srv.client();
+    await plain.post('/api/groups', { name: 'Les Potes', emoji: '🍻', pseudo: 'Direct', avatar: '🦊', pin: PIN, coupon: coupon(srv) });
+    assert.doesNotMatch(plain.setCookies[0], /Secure/);
   });
 });

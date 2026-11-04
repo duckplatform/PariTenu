@@ -1,5 +1,6 @@
 import { avatarPicker, face } from '../avatars.js';
 import { patch, post } from '../api.js';
+import { credits } from '../brand.js';
 import { h } from '../dom.js';
 import { activeMembers, ctx, groupUrl, invalidate, navigate } from '../state.js';
 import { forgetGroup, setGroups } from '../store.js';
@@ -126,6 +127,7 @@ export async function meView() {
     h('section.card.stack',
       h('a.btn', { href: '/g' }, 'Mes groupes'),
       h('button.btn', { type: 'button', onclick: logout }, 'Me déconnecter de cet appareil (tous mes groupes)'),
-      h('button.btn.danger', { type: 'button', onclick: leave }, 'Quitter le groupe')));
+      h('button.btn.danger', { type: 'button', onclick: leave }, 'Quitter le groupe')),
+    h('div.me-credits.muted.center', credits()));
   return { node, tab: 'me' };
 }

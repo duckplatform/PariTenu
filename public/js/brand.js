@@ -14,6 +14,7 @@ const DEFAULTS = {
   hostUrl: '',
   icon: '/icons/icon.svg',
   renamed: false,
+  version: '', // la version du logiciel (package.json), posée par le serveur
 };
 
 function read() {
@@ -46,11 +47,18 @@ export function taglineParts(text = brand.tagline) {
   return [sentences.slice(0, -1).join(''), h('em', sentences.at(-1).trim())];
 }
 
-/** Le crédit en pied de page : « Propulsé par PariTenu, logiciel libre » (une fois renommée), puis l'hébergeur. */
+/** « PariTenu v1.2.0 » : le logiciel et sa version (sans version connue, son nom seul). */
+export const softwareLabel = () => (brand.version ? `PariTenu v${brand.version}` : 'PariTenu');
+
+/**
+ * Le crédit en pied de page : le logiciel et sa version (« PariTenu v1.2.0, logiciel libre » ; une installation renommée
+ * dit « Propulsé par … »), puis l'hébergeur s'il est renseigné.
+ */
 export function credits() {
   const parts = [];
-  if (brand.renamed) {
-    parts.push(h('span', 'Propulsé par ', PROJECT_URL ? h('a', { href: PROJECT_URL, target: '_blank', rel: 'noopener' }, 'PariTenu') : h('b', 'PariTenu'), ', logiciel libre'));
+  if (brand.renamed || brand.version) {
+    const software = PROJECT_URL ? h('a', { href: PROJECT_URL, target: '_blank', rel: 'noopener' }, softwareLabel()) : h('b', softwareLabel());
+    parts.push(h('span', brand.renamed ? 'Propulsé par ' : '', software, ', logiciel libre'));
   }
   if (brand.hostName) {
     parts.push(h('span', 'Hébergé par ', brand.hostUrl ? h('a', { href: brand.hostUrl, target: '_blank', rel: 'noopener' }, brand.hostName) : h('b', brand.hostName)));

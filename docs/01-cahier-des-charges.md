@@ -5,7 +5,7 @@
 > **Statut : V1 livrée le 2026-10-29 ; V1.1 (réglages des paris, paris tout prêts à résultat automatique, § 7.11) le
 > 2026-10-30 ; V1.2 (Grands Prix moto) et V2 (classements par compétition et par saison, paris ouverts tout seuls,
 > tous les sports, § 7.7 et § 7.11) le même jour ; V3 (barème à cote fixe, un joueur dans plusieurs groupes,
-> compétitions suivies, design sportif, tablette et PC, site et aide, § 7.4, § 7.1, § 7.11, § 7.12) le même jour.** Ce qui est fait et ce qui reste à vérifier : [feuille de route](04-roadmap.md).
+> compétitions suivies, design sportif, tablette et PC, site et aide, § 7.4, § 7.1, § 7.11, § 7.12) le même jour.** Ce qui est livré : [journal des modifications](../CHANGELOG.md) ; la suite : [feuille de route](04-roadmap.md).
 > Le code fait foi pour les détails techniques : [docs/03-technique.md](03-technique.md) (par exemple, les badges sont
 > calculés à la volée plutôt que stockés).
 
@@ -493,8 +493,8 @@ faut le lien d'un groupe. »
 
 Demande : « Je vais rendre ce projet open source, donc on garde le nom d'app PariTenu. Par contre on fait une page de
 configuration dans l'admin UI qui regroupe apparence et les autres settings tel que le nom qu'on veut lui donner, son
-URL etc. » Le logiciel s'appelle **PariTenu** ; chaque installation choisit son nom (la nôtre : « Paris entre
-Couilles », nom court « EntreCouilles », `https://paris.entrecouilles.fr`, hébergée par Duck Platform).
+URL etc. » Le logiciel s'appelle **PariTenu** ; chaque installation choisit son nom (par exemple « Les Pronos du
+Vendredi », nom court « Pronos », `https://pronos.example.org`) et peut nommer son hébergeur.
 
 * **Page ⚙️ Configuration** de l'admin du site (elle remplace la page Apparence, dont l'adresse y mène) :
   * **Identité** : nom (onglet, en-têtes, messages partagés), nom court (sous l'icône du téléphone, 14 caractères),
@@ -505,13 +505,13 @@ Couilles », nom court « EntreCouilles », `https://paris.entrecouilles.fr`, h�
   * **Icône et logo** : un PNG carré (512 px conseillés), aperçu dans l'onglet, sur l'écran du téléphone et en en-tête ;
     retour à l'icône d'origine.
   * **Apparence** : les thèmes, comme avant.
-  Les textes s'enregistrent d'un coup (journal : « Nom : « Pari tenu ! » → « Paris entre Couilles » ») ; l'icône et le
+  Les textes s'enregistrent d'un coup (journal : « Nom : « Pari tenu ! » → « Les Pronos du Vendredi » ») ; l'icône et le
   thème s'appliquent tout de suite, après confirmation. Chaque joueur voit le changement à sa page suivante.
-* **Adresse publique : seulement les liens** (choix de l'utilisateur) : les liens des groupes, des coupons et des paris partagés
+* **Adresse publique : seulement les liens** : les liens des groupes, des coupons et des paris partagés
   la prennent ; pas de redirection, les autres adresses du site continuent de marcher.
-* **Crédit** (choix de l'utilisateur : « petit crédit en pied, et mentionner l'hébergement par Duck Platform ») : une
-  installation renommée affiche « Propulsé par PariTenu, logiciel libre » en pied de l'accueil et de l'aide, puis
-  « Hébergé par … » si un hébergeur est renseigné.
+* **Crédit** : un petit crédit en pied de l'accueil, de l'aide et de la page « Moi » nomme le logiciel et sa version
+  (« PariTenu v1.0.0, logiciel libre » ; « Propulsé par PariTenu v1.0.0, logiciel libre » une fois l'installation
+  renommée), puis « Hébergé par … » si un hébergeur est renseigné. L'admin du site affiche aussi la version.
 * Restent inchangés, pour ne déconnecter personne : la règle du jeu « pari tenu », les cookies, les adresses, la base.
 
 ### 7.16 Adresses de l'app et pages du site (2026-11-03)
@@ -570,7 +570,7 @@ page d'index peut être indexée. »
 
 Demande : « on supprime le système de liens d'invitation, le lien du groupe fait tout. Par contre sur la page de login
 je ne veux pas voir de proposition d'identité, login + PIN » ; « éventuellement on garde la possibilité de changer le
-lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans redirection (choix de l'utilisateur).
+lien du groupe en cas de compromission ». Les anciens liens d'invitation : sans redirection.
 
 * Le lien d'un groupe est son adresse, `https://…/<groupe>` (16 caractères hexadécimaux : 64 bits tirés au hasard).
   Les boutons Partager (accueil du groupe, « Moi », Réglages du groupe) la partagent ; un pari se partage par son
@@ -614,7 +614,7 @@ formulaire. »
 | Sujet | Exigence |
 |---|---|
 | Appareils | Téléphone d'abord (dès 360 px de large), tablette et PC (V3) ; versions récentes de Safari, Chrome, Edge |
-| Installation | Installable sur l'écran d'accueil (PWA), ce qui demande du HTTPS (fourni par Tailscale Funnel pendant les tests) |
+| Installation | Installable sur l'écran d'accueil (PWA), ce qui demande du HTTPS (fourni par le reverse proxy ou l'hébergeur) |
 | Rapidité | Créer un pari en moins d'une minute, parier en 2 touches, pages affichées en moins d'une seconde en 4G |
 | Fiabilité des points | Chaque attribution de points se fait dans une transaction, et le score de chacun est toujours égal à la somme de son journal (vérifié par les tests) |
 | Heure | Fuseau Europe/Paris ; l'heure du serveur fait foi ; affichage relatif (« dans 2 h ») |
@@ -625,20 +625,20 @@ formulaire. »
 | Langue et ton | Français, ton détendu |
 | Accessibilité | Contrastes suffisants, zones tactiles d'au moins 44 px, mode sombre automatique |
 
-## 9. Proposition technique
-
-Je propose de reprendre la stack de tes projets récents (DuckSafe, DuckAsso) :
+## 9. Choix techniques
 
 * **Serveur** : Node 24 (modules ESM), Express 5, validation avec zod, helmet.
 * **Données** : SQLite embarqué (`node:sqlite`), tables STRICT, migrations versionnées.
 * **Interface** : application d'une seule page en JavaScript natif, sans étape de build, avec le helper `h()` (pas d'`innerHTML`). Manifest et service worker pour l'installation sur téléphone.
-* **PIN** : haché avec `crypto.argon2` (Node 24.7 ou plus).
+* **PIN** : haché avec scrypt (`crypto.scrypt`, au niveau recommandé par l'OWASP).
 * **Tests** : `node:test` pour le calcul des points et le cycle de vie des paris ; Playwright (Edge) pour les parcours sur téléphone.
 
 ### Hébergement
 
-* **Phase de test : ton PC, exposé avec Tailscale Funnel.** L'app reçoit une adresse publique en HTTPS (`https://<nom-du-pc>.<ton-tailnet>.ts.net`). Tes amis n'ont rien à installer : ils ouvrent le lien WhatsApp. Le lien du groupe reste le seul secret. Limite : l'app n'est joignable que quand le PC est allumé.
-* **Plus tard** : Docker + Caddy (HTTPS automatique) sur un petit serveur, pour une app disponible en permanence. La base SQLite se déplace telle quelle.
+* **Auto-hébergé** : un serveur Node 24.7 ou plus récent, derrière une adresse HTTPS (reverse proxy ou hébergeur
+  Node). Les amis n'ont rien à installer : ils ouvrent le lien du groupe. Le lien du groupe reste le seul secret.
+* La base SQLite tient dans un fichier, qui se sauvegarde et se déplace tel quel. Installation : voir le
+  [README](../README.md).
 
 ### Modèle de données (esquisse)
 
@@ -668,7 +668,7 @@ Je propose de reprendre la stack de tes projets récents (DuckSafe, DuckAsso) :
 6. Un pronostic envoyé une seconde après la clôture est refusé.
 7. Cinq PIN faux bloquent le compte pendant 15 minutes (puis plus longtemps), et un lien régénéré bloque l'ancien.
 8. L'arbitre ne peut pas parier sur son pari, et un membre ne peut pas choisir deux options.
-9. Servie par Tailscale Funnel, l'app s'installe sur l'écran d'accueil d'un iPhone et d'un téléphone Android.
+9. Servie en HTTPS, l'app s'installe sur l'écran d'accueil d'un iPhone et d'un téléphone Android.
 
 ## 11. Feuille de route
 
@@ -688,7 +688,7 @@ Je propose de reprendre la stack de tes projets récents (DuckSafe, DuckAsso) :
 | Sujet | Décision (2026-10-29) |
 |---|---|
 | Nom | « Pari tenu ! » |
-| Hébergement | Ton PC via Tailscale (Funnel) pour les tests, un serveur plus tard |
+| Hébergement | Auto-hébergé : chaque installation tourne sur son serveur ; logiciel libre, réglé depuis son admin (2026-11-03) |
 | Visibilité | Tout le monde voit tout, à tout moment |
 | Économie | Paris gratuits : on ne mise rien et on ne fait que gagner des points (100 × la cote du groupe) |
 | Saisons | ~~Pas de remise à zéro (onglet « Ce mois-ci »)~~ — remplacé le 2026-10-30 : classement par compétition (ou catégorie), sur les vraies saisons (officielles pour le sport, équinoxes et solstices sinon) ; champion en fin de saison, remise à zéro, historique gardé |

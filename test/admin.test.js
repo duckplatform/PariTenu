@@ -498,8 +498,8 @@ describe('apparence', () => {
 
 describe('configuration de l’installation', () => {
   const OURS = {
-    name: 'Paris entre Couilles', shortName: 'EntreCouilles', publicUrl: 'https://paris.entrecouilles.fr/',
-    hostName: 'Duck Platform', hostUrl: 'https://duckplatform.net',
+    name: 'Les Pronos du Vendredi', shortName: 'Pronos', publicUrl: 'https://pronos.example.org/',
+    hostName: 'Mon Hébergeur', hostUrl: 'https://hebergeur.example.org',
   };
   const page = async (s, url) => (await fetch(s.base + url)).text();
   const metaInstance = (html) => JSON.parse(html.match(/<meta name="instance" content="([^"]*)">/)[1]
@@ -522,26 +522,26 @@ describe('configuration de l’installation', () => {
 
     const saved = await adm.ok('PATCH', '/api/admin/branding', OURS);
     assert.deepEqual(saved.changed, ['name', 'shortName', 'publicUrl', 'hostName', 'hostUrl']);
-    assert.equal(saved.branding.publicUrl, 'https://paris.entrecouilles.fr', 'sans « / » final');
+    assert.equal(saved.branding.publicUrl, 'https://pronos.example.org', 'sans « / » final');
     assert.equal(saved.brand.renamed, true);
     const [last] = (await adm.ok('GET', '/api/admin/log')).entries;
     assert.equal(last.action, 'branding_changed');
-    assert.match(last.summary, /^Nom : « Pari tenu ! » → « Paris entre Couilles » ; Nom court/);
-    assert.equal((await adm.ok('PATCH', '/api/admin/branding', { name: 'Paris entre Couilles' })).changed.length, 0, 'rien de changé');
+    assert.match(last.summary, /^Nom : « Pari tenu ! » → « Les Pronos du Vendredi » ; Nom court/);
+    assert.equal((await adm.ok('PATCH', '/api/admin/branding', { name: 'Les Pronos du Vendredi' })).changed.length, 0, 'rien de changé');
 
     // La coquille de l'app, celle de l'admin, le manifeste, l'API publique et les messages du serveur.
     html = await page(s, '/');
-    assert.match(html, /<title>Paris entre Couilles<\/title>/);
-    assert.match(html, /<meta name="apple-mobile-web-app-title" content="EntreCouilles">/);
-    assert.equal(metaInstance(html).hostName, 'Duck Platform');
-    assert.match(await page(s, '/g/abc'), /<title>Paris entre Couilles<\/title>/);
-    assert.match(await page(s, '/admin'), /<title>Admin — Paris entre Couilles<\/title>/);
+    assert.match(html, /<title>Les Pronos du Vendredi<\/title>/);
+    assert.match(html, /<meta name="apple-mobile-web-app-title" content="Pronos">/);
+    assert.equal(metaInstance(html).hostName, 'Mon Hébergeur');
+    assert.match(await page(s, '/g/abc'), /<title>Les Pronos du Vendredi<\/title>/);
+    assert.match(await page(s, '/admin'), /<title>Admin — Les Pronos du Vendredi<\/title>/);
     const manifest = await (await fetch(`${s.base}/manifest.webmanifest`)).json();
-    assert.deepEqual([manifest.name, manifest.short_name, manifest.start_url], ['Paris entre Couilles', 'EntreCouilles', '/']);
-    assert.equal((await s.client().ok('GET', '/api/instance')).brand.publicUrl, 'https://paris.entrecouilles.fr');
+    assert.deepEqual([manifest.name, manifest.short_name, manifest.start_url], ['Les Pronos du Vendredi', 'Pronos', '/']);
+    assert.equal((await s.client().ok('GET', '/api/instance')).brand.publicUrl, 'https://pronos.example.org');
     const refused = await s.client().post('/api/groups', { name: 'Sans coupon', emoji: '🎲', pseudo: 'Zoé', avatar: '🦊', pin: PIN });
     assert.equal(refused.body.code, 'coupon_required');
-    assert.match(refused.body.error, /la personne qui gère Paris entre Couilles$/);
+    assert.match(refused.body.error, /la personne qui gère Les Pronos du Vendredi$/);
 
     // Les textes de l'admin ne deviennent jamais du code dans la page.
     await adm.ok('PATCH', '/api/admin/branding', { name: 'Les <script>alert(1)</script> $& amis', intro: 'Une "intro" $1 & co' });
@@ -552,8 +552,8 @@ describe('configuration de l’installation', () => {
     assert.equal(metaInstance(html).name, 'Les <script>alert(1)</script> $& amis');
 
     // Refusés : adresse sans https, avec un chemin, nom trop long, nom court trop long, hébergeur en http.
-    for (const body of [{ publicUrl: 'http://paris.entrecouilles.fr' }, { publicUrl: 'https://paris.entrecouilles.fr/jeu' },
-      { name: 'x'.repeat(41) }, { name: ' ' }, { shortName: 'Paris entre Couilles' }, { hostUrl: 'http://duckplatform.net' }, { publicUrl: 'javascript:alert(1)' }]) {
+    for (const body of [{ publicUrl: 'http://pronos.example.org' }, { publicUrl: 'https://pronos.example.org/jeu' },
+      { name: 'x'.repeat(41) }, { name: ' ' }, { shortName: 'Les Pronos du Vendredi' }, { hostUrl: 'http://hebergeur.example.org' }, { publicUrl: 'javascript:alert(1)' }]) {
       const r = await adm.req('PATCH', '/api/admin/branding', { body });
       assert.equal(r.status, 400, JSON.stringify(body));
     }
@@ -570,9 +570,9 @@ describe('configuration de l’installation', () => {
   it('adresse publique : ses requêtes passent le contrôle d’origine, et ses cookies sont « Secure »', () => fresh(async (s) => {
     await s.deps.admin.setPassword(PASSWORD);
     const adm = await signIn(s);
-    const ours = { headers: { origin: 'https://paris.entrecouilles.fr' } };
+    const ours = { headers: { origin: 'https://pronos.example.org' } };
     assert.equal((await adm.post('/api/admin/coupons', {}, ours)).status, 403, 'pas encore son adresse');
-    await adm.ok('PATCH', '/api/admin/branding', { publicUrl: 'https://paris.entrecouilles.fr' });
+    await adm.ok('PATCH', '/api/admin/branding', { publicUrl: 'https://pronos.example.org' });
     assert.equal((await adm.post('/api/admin/coupons', {}, ours)).status, 201);
     assert.equal((await adm.post('/api/admin/coupons', {}, { headers: { origin: 'https://evil.example' } })).status, 403);
     // Derrière le proxy de l'hébergeur, en http côté serveur : le cookie reste réservé au https. (fetch ne laisse pas
@@ -581,7 +581,7 @@ describe('configuration de l’installation', () => {
     const cookies = await new Promise((resolve, reject) => {
       const req = http.request({
         host: '127.0.0.1', port, path: '/api/admin/login', method: 'POST',
-        headers: { host: 'paris.entrecouilles.fr', origin: 'https://paris.entrecouilles.fr', 'content-type': 'application/json' },
+        headers: { host: 'pronos.example.org', origin: 'https://pronos.example.org', 'content-type': 'application/json' },
       }, (res) => { res.resume(); resolve(res.headers['set-cookie'] ?? []); });
       req.on('error', reject);
       req.end(JSON.stringify({ password: PASSWORD }));

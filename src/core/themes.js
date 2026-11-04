@@ -1,7 +1,7 @@
 // Habillages de l'appli, choisis par l'admin du site pour tout le monde (instance_settings, clé « theme »).
 // « stade » est l'habillage d'origine (public/css/app.css seule) ; chaque autre thème ajoute public/css/themes/<id>.css,
 // servi à l'adresse /theme.css (polices hébergées par l'app, dans public/fonts/<id>/).
-// Styles, palettes et polices viennent de la base du skill ui-ux-pro-max (maquettes : docs/maquettes/).
+// Styles, palettes et polices viennent de la base du skill ui-ux-pro-max.
 
 export const DEFAULT_THEME = 'stade';
 

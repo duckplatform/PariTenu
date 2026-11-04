@@ -3,12 +3,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PIN_PARAMS } from './lib/pin.js';
 
-// Le dossier de l'app : .env et data/ s'y trouvent, quel que soit le dossier courant (Passenger, cron, terminal).
+// Le dossier de l'app : .env et data/ s'y trouvent, quel que soit le dossier courant (service, cron, terminal).
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 /**
- * Charge le .env de l'app s'il existe, en secours : les variables déjà définies (Passenger dans cPanel, le terminal…)
- * restent prioritaires.
+ * Charge le .env de l'app s'il existe, en secours : les variables déjà définies (service système, hébergeur,
+ * terminal…) restent prioritaires. Modèle commenté : .env.example.
  */
 export function loadDotEnv(file = path.join(ROOT, '.env')) {
   if (fs.existsSync(file)) process.loadEnvFile(file);
@@ -25,11 +25,11 @@ function parseTrustProxy(value) {
 }
 
 /**
- * Variables d'environnement (sous cPanel : celles de « Setup Node.js App », le .env n'étant qu'un secours) :
- *   PORT (5190), HOST (0.0.0.0) : ignorés sous Passenger, qui choisit lui-même
+ * Variables d'environnement (le .env n'étant qu'un secours ; voir .env.example) :
+ *   PORT (5190), HOST (0.0.0.0) : ignorés sous Phusion Passenger, qui choisit lui-même
  *   PT_DB_PATH (data/paritenu.db) : à côté de la base, data/branding (icône) et data/media (images des sources)
- *   PT_COOKIE_SECURE : auto (défaut : Secure en HTTPS et sur *.ts.net) | always | never
- *   PT_TRUST_PROXY   : loopback (défaut, adapté à Tailscale Funnel et Caddy en local) | nombre de proxys | false
+ *   PT_COOKIE_SECURE : auto (défaut : Secure en HTTPS) | always | never
+ *   PT_TRUST_PROXY   : loopback (défaut, un reverse proxy sur la même machine) | nombre de proxys | false
  *   PT_TEST_HOOKS=1  : expose /api/_test/clock pour déplacer l'horloge (tests et démo uniquement)
  *   PT_PADEL_TOKEN   : clé personnelle gratuite de Padel API (padelapi.org) ; sans elle, pas de paris de padel
  */

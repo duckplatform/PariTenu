@@ -12,6 +12,7 @@ import { buildConfig } from '../../src/config.js';
 import { naturalSeason } from '../../src/core/seasons.js';
 import { createClock } from '../../src/lib/clock.js';
 import { encodePng } from '../../src/lib/png.js';
+import { VERSION } from '../../src/version.js';
 import { fakeUpstream } from '../fake-upstream.js';
 
 const HEADED = process.argv.includes('--headed');
@@ -153,6 +154,8 @@ await test('l’accueil du site, puis créer un groupe par le lien d’un coupon
   await page.locator('.landing-hero h1').waitFor();
   assert.equal(await page.locator('form').count(), 0, 'pas de formulaire sur l’accueil');
   assert.equal(await page.locator('a[href^="/n/"]').count(), 0, 'aucun lien vers la création d’un groupe');
+  // En pied de page : le logiciel et sa version (package.json).
+  assert.equal(await page.locator('.site-foot .credits').textContent(), `PariTenu v${VERSION}, logiciel libre`);
   await shot(page, '00-accueil-site', { fullPage: true });
   // Créer un groupe : seulement par le lien d'un coupon (/n sans coupon n'existe pas).
   assert.equal((await page.goto(`${ORIGIN}/n`)).status(), 404, 'pas de formulaire sans coupon dans l’adresse');
@@ -530,6 +533,8 @@ await test('5 PIN faux bloquent le compte', async () => {
 await test('admin : changer le lien donne une nouvelle adresse, l’ancienne ne mène plus à rien', async () => {
   const { page } = lea;
   await page.goto(`${betUrl.split('/bet/')[0]}/me`);
+  await page.locator('.me-credits .credits').waitFor();
+  assert.equal(await page.locator('.me-credits .credits').textContent(), `PariTenu v${VERSION}, logiciel libre`, 'la version en bas de « Moi »');
   assert.equal(await page.getByRole('link', { name: /Réglages du groupe|Administration/ }).count(), 0, 'plus dans « Moi »');
   // Les réglages du groupe : l'engrenage à côté de son nom (sur téléphone, dans l'en-tête du groupe).
   await page.goto(betUrl.split('/bet/')[0]);
@@ -1166,6 +1171,7 @@ await test('admin du site : mot de passe choisi sur le serveur, coupon, son lien
   assert.equal(await pc.page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'pas de défilement horizontal');
   await shot(pc.page, '47-admin-telephone');
   await pc.page.locator('.adm-bnav').getByRole('button', { name: 'Plus' }).click();
+  assert.equal(await dialog(pc.page).locator('.adm-version').textContent(), `PariTenu v${VERSION}`);
   await dialog(pc.page).getByRole('button', { name: 'Se déconnecter' }).click();
   await pc.page.getByLabel('Mot de passe').waitFor();
   await pc.context.close();
@@ -1284,17 +1290,18 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   const input = (name) => adm.page.locator(`.adm-config [name="${name}"]`);
   await input('name').waitFor();
   assert.equal(await input('name').inputValue(), 'Pari tenu !');
-  await input('name').fill('Paris entre Couilles');
-  await input('shortName').fill('EntreCouilles');
-  await input('publicUrl').fill('https://paris.entrecouilles.fr');
-  await input('hostName').fill('Duck Platform');
-  await input('hostUrl').fill('https://duckplatform.net');
+  await input('name').fill('Les Pronos du Vendredi');
+  await input('shortName').fill('Pronos');
+  await input('publicUrl').fill('https://pronos.example.org');
+  await input('hostName').fill('Mon Hébergeur');
+  await input('hostUrl').fill('https://hebergeur.example.org');
   // Aperçu en direct, avant d'enregistrer.
-  assert.match(await adm.page.locator('.adm-preview').innerText(), /Paris entre Couilles[\s\S]*EntreCouilles[\s\S]*https:\/\/paris\.entrecouilles\.fr\/a1b2c3d4e5f60718/);
+  assert.match(await adm.page.locator('.adm-preview').innerText(), /Les Pronos du Vendredi[\s\S]*Pronos[\s\S]*https:\/\/pronos\.example\.org\/a1b2c3d4e5f60718/);
   await adm.page.getByRole('button', { name: 'Enregistrer' }).click();
   await waitText(adm.page, 'Configuration enregistrée');
-  await adm.page.locator('.adm-side .adm-brand', { hasText: 'Paris entre Couilles' }).waitFor();
-  assert.equal(await adm.page.title(), 'Configuration · Admin — Paris entre Couilles');
+  await adm.page.locator('.adm-side .adm-brand', { hasText: 'Les Pronos du Vendredi' }).waitFor();
+  assert.equal(await adm.page.title(), 'Configuration · Admin — Les Pronos du Vendredi');
+  assert.equal(await adm.page.locator('.adm-side .adm-version').textContent(), `PariTenu v${VERSION}`);
 
   // Une icône : un carré jaune sur fond bleu nuit, recadrée et déclinée par le serveur.
   const side = 512;
@@ -1316,22 +1323,24 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   const visitor = await phone('Visiteur');
   await visitor.page.goto(`${ORIGIN}/`);
   await visitor.page.locator('.landing-hero h1').waitFor();
-  assert.equal(await visitor.page.title(), 'Paris entre Couilles · paris gratuits entre amis');
-  assert.equal((await visitor.page.locator('.landing-top .brand').textContent()).trim(), 'Paris entre Couilles');
+  assert.equal(await visitor.page.title(), 'Les Pronos du Vendredi · paris gratuits entre amis');
+  assert.equal((await visitor.page.locator('.landing-top .brand').textContent()).trim(), 'Les Pronos du Vendredi');
   assert.match(await visitor.page.locator('.landing-top .brand img').getAttribute('src'), /^\/brand\/icon-192\.png\?v=\d+$/);
   assert.equal(await visitor.page.locator('.landing-hero h1 em').textContent(), 'Sans miser un centime.');
   assert.match(await visitor.page.locator('link[rel="apple-touch-icon"]').getAttribute('href'), /^\/brand\/icon-180\.png/);
   const credits = visitor.page.locator('.site-foot .credits');
-  assert.equal(await credits.textContent(), 'Propulsé par PariTenu, logiciel libre · Hébergé par Duck Platform');
-  assert.equal(await credits.getByRole('link', { name: 'Duck Platform' }).getAttribute('href'), 'https://duckplatform.net');
+  assert.equal(await credits.textContent(), `Propulsé par PariTenu v${VERSION}, logiciel libre · Hébergé par Mon Hébergeur`);
+  assert.equal(await credits.getByRole('link', { name: 'Mon Hébergeur' }).getAttribute('href'), 'https://hebergeur.example.org');
   const manifest = await visitor.page.evaluate(async () => (await fetch('/manifest.webmanifest')).json());
-  assert.deepEqual([manifest.name, manifest.short_name], ['Paris entre Couilles', 'EntreCouilles']);
+  assert.deepEqual([manifest.name, manifest.short_name], ['Les Pronos du Vendredi', 'Pronos']);
   await shot(visitor.page, '65-accueil-renomme', { fullPage: true });
   await visitor.page.setViewportSize({ width: 1440, height: 900 });
   await shot(visitor.page, '66-accueil-renomme-pc');
   await visitor.page.goto(`${ORIGIN}/help`);
-  await waitText(visitor.page, 'Paris entre Couilles est un jeu de pronostics entre amis');
-  assert.match(await visitor.page.locator('.help-credits').innerText(), /Hébergé par Duck Platform/);
+  await waitText(visitor.page, 'Les Pronos du Vendredi est un jeu de pronostics entre amis');
+  const helpCredits = await visitor.page.locator('.help-credits').innerText();
+  assert.match(helpCredits, /Hébergé par Mon Hébergeur/);
+  assert.ok(helpCredits.includes(`PariTenu v${VERSION}, logiciel libre`), helpCredits);
   await visitor.context.close();
 
   // Léa partage le lien de son groupe : il part sur l'adresse publique.
@@ -1339,12 +1348,12 @@ await test('configuration : l’admin du site renomme l’installation, son adre
   await lea.page.goto(`${home}/admin`);
   await lea.page.reload();
   await lea.page.locator('.invite-link code').waitFor();
-  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/paris\.entrecouilles\.fr\/g\/[0-9a-f]{16}$/);
+  assert.match(await lea.page.locator('.invite-link code').innerText(), /^https:\/\/pronos\.example\.org\/g\/[0-9a-f]{16}$/);
   await lea.page.getByRole('button', { name: 'Partager', exact: true }).click();
   const sent = await lea.page.evaluate(() => window.__shared.at(-1));
-  assert.match(sent.url, /^https:\/\/paris\.entrecouilles\.fr\/g\/[0-9a-f]{16}$/);
-  assert.match(sent.text, /sur Paris entre Couilles$/);
-  assert.match(await lea.page.title(), / — Paris entre Couilles$/);
+  assert.match(sent.url, /^https:\/\/pronos\.example\.org\/g\/[0-9a-f]{16}$/);
+  assert.match(sent.text, /sur Les Pronos du Vendredi$/);
+  assert.match(await lea.page.title(), / — Les Pronos du Vendredi$/);
 
   // Retour aux valeurs de PariTenu (les tests suivants attendent « Pari tenu ! »).
   const reset = await adm.page.evaluate(async () => {

@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { badRequest } from '../lib/errors.js';
 import { decodePng, encodePng, isPng, resize } from '../lib/png.js';
+import { VERSION } from '../version.js';
 
 /** Les valeurs d'une installation neuve : celles de PariTenu. */
 export const DEFAULT_BRANDING = Object.freeze({
@@ -63,6 +64,8 @@ export class BrandingService {
       icon: this.iconUrl(192) ?? '/icons/icon.svg',
       // Renommée : la page d'accueil dit « Propulsé par PariTenu ».
       renamed: b.name !== DEFAULT_BRANDING.name,
+      // La version du logiciel, en pied de page (public/js/brand.js : credits).
+      version: VERSION,
     };
   }
 
@@ -80,7 +83,7 @@ export class BrandingService {
 
   /**
    * Enregistre les champs donnés (déjà vérifiés) ; rend les changements pour le journal :
-   * [{ field, label, text }] (« Nom : « Pari tenu ! » → « Paris entre Couilles » »).
+   * [{ field, label, text }] (« Nom : « Pari tenu ! » → « Les Pronos du Vendredi » »).
    */
   update(patch) {
     const current = this.get();

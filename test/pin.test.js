@@ -5,7 +5,7 @@ import { hashPin, verifyPin } from '../src/lib/pin.js';
 
 const LIGHT = { cost: 2 ** 10, blockSize: 8, parallelization: 1 };
 
-// Le Node de cPanel n'a pas Argon2 (OpenSSL du système trop ancien) : les nouveaux hachages n'en dépendent pas.
+// Un Node lié à un OpenSSL trop ancien n'a pas Argon2 : les nouveaux hachages n'en dépendent pas.
 function argon2Supported() {
   try {
     crypto.argon2Sync('argon2id', { message: 'x', nonce: Buffer.alloc(16), memory: 8, passes: 1, parallelism: 1, tagLength: 32 });
